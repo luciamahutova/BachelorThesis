@@ -1,0 +1,82 @@
+body {
+    background-color: #061327;
+    background-size: 100%;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto auto;
+}
+
+.container1 {
+    grid-area: 2 / 2 / span 1 / span 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.container1 p {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 65px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+}
+
+.container2 {
+    grid-area: 3 / 2 / span 1 / span 1;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-shrink: 3;
+}
+
+.topLine,
+.bottomLine {
+    background-color: #ffffff;
+    height: 10px;
+    width: 420px;
+    border-radius: 5px 0;
+}
+
+.bottomLine {
+    width: 800px;
+    margin: 10px 20px 10px 0;
+}
+
+.container2 a {
+    align-self: center;
+    cursor: pointer;
+}
+
+.container2 a:hover {
+    opacity: 1;
+    padding-top: 10px;
+}
+
+
+/* not used */
+
+@keyframes example {
+    from {
+        background-color: #061327;
+    }
+    to {
+        background-color: #865276;
+        overflow-y: hidden;
+        transition-property: all;
+        transition-duration: 1s;
+        transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+        max-height: 0;
+    }
+}
+
+.container2 a:target {
+    animation-name: example;
+    animation-duration: 1s;
+}
