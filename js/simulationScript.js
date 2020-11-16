@@ -38,7 +38,6 @@ let jupiter = new THREE.SphereGeometry(0.5, 50, 50);
 let saturn = new THREE.SphereGeometry(0.5, 50, 50);
 let uranus = new THREE.SphereGeometry(0.5, 50, 50);
 let neptune = new THREE.SphereGeometry(0.5, 50, 50);
-let mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh = '';
 
 // Mesh for planets
 function setNewMesh(imageSrc) {
@@ -47,25 +46,21 @@ function setNewMesh(imageSrc) {
     return meshMaterial;
 }
 
+// Creating mesh for planets
+let mercuryMesh = new THREE.Mesh(mercury, setNewMesh('/images/textures/mercuryTexture2k.jpg'));
+let venusMesh = new THREE.Mesh(venus, setNewMesh('/images/textures/venusTexture2k.jpg'));
+let earthMesh = new THREE.Mesh(earth, setNewMesh('/images/textures/earthTexture2k.jpg'));
+let marsMesh = new THREE.Mesh(mars, setNewMesh('/images/textures/marsTexture2k.jpg'));
+let jupiterMesh = new THREE.Mesh(jupiter, setNewMesh('/images/textures/jupiterTexture2k.jpg'));
+let saturnMesh = new THREE.Mesh(saturn, setNewMesh('/images/textures/saturnTexture2k.jpg'));
+let uranusMesh = new THREE.Mesh(uranus, setNewMesh('/images/textures/uranusTexture2k.jpg'));
+let neptuneMesh = new THREE.Mesh(neptune, setNewMesh('/images/textures/neptuneTexture2k.jpg'));
+scene.add(mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
+
 // const mercuryTexture = new THREE.TextureLoader().load('/images/textures/mercuryTexture2k.jpg');
 // const mercuryMaterial = new THREE.MeshBasicMaterial({ map: mercuryTexture });
 // let sphereMesh = new THREE.Mesh(mercury, mercuryMaterial);
 
-var planetObjects = new Array(mercury, venus, earth, mars, jupiter, saturn, uranus, neptune);
-var planetMeshes = new Array(mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
-var planetTextures = new Array('/images/textures/mercuryTexture2k.jpg', '/images/textures/venusTexture2k.jpg',
-    '/images/textures/earthTexture2k.jpg', '/images/textures/marsTexture2k.jpg',
-    '/images/textures/jupiterTexture2k.jpg', '/images/textures/saturnTexture2k.jpg',
-    '/images/textures/uranusTexture2k.jpg', '/images/textures/neptuneTexture2k.jpg'
-);
-for (i = 0; i < planetMeshes.length; i++) {
-    // sphereMesh = new THREE.Mesh(planetObjects[i], setNewMesh(planetTextures[i]));
-    // sphereMesh.position.x = (Math.random() - 0.5) * 10;
-    // scene.add(sphereMesh);
-    planetMeshes[i] = new THREE.Mesh(planetObjects[i], setNewMesh(planetTextures[i]));
-    planetMeshes[i].position.x = (Math.random() - 0.5) * 10;
-    scene.add(planetMeshes[i]);
-}
 
 //CUDZI KOD - resize pre okno = DEFORMUJE OBJEKTY, ZATIAL NEPOUZITE
 // window.addEventListener('resize', () => {
