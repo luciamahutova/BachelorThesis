@@ -5,12 +5,20 @@ let scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
 camera.position.x = 2;
 camera.position.z = 10;
+//camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 // Renderer
 let renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(devicePixelRatio);
 document.body.appendChild(renderer.domElement);
+
+// Window resizing - background
+window.addEventListener('resize', function() {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+});
 
 // Light
 let hemiLight = new THREE.HemisphereLight(0x00aa00, 0x000000, 1);
@@ -56,25 +64,13 @@ let saturnMesh = new THREE.Mesh(saturn, setNewMesh('/images/textures/saturnTextu
 let uranusMesh = new THREE.Mesh(uranus, setNewMesh('/images/textures/uranusTexture2k.jpg'));
 let neptuneMesh = new THREE.Mesh(neptune, setNewMesh('/images/textures/neptuneTexture2k.jpg'));
 scene.add(mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
-
-// const mercuryTexture = new THREE.TextureLoader().load('/images/textures/mercuryTexture2k.jpg');
-// const mercuryMaterial = new THREE.MeshBasicMaterial({ map: mercuryTexture });
-// let sphereMesh = new THREE.Mesh(mercury, mercuryMaterial);
-
-
-//CUDZI KOD - resize pre okno = DEFORMUJE OBJEKTY, ZATIAL NEPOUZITE
-// window.addEventListener('resize', () => {
-//     renderer.setSize = window.innerWidth, window.innerHeight;
-//     camera.aspect = window.innerWidth / window.innerHeight;
-//     camera.updateProjectionMatrix();
-// })
+neptuneMesh.position.x = 5;
 
 // Animation
 const animate = function() {
     requestAnimationFrame(animate);
 
-    // sphereMesh.rotation.x += 0.01;
-    // sphereMesh.rotation.y += 0.01;
+    //earthMesh.rotation.y += 0.01;
 
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
