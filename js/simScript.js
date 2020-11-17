@@ -36,7 +36,7 @@ function resizeBackground() {
 
 function setLight() {
     hemiLight = new THREE.HemisphereLight(0x00aa00, 0x000000, 1);
-    hemiLight.position.set(500, 500, 0);
+    hemiLight.position.set(0, 0, 0);
     scene.add(hemiLight);
 }
 
@@ -98,6 +98,8 @@ function setPlanetsRotationAngle() {
     saturnMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (26.7 * Math.PI) / 180);
     uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (97.8 * Math.PI) / 180);
     neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
+
+    //saturnMesh.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), (26.7 * Math.PI) / 180);
 }
 
 function createZoomEvent() {
@@ -130,7 +132,14 @@ earthMesh.position.z = 2;
 const animate = function() {
     requestAnimationFrame(animate);
 
-    //earthMesh.rotation.y += 0.01;
+    // mercuryMesh.rotation.y += 0.016;
+    // venusMesh.rotation.y += 0.012;
+    // earthMesh.rotation.y += 0.01;
+    // marsMesh.rotation.y += 0.008;
+    // jupiterMesh.rotation.y += 0.004;
+    //saturnMesh.rotation.y += 0.003;
+    // uranusMesh.rotation.y += 0.002;
+    // neptuneMesh.rotation.y += 0.002;
 
     // mercuryMesh.rotation.y += Math.PI / 180;
     // venusMesh.rotation.y += Math.PI / 180;
