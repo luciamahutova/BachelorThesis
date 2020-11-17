@@ -10,7 +10,6 @@ setStaticBackground();
 createPlanets();
 setPlanetsRotationAngle();
 createZoomEvent();
-animate();
 
 function initialize() {
     // Scene
@@ -138,3 +137,4 @@ const animate = function() {
     renderer.render(bgScene, bgCamera);
     renderer.render(scene, camera);
 };
+animate();
