@@ -62,21 +62,15 @@ body {
 
 /* not used */
 
-@keyframes example {
-    from {
-        background-color: #061327;
-    }
-    to {
-        background-color: #865276;
-        overflow-y: hidden;
-        transition-property: all;
-        transition-duration: 1s;
-        transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-        max-height: 0;
-    }
-}
 
-.container2 a:target {
+/* .container2 a:target {
     animation-name: example;
     animation-duration: 1s;
-}
+} */
+
+
+/* @viewport {
+    zoom: 1.0;
+    min-zoom: 1.0;
+    max-zoom: 2.0;
+} */

@@ -3,15 +3,15 @@ let scene = new THREE.Scene();
 
 // Camera
 let camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
-camera.position.x = 2;
 camera.position.z = 10;
-//camera.up = new THREE.Vector3(0, 0, 1); //Z-axis is pointing up
+//camera.updateProjectionMatrix();
 //camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 // Renderer
 let renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(devicePixelRatio);
+//renderer.physicallyCorrectLights = true;
 document.body.appendChild(renderer.domElement);
 
 // Window resizing - background
@@ -39,14 +39,14 @@ bgScene.add(bgCamera);
 bgScene.add(bgMesh);
 
 // Creating planets
-let mercury = new THREE.SphereGeometry(1, 50, 50);
-let venus = new THREE.SphereGeometry(1, 50, 50);
-let earth = new THREE.SphereGeometry(3, 50, 50);
-let mars = new THREE.SphereGeometry(1, 50, 50);
-let jupiter = new THREE.SphereGeometry(1, 50, 50);
-let saturn = new THREE.SphereGeometry(1, 50, 50);
-let uranus = new THREE.SphereGeometry(1, 50, 50);
-let neptune = new THREE.SphereGeometry(1, 50, 50);
+let mercury = new THREE.SphereGeometry(0.175, 50, 50);
+let venus = new THREE.SphereGeometry(0.434, 50, 50);
+let earth = new THREE.SphereGeometry(0.457, 50, 50);
+let mars = new THREE.SphereGeometry(0.243, 50, 50);
+let jupiter = new THREE.SphereGeometry(1.674, 50, 50);
+let saturn = new THREE.SphereGeometry(1.395, 50, 50);
+let uranus = new THREE.SphereGeometry(0.607, 50, 50);
+let neptune = new THREE.SphereGeometry(0.589, 50, 50);
 
 // Mesh for planets
 function setNewMesh(imageSrc) {
@@ -74,6 +74,7 @@ jupiterMesh.position.x = 2;
 saturnMesh.position.x = 4;
 uranusMesh.position.x = 6;
 neptuneMesh.position.x = 8;
+earthMesh.position.z = 2;
 
 // Planets' angle around its axis
 mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (0.03 * Math.PI) / 180);
@@ -86,8 +87,8 @@ uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (97.8 * Math.PI)
 neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
 
 // Zoom-in and zoom-out
-document.addEventListener('mousewheel', (event) => {
-    camera.position.z += event.deltaY / 500;
+document.addEventListener('wheel', (event) => {
+    camera.position.z += (event.deltaY / 1000) * 0.5;
 });
 
 // Animation
