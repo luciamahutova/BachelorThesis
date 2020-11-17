@@ -1,7 +1,7 @@
 var scene, camera, renderer, hemiLight;
 var bgTexture, bgGeometry, bgMaterial, bgMesh, bgScene, bgCamera;
-var mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
-var mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
+var sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
+var sunMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
 
 initialize();
 resizeBackground();
@@ -55,6 +55,7 @@ function setStaticBackground() {
 }
 
 function createPlanets() {
+    sun = new THREE.SphereGeometry(5, 50, 50);
     mercury = new THREE.SphereGeometry(0.175, 50, 50);
     venus = new THREE.SphereGeometry(0.434, 50, 50);
     earth = new THREE.SphereGeometry(0.457, 50, 50);
@@ -74,8 +75,8 @@ function setNewMesh(imageSrc) {
     return meshMaterial;
 }
 
-
 function createPlanetsMesh() {
+    sunMesh = new THREE.Mesh(sun, setNewMesh('/images/textures/sunTexture2k.jpg'));
     mercuryMesh = new THREE.Mesh(mercury, setNewMesh('/images/textures/mercuryTexture2k.jpg'));
     venusMesh = new THREE.Mesh(venus, setNewMesh('/images/textures/venusTexture2k.jpg'));
     earthMesh = new THREE.Mesh(earth, setNewMesh('/images/textures/earthTexture2k.jpg'));
@@ -84,7 +85,7 @@ function createPlanetsMesh() {
     saturnMesh = new THREE.Mesh(saturn, setNewMesh('/images/textures/saturnTexture2k.jpg'));
     uranusMesh = new THREE.Mesh(uranus, setNewMesh('/images/textures/uranusTexture2k.jpg'));
     neptuneMesh = new THREE.Mesh(neptune, setNewMesh('/images/textures/neptuneTexture2k.jpg'));
-    scene.add(mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
+    scene.add(sunMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
 }
 
 function setPlanetsRotationAngle() {
@@ -102,11 +103,19 @@ function setPlanetsRotationAngle() {
 function createZoomEvent() {
     // Zoom-in and zoom-out
     document.addEventListener('wheel', (event) => {
-        camera.position.z += (event.deltaY / 1000) * 0.5;
+        camera.position.z += (event.deltaY / 2000) * 0.5;
     });
 }
 
+// function centerTheSun() {
+//     sunMesh.position.x = 0;
+//     sunMesh.position.y = 0;
+//     sunMesh.position.z = 0;
+// }
+
 // docasne rozmiestnenie
+sunMesh.position.x = -6;
+sunMesh.position.z = -10;
 mercuryMesh.position.x = -6;
 venusMesh.position.x = -4;
 earthMesh.position.x = -2;
