@@ -41,7 +41,7 @@ bgScene.add(bgMesh);
 // Creating planets
 let mercury = new THREE.SphereGeometry(1, 50, 50);
 let venus = new THREE.SphereGeometry(1, 50, 50);
-let earth = new THREE.SphereGeometry(1, 50, 50);
+let earth = new THREE.SphereGeometry(3, 50, 50);
 let mars = new THREE.SphereGeometry(1, 50, 50);
 let jupiter = new THREE.SphereGeometry(1, 50, 50);
 let saturn = new THREE.SphereGeometry(1, 50, 50);
@@ -76,14 +76,19 @@ uranusMesh.position.x = 6;
 neptuneMesh.position.x = 8;
 
 // Planets' angle around its axis
-mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -0.03);
-venusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -177.4);
-earthMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -23.4);
-marsMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -25.2);
-jupiterMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -3.1);
-saturnMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -26.7);
-uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -97.8);
-neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 1, 0), -28.3);
+mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (0.03 * Math.PI) / 180);
+venusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (177.4 * Math.PI) / 180);
+earthMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (23.4 * Math.PI) / 180);
+marsMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (25.2 * Math.PI) / 180);
+jupiterMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (3.1 * Math.PI) / 180);
+saturnMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (26.7 * Math.PI) / 180);
+uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (97.8 * Math.PI) / 180);
+neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
+
+// Zoom-in and zoom-out
+document.addEventListener('mousewheel', (event) => {
+    camera.position.z += event.deltaY / 500;
+});
 
 // Animation
 const animate = function() {
@@ -91,6 +96,15 @@ const animate = function() {
 
     //earthMesh.rotation.y += 0.01;
     //saturnMesh.rotation.y += 0.01;
+
+    // mercuryMesh.rotation.y += Math.PI / 180;
+    // venusMesh.rotation.y += Math.PI / 180;
+    //earthMesh.rotation.y += Math.PI / 180;
+    // marsMesh.rotation.y += Math.PI / 180;
+    // jupiterMesh.rotation.y += Math.PI / 180;
+    // saturnMesh.rotation.y += Math.PI / 180;
+    // uranusMesh.rotation.y += Math.PI / 180;
+    // neptuneMesh.rotation.y += Math.PI / 180;
 
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
