@@ -17,7 +17,8 @@ function initialize() {
 
     // Camera
     camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
-    camera.position.z = 10;
+    camera.position.set(0, 10, 50);
+    camera.lookAt(new THREE.Vector3(0, 1, 0));
 
     // Renderer
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -89,7 +90,7 @@ function createPlanetsMesh() {
 }
 
 function setPlanetsRotationAngle() {
-    // Planets' angle around its axis
+    // Planets' angle around its axis = Z
     mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (0.03 * Math.PI) / 180);
     venusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (177.4 * Math.PI) / 180);
     earthMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (23.4 * Math.PI) / 180);
@@ -99,7 +100,15 @@ function setPlanetsRotationAngle() {
     uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (97.8 * Math.PI) / 180);
     neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
 
-    //saturnMesh.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), (26.7 * Math.PI) / 180);
+    // For the top view = X
+    mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
+    venusMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
+    earthMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
+    marsMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
+    jupiterMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
+    saturnMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
+    uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
+    neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
 }
 
 function createZoomEvent() {
@@ -117,7 +126,7 @@ function createZoomEvent() {
 
 // docasne rozmiestnenie
 sunMesh.position.x = -6;
-sunMesh.position.z = -10;
+//sunMesh.position.z = -10;
 mercuryMesh.position.x = -6;
 venusMesh.position.x = -4;
 earthMesh.position.x = -2;
