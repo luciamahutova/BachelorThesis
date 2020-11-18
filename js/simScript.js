@@ -9,7 +9,7 @@ setLight();
 setStaticBackground();
 createPlanets();
 setPlanetsRotationAngle();
-createZoomEvent();
+//createZoomEvent();
 
 function initialize() {
     // Scene
@@ -44,6 +44,7 @@ function setLight() {
 function setStaticBackground() {
     // Background texture
     bgTexture = THREE.ImageUtils.loadTexture('/images/2k-starsMilkyWay.jpg');
+    //bgTexture = new THREE.TextureLoader.load('/images/2k-starsMilkyWay.jpg');
     bgGeometry = new THREE.PlaneGeometry(2, 2, 0);
     bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
     bgMesh = new THREE.Mesh(bgGeometry, bgMaterial);
@@ -124,9 +125,7 @@ function createZoomEvent() {
 //     sunMesh.position.z = 0;
 // }
 
-// docasne rozmiestnenie
-sunMesh.position.x = -6;
-//sunMesh.position.z = -10;
+// docasne rozmiestnenie6;
 mercuryMesh.position.x = -6;
 venusMesh.position.x = -4;
 earthMesh.position.x = -2;
@@ -136,6 +135,7 @@ saturnMesh.position.x = 4;
 uranusMesh.position.x = 6;
 neptuneMesh.position.x = 8;
 earthMesh.position.z = 2;
+
 
 // Animation
 const animate = function() {
