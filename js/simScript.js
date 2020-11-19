@@ -2,6 +2,7 @@ var scene, camera, renderer, hemiLight;
 var bgTexture, bgGeometry, bgMaterial, bgMesh, bgScene, bgCamera;
 var sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
 var sunMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
+var emptyObjectRotateMercury, emptyObjectRotateVenus, emptyObjectRotateEarth, emptyObjectRotateMars, emptyObjectRotateJupiter, emptyObjectRotateSaturn, emptyObjectRotateUranus, emptyObjectRotateNeptune;
 
 initialize();
 resizeBackground();
@@ -127,13 +128,42 @@ neptuneMesh.position.x = 8;
 earthMesh.position.z = 2;
 
 //POKUS
-sunMesh.add(neptuneMesh);
+var emptyObject = new THREE.Object3D();
+sunMesh.add(emptyObject);
+emptyObject.add(neptuneMesh);
+
+function createEmptyObjects() {
+    emptyObjectRotateMercury = new THREE.Object3D();
+    emptyObjectRotateMercury.add(mercuryMesh);
+
+    emptyObjectRotateVenus = new THREE.Object3D();
+    emptyObjectRotateVenus.add(venusMesh);
+
+    emptyObjectRotateEarth = new THREE.Object3D();
+    emptyObjectRotateEarth.add(earthMesh);
+
+    emptyObjectRotateMars = new THREE.Object3D();
+    emptyObjectRotateMars.add(marsMesh);
+
+    emptyObjectRotateJupiter = new THREE.Object3D();
+    emptyObjectRotateJupiter.add(jupiterMesh);
+
+    emptyObjectRotateSaturn = new THREE.Object3D();
+    emptyObjectRotateSaturn.add(saturnMesh);
+
+    emptyObjectRotateUranus = new THREE.Object3D();
+    emptyObjectRotateUranus.add(uranusMesh);
+
+    emptyObjectRotateNeptune = new THREE.Object3D();
+    emptyObjectRotateNeptune.add(neptuneMesh);
+}
 
 // Animation
 const animate = function() {
     requestAnimationFrame(animate);
 
     //sunMesh.rotation.y += 0.016;
+    //emptyObject.rotation.y += 0.1;
     // mercuryMesh.rotation.y += 0.016;
     // venusMesh.rotation.y += 0.012;
     // earthMesh.rotation.y += 0.01;
