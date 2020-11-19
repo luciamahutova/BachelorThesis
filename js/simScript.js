@@ -4,6 +4,10 @@ var sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
 var sunMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
 var emptyObjectRotateMercury, emptyObjectRotateVenus, emptyObjectRotateEarth, emptyObjectRotateMars, emptyObjectRotateJupiter, emptyObjectRotateSaturn, emptyObjectRotateUranus, emptyObjectRotateNeptune;
 
+var eulerNumberDistanceFromSun = [2.0790e+3, 3.8849e+3, 5.3709e+3, 8.1834e+3,
+    2.7951e+4, 5.1464e+4, 1.0328e+5, 1.6168e+5
+];
+
 initialize();
 resizeBackground();
 setLight();
@@ -19,7 +23,7 @@ function initialize() {
 
     // Camera
     camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
-    camera.position.set(0, 30, 0);
+    camera.position.set(0, 40, 0);
     camera.lookAt(new THREE.Vector3(0, 1, 0));
 
     // Renderer
@@ -59,13 +63,16 @@ function setStaticBackground() {
 }
 
 function createPlanets() {
+    // 10x smaller scale for the Sun
     sun = new THREE.SphereBufferGeometry(5, 50, 50);
     mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
-    venus = new THREE.SphereBufferGeometry(0.434, 50, 50);
+    venus = new THREE.SphereBufferGeometry(0.435, 50, 50);
     earth = new THREE.SphereBufferGeometry(0.457, 50, 50);
     mars = new THREE.SphereBufferGeometry(0.243, 50, 50);
-    jupiter = new THREE.SphereBufferGeometry(1.674, 50, 50);
-    saturn = new THREE.SphereBufferGeometry(1.395, 50, 50);
+
+    // 3x smaller scale (4 planets)
+    jupiter = new THREE.SphereBufferGeometry(1.673, 50, 50);
+    saturn = new THREE.SphereBufferGeometry(1.394, 50, 50);
     uranus = new THREE.SphereBufferGeometry(0.607, 50, 50);
     neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
 
@@ -111,15 +118,17 @@ function createZoomEvent() {
     });
 }
 
-// docasne rozmiestnenie;
-mercuryMesh.position.x = 5;
-venusMesh.position.x = 6;
-earthMesh.position.x = 8;
-marsMesh.position.x = 10;
-jupiterMesh.position.x = 12;
-saturnMesh.position.x = 14;
-uranusMesh.position.x = 16;
-neptuneMesh.position.x = 18;
+// Position for every planet's orbit from the Sun
+function setPlanetsPositionFromSun(eulerNumberDistanceFromSun) {
+    mercuryMesh.position.x = eulerNumberDistanceFromSun[0] / 300;
+    venusMesh.position.x = eulerNumberDistanceFromSun[1] / 300;
+    earthMesh.position.x = eulerNumberDistanceFromSun[2] / 300;
+    marsMesh.position.x = eulerNumberDistanceFromSun[3] / 400;
+    jupiterMesh.position.x = eulerNumberDistanceFromSun[4] / 1000;
+    saturnMesh.position.x = eulerNumberDistanceFromSun[5] / 1500;
+    uranusMesh.position.x = eulerNumberDistanceFromSun[6] / 2500;
+    neptuneMesh.position.x = eulerNumberDistanceFromSun[7] / 3500;
+}
 
 //Empty objects will control planets' movement around the Sun
 function createEmptyObjects() {
@@ -176,15 +185,9 @@ function setPlanetsRotationSpeedAroundSun() {
 // Animation
 const animate = function() {
     requestAnimationFrame(animate);
-
     // mercuryMesh.rotation.y += Math.PI / 180;
-    // venusMesh.rotation.y += Math.PI / 180;
-    // earthMesh.rotation.y += Math.PI / 180;
-    // marsMesh.rotation.y += Math.PI / 180;
-    // jupiterMesh.rotation.y += Math.PI / 180;
-    // saturnMesh.rotation.y += Math.PI / 180;
-    // uranusMesh.rotation.y += Math.PI / 180;
-    // neptuneMesh.rotation.y += Math.PI / 180;
+
+    setPlanetsPositionFromSun(eulerNumberDistanceFromSun);
     setPlanetsRotationSpeedAroundSun();
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
