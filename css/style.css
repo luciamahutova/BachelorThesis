@@ -1,6 +1,7 @@
 body {
     background-color: #061327;
     background-size: 100%;
+    margin: 0;
 }
 
 .container {
@@ -74,3 +75,9 @@ body {
     min-zoom: 1.0;
     max-zoom: 2.0;
 } */
+
+header nav {
+    width: 300px;
+    height: 400px;
+    background-color: #061327;
+}
