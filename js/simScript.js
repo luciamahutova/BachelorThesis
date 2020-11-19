@@ -111,15 +111,9 @@ function setPlanetsRotationAngle() {
     neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
 }
 
-function createZoomEvent() {
-    // Zoom-in and zoom-out
-    document.addEventListener('wheel', (event) => {
-        camera.position.z += (event.deltaY / 2000) * 0.5;
-    });
-}
-
 // Position for every planet's orbit from the Sun
 function setPlanetsPositionFromSun(eulerNumberDistanceFromSun) {
+    // Changed scale for better view
     mercuryMesh.position.x = eulerNumberDistanceFromSun[0] / 300;
     venusMesh.position.x = eulerNumberDistanceFromSun[1] / 300;
     earthMesh.position.x = eulerNumberDistanceFromSun[2] / 300;
@@ -161,14 +155,11 @@ function createEmptyObjects() {
 
 // For rotating planets around the Sun
 function addEmptyToSun() {
-    sunMesh.add(emptyObjectRotateMercury);
-    sunMesh.add(emptyObjectRotateVenus);
-    sunMesh.add(emptyObjectRotateEarth);
-    sunMesh.add(emptyObjectRotateMars);
-    sunMesh.add(emptyObjectRotateJupiter);
-    sunMesh.add(emptyObjectRotateSaturn);
-    sunMesh.add(emptyObjectRotateUranus);
-    sunMesh.add(emptyObjectRotateNeptune);
+    var emptyObjectsArray = [emptyObjectRotateMercury, emptyObjectRotateVenus, emptyObjectRotateEarth, emptyObjectRotateMars, emptyObjectRotateJupiter, emptyObjectRotateSaturn, emptyObjectRotateUranus, emptyObjectRotateNeptune];
+
+    for (i = 0; i < emptyObjectsArray.length; i++) {
+        sunMesh.add(emptyObjectsArray[i]);
+    }
 }
 
 function setPlanetsRotationSpeedAroundSun() {
@@ -180,6 +171,13 @@ function setPlanetsRotationSpeedAroundSun() {
     emptyObjectRotateSaturn.rotation.y += 0.003;
     emptyObjectRotateUranus.rotation.y += 0.002;
     emptyObjectRotateNeptune.rotation.y += 0.002;
+}
+
+function createZoomEvent() {
+    // Zoom-in and zoom-out
+    document.addEventListener('wheel', (event) => {
+        camera.position.z += (event.deltaY / 2000) * 0.5;
+    });
 }
 
 // Animation
