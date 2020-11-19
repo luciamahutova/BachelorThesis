@@ -11,6 +11,7 @@ setStaticBackground();
 createPlanets();
 setPlanetsRotationAngle();
 //createZoomEvent();
+createEmptyObjects();
 
 function initialize() {
     // Scene
@@ -117,20 +118,14 @@ function createZoomEvent() {
 // }
 
 // docasne rozmiestnenie6;
-mercuryMesh.position.x = -6;
-venusMesh.position.x = -4;
-earthMesh.position.x = -2;
-marsMesh.position.x = 0;
-jupiterMesh.position.x = 2;
-saturnMesh.position.x = 4;
-uranusMesh.position.x = 6;
-neptuneMesh.position.x = 8;
-earthMesh.position.z = 2;
-
-//POKUS
-var emptyObject = new THREE.Object3D();
-sunMesh.add(emptyObject);
-emptyObject.add(neptuneMesh);
+mercuryMesh.position.x = 5;
+venusMesh.position.x = 6;
+earthMesh.position.x = 8;
+marsMesh.position.x = 10;
+jupiterMesh.position.x = 12;
+saturnMesh.position.x = 14;
+uranusMesh.position.x = 16;
+neptuneMesh.position.x = 18;
 
 function createEmptyObjects() {
     emptyObjectRotateMercury = new THREE.Object3D();
@@ -156,6 +151,30 @@ function createEmptyObjects() {
 
     emptyObjectRotateNeptune = new THREE.Object3D();
     emptyObjectRotateNeptune.add(neptuneMesh);
+
+    addEmptyToSun();
+}
+
+function addEmptyToSun() {
+    sunMesh.add(emptyObjectRotateMercury);
+    sunMesh.add(emptyObjectRotateVenus);
+    sunMesh.add(emptyObjectRotateEarth);
+    sunMesh.add(emptyObjectRotateMars);
+    sunMesh.add(emptyObjectRotateJupiter);
+    sunMesh.add(emptyObjectRotateSaturn);
+    sunMesh.add(emptyObjectRotateUranus);
+    sunMesh.add(emptyObjectRotateNeptune);
+}
+
+function setPlanetsRotationSpeedAroundSun() {
+    emptyObjectRotateMercury.rotation.y += 0.016;
+    emptyObjectRotateVenus.rotation.y += 0.012;
+    emptyObjectRotateEarth.rotation.y += 0.01;
+    emptyObjectRotateMars.rotation.y += 0.008;
+    emptyObjectRotateJupiter.rotation.y += 0.004;
+    emptyObjectRotateSaturn.rotation.y += 0.003;
+    emptyObjectRotateUranus.rotation.y += 0.002;
+    emptyObjectRotateNeptune.rotation.y += 0.002;
 }
 
 // Animation
@@ -181,7 +200,7 @@ const animate = function() {
     // saturnMesh.rotation.y += Math.PI / 180;
     // uranusMesh.rotation.y += Math.PI / 180;
     // neptuneMesh.rotation.y += Math.PI / 180;
-
+    setPlanetsRotationSpeedAroundSun();
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
     renderer.render(bgScene, bgCamera);
