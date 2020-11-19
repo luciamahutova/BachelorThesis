@@ -111,13 +111,7 @@ function createZoomEvent() {
     });
 }
 
-// function centerTheSun() {
-//     sunMesh.position.x = 0;
-//     sunMesh.position.y = 0;
-//     sunMesh.position.z = 0;
-// }
-
-// docasne rozmiestnenie6;
+// docasne rozmiestnenie;
 mercuryMesh.position.x = 5;
 venusMesh.position.x = 6;
 earthMesh.position.x = 8;
@@ -180,17 +174,6 @@ function setPlanetsRotationSpeedAroundSun() {
 // Animation
 const animate = function() {
     requestAnimationFrame(animate);
-
-    //sunMesh.rotation.y += 0.016;
-    //emptyObject.rotation.y += 0.1;
-    // mercuryMesh.rotation.y += 0.016;
-    // venusMesh.rotation.y += 0.012;
-    // earthMesh.rotation.y += 0.01;
-    // marsMesh.rotation.y += 0.008;
-    // jupiterMesh.rotation.y += 0.004;
-    // saturnMesh.rotation.y += 0.003;
-    // uranusMesh.rotation.y += 0.002;
-    //neptuneMesh.rotation.y += 0.002;
 
     // mercuryMesh.rotation.y += Math.PI / 180;
     // venusMesh.rotation.y += Math.PI / 180;
