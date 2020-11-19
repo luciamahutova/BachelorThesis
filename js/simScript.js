@@ -17,7 +17,7 @@ function initialize() {
 
     // Camera
     camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
-    camera.position.set(0, 10, 50);
+    camera.position.set(0, 30, 0);
     camera.lookAt(new THREE.Vector3(0, 1, 0));
 
     // Renderer
@@ -57,15 +57,15 @@ function setStaticBackground() {
 }
 
 function createPlanets() {
-    sun = new THREE.SphereGeometry(5, 50, 50);
-    mercury = new THREE.SphereGeometry(0.175, 50, 50);
-    venus = new THREE.SphereGeometry(0.434, 50, 50);
-    earth = new THREE.SphereGeometry(0.457, 50, 50);
-    mars = new THREE.SphereGeometry(0.243, 50, 50);
-    jupiter = new THREE.SphereGeometry(1.674, 50, 50);
-    saturn = new THREE.SphereGeometry(1.395, 50, 50);
-    uranus = new THREE.SphereGeometry(0.607, 50, 50);
-    neptune = new THREE.SphereGeometry(0.589, 50, 50);
+    sun = new THREE.SphereBufferGeometry(5, 50, 50);
+    mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
+    venus = new THREE.SphereBufferGeometry(0.434, 50, 50);
+    earth = new THREE.SphereBufferGeometry(0.457, 50, 50);
+    mars = new THREE.SphereBufferGeometry(0.243, 50, 50);
+    jupiter = new THREE.SphereBufferGeometry(1.674, 50, 50);
+    saturn = new THREE.SphereBufferGeometry(1.395, 50, 50);
+    uranus = new THREE.SphereBufferGeometry(0.607, 50, 50);
+    neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
 
     createPlanetsMesh();
 }
@@ -100,16 +100,6 @@ function setPlanetsRotationAngle() {
     saturnMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (26.7 * Math.PI) / 180);
     uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (97.8 * Math.PI) / 180);
     neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
-
-    // For the top view = X
-    mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
-    venusMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
-    earthMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
-    marsMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
-    jupiterMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
-    saturnMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
-    uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
-    neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(1, 0, 0), (90 * Math.PI) / 180);
 }
 
 function createZoomEvent() {
@@ -136,19 +126,22 @@ uranusMesh.position.x = 6;
 neptuneMesh.position.x = 8;
 earthMesh.position.z = 2;
 
+//POKUS
+sunMesh.add(neptuneMesh);
 
 // Animation
 const animate = function() {
     requestAnimationFrame(animate);
 
+    //sunMesh.rotation.y += 0.016;
     // mercuryMesh.rotation.y += 0.016;
     // venusMesh.rotation.y += 0.012;
     // earthMesh.rotation.y += 0.01;
     // marsMesh.rotation.y += 0.008;
     // jupiterMesh.rotation.y += 0.004;
-    //saturnMesh.rotation.y += 0.003;
+    // saturnMesh.rotation.y += 0.003;
     // uranusMesh.rotation.y += 0.002;
-    // neptuneMesh.rotation.y += 0.002;
+    //neptuneMesh.rotation.y += 0.002;
 
     // mercuryMesh.rotation.y += Math.PI / 180;
     // venusMesh.rotation.y += Math.PI / 180;
