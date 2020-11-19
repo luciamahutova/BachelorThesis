@@ -121,6 +121,7 @@ saturnMesh.position.x = 14;
 uranusMesh.position.x = 16;
 neptuneMesh.position.x = 18;
 
+//Empty objects will control planets' movement around the Sun
 function createEmptyObjects() {
     emptyObjectRotateMercury = new THREE.Object3D();
     emptyObjectRotateMercury.add(mercuryMesh);
@@ -149,6 +150,7 @@ function createEmptyObjects() {
     addEmptyToSun();
 }
 
+// For rotating planets around the Sun
 function addEmptyToSun() {
     sunMesh.add(emptyObjectRotateMercury);
     sunMesh.add(emptyObjectRotateVenus);
