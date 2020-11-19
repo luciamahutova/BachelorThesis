@@ -4,9 +4,12 @@ var sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
 var sunMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
 var emptyObjectRotateMercury, emptyObjectRotateVenus, emptyObjectRotateEarth, emptyObjectRotateMars, emptyObjectRotateJupiter, emptyObjectRotateSaturn, emptyObjectRotateUranus, emptyObjectRotateNeptune;
 
+// Values
 var eulerNumberDistanceFromSun = [2.0790e+3, 3.8849e+3, 5.3709e+3, 8.1834e+3,
     2.7951e+4, 5.1464e+4, 1.0328e+5, 1.6168e+5
 ];
+var rotationValuesAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.182];
+
 
 initialize();
 resizeBackground();
@@ -162,15 +165,15 @@ function addEmptyToSun() {
     }
 }
 
-function setPlanetsRotationSpeedAroundSun() {
-    emptyObjectRotateMercury.rotation.y += 0.016;
-    emptyObjectRotateVenus.rotation.y += 0.012;
-    emptyObjectRotateEarth.rotation.y += 0.01;
-    emptyObjectRotateMars.rotation.y += 0.008;
-    emptyObjectRotateJupiter.rotation.y += 0.004;
-    emptyObjectRotateSaturn.rotation.y += 0.003;
-    emptyObjectRotateUranus.rotation.y += 0.002;
-    emptyObjectRotateNeptune.rotation.y += 0.002;
+function setPlanetsRotationSpeedAroundSun(values) {
+    emptyObjectRotateMercury.rotation.y += values[0] / 100;
+    emptyObjectRotateVenus.rotation.y += values[1] / 100;
+    emptyObjectRotateEarth.rotation.y += values[2] / 100;
+    emptyObjectRotateMars.rotation.y += values[3] / 100;
+    emptyObjectRotateJupiter.rotation.y += values[4] / 100;
+    emptyObjectRotateSaturn.rotation.y += values[5] / 100;
+    emptyObjectRotateUranus.rotation.y += values[6] / 100;
+    emptyObjectRotateNeptune.rotation.y += values[7] / 100;
 }
 
 function createZoomEvent() {
@@ -186,7 +189,7 @@ const animate = function() {
     // mercuryMesh.rotation.y += Math.PI / 180;
 
     setPlanetsPositionFromSun(eulerNumberDistanceFromSun);
-    setPlanetsRotationSpeedAroundSun();
+    setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
     renderer.render(bgScene, bgCamera);
