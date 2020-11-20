@@ -1,7 +1,7 @@
-body {
-    background-color: #061327;
-    background-size: 100%;
+* {
     margin: 0;
+    padding: 0;
+    background-size: 100%;
 }
 
 .container {
@@ -76,8 +76,50 @@ body {
     max-zoom: 2.0;
 } */
 
-header nav {
+
+/* Menu ****************************************************************************************************
+***********************************************************************************************************/
+
+#menu {
     width: 300px;
     height: 400px;
     background-color: #061327;
+    float: right;
+    position: relative;
+}
+
+#menu img {
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+#menu a {
+    margin-left: 20px;
+    color: #ffffff;
+    font-size: 18px;
+    font-family: 'Helvetica Neue';
+    text-decoration: none;
+    position: relative;
+    transition: transform 0.3s ease;
+    transform: translateX(0px);
+}
+
+#menu ul li {
+    margin-bottom: 15px;
+    list-style-type: none;
+}
+
+#menu .languages {
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 15px;
+}
+
+#menu .languages a:hover {
+    font-weight: bold;
+}
+
+#menu li:hover {
+    transform: translateX(10px);
+    font-weight: bold;
 }
