@@ -1,8 +1,8 @@
 var scene, camera, renderer, hemiLight;
 var bgTexture, bgGeometry, bgMaterial, bgMesh, bgScene, bgCamera;
-var sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
-var sunMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
-var emptyObjectRotateMercury, emptyObjectRotateVenus, emptyObjectRotateEarth, emptyObjectRotateMars, emptyObjectRotateJupiter, emptyObjectRotateSaturn, emptyObjectRotateUranus, emptyObjectRotateNeptune;
+var sun, moon, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
+var sunMesh, moonMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
+var emptyObjectRotateMercury, emptyObjectRotateVenus, emptyObjectRotateEarth, emptyObjectRotateMoon, emptyObjectRotateMars, emptyObjectRotateJupiter, emptyObjectRotateSaturn, emptyObjectRotateUranus, emptyObjectRotateNeptune;
 
 // Values
 var eulerNumberDistanceFromSun = [2.0790e+3, 3.8849e+3, 5.3709e+3, 8.1834e+3,
@@ -71,6 +71,7 @@ function createPlanets() {
     mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
     venus = new THREE.SphereBufferGeometry(0.435, 50, 50);
     earth = new THREE.SphereBufferGeometry(0.457, 50, 50);
+    moon = new THREE.SphereBufferGeometry(0.124, 50, 50);
     mars = new THREE.SphereBufferGeometry(0.243, 50, 50);
 
     // 3x smaller scale (4 planets)
@@ -89,17 +90,19 @@ function setNewMesh(imageSrc) {
     return meshMaterial;
 }
 
+
 function createPlanetsMesh() {
     sunMesh = new THREE.Mesh(sun, setNewMesh('/images/textures/sunTexture2k.jpg'));
     mercuryMesh = new THREE.Mesh(mercury, setNewMesh('/images/textures/mercuryTexture2k.jpg'));
     venusMesh = new THREE.Mesh(venus, setNewMesh('/images/textures/venusTexture2k.jpg'));
     earthMesh = new THREE.Mesh(earth, setNewMesh('/images/textures/earthTexture2k.jpg'));
+    moonMesh = new THREE.Mesh(moon, setNewMesh('/images/textures/moonTexture2k.jpg'));
     marsMesh = new THREE.Mesh(mars, setNewMesh('/images/textures/marsTexture2k.jpg'));
     jupiterMesh = new THREE.Mesh(jupiter, setNewMesh('/images/textures/jupiterTexture2k.jpg'));
     saturnMesh = new THREE.Mesh(saturn, setNewMesh('/images/textures/saturnTexture2k.jpg'));
     uranusMesh = new THREE.Mesh(uranus, setNewMesh('/images/textures/uranusTexture2k.jpg'));
     neptuneMesh = new THREE.Mesh(neptune, setNewMesh('/images/textures/neptuneTexture2k.jpg'));
-    scene.add(sunMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
+    scene.add(sunMesh, moonMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
 }
 
 function setPlanetsRotationAngle() {
@@ -127,6 +130,11 @@ function setPlanetsPositionFromSun(eulerNumberDistanceFromSun) {
     neptuneMesh.position.x = eulerNumberDistanceFromSun[7] / 3500;
 }
 
+function setMoonPositionFromEarth() {
+    // Not proper value = set according to model
+    moonMesh.position.x = 1;
+}
+
 //Empty objects will control planets' movement around the Sun
 function createEmptyObjects() {
     emptyObjectRotateMercury = new THREE.Object3D();
@@ -137,6 +145,10 @@ function createEmptyObjects() {
 
     emptyObjectRotateEarth = new THREE.Object3D();
     emptyObjectRotateEarth.add(earthMesh);
+
+    emptyObjectRotateMoon = new THREE.Object3D();
+    earthMesh.add(emptyObjectRotateMoon);
+    emptyObjectRotateMoon.add(moonMesh);
 
     emptyObjectRotateMars = new THREE.Object3D();
     emptyObjectRotateMars.add(marsMesh);
@@ -187,11 +199,12 @@ function createZoomEvent() {
 const animate = function() {
     requestAnimationFrame(animate);
     // mercuryMesh.rotation.y += Math.PI / 180;
-    jupiterMesh.rotation.set(0, 0, (0.03 * Math.PI) / 180);
-    jupiterMesh.rotation.z += 0.5;
+    //jupiterMesh.rotation.set(0, 0, (0.03 * Math.PI) / 180);
+    //jupiterMesh.rotation.z += 0.5;
 
     setPlanetsPositionFromSun(eulerNumberDistanceFromSun);
-    setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
+    setMoonPositionFromEarth();
+    //setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
     renderer.render(bgScene, bgCamera);
