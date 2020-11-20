@@ -118,7 +118,7 @@ function setPlanetsRotationAngle() {
 }
 
 // Position for every planet's orbit from the Sun
-function setPlanetsPositionFromSun(eulerNumberDistanceFromSun) {
+function setPlanetsDistanceFromSun(eulerNumberDistanceFromSun) {
     // Changed scale for better view
     mercuryMesh.position.x = eulerNumberDistanceFromSun[0] / 300;
     venusMesh.position.x = eulerNumberDistanceFromSun[1] / 300;
@@ -128,9 +128,10 @@ function setPlanetsPositionFromSun(eulerNumberDistanceFromSun) {
     saturnMesh.position.x = eulerNumberDistanceFromSun[5] / 1500;
     uranusMesh.position.x = eulerNumberDistanceFromSun[6] / 2500;
     neptuneMesh.position.x = eulerNumberDistanceFromSun[7] / 3500;
+    setMoonDistanceFromEarth();
 }
 
-function setMoonPositionFromEarth() {
+function setMoonDistanceFromEarth() {
     // Not proper value = set according to model
     moonMesh.position.x = 1;
 }
@@ -186,6 +187,12 @@ function setPlanetsRotationSpeedAroundSun(values) {
     emptyObjectRotateSaturn.rotation.y += values[5] / 100;
     emptyObjectRotateUranus.rotation.y += values[6] / 100;
     emptyObjectRotateNeptune.rotation.y += values[7] / 100;
+    setMoonRotationAroundEarth();
+}
+
+function setMoonRotationAroundEarth() {
+    // Not proper value, needs to change
+    emptyObjectRotateMoon.rotation.y += 0.01;
 }
 
 function createZoomEvent() {
@@ -202,9 +209,8 @@ const animate = function() {
     //jupiterMesh.rotation.set(0, 0, (0.03 * Math.PI) / 180);
     //jupiterMesh.rotation.z += 0.5;
 
-    setPlanetsPositionFromSun(eulerNumberDistanceFromSun);
-    setMoonPositionFromEarth();
-    //setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
+    setPlanetsDistanceFromSun(eulerNumberDistanceFromSun);
+    setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
     renderer.render(bgScene, bgCamera);
