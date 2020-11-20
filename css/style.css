@@ -61,22 +61,6 @@
 }
 
 
-/* not used */
-
-
-/* .container2 a:target {
-    animation-name: example;
-    animation-duration: 1s;
-} */
-
-
-/* @viewport {
-    zoom: 1.0;
-    min-zoom: 1.0;
-    max-zoom: 2.0;
-} */
-
-
 /* Menu ****************************************************************************************************
 ***********************************************************************************************************/
 
@@ -85,23 +69,22 @@
     width: 0;
     background-color: #061327;
     float: right;
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
-    z-index: 1;
     overflow-x: hidden;
-    overflow: hidden;
     transition: 0.5s;
 }
 
-header img {
+#menu img {
     position: fixed;
     top: 40px;
     right: 40px;
+    z-index: 1;
 }
 
-header img:focus {
-    visibility: hidden;
+#menu nav {
+    z-index: 1;
 }
 
 #menu a {
