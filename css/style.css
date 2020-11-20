@@ -74,16 +74,13 @@
     right: 0;
     overflow-x: hidden;
     transition: 0.5s;
+    z-index: 10;
 }
 
-#menu img {
+header img {
     position: fixed;
     top: 40px;
     right: 40px;
-    z-index: 1;
-}
-
-#menu nav {
     z-index: 1;
 }
 
@@ -95,7 +92,6 @@
     text-decoration: none;
     position: relative;
     transition: transform 0.3s ease;
-    transform: translateX(0px);
 }
 
 #menu ul {
