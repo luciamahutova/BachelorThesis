@@ -187,6 +187,8 @@ function createZoomEvent() {
 const animate = function() {
     requestAnimationFrame(animate);
     // mercuryMesh.rotation.y += Math.PI / 180;
+    jupiterMesh.rotation.set(0, 0, (0.03 * Math.PI) / 180);
+    jupiterMesh.rotation.z += 0.5;
 
     setPlanetsPositionFromSun(eulerNumberDistanceFromSun);
     setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
