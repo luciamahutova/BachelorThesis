@@ -202,6 +202,35 @@ function createZoomEvent() {
     });
 }
 
+//POKUS
+var isRunning = true;
+var animFrameOutput;
+
+function repeatOften() {
+    setPlanetsDistanceFromSun(eulerNumberDistanceFromSun);
+    setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
+    bgMesh.material.depthTest = false;
+    renderer.autoClear = false;
+    renderer.render(bgScene, bgCamera);
+    renderer.render(scene, camera);
+    animFrameOutput = requestAnimationFrame(repeatOften);
+}
+//repeatOften();
+animFrameOutput = requestAnimationFrame(repeatOften);
+
+$(".pauseButton").on("click", function() {
+    if (isRunning) {
+        isRunning = false;
+        cancelAnimationFrame(animFrameOutput);
+    }
+});
+$(".playButton").on("click", function() {
+    if (!isRunning) {
+        isRunning = true;
+        animFrameOutput = requestAnimationFrame(repeatOften);
+    }
+});
+
 // Animation
 const animate = function() {
     requestAnimationFrame(animate);
@@ -216,4 +245,4 @@ const animate = function() {
     renderer.render(bgScene, bgCamera);
     renderer.render(scene, camera);
 };
-animate();
+//animate();

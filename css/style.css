@@ -123,3 +123,22 @@ header img {
     top: 30px;
     font-size: 40px;
 }
+
+
+/* Sidebar *************************************************************************************************
+***********************************************************************************************************/
+
+header .playButton,
+header .pauseButton {
+    width: 25px;
+    height: 25px;
+    border: none;
+    background-image: url(/icons/playButton.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+header .pauseButton {
+    background-image: url(/icons/pauseButton.png);
+}
