@@ -135,6 +135,17 @@ header img {
     z-index: 1;
 }
 
+.confirmChangesButton {
+    width: 80px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    background-color: #BABABA;
+    font-family: 'Helvetica Neue';
+    font-size: 15px;
+    color: #ffffff;
+}
+
 .playButton,
 .pauseButton {
     width: 25px;
