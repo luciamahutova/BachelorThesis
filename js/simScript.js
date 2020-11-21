@@ -202,21 +202,22 @@ function createZoomEvent() {
     });
 }
 
-//POKUS
-var isRunning = true;
-var animFrameOutput;
 
-function repeatOften() {
+// Animation; Play/Pause animation
+var isRunning = true;
+var animFrameOutput = 0;
+
+const animate = function() {
+    animFrameOutput = requestAnimationFrame(animate);
     setPlanetsDistanceFromSun(eulerNumberDistanceFromSun);
     setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
+
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
     renderer.render(bgScene, bgCamera);
     renderer.render(scene, camera);
-    animFrameOutput = requestAnimationFrame(repeatOften);
-}
-//repeatOften();
-animFrameOutput = requestAnimationFrame(repeatOften);
+};
+animate();
 
 $(".pauseButton").on("click", function() {
     if (isRunning) {
@@ -227,22 +228,6 @@ $(".pauseButton").on("click", function() {
 $(".playButton").on("click", function() {
     if (!isRunning) {
         isRunning = true;
-        animFrameOutput = requestAnimationFrame(repeatOften);
+        animFrameOutput = requestAnimationFrame(animate);
     }
 });
-
-// Animation
-const animate = function() {
-    requestAnimationFrame(animate);
-    // mercuryMesh.rotation.y += Math.PI / 180;
-    //jupiterMesh.rotation.set(0, 0, (0.03 * Math.PI) / 180);
-    //jupiterMesh.rotation.z += 0.5;
-
-    setPlanetsDistanceFromSun(eulerNumberDistanceFromSun);
-    setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
-    bgMesh.material.depthTest = false;
-    renderer.autoClear = false;
-    renderer.render(bgScene, bgCamera);
-    renderer.render(scene, camera);
-};
-//animate();
