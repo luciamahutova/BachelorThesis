@@ -2,6 +2,10 @@
     margin: 0;
     padding: 0;
     background-size: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #ffffff;
 }
 
 .container {
@@ -24,8 +28,6 @@
     text-transform: capitalize;
     font-weight: bold;
     font-size: 65px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #ffffff;
 }
 
 .container2 {
@@ -86,9 +88,7 @@ header img {
 
 #menu a {
     margin-left: 20px;
-    color: #ffffff;
     font-size: 18px;
-    font-family: 'Helvetica Neue';
     text-decoration: none;
     position: relative;
     transition: transform 0.3s ease;
@@ -141,9 +141,6 @@ header img {
     border: none;
     border-radius: 5px;
     background-color: #BABABA;
-    font-family: 'Helvetica Neue';
-    font-size: 15px;
-    color: #ffffff;
 }
 
 .playButton,
