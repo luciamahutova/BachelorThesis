@@ -90,7 +90,6 @@ function setNewMesh(imageSrc) {
     return meshMaterial;
 }
 
-
 function createPlanetsMesh() {
     sunMesh = new THREE.Mesh(sun, setNewMesh('/images/textures/sunTexture2k.jpg'));
     mercuryMesh = new THREE.Mesh(mercury, setNewMesh('/images/textures/mercuryTexture2k.jpg'));

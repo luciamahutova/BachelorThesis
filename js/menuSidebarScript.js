@@ -8,3 +8,10 @@ function closeNav() {
 }
 
 // Script for sidebar
+function openSidebar() {
+
+}
+
+function closeSidebar() {
+
+}
