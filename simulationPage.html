@@ -31,28 +31,34 @@
         <img src="/icons/molecules.png" class="sidebarIcon" alt="" width="30" height="30" onclick="openSidebar()">
         <section>
             <h4>Names</h4>
-            <span>Show all names</span>
+            <label>
+                <span class="checkmark">Show all names</span><input type="checkbox">
+            </label>
+
             <span>Single name</span>
         </section>
+
         <section>
             <h4>Orbit</h4>
-            <span>All planets</span>
+            <span class="checkmark"></span>All planets<input type="checkbox">
             <span>Single planet's orbit</span>
             <span>Moon's orbit</span>
         </section>
+
         <section>
             <h4>Velocity</h4>
             <span>Single planet's velocity</span>
             <span>Velocity value:</span>
-            <span>Original velocities</span>
+            <span class="checkmark"></span>Original velocities<input type="checkbox">
         </section>
+
         <section>
             <h4>Cosmic object</h4>
             <span>Add to planet's orbit</span>
-            <span>Show object's orbit</span>
+            <span class="checkmark">Show object's orbit</span><input type="checkbox">
             <span>Change velocity</span>
             <span>Change force</span>
-            <span>Original values</span>
+            <span class="checkmark">Original values</span><input type="checkbox">
         </section>
 
         <button class="confirmChangesButton" type="submit">Confirm</button>
