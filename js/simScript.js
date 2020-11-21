@@ -218,16 +218,23 @@ const animate = function() {
     renderer.render(scene, camera);
 };
 animate();
+pauseApplication();
+playApplication();
 
-$(".pauseButton").on("click", function() {
-    if (isRunning) {
-        isRunning = false;
-        cancelAnimationFrame(animFrameOutput);
-    }
-});
-$(".playButton").on("click", function() {
-    if (!isRunning) {
-        isRunning = true;
-        animFrameOutput = requestAnimationFrame(animate);
-    }
-});
+function pauseApplication() {
+    $(".pauseButton").on("click", function() {
+        if (isRunning) {
+            isRunning = false;
+            cancelAnimationFrame(animFrameOutput);
+        }
+    });
+}
+
+function playApplication() {
+    $(".playButton").on("click", function() {
+        if (!isRunning) {
+            isRunning = true;
+            animFrameOutput = requestAnimationFrame(animate);
+        }
+    });
+}
