@@ -5,6 +5,7 @@
     background-color: #061327;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #ffffff;
+    font-weight: 400;
 }
 
 .container {
@@ -134,12 +135,49 @@ header img {
     z-index: 1;
 }
 
+.sidebar {
+    position: fixed;
+    top: 150px;
+    right: 40px;
+    width: 250px;
+    height: 510px;
+    border: none;
+    border-radius: 5px 0;
+    font-size: 16px;
+}
+
+.sidebar div:first-of-type {
+    width: 250px;
+    height: 510px;
+    border: none;
+    border-radius: 5px 0;
+    box-shadow: 0 0 0 2px #ffffff;
+    display: inline-block;
+}
+
+.sidebar section {
+    margin-top: 20px;
+    margin: 10px 0 20px 12px;
+}
+
+.sidebar span {
+    display: block;
+    margin-top: 4px;
+    margin-left: 15px;
+}
+
+.sidebar button {
+    position: relative;
+    float: left;
+}
+
 .confirmChangesButton {
     width: 80px;
     height: 25px;
     border: none;
     border-radius: 5px;
     background-color: #BABABA;
+    margin: 0 70px 0 15px;
 }
 
 .playButton,
@@ -155,4 +193,6 @@ header img {
 
 .pauseButton {
     background-image: url(/icons/pauseButton.png);
+    position: fixed;
+    margin-right: 20px;
 }
