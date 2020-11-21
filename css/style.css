@@ -128,8 +128,8 @@ header img {
 /* Sidebar *************************************************************************************************
 ***********************************************************************************************************/
 
-header .playButton,
-header .pauseButton {
+.playButton,
+.pauseButton {
     width: 25px;
     height: 25px;
     border: none;
@@ -139,6 +139,6 @@ header .pauseButton {
     background-color: transparent;
 }
 
-header .pauseButton {
+.pauseButton {
     background-image: url(/icons/pauseButton.png);
 }
