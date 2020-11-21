@@ -134,46 +134,6 @@ header img {
     z-index: 1;
 }
 
-
-/* Checkbox in sidebar ***************************************/
-
-.checkmark+input[type="checkbox"] {
-    /* Hide default HTML checkbox */
-    opacity: 0;
-    height: 0;
-    width: 0;
-}
-
-.checkmark+input[type="checkbox"],
-.checkmark+input[type="checkbox"]:focus {
-    /* Unchecked checkbox */
-    /* background-color: #061327; */
-    border: 2px solid #BABABA;
-    border-radius: 5px;
-    width: 14px;
-    height: 14px;
-}
-
-.checkmark+input[type="checkbox"]:checked {
-    background-color: #f13544;
-    border-color: #f13544;
-}
-
-.checkmark::after {
-    /* Style the checkmark */
-    content: "";
-    background-image: url("/icons/checkedInput.png");
-    background-size: 12px 12px;
-    width: 12px;
-    height: 12px;
-    margin: 2px 0 0 2px;
-}
-
-.checkmark:after {
-    /* Show the checkmark when checked */
-    display: block;
-}
-
 .confirmChangesButton {
     width: 80px;
     height: 25px;
