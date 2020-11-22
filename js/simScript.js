@@ -45,7 +45,7 @@ function resizeBackground() {
 }
 
 function setLight() {
-    hemiLight = new THREE.HemisphereLight(0x00aa00, 0x000000, 1);
+    hemiLight = new THREE.HemisphereLight(0x061327, 0x000000, 1);
     hemiLight.position.set(0, 0, 0);
     scene.add(hemiLight);
 }
@@ -191,7 +191,7 @@ function setPlanetsRotationSpeedAroundSun(values) {
 
 function setMoonRotationAroundEarth() {
     // Not proper value, needs to change
-    emptyObjectRotateMoon.rotation.y += 0.01;
+    emptyObjectRotateMoon.rotation.y += 0.001;
 }
 
 function createZoomEvent() {
