@@ -172,6 +172,10 @@ header img {
     margin-top: 5px;
 }
 
+#sidebar label span {
+    margin-top: 0;
+}
+
 #sidebar select {
     position: relative;
     float: right;

@@ -1,32 +1,99 @@
 let arrLang = {
-    en: {
-        'home': 'Home',
-        'about': 'About Us',
-        'contact': 'Contact US'
+    cz: {
+        // Menu
+        'ssm': 'Model sluneční soustavy',
+        'planets': 'Planety',
+        'about': 'O aplikaci',
+        // Sidebar
+        'names': 'Jména',
+        'allPlanets': 'Pro všechny planety',
+        'singlePlanet': 'Pro planetu',
+        'moonOrbit': 'Orbita měsíce',
+        'orbit': 'Orbita',
+        'velocity': 'Rychlost',
+        'newValue': 'Nová hodnota',
+        'originalValues': 'Původní hodnoty',
+        'cosmicObject': 'Kosmický objekt',
+        'addToPlanet': 'Přidat ke planetě',
+        'objectOrbit': 'Dráha objektu',
+        'changeVelocity': 'Změna rychlosti',
+        'changeForce': 'Změna síly',
+        'mercury': 'Merkur',
+        'venus': 'Venuše',
+        'earth': 'Země',
+        'mars': 'Mars',
+        'jupiter': 'Jupiter',
+        'saturn': 'Saturn',
+        'uranus': 'Uran',
+        'neptune': 'Neptun',
+        'confirm': 'Potvrdit'
     },
 
-    es: {
-        'home': 'casa',
-        'about': 'sobre nosotros',
-        'contact': 'Contáctenos'
+    en: {
+        // Menu
+        'ssm': 'Solar system model',
+        'planets': 'Planets',
+        'about': 'About application',
+        // Sidebar
+        'names': 'Names',
+        'allPlanets': 'For all planets',
+        'singlePlanet': 'For single planet',
+        'moonOrbit': "Moon's orbit",
+        'orbit': 'Orbit',
+        'velocity': 'Velocity',
+        'newValue': 'New value',
+        'originalValues': 'Original values',
+        'cosmicObject': 'Cosmis object',
+        'addToPlanet': 'Add to planet',
+        'objectOrbit': "Show object's orbit",
+        'changeVelocity': 'Change velocity',
+        'changeForce': 'Change force',
+        'mercury': 'Mercury',
+        'venus': 'Venus',
+        'earth': 'Earth',
+        'mars': 'Mars',
+        'jupiter': 'Jupiter',
+        'saturn': 'Saturn',
+        'uranus': 'Uranus',
+        'neptune': 'Neptune',
+        'confirm': 'Confirm'
+    },
+    sk: {
+        // Menu
+        'ssm': 'Model slnečnej sústavy',
+        'planets': 'Planéty',
+        'about': 'O aplikácii',
+        // Sidebar
+        'names': 'Mená',
+        'allPlanets': 'Pre všetky planéty',
+        'singlePlanet': 'Pre planétu',
+        'moonOrbit': 'Orbita mesiaca',
+        'orbit': 'Orbita',
+        'velocity': 'Rýchlosť',
+        'newValue': 'Nová hodnota',
+        'originalValues': 'Pôvodné hodnoty',
+        'cosmicObject': 'Kozmický objekt',
+        'addToPlanet': 'Pridať k planéte',
+        'objectOrbit': 'Orbita objektu',
+        'changeVelocity': 'Zmena rýchlosti',
+        'changeForce': 'Zmena sily',
+        'mercury': 'Merkúr',
+        'venus': 'Venuša',
+        'earth': 'Zem',
+        'mars': 'Mars',
+        'jupiter': 'Jupiter',
+        'saturn': 'Saturn',
+        'uranus': 'Urán',
+        'neptune': 'Neptún',
+        'confirm': 'Potvrdiť'
     }
 }
 
 $(function() {
-    let lang = localStorage.getItem('language');
-    changeLanguage(lang);
-
     $('.translate').click(function() {
-        lang = $(this).attr('id');
-        console.log("lang: " + lang);
-        localStorage.setItem('language', lang);
-        changeLanguage(lang);
-    });
-
-    function changeLanguage(lang) {
+        var lang = $(this).attr('id');
         $('.lang').each(function(index, element) {
             $(this).text(arrLang[lang][$(this).attr('key')]);
         });
-    }
-
+    });
 })
