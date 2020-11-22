@@ -135,7 +135,7 @@ header img {
     z-index: 1;
 }
 
-.sidebar {
+#sidebar {
     position: fixed;
     top: 150px;
     right: 40px;
@@ -144,9 +144,10 @@ header img {
     border: none;
     border-radius: 5px 0;
     font-size: 16px;
+    transition: 0.6s;
 }
 
-.sidebar div:first-of-type {
+#sidebar div:first-of-type {
     width: 250px;
     height: 510px;
     border: none;
@@ -155,18 +156,18 @@ header img {
     display: inline-block;
 }
 
-.sidebar section {
+#sidebar section {
     margin-top: 20px;
     margin: 10px 0 20px 12px;
 }
 
-.sidebar span {
+#sidebar span {
     display: block;
     margin-top: 4px;
     margin-left: 15px;
 }
 
-.sidebar button {
+#sidebar button {
     position: relative;
     float: left;
 }

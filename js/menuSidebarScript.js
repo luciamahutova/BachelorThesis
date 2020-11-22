@@ -8,10 +8,15 @@ function closeNav() {
 }
 
 // Script for sidebar
-function openSidebar() {
+var isSidebarOpen = true;
 
-}
+function showHideSidebar() {
+    if (!isSidebarOpen) {
+        isSidebarOpen = true;
+        document.getElementById("sidebar").style.right = "40px"
 
-function closeSidebar() {
-
+    } else {
+        isSidebarOpen = false;
+        document.getElementById("sidebar").style.right = "-300px";
+    }
 }
