@@ -1,25 +1,32 @@
-// var languages = {
-//     "CZ": "Čeština",
-//     "EN": "English",
-//     "SK": "Slovenčina"
-// };
+let arrLang = {
+    en: {
+        'home': 'Home',
+        'about': 'About Us',
+        'contact': 'Contact US'
+    },
 
-// var wordsInCZ = {
-//     "navText1": "Model sluneční soustavy",
-//     "navText2": "Planety",
-//     "navText3": "O aplikaci"
-// };
+    es: {
+        'home': 'casa',
+        'about': 'sobre nosotros',
+        'contact': 'Contáctenos'
+    }
+}
 
-// var wordsInEN = {
-//     "navText1": "Solar system model",
-//     "navText2": "Planets",
-//     "navText3": "About application"
-// };
+$(function() {
+    let lang = localStorage.getItem('language');
+    changeLanguage(lang);
 
-// var wordsInSK = {
-//     "navText1": "Model slnečnej sústavy",
-//     "navText2": "Planéty",
-//     "navText3": "O aplikácii"
-// };
+    $('.translate').click(function() {
+        lang = $(this).attr('id');
+        console.log("lang: " + lang);
+        localStorage.setItem('language', lang);
+        changeLanguage(lang);
+    });
 
-// window.onload = initialize;
+    function changeLanguage(lang) {
+        $('.lang').each(function(index, element) {
+            $(this).text(arrLang[lang][$(this).attr('key')]);
+        });
+    }
+
+})
