@@ -137,10 +137,10 @@ header img {
 
 #sidebar {
     position: fixed;
-    top: 150px;
+    top: 160px;
     right: 40px;
-    width: 250px;
-    height: 510px;
+    width: 270px;
+    height: 520px;
     border: none;
     border-radius: 5px 0;
     font-size: 16px;
@@ -148,8 +148,8 @@ header img {
 }
 
 #sidebar div:first-child {
-    width: 250px;
-    height: 510px;
+    width: 270px;
+    height: 520px;
     border: none;
     border-radius: 5px 0;
     box-shadow: 0 0 0 2px #ffffff;
@@ -163,12 +163,17 @@ header img {
 
 #sidebar span {
     display: inline-block;
-    margin-top: 4px;
+    margin-top: 5px;
     margin-left: 15px;
 }
 
+#sidebar label {
+    display: block;
+    margin-top: 5px;
+}
+
 #sidebar input[type="number"] {
-    width: 80px;
+    width: 100px;
     position: relative;
     float: right;
     margin-right: 15px;
@@ -213,7 +218,7 @@ input[type=number] {
     border: none;
     border-radius: 5px;
     background-color: #BABABA;
-    margin: 0 70px 0 15px;
+    margin: 0 90px 0 15px;
 }
 
 .playButton,
