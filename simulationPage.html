@@ -39,7 +39,9 @@
 
             <section>
                 <h3>Orbit</h3>
-                <span class="checkmark"></span><input type="checkbox">All planets
+                <label>
+                    <span class="checkmark"></span><input type="checkbox">All planets
+                </label>
                 <span>Single planet's orbit</span>
                 <span>Moon's orbit</span>
             </section>
@@ -47,17 +49,32 @@
             <section>
                 <h3>Velocity</h3>
                 <span>Single planet's velocity</span>
-                <span>Velocity value:</span>
-                <span class="checkmark"></span><input type="checkbox">Original velocities
+                <div>
+                    <span>Velocity value:</span>
+                    <input type="number">
+                </div>
+                <label>
+                    <span class="checkmark"></span><input type="checkbox">Original velocities
+                </label>
             </section>
 
             <section>
                 <h3>Cosmic object</h3>
                 <span>Add to planet's orbit</span>
-                <span class="checkmark"></span><input type="checkbox">Show object's orbit
-                <span>Change velocity</span>
-                <span>Change force</span>
-                <span class="checkmark"></span><input type="checkbox">Original values
+                <label>
+                    <span class="checkmark"></span><input type="checkbox">Show object's orbit
+                </label>
+                <div>
+                    <span>Change velocity</span>
+                    <input type="number">
+                </div>
+                <div>
+                    <span>Change force</span>
+                    <input type="number">
+                </div>
+                <label>
+                    <span class="checkmark"></span><input type="checkbox">Original values
+                </label>
             </section>
 
             <button class="confirmChangesButton" type="submit">Confirm</button>
