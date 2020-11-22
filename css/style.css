@@ -8,6 +8,14 @@
     font-weight: 400;
 }
 
+a {
+    cursor: pointer;
+}
+
+
+/* Home page ***********************************************************************************************
+***********************************************************************************************************/
+
 .container {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -54,7 +62,6 @@
 
 .container2 a {
     align-self: center;
-    cursor: pointer;
 }
 
 .container2 a:hover {
@@ -105,17 +112,12 @@ header img {
 
 #menu li:hover {
     transform: translateX(10px);
-    font-weight: bold;
 }
 
 #menu .languages {
     text-transform: uppercase;
     position: absolute;
     bottom: 15px;
-}
-
-#menu .languages a:hover {
-    font-weight: bold;
 }
 
 #menu .closebtn {
@@ -157,14 +159,12 @@ header img {
 }
 
 #sidebar section {
-    margin-top: 20px;
     margin: 10px 0 20px 12px;
 }
 
 #sidebar span {
     display: inline-block;
-    margin-top: 5px;
-    margin-left: 15px;
+    margin: 5px 0 0 15px;
 }
 
 #sidebar label {
@@ -185,7 +185,6 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* Hide arrows in input - Chrome, Safari, Edge, Opera */
     -webkit-appearance: none;
-    margin: 0;
 }
 
 input[type=number] {
@@ -227,9 +226,6 @@ input[type=number] {
     height: 25px;
     border: none;
     background-image: url(/icons/playButton.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
 }
 
 .pauseButton {
