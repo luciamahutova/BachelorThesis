@@ -20,3 +20,23 @@ function showHideSidebar() {
         document.getElementById("sidebar").style.right = "-300px";
     }
 }
+
+function pauseApplication() {
+    $(".pauseButton").on("click", function() {
+        if (isRunning) {
+            isRunning = false;
+            cancelAnimationFrame(animFrameOutput);
+        }
+    });
+}
+pauseApplication();
+
+function playApplication() {
+    $(".playButton").on("click", function() {
+        if (!isRunning) {
+            isRunning = true;
+            animFrameOutput = requestAnimationFrame(animate);
+        }
+    });
+}
+playApplication();
