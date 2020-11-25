@@ -245,3 +245,22 @@ input[type=number] {
     position: fixed;
     margin-right: 20px;
 }
+
+
+/* 2 icons for Solar system models ***********/
+
+.models button {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    margin-right: 20px;
+    background-image: url(/icons/solarSystem2D.png);
+}
+
+.models button:nth-of-type(2) {
+    left: 110px;
+    background-image: url(/icons/solarSystem3D.png);
+}
