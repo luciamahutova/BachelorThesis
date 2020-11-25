@@ -1,18 +1,21 @@
 // Values /////////////////////////////////////////////////////
-var eulerNumberDistanceFromSun = [2.0790e+3, 3.8849e+3, 5.3709e+3, 8.1834e+3,
-    2.7951e+4, 5.1464e+4, 1.0328e+5, 1.6168e+5
-];
 var rotationValuesAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.182];
-
+var eulerNumberDistanceFromSun = [2.0790e+3, 3.8849e+3, 5.3709e+3, 8.1834e+3, 2.7951e+4, 5.1464e+4, 1.0328e+5, 1.6168e+5];
+var scene, camera, renderer, hemiLight, planetsMesh;
+var bgTexture, bgGeometry, bgMaterial, bgMesh, bgScene, bgCamera;
 
 initialize();
 resizeBackground();
 setLight();
 setStaticBackground();
 createPlanets();
+planetsMesh = createPlanetsMesh();
+addMeshToScene(planetsMesh);
 setPlanetsRotationAngle();
 createEmptyObjects();
-//createZoomEvent();
+createZoomEvent();
+//var mesh = createOrbit();
+animate();
 
 
 function initialize() {
@@ -22,7 +25,8 @@ function initialize() {
     // Camera
     camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
     camera.position.set(0, 40, 0);
-    camera.lookAt(new THREE.Vector3(0, 1, 0));
+    //camera.position.set(0, 0, 40);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // Renderer
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -67,19 +71,43 @@ function createZoomEvent() {
     });
 }
 
+function addMeshToScene(planetsMesh) {
+    for (var i = 0; i < planetsMesh.length; i++) {
+        scene.add(planetsMesh[i]);
+    }
+}
 
-// Animation; Play/Pause animation ////////////////////////////
-var isRunning = true;
-var animFrameOutput = 0;
+// POKUS - NAKRESLENIE CIARY
+//scene.add(mesh);
+const curve = new THREE.EllipseCurve(
+    0, 0, // ax, aY
+    20.5, 20.5, // xRadius, yRadius
+    0, 2 * Math.PI, // aStartAngle, aEndAngle
+    false, // aClockwise
+    1 // aRotation
+);
 
-const animate = function() {
+const points = curve.getPoints(50);
+const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+const material = new THREE.LineBasicMaterial({ color: 0xffffff });
+
+// Create the final object to add to the scene
+const ellipse = new THREE.Line(geometry, material);
+ellipse.rotation.x += 90 * Math.PI / 180;
+scene.add(ellipse);
+
+// Animation
+///////////////////////////////////////////////////////////////
+function animate() {
     animFrameOutput = requestAnimationFrame(animate);
     setPlanetsDistanceFromSun(eulerNumberDistanceFromSun);
     setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
+
+    //mesh.rotation.z -= rotationValuesAroundSun[4] / 100;
 
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
     renderer.render(bgScene, bgCamera);
     renderer.render(scene, camera);
 };
-animate();

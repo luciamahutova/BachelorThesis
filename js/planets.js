@@ -1,5 +1,3 @@
-var scene, camera, renderer, hemiLight;
-var bgTexture, bgGeometry, bgMaterial, bgMesh, bgScene, bgCamera;
 var sun, moon, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
 var sunMesh, moonMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh;
 var emptyObjectRotateMercury, emptyObjectRotateVenus, emptyObjectRotateEarth, emptyObjectRotateMoon, emptyObjectRotateMars, emptyObjectRotateJupiter, emptyObjectRotateSaturn, emptyObjectRotateUranus, emptyObjectRotateNeptune;
@@ -19,8 +17,6 @@ function createPlanets() {
     saturn = new THREE.SphereBufferGeometry(1.394, 50, 50);
     uranus = new THREE.SphereBufferGeometry(0.607, 50, 50);
     neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
-
-    createPlanetsMesh();
 }
 
 // Mesh for planets
@@ -41,7 +37,8 @@ function createPlanetsMesh() {
     saturnMesh = new THREE.Mesh(saturn, setNewMesh('/images/textures/saturnTexture2k.jpg'));
     uranusMesh = new THREE.Mesh(uranus, setNewMesh('/images/textures/uranusTexture2k.jpg'));
     neptuneMesh = new THREE.Mesh(neptune, setNewMesh('/images/textures/neptuneTexture2k.jpg'));
-    scene.add(sunMesh, moonMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
+    // scene.add(sunMesh, moonMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
+    return [sunMesh, moonMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh];
 }
 
 function setPlanetsRotationAngle() {
@@ -133,3 +130,12 @@ function setMoonRotationAroundEarth() {
     // Not proper value, needs to change
     emptyObjectRotateMoon.rotation.y += 0.001;
 }
+
+// POKUS - ORBIT
+// function createOrbit() {
+//     const geometry = new THREE.RingGeometry(27.8, eulerNumberDistanceFromSun[4] / 1000, 30, 1, 0, 5);
+//     const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+//     const mesh = new THREE.Mesh(geometry, material);
+//     mesh.rotation.x += 90 * Math.PI / 180;
+//     return mesh;
+// }
