@@ -15,7 +15,7 @@ setPlanetsRotationAngle();
 createEmptyObjects();
 createZoomEvent();
 //var mesh = createOrbit();
-animate();
+
 
 
 function initialize() {
@@ -29,9 +29,10 @@ function initialize() {
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: false }); //ZMENA
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(devicePixelRatio);
+    renderer.autoClearColor = false; // PRIDANE
     document.body.appendChild(renderer.domElement);
 }
 
@@ -77,37 +78,67 @@ function addMeshToScene(planetsMesh) {
     }
 }
 
-// POKUS - NAKRESLENIE CIARY
-//scene.add(mesh);
-const curve = new THREE.EllipseCurve(
-    0, 0, // ax, aY
-    20.5, 20.5, // xRadius, yRadius
-    0, 2 * Math.PI, // aStartAngle, aEndAngle
-    false, // aClockwise
-    1 // aRotation
-);
+// POKUS 2 - NAKRESLENIE CIARY
+// Make highly-transparent plane
+var fadeMaterial = new THREE.MeshBasicMaterial({
+    color: 0x061327,
+    transparent: true,
+    opacity: 0.05
+});
+var fadePlane = new THREE.PlaneBufferGeometry(1, 1);
+var fadeMesh = new THREE.Mesh(fadePlane, fadeMaterial);
 
-const points = curve.getPoints(50);
-const geometry = new THREE.BufferGeometry().setFromPoints(points);
+// Create Object3D to hold camera and transparent plane
+var camGroup = new THREE.Object3D();
+camGroup.add(fadeMesh);
 
-const material = new THREE.LineBasicMaterial({ color: 0xffffff });
+// Put plane in front of camera
+fadeMesh.position.z = -0.1;
 
-// Create the final object to add to the scene
-const ellipse = new THREE.Line(geometry, material);
-ellipse.rotation.x += 90 * Math.PI / 180;
-scene.add(ellipse);
+// Make plane render before particles
+fadeMesh.renderOrder = -1;
+
+// Add camGroup to scene
+scene.add(camGroup);
+
+
+// var lineRenderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true, antialias: true });
+// lineRenderer.autoClearColor = false;
+// lineRenderer.setSize(window.innerWidth, window.innerHeight);
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.appendChild(lineRenderer.domElement);
+});
+
+// var geometry = new THREE.BoxGeometry(1, 1, 1);
+// var material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+// var cube = new THREE.Mesh(geometry, material);
+// scene.add(cube);
+var orbitLine = new THREE.SphereBufferGeometry(0.15, 30, 30);
+var orbitColor = new THREE.MeshBasicMaterial({ color: 0xffffff });
+var planetOrbit = new THREE.Mesh(orbitLine, orbitColor);
+emptyObjectRotateJupiter.add(planetOrbit);
+scene.add(planetOrbit);
+
+var step = .03;
 
 // Animation
 ///////////////////////////////////////////////////////////////
 function animate() {
-    animFrameOutput = requestAnimationFrame(animate);
+
     setPlanetsDistanceFromSun(eulerNumberDistanceFromSun);
     setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
 
-    //mesh.rotation.z -= rotationValuesAroundSun[4] / 100;
+    // POKUS
+    //planetOrbit.position.x += step;
+    planetOrbit.position.x = (eulerNumberDistanceFromSun[4] / 1000);
+    planetOrbit.position.z = 2;
+    planetOrbit.rotation.y += 0.01;
 
     bgMesh.material.depthTest = false;
     renderer.autoClear = false;
     renderer.render(bgScene, bgCamera);
     renderer.render(scene, camera);
+    animFrameOutput = requestAnimationFrame(animate);
 };
+animate();

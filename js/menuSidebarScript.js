@@ -17,7 +17,7 @@ var animFrameOutput = 0;
 function showHideSidebar() {
     if (!isSidebarOpen) {
         isSidebarOpen = true;
-        document.getElementById("sidebar").style.right = "40px"
+        document.getElementById("sidebar").style.right = "40px";
 
     } else {
         isSidebarOpen = false;

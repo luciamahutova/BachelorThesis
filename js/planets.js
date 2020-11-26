@@ -130,12 +130,3 @@ function setMoonRotationAroundEarth() {
     // Not proper value, needs to change
     emptyObjectRotateMoon.rotation.y += 0.001;
 }
-
-// POKUS - ORBIT
-// function createOrbit() {
-//     const geometry = new THREE.RingGeometry(27.8, eulerNumberDistanceFromSun[4] / 1000, 30, 1, 0, 5);
-//     const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-//     const mesh = new THREE.Mesh(geometry, material);
-//     mesh.rotation.x += 90 * Math.PI / 180;
-//     return mesh;
-// }
