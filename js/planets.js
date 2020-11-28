@@ -17,12 +17,15 @@ function createPlanets() {
     saturn = new THREE.SphereBufferGeometry(1.394, 50, 50);
     uranus = new THREE.SphereBufferGeometry(0.607, 50, 50);
     neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
+    jupiter.receiveShadow = true;
 }
 
 // Mesh for planets
 function setNewMesh(imageSrc) {
     let texture = new THREE.TextureLoader().load(imageSrc);
-    let meshMaterial = new THREE.MeshBasicMaterial({ map: texture });
+    let meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
+    meshMaterial.receiveShadow = true;
+    meshMaterial.castShadow = true;
     return meshMaterial;
 }
 

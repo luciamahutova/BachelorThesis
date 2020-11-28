@@ -1,7 +1,7 @@
 // Values /////////////////////////////////////////////////////
 var rotationValuesAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.182];
 var eulerNumberDistanceFromSun = [2.0790e+3, 3.8849e+3, 5.3709e+3, 8.1834e+3, 2.7951e+4, 5.1464e+4, 1.0328e+5, 1.6168e+5];
-var scene, camera, renderer, hemiLight, planetsMesh;
+var scene, camera, renderer, hemiLight, pointLight, planetsMesh;
 var bgTexture, bgGeometry, bgMaterial, bgMesh, bgScene, bgCamera;
 
 initialize();
@@ -30,6 +30,8 @@ function initialize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.autoClearColor = false; // PRIDANE
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.BasicShadowMap;
     document.body.appendChild(renderer.domElement);
 }
 
@@ -42,9 +44,16 @@ function resizeBackground() {
 }
 
 function setLight() {
-    hemiLight = new THREE.HemisphereLight(0x061327, 0xffffff, 1);
+    hemiLight = new THREE.HemisphereLight(0xffffff, 0x061327, 1.3);
     hemiLight.position.set(0, 0, 0);
     scene.add(hemiLight);
+
+    pointLight = new THREE.PointLight(0xffffff, 0.8, window.innerHeight, 1.5);
+    pointLight.position.set(0, 0, 0);
+    pointLight.castShadow = true;
+    pointLight.shadow.camera.near = 0;
+    pointLight.shadow.camera.far = window.innerWidth;
+    scene.add(pointLight);
 }
 
 function setStaticBackground() {
