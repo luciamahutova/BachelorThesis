@@ -53,6 +53,12 @@ class Planet {
         ];
     }
 
+    addMeshToScene(planetsMesh) {
+        for (var i = 0; i < planetsMesh.length; i++) {
+            this.scene.add(planetsMesh[i]);
+        }
+    }
+
     setPlanetsRotationAngle() {
         // Planets' angle around its axis = Z
         this.mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (0.03 * Math.PI) / 180);
