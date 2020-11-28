@@ -1,4 +1,5 @@
-function planet() {
+class Planet {
+    //constructor() {
     // this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars, this.jupiter, this.saturn, this.uranus,
     //     this.neptune = null;
     // this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh, this.jupiterMesh,
@@ -6,8 +7,9 @@ function planet() {
     // this.emptyObjectRotateMercury, this.emptyObjectRotateVenus, this.emptyObjectRotateEarth, this.emptyObjectRotateMoon,
     //     this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn, this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune = null;
     // this.meshMaterial = null;
+    //}
 
-    this.createPlanets = function createPlanets() {
+    createPlanets() {
         // 10x smaller scale for the Sun
         this.sun = new THREE.SphereBufferGeometry(5, 50, 50);
         this.mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
@@ -23,7 +25,7 @@ function planet() {
         this.neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
     }
 
-    this.setNewMesh = function setNewMesh(imageSrc) {
+    setNewMesh(imageSrc) {
         let texture = new THREE.TextureLoader().load(imageSrc);
         this.meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
         this.meshMaterial.receiveShadow = true;
@@ -31,7 +33,7 @@ function planet() {
         return this.meshMaterial;
     }
 
-    this.createPlanetsMesh = function createPlanetsMesh() {
+    createPlanetsMesh() {
         this.sunMesh = new THREE.Mesh(this.sun, this.setNewMesh('/images/textures/sunTexture2k.jpg'));
         this.mercuryMesh = new THREE.Mesh(this.mercury, this.setNewMesh('/images/textures/mercuryTexture2k.jpg'));
         this.venusMesh = new THREE.Mesh(this.venus, this.setNewMesh('/images/textures/venusTexture2k.jpg'));
@@ -48,7 +50,7 @@ function planet() {
         ];
     }
 
-    this.setPlanetsRotationAngle = function setPlanetsRotationAngle() {
+    setPlanetsRotationAngle() {
         // Planets' angle around its axis = Z
         this.mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (0.03 * Math.PI) / 180);
         this.venusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (177.4 * Math.PI) / 180);
@@ -60,13 +62,13 @@ function planet() {
         this.neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
     }
 
-    this.setMoonDistanceFromEarth = function setMoonDistanceFromEarth() {
+    setMoonDistanceFromEarth() {
         // Not proper value = set according to model
         this.moonMesh.position.x = 1;
     }
 
     // Position for every planet's orbit from the Sun
-    this.setPlanetsDistanceFromSun = function setPlanetsDistanceFromSun(values) {
+    setPlanetsDistanceFromSun(values) {
         // Changed scale for better view
         this.mercuryMesh.position.x = values[0] / 300;
         this.venusMesh.position.x = values[1] / 300;
@@ -80,7 +82,7 @@ function planet() {
     }
 
     //Empty objects will control planets' movement around the Sun
-    this.createEmptyObjects = function createEmptyObjects() {
+    createEmptyObjects() {
         this.emptyObjectRotateMercury = new THREE.Object3D();
         this.emptyObjectRotateMercury.add(this.mercuryMesh);
 
@@ -113,22 +115,22 @@ function planet() {
     }
 
     // For rotating planets around the Sun
-    this.addEmptyToSun = function addEmptyToSun() {
+    addEmptyToSun() {
         var emptyObjectsArray = [this.emptyObjectRotateMercury, this.emptyObjectRotateVenus, this.emptyObjectRotateEarth, this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn,
             this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune
         ];
 
-        for (i = 0; i < emptyObjectsArray.length; i++) {
+        for (var i = 0; i < emptyObjectsArray.length; i++) {
             this.sunMesh.add(emptyObjectsArray[i]);
         }
     }
 
-    this.setMoonRotationAroundEarth = function setMoonRotationAroundEarth() {
+    setMoonRotationAroundEarth() {
         // Not proper value, needs to change
         this.emptyObjectRotateMoon.rotation.y += 0.001;
     }
 
-    this.setPlanetsRotationSpeedAroundSun = function setPlanetsRotationSpeedAroundSun(values) {
+    setPlanetsRotationSpeedAroundSun(values) {
         this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
         this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
         this.emptyObjectRotateEarth.rotation.y += values[2] / 100;

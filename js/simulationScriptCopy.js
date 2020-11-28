@@ -10,13 +10,12 @@ setLight();
 setStaticBackground();
 
 // createZoomEvent();
-var planetObject = new planet();
+var planetObject = new Planet();
 planetObject.createPlanets();
 planetsMesh = planetObject.createPlanetsMesh();
 addMeshToScene(planetsMesh);
 planetObject.setPlanetsRotationAngle();
 planetObject.createEmptyObjects();
-
 
 
 function initialize() {
