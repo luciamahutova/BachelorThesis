@@ -3,14 +3,6 @@ class Planet {
         this.scene = scene;
     }
 
-    // this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars, this.jupiter, this.saturn, this.uranus,
-    //     this.neptune = null;
-    // this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh, this.jupiterMesh,
-    //     this.saturnMesh, this.uranusMesh, this.neptuneMesh = null;
-    // this.emptyObjectRotateMercury, this.emptyObjectRotateVenus, this.emptyObjectRotateEarth, this.emptyObjectRotateMoon,
-    //     this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn, this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune = null;
-    // this.meshMaterial = null;
-
     createPlanets = function() {
         // 10x smaller scale for the Sun
         this.sun = new THREE.SphereBufferGeometry(5, 50, 50);
