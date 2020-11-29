@@ -142,4 +142,12 @@ class Planet {
         this.setMoonRotationAroundEarth();
     }
 
+    // Called outside the class //////////////////////////////////////
+    initializePlanets = function() {
+        this.createPlanets();
+        this.planetsMesh = this.createPlanetsMesh();
+        this.addMeshToScene(this.planetsMesh);
+        this.setPlanetsRotationAngle();
+        this.createEmptyObjects();
+    }
 }

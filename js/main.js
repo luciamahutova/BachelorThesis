@@ -12,11 +12,7 @@ camera = mainScene.getCamera();
 mainScene.resizeBackground(renderer, camera);
 
 var planetObject = new Planet(scene);
-planetObject.createPlanets();
-planetsMesh = planetObject.createPlanetsMesh();
-planetObject.addMeshToScene(planetsMesh);
-planetObject.setPlanetsRotationAngle();
-planetObject.createEmptyObjects();
+planetObject.initializePlanets();
 
 
 function animate() {
