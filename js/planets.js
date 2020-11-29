@@ -52,14 +52,11 @@ class Planet {
 
     setPlanetsRotationAngle = function() {
         // Planets' angle around its axis = Z
-        this.mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (0.03 * Math.PI) / 180);
-        this.venusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (177.4 * Math.PI) / 180);
-        this.earthMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (23.4 * Math.PI) / 180);
-        this.marsMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (25.2 * Math.PI) / 180);
-        this.jupiterMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (3.1 * Math.PI) / 180);
-        this.saturnMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (26.7 * Math.PI) / 180);
-        this.uranusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (97.8 * Math.PI) / 180);
-        this.neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
+        var angleValuesZ = [0.03, 177.4, 23.4, 25.2, 3.1, 26.7, 97.8, 28.3];
+
+        for (var i = 2, angle = 0; i < this.planetsMesh.length; i++, angle++) {
+            this.planetsMesh[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (angleValuesZ[angle] * Math.PI) / 180);
+        }
     }
 
     setMoonDistanceFromEarth = function() {
