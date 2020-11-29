@@ -6,7 +6,7 @@ var scene, renderer, planetsMesh;
 var mainScene = new MainScene();
 scene = mainScene.getScene();
 
-var planetObject = new Planet(scene, renderer);
+var planetObject = new Planet(scene);
 planetObject.createPlanets();
 planetsMesh = planetObject.createPlanetsMesh();
 planetObject.addMeshToScene(planetsMesh);

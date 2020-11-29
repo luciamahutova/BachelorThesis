@@ -1,7 +1,6 @@
 class Planet {
-    constructor(scene, renderer) {
+    constructor(scene) {
         this.scene = scene;
-        this.renderer = renderer;
     }
 
     // this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars, this.jupiter, this.saturn, this.uranus,
@@ -12,7 +11,7 @@ class Planet {
     //     this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn, this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune = null;
     // this.meshMaterial = null;
 
-    createPlanets() {
+    createPlanets = function() {
         // 10x smaller scale for the Sun
         this.sun = new THREE.SphereBufferGeometry(5, 50, 50);
         this.mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
@@ -28,7 +27,7 @@ class Planet {
         this.neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
     }
 
-    setNewMesh(imageSrc) {
+    setNewMesh = function(imageSrc) {
         let texture = new THREE.TextureLoader().load(imageSrc);
         this.meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
         this.meshMaterial.receiveShadow = true;
@@ -36,7 +35,7 @@ class Planet {
         return this.meshMaterial;
     }
 
-    createPlanetsMesh() {
+    createPlanetsMesh = function() {
         this.sunMesh = new THREE.Mesh(this.sun, this.setNewMesh('/images/textures/sunTexture2k.jpg'));
         this.mercuryMesh = new THREE.Mesh(this.mercury, this.setNewMesh('/images/textures/mercuryTexture2k.jpg'));
         this.venusMesh = new THREE.Mesh(this.venus, this.setNewMesh('/images/textures/venusTexture2k.jpg'));
@@ -53,13 +52,13 @@ class Planet {
         ];
     }
 
-    addMeshToScene(planetsMesh) {
+    addMeshToScene = function(planetsMesh) {
         for (var i = 0; i < planetsMesh.length; i++) {
             this.scene.add(planetsMesh[i]);
         }
     }
 
-    setPlanetsRotationAngle() {
+    setPlanetsRotationAngle = function() {
         // Planets' angle around its axis = Z
         this.mercuryMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (0.03 * Math.PI) / 180);
         this.venusMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (177.4 * Math.PI) / 180);
@@ -71,13 +70,13 @@ class Planet {
         this.neptuneMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (28.3 * Math.PI) / 180);
     }
 
-    setMoonDistanceFromEarth() {
+    setMoonDistanceFromEarth = function() {
         // Not proper value = set according to model
         this.moonMesh.position.x = 1;
     }
 
     // Position for every planet's orbit from the Sun
-    setPlanetsDistanceFromSun(values) {
+    setPlanetsDistanceFromSun = function(values) {
         // Changed scale for better view
         this.mercuryMesh.position.x = values[0] / 300;
         this.venusMesh.position.x = values[1] / 300;
@@ -91,7 +90,7 @@ class Planet {
     }
 
     //Empty objects will control planets' movement around the Sun
-    createEmptyObjects() {
+    createEmptyObjects = function() {
         this.emptyObjectRotateMercury = new THREE.Object3D();
         this.emptyObjectRotateMercury.add(this.mercuryMesh);
 
@@ -124,7 +123,7 @@ class Planet {
     }
 
     // For rotating planets around the Sun
-    addEmptyToSun() {
+    addEmptyToSun = function() {
         var emptyObjectsArray = [this.emptyObjectRotateMercury, this.emptyObjectRotateVenus, this.emptyObjectRotateEarth, this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn,
             this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune
         ];
@@ -134,12 +133,12 @@ class Planet {
         }
     }
 
-    setMoonRotationAroundEarth() {
+    setMoonRotationAroundEarth = function() {
         // Not proper value, needs to change
         this.emptyObjectRotateMoon.rotation.y += 0.001;
     }
 
-    setPlanetsRotationSpeedAroundSun(values) {
+    setPlanetsRotationSpeedAroundSun = function(values) {
         this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
         this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
         this.emptyObjectRotateEarth.rotation.y += values[2] / 100;
