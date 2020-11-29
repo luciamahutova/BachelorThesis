@@ -1,8 +1,4 @@
 class MainScene {
-    constructor() {
-
-    }
-
     initScene = function() {
         this.scene = new THREE.Scene();
         return this.scene;
