@@ -38,7 +38,7 @@ class Planet {
         this.saturnMesh = new THREE.Mesh(this.saturn, this.setNewMesh('/images/textures/saturnTexture2k.jpg'));
         this.uranusMesh = new THREE.Mesh(this.uranus, this.setNewMesh('/images/textures/uranusTexture2k.jpg'));
         this.neptuneMesh = new THREE.Mesh(this.neptune, this.setNewMesh('/images/textures/neptuneTexture2k.jpg'));
-        // scene.add(sunMesh, moonMesh, mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
+
         return [this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
             this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh
         ];
