@@ -139,6 +139,13 @@ class Planet {
         this.setMoonRotationAroundEarth();
     }
 
+    // POKUS - TOCENIE POMOCOU VEKTORU, NIE OKOLO Y-OSI
+    getAcceleration = function(distance, starMass) {
+        var G = 6.67384e-11; // m3 kg-1 s-2
+        return G * starMass / (Math.pow(distance, 2));
+    }
+
+
     // Called outside the class //////////////////////////////////////
     initializePlanets = function() {
         this.createPlanets();

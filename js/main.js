@@ -20,6 +20,6 @@ function animate() {
     planetObject.setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
 
     mainScene.animate();
-    animFrameOutput = requestAnimationFrame(animate);
+    animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();

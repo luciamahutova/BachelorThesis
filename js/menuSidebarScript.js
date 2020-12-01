@@ -11,8 +11,8 @@ function closeNav() {
 // Script for sidebar 
 ///////////////////////////////////////////////////////////////
 var isSidebarOpen = true;
-var isRunning = true;
-var animFrameOutput = 0;
+var isAppRunning = true;
+var animationFrameOutput = 0;
 
 function showHideSidebar() {
     if (!isSidebarOpen) {
@@ -27,9 +27,9 @@ function showHideSidebar() {
 
 function pauseApplication() {
     $(".pauseButton").on("click", function() {
-        if (isRunning) {
-            isRunning = false;
-            cancelAnimationFrame(animFrameOutput);
+        if (isAppRunning) {
+            isAppRunning = false;
+            cancelAnimationFrame(animationFrameOutput);
         }
     });
 }
@@ -37,9 +37,9 @@ pauseApplication();
 
 function playApplication() {
     $(".playButton").on("click", function() {
-        if (!isRunning) {
-            isRunning = true;
-            animFrameOutput = requestAnimationFrame(animate);
+        if (!isAppRunning) {
+            isAppRunning = true;
+            animationFrameOutput = requestAnimationFrame(animate);
         }
     });
 }
