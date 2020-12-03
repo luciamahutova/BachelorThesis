@@ -279,3 +279,32 @@ input[type=number] {
     left: 110px;
     background-image: url(/icons/solarSystem3D.png);
 }
+
+
+/* Planets *************************************************************************************************
+***********************************************************************************************************/
+
+h1+section {
+    position: absolute;
+    bottom: 180px;
+    left: 40px;
+    width: 2000px;
+    max-height: 230px;
+    overflow-x: visible;
+    overflow-y: hidden;
+}
+
+h1+section article {
+    position: relative;
+    float: left;
+    width: fit-content;
+    height: inherit;
+    margin-right: 50px;
+    opacity: 0.6;
+}
+
+
+/* h1+div section img {
+    position: absolute;
+    top: 20px;
+} */
