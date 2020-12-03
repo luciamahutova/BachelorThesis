@@ -21,9 +21,6 @@ let arrLang = {
         'mercury': 'Merkur',
         'venus': 'Venuše',
         'earth': 'Země',
-        'mars': 'Mars',
-        'jupiter': 'Jupiter',
-        'saturn': 'Saturn',
         'uranus': 'Uran',
         'neptune': 'Neptun',
         'confirm': 'Potvrdit'
@@ -51,9 +48,6 @@ let arrLang = {
         'mercury': 'Mercury',
         'venus': 'Venus',
         'earth': 'Earth',
-        'mars': 'Mars',
-        'jupiter': 'Jupiter',
-        'saturn': 'Saturn',
         'uranus': 'Uranus',
         'neptune': 'Neptune',
         'confirm': 'Confirm'
@@ -80,9 +74,6 @@ let arrLang = {
         'mercury': 'Merkúr',
         'venus': 'Venuša',
         'earth': 'Zem',
-        'mars': 'Mars',
-        'jupiter': 'Jupiter',
-        'saturn': 'Saturn',
         'uranus': 'Urán',
         'neptune': 'Neptún',
         'confirm': 'Potvrdiť'
