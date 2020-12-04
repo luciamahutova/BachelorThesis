@@ -323,19 +323,6 @@ header+a {
     top: 40px;
 }
 
-.singlePlanetInfo {
-    /* DOCASNE VSETKY TEXTY SCHOVANE */
-    visibility: collapse;
-}
-
-.singlePlanetInfo:first-of-type {
-    visibility: visible;
-}
-
-.singlePlanetInfo div p {
-    margin: 5px 0 15px 15px;
-}
-
 .fadeLine {
     display: block;
     border: none;
@@ -349,10 +336,23 @@ header+a {
     left: 160px;
 }
 
+
+/* Responsivity */
+
 .containerPlanetInfo {
     display: grid;
     grid-template-columns: 40px auto auto auto 40px;
     grid-template-rows: 250px auto auto;
+    visibility: collapse;
+    height: 0px;
+}
+
+.containerPlanetInfo:first-of-type {
+    visibility: visible;
+}
+
+.containerPlanetInfo div p {
+    margin: 5px 0 15px 15px;
 }
 
 .container3 {
