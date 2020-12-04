@@ -332,10 +332,6 @@ header+a {
     visibility: visible;
 }
 
-.singlePlanetInfo h1+p {
-    max-width: 365px;
-}
-
 .singlePlanetInfo div p {
     margin: 5px 0 15px 15px;
 }
@@ -351,4 +347,22 @@ header+a {
     opacity: 0.1;
     position: fixed;
     left: 160px;
+}
+
+.containerPlanetInfo {
+    display: grid;
+    grid-template-columns: 40px auto auto auto 40px;
+    grid-template-rows: 250px auto auto;
+}
+
+.container3 {
+    grid-area: 2 / 2 / span 1 / span 3;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.container3 p:first-child {
+    max-width: 365px;
 }
