@@ -32,7 +32,7 @@
     <span class="fadeLine"></span>
 
     <!-- Mercury -->
-    <section class="containerPlanetInfo data-1" id="data-1">
+    <section class="containerPlanetInfo" id="data-1">
         <h1 class="lang" key="mercury">Mercury</h1>
         <div class="container3">
             <p>Mercury is the closest planet to the Sun. For every two orbits of the Sun, Mercury completes three rotations about its axis. Thirteen times a century Mercury can be observed from the Earth passing across the face of the Sun in an event called
@@ -235,22 +235,9 @@
         </div>
     </section>
 
-    <script>
-        function showData(numberOfPlanet) {
-            console.log("clicked!");
-            //$("data-" + numberOfPlanet).addClass('visibleClass');
-            var elem = document.getElementById('data-1');
-            elem.style.visibility = 'visible';
-            hideElement(8, numberOfPlanet);
-        }
-
-        function hideElement(total, active) {
-            for (i = 1; i <= total; i++) {
-                if (i != active)
-                    $("#data-" + i).removeClass('visibleClass');
-            }
-        }
-    </script>
+    <!-- Scripts -->
+    <script src="/js/menuSidebarScript.js "></script>
+    <script src="/js/textTranslator.js "></script>
 
 </body>
 
