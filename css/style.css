@@ -347,10 +347,9 @@ header+a {
     height: 0px;
 }
 
-
-/* .containerPlanetInfo:first-of-type {
+.containerPlanetInfo:first-of-type {
     visibility: visible;
-} */
+}
 
 .containerPlanetInfo div p {
     margin: 5px 0 15px 15px;
