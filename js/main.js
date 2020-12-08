@@ -14,6 +14,9 @@ mainScene.resizeBackground(renderer, camera);
 var planetObject = new Planet(scene);
 planetObject.initializePlanets();
 
+// POKUS
+
+
 
 function animate() {
     planetObject.setPlanetsDistanceFromSun(eulerNumberDistanceFromSun);

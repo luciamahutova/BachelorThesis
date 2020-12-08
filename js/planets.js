@@ -1,6 +1,7 @@
 class Planet {
     constructor(scene) {
         this.scene = scene;
+        this.planetData = [];
     }
 
     createPlanets = function() {
@@ -139,10 +140,113 @@ class Planet {
         this.setMoonRotationAroundEarth();
     }
 
-    // POKUS - TOCENIE POMOCOU VEKTORU, NIE OKOLO Y-OSI
-    getAcceleration = function(distance, starMass) {
-        var G = 6.67384e-11; // m3 kg-1 s-2
-        return G * starMass / (Math.pow(distance, 2));
+    // POKUS - ORBITA V TVARE ELIPSY
+    createOrbitShape = function(planetData) {
+        var curve, points, geometry, material, ellipse;
+        var scaleFactor = [19, 17, 17, 13.5, 5, 3.5, 2, 1.5]; // my values - to fit orbits into 1 screen
+
+        for (var i = 0; i < planetData.length; i++) {
+            curve = new THREE.EllipseCurve(
+                this.planetData[i]["c"] * (scaleFactor[i] / 2), 0, // aX, aY (X/Y center of the ellipse)
+                this.planetData[i]["a"] * scaleFactor[i], //xRadius (The radius of the ellipse in the X direction)
+                this.planetData[i]["b"] * scaleFactor[i], //yRadius
+                0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
+                false, 0 // aClockwise, aRotation
+            );
+            points = curve.getPoints(500);
+            geometry = new THREE.BufferGeometry().setFromPoints(points);
+            material = new THREE.LineBasicMaterial({ color: 0xffffff });
+            ellipse = new THREE.Line(geometry, material);
+            ellipse.rotation.x = THREE.Math.degToRad(90);
+            this.scene.add(ellipse);
+        }
+    }
+
+    // DOPLNENIE DAT PRE PLANETY
+    addDataToPlanetObject = function() {
+        // a: semi-major axis, which is the largest distance between the center of the ellipse and the curve of the orbit
+        // b: semi-minor axis, which is the shortest distance between the center of the ellipse and the curve of the orbit
+        // c: distance between the center of the orbit and the focus of the orbit, which is where the Sun would be in a     planetary orbit.
+        // e: eccentricity, which is the measure of the deviation of the shape of an orbit from that of a perfect circle (a measure of how elliptical an orbit is). The higher the eccentricity of an orbit, the more elliptical it is;
+        var mercuryData = {
+            a: 0.3870,
+            b: 0.3788,
+            c: 0.0796,
+            e: 0.2056,
+            rotationSpeedAroundSun: 1.607,
+            eulerDistanceFromSun: 2.0790e+3
+        };
+        this.planetData.push(mercuryData);
+
+        var venusData = {
+            a: 0.7219,
+            b: 0.7219,
+            c: 0.0049,
+            e: 0.0068,
+            rotationSpeedAroundSun: 1.174,
+            eulerDistanceFromSun: 3.8849e+3
+        };
+        this.planetData.push(venusData);
+
+        var earthData = {
+            a: 1.0027,
+            b: 1.0025,
+            c: 0.0167,
+            e: 0.0167,
+            rotationSpeedAroundSun: 1.000,
+            eulerDistanceFromSun: 5.3709e+3
+        };
+        this.planetData.push(earthData);
+
+        var marsData = {
+            a: 1.5241,
+            b: 1.5173,
+            c: 0.1424,
+            e: 0.0934,
+            rotationSpeedAroundSun: 0.802,
+            eulerDistanceFromSun: 8.1834e+3
+        };
+        this.planetData.push(marsData);
+
+        var jupiterData = {
+            a: 5.2073,
+            b: 5.2010,
+            c: 0.2520,
+            e: 0.0484,
+            rotationSpeedAroundSun: 0.434,
+            eulerDistanceFromSun: 2.7951e+4
+        };
+        this.planetData.push(jupiterData);
+
+        var saturnData = {
+            a: 9.5590,
+            b: 9.5231,
+            c: 0.5181,
+            e: 0.0542,
+            rotationSpeedAroundSun: 0.323,
+            eulerDistanceFromSun: 5.1464e+4
+        };
+        this.planetData.push(saturnData);
+
+        var uranusData = {
+            a: 19.1848,
+            b: 19.1645,
+            c: 0.9055,
+            e: 0.0472,
+            rotationSpeedAroundSun: 0.228,
+            eulerDistanceFromSun: 1.0328e+5
+        };
+        this.planetData.push(uranusData);
+
+        var neptuneData = {
+            a: 30.0806,
+            b: 30.0788,
+            c: 0.2587,
+            e: 0.0086,
+            rotationSpeedAroundSun: 0.182,
+            eulerDistanceFromSun: 1.6168e+5
+        };
+        this.planetData.push(neptuneData);
     }
 
 
@@ -153,5 +257,77 @@ class Planet {
         this.addMeshToScene(this.planetsMesh);
         this.setPlanetsRotationAngle();
         this.createEmptyObjects();
+        this.addDataToPlanetObject();
+        // POKUS
+        this.createOrbitShape(this.planetData);
+
     }
+}
+
+// POKUS - ELIPSA
+class OrbitEllipse {
+    constructor(orbitAroundPos, orbiterPos, endingApsis, circular) {
+        this.startingApsis = 0;
+        this.endingApsis = 0;
+        this.semiMajorAxis = 0;
+        this.semiMinorAxis = 0;
+        this.focalDistance = 0;
+        this.difference = 0;
+        this.update(orbitAroundPos, orbiterPos, endingApsis, circular);
+    }
+    update = function(orbitAroundPos, orbiterPos, endingApsis, circular) {
+        this.difference = orbiterPos - orbitAroundPos;
+        this.startingApsis = this.difference.magnitude;
+        if (endingApsis == 0 || circular)
+            this.endingApsis = this.startingApsis;
+        else
+            this.endingApsis = endingApsis;
+        this.semiMajorAxis = this.calcSemiMajorAxis(this.startingApsis, this.endingApsis);
+        this.focalDistance = this.calcFocalDistance(this.semiMajorAxis, this.endingApsis);
+        this.semiMinorAxis = this.calcSemiMinorAxis(this.semiMajorAxis, this.focalDistance);
+    }
+
+    getPosition = function(degrees, orbitAroundPos) {
+        // Use the difference between the orbiter and the object it's orbiting around to determine the direction
+        // that the ellipse is aimed
+        // Angle is given in degrees
+        var ellipseDirection = Vector3.Angle(Vector3.left, difference); // the direction the ellipse is rotated
+        if (difference.y < 0) {
+            ellipseDirection = 360 - ellipseDirection; // Full 360 degrees, rather than doubling back after 180 degrees
+        }
+
+        var beta = ellipseDirection * Mathf.Deg2Rad;
+        var sinBeta = Mathf.Sin(beta);
+        var cosBeta = Mathf.Cos(beta);
+
+        var alpha = degrees * Mathf.Deg2Rad;
+        var sinalpha = Mathf.Sin(alpha);
+        var cosalpha = Mathf.Cos(alpha);
+
+        // Position the ellipse relative to the "orbit around" transform
+        var ellipseOffset = difference.normalized * (semiMajorAxis - endingApsis);
+
+        var finalPosition = new THREE.Vector3();
+        finalPosition.x = ellipseOffset.x + (semiMajorAxis * cosalpha * cosBeta - semiMinorAxis * sinalpha * sinBeta) * -1;
+        finalPosition.y = ellipseOffset.y + (semiMajorAxis * cosalpha * sinBeta + semiMinorAxis * sinalpha * cosBeta);
+
+        // Offset entire ellipse proportional to the position of the object we're orbiting around
+        finalPosition += orbitAroundPos;
+
+        return finalPosition;
+    }
+
+    calcSemiMajorAxis = function(startingApsis, endingApsis) {
+        return (startingApsis + endingApsis) * 0.5;
+    }
+
+    calcSemiMinorAxis = function(semiMajorAxis, focalDistance) {
+        var distA = semiMajorAxis + focalDistance * 0.5;
+        var distB = semiMajorAxis - focalDistance * 0.5;
+        return Math.sqrt(Math.pow(distA + distB, 2) - focalDistance * focalDistance) * 0.5;
+    }
+    calcFocalDistance = function(semiMajorAxis, endingApsis) {
+        return (semiMajorAxis - endingApsis) * 2;
+    }
+
 }
