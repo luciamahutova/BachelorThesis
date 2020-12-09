@@ -67,7 +67,7 @@ class Planet {
     }
 
     // Position for every planet's orbit from the Sun
-    setPlanetsDistanceFromSun = function(values) {
+    setPlanetsDistanceFromSun = function() {
         // Changed scale for better view
         for (var i = 0; i < this.planetData.length; i++) {
             this.planetsMeshes[i + 2].position.x = this.planetData[i]["a"] * this.planetData[i]["scaleFactor"] +
@@ -135,14 +135,12 @@ class Planet {
         // this.emptyObjectRotateUranus.rotation.y += values[6] / 100;
         // this.emptyObjectRotateNeptune.rotation.y += values[7] / 100;
         //this.setMoonRotationAroundEarth();
-        var meshes = [this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
-            this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh
-        ];
+
         var timestamp = Date.now() * 0.0001;
         for (var i = 0; i < this.orbits.length; i++) {
-            this.orbits[i].add(meshes[i]);
-            //meshes[i].position.x = Math.cos(timestamp * meshes[i].position.x) * 0.01;
-            //meshes[i].position.z = Math.cos(timestamp * meshes[i].position.z) * 0.01;
+            this.orbits[i].add(this.planetsMeshes[i + 2]);
+            //this.planetsMeshes[i + 2].position.x = Math.cos(timestamp * 1.607);
+            //this.planetsMeshes[i + 2].position.z = Math.sin(timestamp * 1.607);
         }
     }
 
