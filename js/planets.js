@@ -2,6 +2,8 @@ class Planet {
     constructor(scene) {
         this.scene = scene;
         this.planetData = [];
+        this.orbits = [];
+        this.planetsMeshes = [];
     }
 
     createPlanets = function() {
@@ -40,9 +42,8 @@ class Planet {
         this.uranusMesh = new THREE.Mesh(this.uranus, this.setNewMesh('/images/textures/uranusTexture2k.jpg'));
         this.neptuneMesh = new THREE.Mesh(this.neptune, this.setNewMesh('/images/textures/neptuneTexture2k.jpg'));
 
-        return [this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
-            this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh
-        ];
+        this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
+            this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
     }
 
     addMeshToScene = function(planetsMesh) {
@@ -55,8 +56,8 @@ class Planet {
         // Planets' angle around its axis = Z
         var angleValuesZ = [0.03, 177.4, 23.4, 25.2, 3.1, 26.7, 97.8, 28.3];
 
-        for (var i = 2, angle = 0; i < this.planetsMesh.length; i++, angle++) {
-            this.planetsMesh[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (angleValuesZ[angle] * Math.PI) / 180);
+        for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
+            this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (angleValuesZ[angle] * Math.PI) / 180);
         }
     }
 
@@ -68,14 +69,10 @@ class Planet {
     // Position for every planet's orbit from the Sun
     setPlanetsDistanceFromSun = function(values) {
         // Changed scale for better view
-        this.mercuryMesh.position.x = values[0] / 300;
-        this.venusMesh.position.x = values[1] / 300;
-        this.earthMesh.position.x = values[2] / 300;
-        this.marsMesh.position.x = values[3] / 400;
-        this.jupiterMesh.position.x = values[4] / 1000;
-        this.saturnMesh.position.x = values[5] / 1500;
-        this.uranusMesh.position.x = values[6] / 2500;
-        this.neptuneMesh.position.x = values[7] / 3500;
+        for (var i = 0; i < this.planetData.length; i++) {
+            this.planetsMeshes[i + 2].position.x = this.planetData[i]["a"] * this.planetData[i]["scaleFactor"] +
+                this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2);
+        }
         this.setMoonDistanceFromEarth();
     }
 
@@ -129,15 +126,24 @@ class Planet {
     }
 
     setPlanetsRotationSpeedAroundSun = function(values) {
-        this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
-        this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
-        this.emptyObjectRotateEarth.rotation.y += values[2] / 100;
-        this.emptyObjectRotateMars.rotation.y += values[3] / 100;
-        this.emptyObjectRotateJupiter.rotation.y += values[4] / 100;
-        this.emptyObjectRotateSaturn.rotation.y += values[5] / 100;
-        this.emptyObjectRotateUranus.rotation.y += values[6] / 100;
-        this.emptyObjectRotateNeptune.rotation.y += values[7] / 100;
-        this.setMoonRotationAroundEarth();
+        // this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
+        // this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
+        // this.emptyObjectRotateEarth.rotation.y += values[2] / 100;
+        // this.emptyObjectRotateMars.rotation.y += values[3] / 100;
+        // this.emptyObjectRotateJupiter.rotation.y += values[4] / 100;
+        // this.emptyObjectRotateSaturn.rotation.y += values[5] / 100;
+        // this.emptyObjectRotateUranus.rotation.y += values[6] / 100;
+        // this.emptyObjectRotateNeptune.rotation.y += values[7] / 100;
+        //this.setMoonRotationAroundEarth();
+        var meshes = [this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
+            this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh
+        ];
+        var timestamp = Date.now() * 0.0001;
+        for (var i = 0; i < this.orbits.length; i++) {
+            this.orbits[i].add(meshes[i]);
+            //meshes[i].position.x = Math.cos(timestamp * meshes[i].position.x) * 0.01;
+            //meshes[i].position.z = Math.cos(timestamp * meshes[i].position.z) * 0.01;
+        }
     }
 
     // POKUS - ORBITA V TVARE ELIPSY
@@ -147,9 +153,9 @@ class Planet {
 
         for (var i = 0; i < planetData.length; i++) {
             curve = new THREE.EllipseCurve(
-                this.planetData[i]["c"] * (scaleFactor[i] / 2), 0, // aX, aY (X/Y center of the ellipse)
-                this.planetData[i]["a"] * scaleFactor[i], //xRadius (The radius of the ellipse in the X direction)
-                this.planetData[i]["b"] * scaleFactor[i], //yRadius
+                this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
+                this.planetData[i]["a"] * this.planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
+                this.planetData[i]["b"] * this.planetData[i]["scaleFactor"], //yRadius
                 0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
                 false, 0 // aClockwise, aRotation
             );
@@ -158,6 +164,7 @@ class Planet {
             material = new THREE.LineBasicMaterial({ color: 0xffffff });
             ellipse = new THREE.Line(geometry, material);
             ellipse.rotation.x = THREE.Math.degToRad(90);
+            this.orbits.push(ellipse);
             this.scene.add(ellipse);
         }
     }
@@ -174,7 +181,8 @@ class Planet {
             c: 0.0796,
             e: 0.2056,
             rotationSpeedAroundSun: 1.607,
-            eulerDistanceFromSun: 2.0790e+3
+            eulerDistanceFromSun: 2.0790e+3,
+            scaleFactor: 19
         };
         this.planetData.push(mercuryData);
 
@@ -184,7 +192,8 @@ class Planet {
             c: 0.0049,
             e: 0.0068,
             rotationSpeedAroundSun: 1.174,
-            eulerDistanceFromSun: 3.8849e+3
+            eulerDistanceFromSun: 3.8849e+3,
+            scaleFactor: 17
         };
         this.planetData.push(venusData);
 
@@ -194,7 +203,8 @@ class Planet {
             c: 0.0167,
             e: 0.0167,
             rotationSpeedAroundSun: 1.000,
-            eulerDistanceFromSun: 5.3709e+3
+            eulerDistanceFromSun: 5.3709e+3,
+            scaleFactor: 17
         };
         this.planetData.push(earthData);
 
@@ -204,7 +214,8 @@ class Planet {
             c: 0.1424,
             e: 0.0934,
             rotationSpeedAroundSun: 0.802,
-            eulerDistanceFromSun: 8.1834e+3
+            eulerDistanceFromSun: 8.1834e+3,
+            scaleFactor: 13.5
         };
         this.planetData.push(marsData);
 
@@ -214,7 +225,8 @@ class Planet {
             c: 0.2520,
             e: 0.0484,
             rotationSpeedAroundSun: 0.434,
-            eulerDistanceFromSun: 2.7951e+4
+            eulerDistanceFromSun: 2.7951e+4,
+            scaleFactor: 5
         };
         this.planetData.push(jupiterData);
 
@@ -224,7 +236,8 @@ class Planet {
             c: 0.5181,
             e: 0.0542,
             rotationSpeedAroundSun: 0.323,
-            eulerDistanceFromSun: 5.1464e+4
+            eulerDistanceFromSun: 5.1464e+4,
+            scaleFactor: 3.5
         };
         this.planetData.push(saturnData);
 
@@ -234,7 +247,8 @@ class Planet {
             c: 0.9055,
             e: 0.0472,
             rotationSpeedAroundSun: 0.228,
-            eulerDistanceFromSun: 1.0328e+5
+            eulerDistanceFromSun: 1.0328e+5,
+            scaleFactor: 2
         };
         this.planetData.push(uranusData);
 
@@ -244,7 +258,8 @@ class Planet {
             c: 0.2587,
             e: 0.0086,
             rotationSpeedAroundSun: 0.182,
-            eulerDistanceFromSun: 1.6168e+5
+            eulerDistanceFromSun: 1.6168e+5,
+            scaleFactor: 1.5
         };
         this.planetData.push(neptuneData);
     }
@@ -253,10 +268,10 @@ class Planet {
     // Called outside the class //////////////////////////////////////
     initializePlanets = function() {
         this.createPlanets();
-        this.planetsMesh = this.createPlanetsMesh();
-        this.addMeshToScene(this.planetsMesh);
+        this.createPlanetsMesh();
+        this.addMeshToScene(this.planetsMeshes);
         this.setPlanetsRotationAngle();
-        this.createEmptyObjects();
+        //this.createEmptyObjects();
         this.addDataToPlanetObject();
         // POKUS
         this.createOrbitShape(this.planetData);
