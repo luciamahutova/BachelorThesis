@@ -197,29 +197,6 @@ class Planet {
         }
     }
 
-    // POKUS - ORBITA V TVARE ELIPSY
-    createOrbitShape = function(planetData) {
-        var curve, points, geometry, material, ellipse;
-        var scaleFactor = [19, 17, 17, 13.5, 5, 3.5, 2, 1.5]; // my values - to fit orbits into 1 screen
-
-        for (var i = 0; i < planetData.length; i++) {
-            curve = new THREE.EllipseCurve(
-                this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
-                this.planetData[i]["a"] * this.planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
-                this.planetData[i]["b"] * this.planetData[i]["scaleFactor"], //yRadius
-                0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
-                false, 0 // aClockwise, aRotation
-            );
-            points = curve.getPoints(500);
-            geometry = new THREE.BufferGeometry().setFromPoints(points);
-            material = new THREE.LineBasicMaterial({ color: 0xffffff });
-            ellipse = new THREE.Line(geometry, material);
-            ellipse.rotation.x = THREE.Math.degToRad(90);
-            this.orbits.push(ellipse);
-            this.scene.add(ellipse);
-        }
-    }
-
     // Called outside the class //////////////////////////////////////
     initializePlanets = function() {
         this.createPlanets();
@@ -290,4 +267,25 @@ Planet.prototype.setPlanetsDistanceFromSun = function() {
     }
     // Not proper value = set according to model
     this.moonMesh.position.x = 1;
+}
+
+Planet.prototype.createOrbitShape = function(planetData) {
+    var curve, points, geometry, material, ellipse;
+
+    for (var i = 0; i < planetData.length; i++) {
+        curve = new THREE.EllipseCurve(
+            this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
+            this.planetData[i]["a"] * this.planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
+            this.planetData[i]["b"] * this.planetData[i]["scaleFactor"], //yRadius
+            0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
+            false, 0 // aClockwise, aRotation
+        );
+        points = curve.getPoints(500);
+        geometry = new THREE.BufferGeometry().setFromPoints(points);
+        material = new THREE.LineBasicMaterial({ color: 0xffffff });
+        ellipse = new THREE.Line(geometry, material);
+        ellipse.rotation.x = THREE.Math.degToRad(90);
+        this.orbits.push(ellipse);
+        this.scene.add(ellipse);
+    }
 }
