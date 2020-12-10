@@ -1,10 +1,10 @@
 class MainScene {
-    _initScene = function() {
+    initScene = function() {
         this.scene = new THREE.Scene();
         return this.scene;
     }
 
-    _initRenderer = function() {
+    initRenderer = function() {
         this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: false });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -15,14 +15,14 @@ class MainScene {
         return this.renderer;
     }
 
-    _initCamera = function() {
+    initCamera = function() {
         this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
         this.camera.position.set(0, 40, 0);
         this.camera.lookAt(new THREE.Vector3(0, 1, 0));
         return this.camera;
     }
 
-    _setLights = function() {
+    setLights = function() {
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x061327, 1.3);
         hemiLight.position.set(0, 0, 0);
         this.scene.add(hemiLight);
@@ -35,7 +35,7 @@ class MainScene {
         this.scene.add(pointLight);
     }
 
-    _setStaticBackground = function() {
+    setStaticBackground = function() {
         const bgTexture = THREE.ImageUtils.loadTexture('/images/2k-starsMilkyWay.jpg');
         const bgGeometry = new THREE.PlaneGeometry(2, 2, 0);
         const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
@@ -43,13 +43,13 @@ class MainScene {
         return this.bgMesh;
     }
 
-    _createBgScene = function() {
+    createBgScene = function() {
         this.bgScene = new THREE.Scene();
         this.bgScene.add(this.bgMesh);
         return this.bgScene;
     }
 
-    _createBgCamera = function() {
+    createBgCamera = function() {
         this.bgCamera = new THREE.Camera();
         this.bgScene.add(this.bgCamera);
         return this.bgCamera;
@@ -57,13 +57,13 @@ class MainScene {
 
     // Called outside the class //////////////////////////////////////
     initialize = function() {
-        this.scene = this._initScene();
-        this.renderer = this._initRenderer();
-        this.camera = this._initCamera();
-        this.bgMesh = this._setStaticBackground();
-        this.bgScene = this._createBgScene(this.bgMesh);
-        this.bgCamera = this._createBgCamera();
-        this._setLights();
+        this.scene = this.initScene();
+        this.renderer = this.initRenderer();
+        this.camera = this.initCamera();
+        this.bgMesh = this.setStaticBackground();
+        this.bgScene = this.createBgScene(this.bgMesh);
+        this.bgCamera = this.createBgCamera();
+        this.setLights();
     }
 
     getScene = function() { return this.scene }
