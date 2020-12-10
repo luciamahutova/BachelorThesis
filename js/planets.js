@@ -27,31 +27,6 @@ class Planet {
         this.scene.add(mesh);
     }
 
-
-    setPlanetsRotationAngle = function() {
-        // Planets' angle around its axis = Z
-        var angleValuesZ = [0.03, 177.4, 23.4, 25.2, 3.1, 26.7, 97.8, 28.3];
-
-        for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
-            this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), (angleValuesZ[angle] * Math.PI) / 180);
-        }
-    }
-
-    setMoonDistanceFromEarth = function() {
-        // Not proper value = set according to model
-        this.moonMesh.position.x = 1;
-    }
-
-    // Position for every planet's orbit from the Sun
-    setPlanetsDistanceFromSun = function() {
-        // Changed scale for better view
-        for (var i = 0; i < this.planetData.length; i++) {
-            this.planetsMeshes[i + 2].position.x = this.planetData[i]["a"] * this.planetData[i]["scaleFactor"] +
-                this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2);
-        }
-        this.setMoonDistanceFromEarth();
-    }
-
     //Empty objects will control planets' movement around the Sun
     createEmptyObjects = function() {
         this.emptyObjectRotateMercury = new THREE.Object3D();
@@ -149,6 +124,7 @@ class Planet {
         // b: semi-minor axis, which is the shortest distance between the center of the ellipse and the curve of the orbit
         // c: distance between the center of the orbit and the focus of the orbit, which is where the Sun would be in a     planetary orbit.
         // e: eccentricity, which is the measure of the deviation of the shape of an orbit from that of a perfect circle (a measure of how elliptical an orbit is). The higher the eccentricity of an orbit, the more elliptical it is;
+        // tiltAxisZ: planets' tilt angle around its axis = Z
         var mercuryData = {
             a: 0.3870,
             b: 0.3788,
@@ -156,7 +132,8 @@ class Planet {
             e: 0.2056,
             rotationSpeedAroundSun: 1.607,
             eulerDistanceFromSun: 2.0790e+3,
-            scaleFactor: 19
+            scaleFactor: 19,
+            tiltAxisZ: 0.03
         };
         this.planetData.push(mercuryData);
 
@@ -167,7 +144,8 @@ class Planet {
             e: 0.0068,
             rotationSpeedAroundSun: 1.174,
             eulerDistanceFromSun: 3.8849e+3,
-            scaleFactor: 17
+            scaleFactor: 17,
+            tiltAxisZ: 177.4
         };
         this.planetData.push(venusData);
 
@@ -178,7 +156,8 @@ class Planet {
             e: 0.0167,
             rotationSpeedAroundSun: 1.000,
             eulerDistanceFromSun: 5.3709e+3,
-            scaleFactor: 17
+            scaleFactor: 17,
+            tiltAxisZ: 23.4
         };
         this.planetData.push(earthData);
 
@@ -189,7 +168,8 @@ class Planet {
             e: 0.0934,
             rotationSpeedAroundSun: 0.802,
             eulerDistanceFromSun: 8.1834e+3,
-            scaleFactor: 13.5
+            scaleFactor: 13.5,
+            tiltAxisZ: 25.2
         };
         this.planetData.push(marsData);
 
@@ -200,7 +180,8 @@ class Planet {
             e: 0.0484,
             rotationSpeedAroundSun: 0.434,
             eulerDistanceFromSun: 2.7951e+4,
-            scaleFactor: 5
+            scaleFactor: 5,
+            tiltAxisZ: 3.1
         };
         this.planetData.push(jupiterData);
 
@@ -211,7 +192,8 @@ class Planet {
             e: 0.0542,
             rotationSpeedAroundSun: 0.323,
             eulerDistanceFromSun: 5.1464e+4,
-            scaleFactor: 3.5
+            scaleFactor: 3.5,
+            tiltAxisZ: 26.7
         };
         this.planetData.push(saturnData);
 
@@ -222,7 +204,8 @@ class Planet {
             e: 0.0472,
             rotationSpeedAroundSun: 0.228,
             eulerDistanceFromSun: 1.0328e+5,
-            scaleFactor: 2
+            scaleFactor: 2,
+            tiltAxisZ: 97.8
         };
         this.planetData.push(uranusData);
 
@@ -233,7 +216,8 @@ class Planet {
             e: 0.0086,
             rotationSpeedAroundSun: 0.182,
             eulerDistanceFromSun: 1.6168e+5,
-            scaleFactor: 1.5
+            scaleFactor: 1.5,
+            tiltAxisZ: 28.3
         };
         this.planetData.push(neptuneData);
     }
@@ -244,9 +228,9 @@ class Planet {
         this.createPlanets();
         this.createPlanetsMesh();
         this.addMeshToScene();
-        this.setPlanetsRotationAngle();
         //this.createEmptyObjects();
         this.addDataToPlanetObject();
+        this.setPlanetsRotationAngle();
         // POKUS
         this.createOrbitShape(this.planetData);
     }
@@ -293,4 +277,21 @@ Planet.prototype.addMeshToScene = function() {
     for (var i = 0; i < this.planetsMeshes.length; i++) {
         this.addToScene(this.planetsMeshes[i]);
     }
+}
+
+Planet.prototype.setPlanetsRotationAngle = function() {
+    for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
+        this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
+            (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
+    }
+}
+
+Planet.prototype.setPlanetsDistanceFromSun = function() {
+    // Changed scale for better view
+    for (var i = 0; i < this.planetData.length; i++) {
+        this.planetsMeshes[i + 2].position.x = this.planetData[i]["a"] * this.planetData[i]["scaleFactor"] +
+            this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2);
+    }
+    // Not proper value = set according to model
+    this.moonMesh.position.x = 1;
 }
