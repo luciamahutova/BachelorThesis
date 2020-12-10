@@ -177,7 +177,7 @@ class Planet {
         }
     }
 
-    // NEDOKONCENE
+    // NEDOKONCENE = ROTACIA PLANET PO ICH ORBITE
     setPlanetsRotationSpeedAroundSun = function(values) {
         // this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
         // this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
@@ -203,7 +203,7 @@ class Planet {
         this.createPlanetsMesh();
         //this.createEmptyObjects();
         this.addDataToPlanetObject();
-        this.setPlanetsRotationAngle(); // NEFUNGUJE NAKLONENIE
+        this.setPlanetsRotationAngle();
         this.createOrbitShape(this.planetData);
     }
 }
@@ -256,6 +256,7 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
         this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
             (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
+        this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90);
     }
 }
 
@@ -274,9 +275,9 @@ Planet.prototype.createOrbitShape = function(planetData) {
 
     for (var i = 0; i < planetData.length; i++) {
         curve = new THREE.EllipseCurve(
-            this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
-            this.planetData[i]["a"] * this.planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
-            this.planetData[i]["b"] * this.planetData[i]["scaleFactor"], //yRadius
+            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
+            planetData[i]["a"] * planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
+            planetData[i]["b"] * planetData[i]["scaleFactor"], //yRadius
             0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
             false, 0 // aClockwise, aRotation
         );
