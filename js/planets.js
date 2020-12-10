@@ -3,24 +3,10 @@ class Planet {
         this.scene = scene;
         this.planetData = [];
         this.orbits = [];
+        this.planetsObjects = [];
         this.planetsMeshes = [];
     }
 
-    createPlanets = function() {
-        // 10x smaller scale for the Sun
-        this.sun = new THREE.SphereBufferGeometry(5, 50, 50);
-        this.mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
-        this.venus = new THREE.SphereBufferGeometry(0.435, 50, 50);
-        this.earth = new THREE.SphereBufferGeometry(0.457, 50, 50);
-        this.moon = new THREE.SphereBufferGeometry(0.124, 50, 50);
-        this.mars = new THREE.SphereBufferGeometry(0.243, 50, 50);
-
-        // 3x smaller scale (4 planets)
-        this.jupiter = new THREE.SphereBufferGeometry(1.673, 50, 50);
-        this.saturn = new THREE.SphereBufferGeometry(1.394, 50, 50);
-        this.uranus = new THREE.SphereBufferGeometry(0.607, 50, 50);
-        this.neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
-    }
 
     setNewMesh = function(imageSrc) {
         let texture = new THREE.TextureLoader().load(imageSrc);
@@ -343,4 +329,25 @@ class OrbitEllipse {
         return (semiMajorAxis - endingApsis) * 2;
     }
 
+}
+
+
+
+Planet.prototype.createPlanets = function() {
+    // 10x smaller scale for the Sun
+    this.sun = new THREE.SphereBufferGeometry(5, 50, 50);
+    this.mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
+    this.venus = new THREE.SphereBufferGeometry(0.435, 50, 50);
+    this.earth = new THREE.SphereBufferGeometry(0.457, 50, 50);
+    this.moon = new THREE.SphereBufferGeometry(0.124, 50, 50);
+    this.mars = new THREE.SphereBufferGeometry(0.243, 50, 50);
+
+    // 3x smaller scale (4 planets)
+    this.jupiter = new THREE.SphereBufferGeometry(1.673, 50, 50);
+    this.saturn = new THREE.SphereBufferGeometry(1.394, 50, 50);
+    this.uranus = new THREE.SphereBufferGeometry(0.607, 50, 50);
+    this.neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
+
+    this.planetsObjects.push(this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars,
+        this.jupiter, this.saturn, this.uranus, this.neptune);
 }
