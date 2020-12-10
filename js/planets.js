@@ -23,12 +23,10 @@ class Planet {
         return new THREE.Mesh(planetObject, this.setNewMesh(imageSrc));
     }
 
-
-    addMeshToScene = function(planetsMesh) {
-        for (var i = 0; i < planetsMesh.length; i++) {
-            this.scene.add(planetsMesh[i]);
-        }
+    addToScene = function(mesh) {
+        this.scene.add(mesh);
     }
+
 
     setPlanetsRotationAngle = function() {
         // Planets' angle around its axis = Z
@@ -245,7 +243,7 @@ class Planet {
     initializePlanets = function() {
         this.createPlanets();
         this.createPlanetsMesh();
-        this.addMeshToScene(this.planetsMeshes);
+        this.addMeshToScene();
         this.setPlanetsRotationAngle();
         //this.createEmptyObjects();
         this.addDataToPlanetObject();
@@ -289,4 +287,10 @@ Planet.prototype.createPlanetsMesh = function() {
 
     this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
+}
+
+Planet.prototype.addMeshToScene = function() {
+    for (var i = 0; i < this.planetsMeshes.length; i++) {
+        this.addToScene(this.planetsMeshes[i]);
+    }
 }
