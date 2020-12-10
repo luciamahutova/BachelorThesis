@@ -7,6 +7,9 @@ class Planet {
         this.planetsMeshes = [];
     }
 
+    createPlanetObject = function(diameter) {
+        return new THREE.SphereBufferGeometry(diameter, 50, 50);
+    }
 
     setNewMesh = function(imageSrc) {
         let texture = new THREE.TextureLoader().load(imageSrc);
@@ -261,92 +264,24 @@ class Planet {
         this.createOrbitShape(this.planetData);
 
     }
-}
-
-// POKUS - ELIPSA
-class OrbitEllipse {
-    constructor(orbitAroundPos, orbiterPos, endingApsis, circular) {
-        this.startingApsis = 0;
-        this.endingApsis = 0;
-        this.semiMajorAxis = 0;
-        this.semiMinorAxis = 0;
-        this.focalDistance = 0;
-        this.difference = 0;
-        this.update(orbitAroundPos, orbiterPos, endingApsis, circular);
-    }
-    update = function(orbitAroundPos, orbiterPos, endingApsis, circular) {
-        this.difference = orbiterPos - orbitAroundPos;
-        this.startingApsis = this.difference.magnitude;
-        if (endingApsis == 0 || circular)
-            this.endingApsis = this.startingApsis;
-        else
-            this.endingApsis = endingApsis;
-        this.semiMajorAxis = this.calcSemiMajorAxis(this.startingApsis, this.endingApsis);
-        this.focalDistance = this.calcFocalDistance(this.semiMajorAxis, this.endingApsis);
-        this.semiMinorAxis = this.calcSemiMinorAxis(this.semiMajorAxis, this.focalDistance);
-    }
-
-    getPosition = function(degrees, orbitAroundPos) {
-        // Use the difference between the orbiter and the object it's orbiting around to determine the direction
-        // that the ellipse is aimed
-        // Angle is given in degrees
-        var ellipseDirection = Vector3.Angle(Vector3.left, difference); // the direction the ellipse is rotated
-        if (difference.y < 0) {
-            ellipseDirection = 360 - ellipseDirection; // Full 360 degrees, rather than doubling back after 180 degrees
-        }
-
-        var beta = ellipseDirection * Mathf.Deg2Rad;
-        var sinBeta = Mathf.Sin(beta);
-        var cosBeta = Mathf.Cos(beta);
-
-        var alpha = degrees * Mathf.Deg2Rad;
-        var sinalpha = Mathf.Sin(alpha);
-        var cosalpha = Mathf.Cos(alpha);
-
-        // Position the ellipse relative to the "orbit around" transform
-        var ellipseOffset = difference.normalized * (semiMajorAxis - endingApsis);
-
-        var finalPosition = new THREE.Vector3();
-        finalPosition.x = ellipseOffset.x + (semiMajorAxis * cosalpha * cosBeta - semiMinorAxis * sinalpha * sinBeta) * -1;
-        finalPosition.y = ellipseOffset.y + (semiMajorAxis * cosalpha * sinBeta + semiMinorAxis * sinalpha * cosBeta);
-
-        // Offset entire ellipse proportional to the position of the object we're orbiting around
-        finalPosition += orbitAroundPos;
-
-        return finalPosition;
-    }
-
-    calcSemiMajorAxis = function(startingApsis, endingApsis) {
-        return (startingApsis + endingApsis) * 0.5;
-    }
-
-    calcSemiMinorAxis = function(semiMajorAxis, focalDistance) {
-        var distA = semiMajorAxis + focalDistance * 0.5;
-        var distB = semiMajorAxis - focalDistance * 0.5;
-        return Math.sqrt(Math.pow(distA + distB, 2) - focalDistance * focalDistance) * 0.5;
-    }
-    calcFocalDistance = function(semiMajorAxis, endingApsis) {
-        return (semiMajorAxis - endingApsis) * 2;
-    }
 
 }
-
 
 
 Planet.prototype.createPlanets = function() {
     // 10x smaller scale for the Sun
-    this.sun = new THREE.SphereBufferGeometry(5, 50, 50);
-    this.mercury = new THREE.SphereBufferGeometry(0.175, 50, 50);
-    this.venus = new THREE.SphereBufferGeometry(0.435, 50, 50);
-    this.earth = new THREE.SphereBufferGeometry(0.457, 50, 50);
-    this.moon = new THREE.SphereBufferGeometry(0.124, 50, 50);
-    this.mars = new THREE.SphereBufferGeometry(0.243, 50, 50);
+    this.sun = this.createPlanetObject(5);
+    this.mercury = this.createPlanetObject(0.175);
+    this.venus = this.createPlanetObject(0.435);
+    this.earth = this.createPlanetObject(0.457);
+    this.moon = this.createPlanetObject(0.124);
+    this.mars = this.createPlanetObject(0.243);
 
-    // 3x smaller scale (4 planets)
-    this.jupiter = new THREE.SphereBufferGeometry(1.673, 50, 50);
-    this.saturn = new THREE.SphereBufferGeometry(1.394, 50, 50);
-    this.uranus = new THREE.SphereBufferGeometry(0.607, 50, 50);
-    this.neptune = new THREE.SphereBufferGeometry(0.589, 50, 50);
+    // // 3x smaller scale (4 planets)
+    this.jupiter = this.createPlanetObject(1.673);
+    this.saturn = this.createPlanetObject(1.394);
+    this.uranus = this.createPlanetObject(0.607);
+    this.neptune = this.createPlanetObject(0.589);
 
     this.planetsObjects.push(this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars,
         this.jupiter, this.saturn, this.uranus, this.neptune);
