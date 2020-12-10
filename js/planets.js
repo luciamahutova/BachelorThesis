@@ -27,98 +27,7 @@ class Planet {
         this.scene.add(mesh);
     }
 
-    //Empty objects will control planets' movement around the Sun
-    createEmptyObjects = function() {
-        this.emptyObjectRotateMercury = new THREE.Object3D();
-        this.emptyObjectRotateMercury.add(this.mercuryMesh);
-
-        this.emptyObjectRotateVenus = new THREE.Object3D();
-        this.emptyObjectRotateVenus.add(this.venusMesh);
-
-        this.emptyObjectRotateEarth = new THREE.Object3D();
-        this.emptyObjectRotateEarth.add(this.earthMesh);
-
-        this.emptyObjectRotateMoon = new THREE.Object3D();
-        this.earthMesh.add(this.emptyObjectRotateMoon);
-        this.emptyObjectRotateMoon.add(this.moonMesh);
-
-        this.emptyObjectRotateMars = new THREE.Object3D();
-        this.emptyObjectRotateMars.add(this.marsMesh);
-
-        this.emptyObjectRotateJupiter = new THREE.Object3D();
-        this.emptyObjectRotateJupiter.add(this.jupiterMesh);
-
-        this.emptyObjectRotateSaturn = new THREE.Object3D();
-        this.emptyObjectRotateSaturn.add(this.saturnMesh);
-
-        this.emptyObjectRotateUranus = new THREE.Object3D();
-        this.emptyObjectRotateUranus.add(this.uranusMesh);
-
-        this.emptyObjectRotateNeptune = new THREE.Object3D();
-        this.emptyObjectRotateNeptune.add(this.neptuneMesh);
-
-        this.addEmptyToSun();
-    }
-
-    // For rotating planets around the Sun
-    addEmptyToSun = function() {
-        var emptyObjectsArray = [this.emptyObjectRotateMercury, this.emptyObjectRotateVenus, this.emptyObjectRotateEarth, this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn,
-            this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune
-        ];
-
-        for (var i = 0; i < emptyObjectsArray.length; i++) {
-            this.sunMesh.add(emptyObjectsArray[i]);
-        }
-    }
-
-    setMoonRotationAroundEarth = function() {
-        // Not proper value, needs to change
-        this.emptyObjectRotateMoon.rotation.y += 0.001;
-    }
-
-    setPlanetsRotationSpeedAroundSun = function(values) {
-        // this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
-        // this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
-        // this.emptyObjectRotateEarth.rotation.y += values[2] / 100;
-        // this.emptyObjectRotateMars.rotation.y += values[3] / 100;
-        // this.emptyObjectRotateJupiter.rotation.y += values[4] / 100;
-        // this.emptyObjectRotateSaturn.rotation.y += values[5] / 100;
-        // this.emptyObjectRotateUranus.rotation.y += values[6] / 100;
-        // this.emptyObjectRotateNeptune.rotation.y += values[7] / 100;
-        //this.setMoonRotationAroundEarth();
-
-        var timestamp = Date.now() * 0.0001;
-        for (var i = 0; i < this.orbits.length; i++) {
-            this.orbits[i].add(this.planetsMeshes[i + 2]);
-            //this.planetsMeshes[i + 2].position.x = Math.cos(timestamp * 1.607);
-            //this.planetsMeshes[i + 2].position.z = Math.sin(timestamp * 1.607);
-        }
-    }
-
-    // POKUS - ORBITA V TVARE ELIPSY
-    createOrbitShape = function(planetData) {
-        var curve, points, geometry, material, ellipse;
-        var scaleFactor = [19, 17, 17, 13.5, 5, 3.5, 2, 1.5]; // my values - to fit orbits into 1 screen
-
-        for (var i = 0; i < planetData.length; i++) {
-            curve = new THREE.EllipseCurve(
-                this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
-                this.planetData[i]["a"] * this.planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
-                this.planetData[i]["b"] * this.planetData[i]["scaleFactor"], //yRadius
-                0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
-                false, 0 // aClockwise, aRotation
-            );
-            points = curve.getPoints(500);
-            geometry = new THREE.BufferGeometry().setFromPoints(points);
-            material = new THREE.LineBasicMaterial({ color: 0xffffff });
-            ellipse = new THREE.Line(geometry, material);
-            ellipse.rotation.x = THREE.Math.degToRad(90);
-            this.orbits.push(ellipse);
-            this.scene.add(ellipse);
-        }
-    }
-
-    // DOPLNENIE DAT PRE PLANETY
+    // Values for planets
     addDataToPlanetObject = function() {
         // a: semi-major axis, which is the largest distance between the center of the ellipse and the curve of the orbit
         // b: semi-minor axis, which is the shortest distance between the center of the ellipse and the curve of the orbit
@@ -222,19 +131,104 @@ class Planet {
         this.planetData.push(neptuneData);
     }
 
+    // VYNECHANE
+    createEmptyObjects = function() {
+        //Empty objects will control planets' movement around the Sun
+        this.emptyObjectRotateMercury = new THREE.Object3D();
+        this.emptyObjectRotateMercury.add(this.mercuryMesh);
+
+        this.emptyObjectRotateVenus = new THREE.Object3D();
+        this.emptyObjectRotateVenus.add(this.venusMesh);
+
+        this.emptyObjectRotateEarth = new THREE.Object3D();
+        this.emptyObjectRotateEarth.add(this.earthMesh);
+
+        this.emptyObjectRotateMoon = new THREE.Object3D();
+        this.earthMesh.add(this.emptyObjectRotateMoon);
+        this.emptyObjectRotateMoon.add(this.moonMesh);
+
+        this.emptyObjectRotateMars = new THREE.Object3D();
+        this.emptyObjectRotateMars.add(this.marsMesh);
+
+        this.emptyObjectRotateJupiter = new THREE.Object3D();
+        this.emptyObjectRotateJupiter.add(this.jupiterMesh);
+
+        this.emptyObjectRotateSaturn = new THREE.Object3D();
+        this.emptyObjectRotateSaturn.add(this.saturnMesh);
+
+        this.emptyObjectRotateUranus = new THREE.Object3D();
+        this.emptyObjectRotateUranus.add(this.uranusMesh);
+
+        this.emptyObjectRotateNeptune = new THREE.Object3D();
+        this.emptyObjectRotateNeptune.add(this.neptuneMesh);
+
+        this.addEmptyToSun();
+    }
+
+    // VYNECHANE
+    addEmptyToSun = function() {
+        // For rotating planets around the Sun
+        var emptyObjectsArray = [this.emptyObjectRotateMercury, this.emptyObjectRotateVenus, this.emptyObjectRotateEarth, this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn,
+            this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune
+        ];
+
+        for (var i = 0; i < emptyObjectsArray.length; i++) {
+            this.sunMesh.add(emptyObjectsArray[i]);
+        }
+    }
+
+    // NEDOKONCENE
+    setPlanetsRotationSpeedAroundSun = function(values) {
+        // this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
+        // this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
+        // this.emptyObjectRotateEarth.rotation.y += values[2] / 100;
+        // this.emptyObjectRotateMars.rotation.y += values[3] / 100;
+        // this.emptyObjectRotateJupiter.rotation.y += values[4] / 100;
+        // this.emptyObjectRotateSaturn.rotation.y += values[5] / 100;
+        // this.emptyObjectRotateUranus.rotation.y += values[6] / 100;
+        // this.emptyObjectRotateNeptune.rotation.y += values[7] / 100;
+        // this.emptyObjectRotateMoon.rotation.y += 0.001;
+
+        var timestamp = Date.now() * 0.0001;
+        for (var i = 0; i < this.orbits.length; i++) {
+            this.orbits[i].add(this.planetsMeshes[i + 2]);
+            //this.planetsMeshes[i + 2].position.x = Math.cos(timestamp * 1.607);
+            //this.planetsMeshes[i + 2].position.z = Math.sin(timestamp * 1.607);
+        }
+    }
+
+    // POKUS - ORBITA V TVARE ELIPSY
+    createOrbitShape = function(planetData) {
+        var curve, points, geometry, material, ellipse;
+        var scaleFactor = [19, 17, 17, 13.5, 5, 3.5, 2, 1.5]; // my values - to fit orbits into 1 screen
+
+        for (var i = 0; i < planetData.length; i++) {
+            curve = new THREE.EllipseCurve(
+                this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
+                this.planetData[i]["a"] * this.planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
+                this.planetData[i]["b"] * this.planetData[i]["scaleFactor"], //yRadius
+                0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
+                false, 0 // aClockwise, aRotation
+            );
+            points = curve.getPoints(500);
+            geometry = new THREE.BufferGeometry().setFromPoints(points);
+            material = new THREE.LineBasicMaterial({ color: 0xffffff });
+            ellipse = new THREE.Line(geometry, material);
+            ellipse.rotation.x = THREE.Math.degToRad(90);
+            this.orbits.push(ellipse);
+            this.scene.add(ellipse);
+        }
+    }
 
     // Called outside the class //////////////////////////////////////
     initializePlanets = function() {
         this.createPlanets();
         this.createPlanetsMesh();
-        this.addMeshToScene();
         //this.createEmptyObjects();
         this.addDataToPlanetObject();
-        this.setPlanetsRotationAngle();
-        // POKUS
+        this.setPlanetsRotationAngle(); // NEFUNGUJE NAKLONENIE
         this.createOrbitShape(this.planetData);
     }
-
 }
 
 
@@ -271,6 +265,8 @@ Planet.prototype.createPlanetsMesh = function() {
 
     this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
+
+    this.addMeshToScene();
 }
 
 Planet.prototype.addMeshToScene = function() {
