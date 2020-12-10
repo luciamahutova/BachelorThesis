@@ -19,21 +19,10 @@ class Planet {
         return this.meshMaterial;
     }
 
-    createPlanetsMesh = function() {
-        this.sunMesh = new THREE.Mesh(this.sun, this.setNewMesh('/images/textures/sunTexture2k.jpg'));
-        this.mercuryMesh = new THREE.Mesh(this.mercury, this.setNewMesh('/images/textures/mercuryTexture2k.jpg'));
-        this.venusMesh = new THREE.Mesh(this.venus, this.setNewMesh('/images/textures/venusTexture2k.jpg'));
-        this.earthMesh = new THREE.Mesh(this.earth, this.setNewMesh('/images/textures/earthTexture2k.jpg'));
-        this.moonMesh = new THREE.Mesh(this.moon, this.setNewMesh('/images/textures/moonTexture2k.jpg'));
-        this.marsMesh = new THREE.Mesh(this.mars, this.setNewMesh('/images/textures/marsTexture2k.jpg'));
-        this.jupiterMesh = new THREE.Mesh(this.jupiter, this.setNewMesh('/images/textures/jupiterTexture2k.jpg'));
-        this.saturnMesh = new THREE.Mesh(this.saturn, this.setNewMesh('/images/textures/saturnTexture2k.jpg'));
-        this.uranusMesh = new THREE.Mesh(this.uranus, this.setNewMesh('/images/textures/uranusTexture2k.jpg'));
-        this.neptuneMesh = new THREE.Mesh(this.neptune, this.setNewMesh('/images/textures/neptuneTexture2k.jpg'));
-
-        this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
-            this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
+    createMesh = function(planetObject, imageSrc) {
+        return new THREE.Mesh(planetObject, this.setNewMesh(imageSrc));
     }
+
 
     addMeshToScene = function(planetsMesh) {
         for (var i = 0; i < planetsMesh.length; i++) {
@@ -262,7 +251,6 @@ class Planet {
         this.addDataToPlanetObject();
         // POKUS
         this.createOrbitShape(this.planetData);
-
     }
 
 }
@@ -285,4 +273,20 @@ Planet.prototype.createPlanets = function() {
 
     this.planetsObjects.push(this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars,
         this.jupiter, this.saturn, this.uranus, this.neptune);
+}
+
+Planet.prototype.createPlanetsMesh = function() {
+    this.sunMesh = this.createMesh(this.planetsObjects[0], '/images/textures/sunTexture2k.jpg');
+    this.moonMesh = this.createMesh(this.planetsObjects[1], '/images/textures/moonTexture2k.jpg');
+    this.mercuryMesh = this.createMesh(this.planetsObjects[2], '/images/textures/mercuryTexture2k.jpg');
+    this.venusMesh = this.createMesh(this.planetsObjects[3], '/images/textures/venusTexture2k.jpg');
+    this.earthMesh = this.createMesh(this.planetsObjects[4], '/images/textures/earthTexture2k.jpg');
+    this.marsMesh = this.createMesh(this.planetsObjects[5], '/images/textures/marsTexture2k.jpg');
+    this.jupiterMesh = this.createMesh(this.planetsObjects[6], '/images/textures/jupiterTexture2k.jpg');
+    this.saturnMesh = this.createMesh(this.planetsObjects[7], '/images/textures/saturnTexture2k.jpg');
+    this.uranusMesh = this.createMesh(this.planetsObjects[8], '/images/textures/uranusTexture2k.jpg');
+    this.neptuneMesh = this.createMesh(this.planetsObjects[9], '/images/textures/neptuneTexture2k.jpg');
+
+    this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
+        this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
 }
