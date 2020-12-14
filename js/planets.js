@@ -280,18 +280,17 @@ Planet.prototype.setPlanetsDistanceFromSun = function() {
 }
 
 Planet.prototype.createOrbitShape = function(planetData) {
-    var curve, points, geometry, material, ellipse;
+    var curve, geometry, material, ellipse;
 
     for (var i = 0; i < planetData.length; i++) {
         curve = this.createCurveForOrbit(planetData, i);
 
-        points = curve.getPoints(500);
-        geometry = new THREE.BufferGeometry().setFromPoints(points);
+        geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(500));
         material = new THREE.LineBasicMaterial({ color: 0xffffff });
         ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
         this.orbits.push(ellipse);
-        ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE?
+        //ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE?
         this.scene.add(ellipse);
     }
 }
