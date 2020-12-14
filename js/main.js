@@ -15,7 +15,6 @@ var planetObject = new Planet(scene);
 planetObject.initializePlanets();
 
 function animate() {
-    planetObject.setPlanetsDistanceFromSun();
     planetObject.setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
 
     mainScene.animate();

@@ -218,7 +218,7 @@ class Planet {
 }
 
 
-Planet.prototype.createPlanets = function() {
+Planet.prototype.createPlanets = function(planetData) {
     // 10x smaller scale for the Sun
     this.sun = this.createPlanetObject(4);
     this.mercury = this.createPlanetObject(0.175);
@@ -269,11 +269,24 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     }
 }
 
-Planet.prototype.setPlanetsDistanceFromSun = function() {
+Planet.prototype.setPlanetsDistanceFromSun = function(planetData) {
+    var zoom = 0;
     // Changed scale for better view
-    for (var i = 0; i < this.planetData.length; i++) {
-        this.planetsMeshes[i + 2].position.x = this.planetData[i]["a"] * this.planetData[i]["scaleFactor"] +
-            this.planetData[i]["c"] * (this.planetData[i]["scaleFactor"] / 2);
+    for (var i = 0; i < planetData.length; i++) {
+        if (planetData[i]["zoom"] > 0) {
+            zoom = planetData[i]["zoom"];
+            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] * zoom +
+                planetData[i]["c"] * (planetData[i]["scaleFactor"] * zoom / 2)
+                // POKUS
+                // this.mercury = 
+        } else if (planetData[i]["zoom"] < 0) {
+            zoom = (planetData[i]["zoom"] * -1);
+            this.planetsMeshes[i + 2].position.x = (planetData[i]["a"] * planetData[i]["scaleFactor"]) / zoom +
+                planetData[i]["c"] * ((planetData[i]["scaleFactor"] / zoom) / 2);
+        } else {
+            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] +
+                planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2);
+        }
     }
     // Not proper value = set according to model
     this.moonMesh.position.x = 1;
@@ -350,6 +363,7 @@ Planet.prototype.zoomRangeslider = function(planetData, orbits) {
         }
 
         this.updateOrbitSize(planetData, orbits);
+        this.setPlanetsDistanceFromSun(planetData);
     }
 
     slider.addEventListener('input', updateZoomValue);
