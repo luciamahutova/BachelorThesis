@@ -64,6 +64,7 @@ class MainScene {
         this.bgScene = this.createBgScene(this.bgMesh);
         this.bgCamera = this.createBgCamera();
         this.setLights();
+        this.zoomRangeslider();
     }
 
     getScene = function() { return this.scene }
@@ -85,4 +86,14 @@ class MainScene {
         this.renderer.render(this.scene, this.camera);
     };
 
+}
+
+MainScene.prototype.zoomRangeslider = function() {
+    var slider = document.getElementById("rangesliderInput");
+    var sliderValue = document.getElementById("rangesliderValue");
+    sliderValue.innerHTML = slider.value;
+
+    slider.oninput = function() {
+        sliderValue.innerHTML = this.value;
+    }
 }

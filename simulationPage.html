@@ -132,8 +132,8 @@
     </section>
 
     <div class="slidecontainer">
-        <input type="range" min="-50" max="50" value="0" class="slider" id="myRange">
-        <p>Zoom: <span id="demo"></span></p>
+        <input type="range" min="-50" max="50" value="0" class="slider" id="rangesliderInput">
+        <p>Zoom: <span id="rangesliderValue"></span></p>
     </div>
 
     <div id="anime-container"></div>
@@ -144,18 +144,6 @@
     <script src="/js/main.js"></script>
     <script src="/js/menuSidebarScript.js "></script>
     <script src="/js/textTranslator.js "></script>
-
-    <!-- <script src="/js/planets.js"></script> -->
-    <!-- <script src="/js/simulationScript.js"></script> -->
-    <script>
-        var slider = document.getElementById("myRange");
-        var output = document.getElementById("demo");
-        output.innerHTML = slider.value;
-
-        slider.oninput = function() {
-            output.innerHTML = this.value;
-        }
-    </script>
 </body>
 
 </html>
