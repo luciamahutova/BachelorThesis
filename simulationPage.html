@@ -131,6 +131,11 @@
         <button></button>
     </section>
 
+    <div class="slidecontainer">
+        <input type="range" min="-50" max="50" value="0" class="slider" id="myRange">
+        <p>Zoom: <span id="demo"></span></p>
+    </div>
+
     <div id="anime-container"></div>
 
     <!-- Scripts -->
@@ -142,6 +147,15 @@
 
     <!-- <script src="/js/planets.js"></script> -->
     <!-- <script src="/js/simulationScript.js"></script> -->
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+    </script>
 </body>
 
 </html>

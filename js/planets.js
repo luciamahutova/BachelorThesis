@@ -211,7 +211,7 @@ class Planet {
 
 Planet.prototype.createPlanets = function() {
     // 10x smaller scale for the Sun
-    this.sun = this.createPlanetObject(5);
+    this.sun = this.createPlanetObject(4);
     this.mercury = this.createPlanetObject(0.175);
     this.venus = this.createPlanetObject(0.435);
     this.earth = this.createPlanetObject(0.457);
@@ -287,6 +287,22 @@ Planet.prototype.createOrbitShape = function(planetData) {
         ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
         this.orbits.push(ellipse);
+        ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE?
         this.scene.add(ellipse);
     }
 }
+
+Planet.prototype.addNamesToPlanets = function() {
+    // const map = new THREE.TextureLoader().load('sprite.png');
+    // const material = new THREE.SpriteMaterial({ map: map });
+    // const sprite = new THREE.Sprite(material);
+    // scene.add(sprite);
+}
+
+Planet.prototype.getPoint = function(curve, t) {
+    // var radians = 2 * Math.PI * t;
+    // return new THREE.Vector3(curve.xRadius * Math.cos(radians),
+    //     curve.yRadius * Math.sin(radians),
+    //     0);
+
+};

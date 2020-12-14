@@ -366,3 +366,50 @@ header+a {
 .container3 p:first-child {
     max-width: 365px;
 }
+
+
+/* SLIDER */
+
+
+/* ------------------------------------------------- */
+
+.slidecontainer {
+    z-index: 20;
+    position: fixed;
+    bottom: 20px;
+    left: 38%;
+    width: 25%;
+    background-color: transparent;
+}
+
+.slidecontainer p {
+    background-color: transparent;
+    position: relative;
+    left: 40%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    outline: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    background: #ffffff;
+    opacity: 0.6;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border-color: #061327;
+    background: #BABABA;
+}
