@@ -39,6 +39,7 @@ class Planet {
             b: 0.3788,
             c: 0.0796,
             e: 0.2056,
+            zoom: 1,
             rotationSpeedAroundSun: 1.607,
             eulerDistanceFromSun: 2.0790e+3,
             scaleFactor: 19,
@@ -51,6 +52,7 @@ class Planet {
             b: 0.7219,
             c: 0.0049,
             e: 0.0068,
+            zoom: 1,
             rotationSpeedAroundSun: 1.174,
             eulerDistanceFromSun: 3.8849e+3,
             scaleFactor: 17,
@@ -63,6 +65,7 @@ class Planet {
             b: 1.0025,
             c: 0.0167,
             e: 0.0167,
+            zoom: 1,
             rotationSpeedAroundSun: 1.000,
             eulerDistanceFromSun: 5.3709e+3,
             scaleFactor: 17,
@@ -75,6 +78,7 @@ class Planet {
             b: 1.5173,
             c: 0.1424,
             e: 0.0934,
+            zoom: 1,
             rotationSpeedAroundSun: 0.802,
             eulerDistanceFromSun: 8.1834e+3,
             scaleFactor: 13.5,
@@ -87,6 +91,7 @@ class Planet {
             b: 5.2010,
             c: 0.2520,
             e: 0.0484,
+            zoom: 1,
             rotationSpeedAroundSun: 0.434,
             eulerDistanceFromSun: 2.7951e+4,
             scaleFactor: 5,
@@ -99,6 +104,7 @@ class Planet {
             b: 9.5231,
             c: 0.5181,
             e: 0.0542,
+            zoom: 1,
             rotationSpeedAroundSun: 0.323,
             eulerDistanceFromSun: 5.1464e+4,
             scaleFactor: 3.5,
@@ -111,6 +117,7 @@ class Planet {
             b: 19.1645,
             c: 0.9055,
             e: 0.0472,
+            zoom: 1,
             rotationSpeedAroundSun: 0.228,
             eulerDistanceFromSun: 1.0328e+5,
             scaleFactor: 2,
@@ -123,6 +130,7 @@ class Planet {
             b: 30.0788,
             c: 0.2587,
             e: 0.0086,
+            zoom: 1,
             rotationSpeedAroundSun: 0.182,
             eulerDistanceFromSun: 1.6168e+5,
             scaleFactor: 1.5,
@@ -205,6 +213,7 @@ class Planet {
         this.addDataToPlanetObject();
         this.setPlanetsRotationAngle();
         this.createOrbitShape(this.planetData);
+        this.zoomRangeslider(this.planetData, this.orbits);
     }
 }
 
@@ -274,13 +283,8 @@ Planet.prototype.createOrbitShape = function(planetData) {
     var curve, points, geometry, material, ellipse;
 
     for (var i = 0; i < planetData.length; i++) {
-        curve = new THREE.EllipseCurve(
-            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
-            planetData[i]["a"] * planetData[i]["scaleFactor"], //xRadius (The radius of the ellipse in the X direction)
-            planetData[i]["b"] * planetData[i]["scaleFactor"], //yRadius
-            0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
-            false, 0 // aClockwise, aRotation
-        );
+        curve = this.createCurveForOrbit(planetData, i);
+
         points = curve.getPoints(500);
         geometry = new THREE.BufferGeometry().setFromPoints(points);
         material = new THREE.LineBasicMaterial({ color: 0xffffff });
@@ -290,6 +294,36 @@ Planet.prototype.createOrbitShape = function(planetData) {
         ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE?
         this.scene.add(ellipse);
     }
+}
+
+Planet.prototype.createCurveForOrbit = function(planetData, i) {
+    var curve;
+    if (planetData[i]["zoom"] > 0) {
+        curve = new THREE.EllipseCurve(
+            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
+            planetData[i]["a"] * planetData[i]["scaleFactor"] * planetData[i]["zoom"], //xRadius
+            planetData[i]["b"] * planetData[i]["scaleFactor"] * planetData[i]["zoom"], //yRadius
+            0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
+            false, 0 // aClockwise, aRotation
+        );
+    } else if (planetData[i]["zoom"] < 0) {
+        curve = new THREE.EllipseCurve(
+            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0,
+            (planetData[i]["a"] * planetData[i]["scaleFactor"]) / (planetData[i]["zoom"] * -1),
+            (planetData[i]["b"] * planetData[i]["scaleFactor"]) / (planetData[i]["zoom"] * -1),
+            0, 2 * Math.PI,
+            false, 0
+        );
+    } else {
+        curve = new THREE.EllipseCurve(
+            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0,
+            planetData[i]["a"] * planetData[i]["scaleFactor"],
+            planetData[i]["b"] * planetData[i]["scaleFactor"],
+            0, 2 * Math.PI,
+            false, 0
+        );
+    }
+    return curve;
 }
 
 Planet.prototype.addNamesToPlanets = function() {
@@ -304,5 +338,32 @@ Planet.prototype.getPoint = function(curve, t) {
     // return new THREE.Vector3(curve.xRadius * Math.cos(radians),
     //     curve.yRadius * Math.sin(radians),
     //     0);
-
 };
+
+Planet.prototype.zoomRangeslider = function(planetData, orbits) {
+    var slider = document.getElementById("rangesliderInput");
+    var sliderValue = document.getElementById("rangesliderValue");
+    let updateZoomValue = () => {
+        sliderValue.innerHTML = slider.value;
+        for (var i = 0; i < planetData.length; i++) {
+            planetData[i]["zoom"] = sliderValue.innerHTML;
+            console.log(planetData[0]["zoom"]);
+        }
+
+        this.updateOrbitSize(planetData, orbits);
+    }
+
+    slider.addEventListener('input', updateZoomValue);
+    updateZoomValue();
+}
+
+Planet.prototype.updateOrbitSize = function(planetData, orbits) {
+    for (var i = 0; i < orbits.length; i++) {
+        this.scene.remove(orbits[i]);
+    }
+    orbits.length = 0; // making array empty 
+    this.createOrbitShape(planetData);
+}
+
+// Planet.prototype.applyZoomValueToModel = function() {
+// }
