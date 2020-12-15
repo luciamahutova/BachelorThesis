@@ -1,4 +1,14 @@
 class MainScene {
+    constructor() {
+        this.initScene();
+        this.initRenderer();
+        this.initCamera();
+        this.bgMesh = this.setStaticBackground();
+        this.bgScene = this.createBgScene(this.bgMesh);
+        this.bgCamera = this.createBgCamera();
+        this.setLights();
+    }
+
     initScene = function() {
         this.scene = new THREE.Scene();
         return this.scene;
@@ -53,17 +63,6 @@ class MainScene {
         this.bgCamera = new THREE.Camera();
         this.bgScene.add(this.bgCamera);
         return this.bgCamera;
-    }
-
-    // Called outside the class //////////////////////////////////////
-    initialize = function() {
-        this.scene = this.initScene();
-        this.renderer = this.initRenderer();
-        this.camera = this.initCamera();
-        this.bgMesh = this.setStaticBackground();
-        this.bgScene = this.createBgScene(this.bgMesh);
-        this.bgCamera = this.createBgCamera();
-        this.setLights();
     }
 
     getScene = function() { return this.scene }

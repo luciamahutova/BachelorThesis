@@ -4,7 +4,6 @@ const eulerNumberDistanceFromSun = [2.0790e+3, 3.8849e+3, 5.3709e+3, 8.1834e+3, 
 var scene, renderer, camera, planetsMesh, zoomValue;
 
 var mainScene = new MainScene();
-mainScene.initialize();
 
 scene = mainScene.getScene();
 renderer = mainScene.getRenderer();

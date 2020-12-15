@@ -377,6 +377,3 @@ Planet.prototype.updateOrbitSize = function(planetData, orbits) {
     orbits.length = 0; // making array empty 
     this.createOrbitShape(planetData);
 }
-
-// Planet.prototype.applyZoomValueToModel = function() {
-// }
