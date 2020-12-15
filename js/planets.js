@@ -139,62 +139,9 @@ class Planet {
         this.planetData.push(neptuneData);
     }
 
-    // VYNECHANE
-    createEmptyObjects = function() {
-        //Empty objects will control planets' movement around the Sun
-        this.emptyObjectRotateMercury = new THREE.Object3D();
-        this.emptyObjectRotateMercury.add(this.mercuryMesh);
-
-        this.emptyObjectRotateVenus = new THREE.Object3D();
-        this.emptyObjectRotateVenus.add(this.venusMesh);
-
-        this.emptyObjectRotateEarth = new THREE.Object3D();
-        this.emptyObjectRotateEarth.add(this.earthMesh);
-
-        this.emptyObjectRotateMoon = new THREE.Object3D();
-        this.earthMesh.add(this.emptyObjectRotateMoon);
-        this.emptyObjectRotateMoon.add(this.moonMesh);
-
-        this.emptyObjectRotateMars = new THREE.Object3D();
-        this.emptyObjectRotateMars.add(this.marsMesh);
-
-        this.emptyObjectRotateJupiter = new THREE.Object3D();
-        this.emptyObjectRotateJupiter.add(this.jupiterMesh);
-
-        this.emptyObjectRotateSaturn = new THREE.Object3D();
-        this.emptyObjectRotateSaturn.add(this.saturnMesh);
-
-        this.emptyObjectRotateUranus = new THREE.Object3D();
-        this.emptyObjectRotateUranus.add(this.uranusMesh);
-
-        this.emptyObjectRotateNeptune = new THREE.Object3D();
-        this.emptyObjectRotateNeptune.add(this.neptuneMesh);
-
-        this.addEmptyToSun();
-    }
-
-    // VYNECHANE
-    addEmptyToSun = function() {
-        // For rotating planets around the Sun
-        var emptyObjectsArray = [this.emptyObjectRotateMercury, this.emptyObjectRotateVenus, this.emptyObjectRotateEarth, this.emptyObjectRotateMars, this.emptyObjectRotateJupiter, this.emptyObjectRotateSaturn,
-            this.emptyObjectRotateUranus, this.emptyObjectRotateNeptune
-        ];
-
-        for (var i = 0; i < emptyObjectsArray.length; i++) {
-            this.sunMesh.add(emptyObjectsArray[i]);
-        }
-    }
-
     // NEDOKONCENE = ROTACIA PLANET PO ICH ORBITE
     setPlanetsRotationSpeedAroundSun = function(values) {
         // this.emptyObjectRotateMercury.rotation.y += values[0] / 100;
-        // this.emptyObjectRotateVenus.rotation.y += values[1] / 100;
-        // this.emptyObjectRotateEarth.rotation.y += values[2] / 100;
-        // this.emptyObjectRotateMars.rotation.y += values[3] / 100;
-        // this.emptyObjectRotateJupiter.rotation.y += values[4] / 100;
-        // this.emptyObjectRotateSaturn.rotation.y += values[5] / 100;
-        // this.emptyObjectRotateUranus.rotation.y += values[6] / 100;
-        // this.emptyObjectRotateNeptune.rotation.y += values[7] / 100;
         // this.emptyObjectRotateMoon.rotation.y += 0.001;
 
         var timestamp = Date.now() * 0.0001;
@@ -209,7 +156,6 @@ class Planet {
     initializePlanets = function() {
         this.createPlanets();
         this.createPlanetsMesh();
-        //this.createEmptyObjects();
         this.addDataToPlanetObject();
         this.setPlanetsRotationAngle();
         this.createOrbitShape(this.planetData);
