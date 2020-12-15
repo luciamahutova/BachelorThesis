@@ -23,10 +23,6 @@ class Planet {
         return new THREE.Mesh(planetObject, this.setNewMesh(imageSrc));
     }
 
-    addToScene = function(mesh) {
-        this.scene.add(mesh);
-    }
-
     // Values for planets
     addDataToPlanetObject = function() {
         // a: semi-major axis, which is the largest distance between the center of the ellipse and the curve of the orbit
@@ -155,7 +151,7 @@ class Planet {
     // Called outside the class //////////////////////////////////////
     initializePlanets = function() {
         this.createPlanets();
-        this.createPlanetsMesh();
+        this.createPlanetsMesh(this.scene);
         this.addDataToPlanetObject();
         this.setPlanetsRotationAngle();
         this.createOrbitShape(this.planetData);
@@ -183,7 +179,7 @@ Planet.prototype.createPlanets = function(planetData) {
         this.jupiter, this.saturn, this.uranus, this.neptune);
 }
 
-Planet.prototype.createPlanetsMesh = function() {
+Planet.prototype.createPlanetsMesh = function(scene) {
     this.sunMesh = this.createMesh(this.planetsObjects[0], '/images/textures/sunTexture2k.jpg');
     this.moonMesh = this.createMesh(this.planetsObjects[1], '/images/textures/moonTexture2k.jpg');
     this.mercuryMesh = this.createMesh(this.planetsObjects[2], '/images/textures/mercuryTexture2k.jpg');
@@ -198,12 +194,12 @@ Planet.prototype.createPlanetsMesh = function() {
     this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
 
-    this.addMeshToScene();
+    this.addMeshToScene(scene);
 }
 
-Planet.prototype.addMeshToScene = function() {
+Planet.prototype.addMeshToScene = function(scene) {
     for (var i = 0; i < this.planetsMeshes.length; i++) {
-        this.addToScene(this.planetsMeshes[i]);
+        scene.add(this.planetsMeshes[i]);
     }
 }
 
@@ -211,7 +207,7 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
         this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
             (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
-        this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90);
+        this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90); //because orbits are rotated +90degrees
     }
 }
 
@@ -223,8 +219,6 @@ Planet.prototype.setPlanetsDistanceFromSun = function(planetData) {
             zoom = planetData[i]["zoom"];
             this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] * zoom +
                 planetData[i]["c"] * (planetData[i]["scaleFactor"] * zoom / 2)
-                // POKUS
-                // this.mercury = 
         } else if (planetData[i]["zoom"] < 0) {
             zoom = (planetData[i]["zoom"] * -1);
             this.planetsMeshes[i + 2].position.x = (planetData[i]["a"] * planetData[i]["scaleFactor"]) / zoom +
@@ -301,7 +295,8 @@ Planet.prototype.getPoint = function(curve, t) {
 Planet.prototype.zoomRangeslider = function(planetData, orbits) {
     var slider = document.getElementById("rangesliderInput");
     var sliderValue = document.getElementById("rangesliderValue");
-    let updateZoomValue = () => {
+
+    var updateZoomValue = () => {
         sliderValue.innerHTML = slider.value;
         for (var i = 0; i < planetData.length; i++) {
             planetData[i]["zoom"] = sliderValue.innerHTML;
