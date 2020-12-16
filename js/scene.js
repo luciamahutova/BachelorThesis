@@ -78,9 +78,20 @@ class MainScene {
     }
 
     animate = function() {
+        window.addEventListener("scroll", this.updateCamera); // POKUS - ANIMACIA KAMERY = ZLE
+
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
         this.renderer.render(this.bgScene, this.bgCamera);
         this.renderer.render(this.scene, this.camera);
     };
+
+
+    // POKUS - ANIMACIA KAMERY
+    updateCamera = function(ev) { // ZLE
+        let elem = document.getElementById("scrollCamera");
+        console.log(window.scrollY);
+        this.scene.position.x += 10;
+        this.camera.position.z = -1.5 + window.scrollX / 250.0;
+    }
 }
