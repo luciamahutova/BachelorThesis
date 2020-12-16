@@ -160,7 +160,8 @@ class Planet {
     }
 }
 
-
+// Creating planet objects
+// -------------------------------------------------------------------------
 Planet.prototype.createPlanets = function(planetData) {
     // 10x smaller scale for the Sun
     this.sun = this.createPlanetObject(4);
@@ -204,6 +205,8 @@ Planet.prototype.addMeshToScene = function(scene) {
     }
 }
 
+// Setting properties of planets
+// -------------------------------------------------------------------------
 Planet.prototype.setPlanetsRotationAngle = function() {
     for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
         this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
@@ -262,6 +265,8 @@ Planet.prototype.scaleMeshesToOriginalSize = function(scaleValue) {
     }
 }
 
+// Orbits for planets
+// -------------------------------------------------------------------------
 Planet.prototype.createOrbitShape = function(planetData) {
     var curve, geometry, material, ellipse;
 
@@ -312,20 +317,16 @@ Planet.prototype.createCurveForOrbit = function(planetData, i) {
     return curve;
 }
 
-Planet.prototype.addNamesToPlanets = function() {
-    // const map = new THREE.TextureLoader().load('sprite.png');
-    // const material = new THREE.SpriteMaterial({ map: map });
-    // const sprite = new THREE.Sprite(material);
-    // scene.add(sprite);
+Planet.prototype.updateOrbitSize = function(planetData, orbits) {
+    for (var i = 0; i < orbits.length; i++) {
+        this.scene.remove(orbits[i]);
+    }
+    orbits.length = 0; // making array empty 
+    this.createOrbitShape(planetData);
 }
 
-Planet.prototype.getPoint = function(curve, t) {
-    // var radians = 2 * Math.PI * t;
-    // return new THREE.Vector3(curve.xRadius * Math.cos(radians),
-    //     curve.yRadius * Math.sin(radians),
-    //     0);
-};
-
+// General function for zooming in/out (for planets and orbits)
+// -------------------------------------------------------------------------
 Planet.prototype.zoomRangeslider = function(planetData, orbits) {
     var slider = document.getElementById("rangesliderInput");
     var sliderValue = document.getElementById("rangesliderValue");
@@ -344,10 +345,20 @@ Planet.prototype.zoomRangeslider = function(planetData, orbits) {
     updateZoomValue();
 }
 
-Planet.prototype.updateOrbitSize = function(planetData, orbits) {
-    for (var i = 0; i < orbits.length; i++) {
-        this.scene.remove(orbits[i]);
-    }
-    orbits.length = 0; // making array empty 
-    this.createOrbitShape(planetData);
+
+
+
+// NEDOKONCENE
+Planet.prototype.addNamesToPlanets = function() {
+    // const map = new THREE.TextureLoader().load('sprite.png');
+    // const material = new THREE.SpriteMaterial({ map: map });
+    // const sprite = new THREE.Sprite(material);
+    // scene.add(sprite);
 }
+
+Planet.prototype.getPoint = function(curve, t) {
+    // var radians = 2 * Math.PI * t;
+    // return new THREE.Vector3(curve.xRadius * Math.cos(radians),
+    //     curve.yRadius * Math.sin(radians),
+    //     0);
+};
