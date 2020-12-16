@@ -30,6 +30,7 @@ class Planet {
         // c: distance between the center of the orbit and the focus of the orbit, which is where the Sun would be in a     planetary orbit.
         // e: eccentricity, which is the measure of the deviation of the shape of an orbit from that of a perfect circle (a measure of how elliptical an orbit is). The higher the eccentricity of an orbit, the more elliptical it is;
         // tiltAxisZ: planets' tilt angle around its axis = Z
+        // scaleFaktor: my values for better view of all planets
         var mercuryData = {
             a: 0.3870,
             b: 0.3788,
@@ -207,33 +208,32 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
         this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
             (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
-        this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90); //because orbits are rotated +90degrees
+        //this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90); //because orbits are rotated +90degrees
     }
 }
 
 Planet.prototype.setPlanetsDistanceFromSun = function(planetData) {
     // Changed scale for better view
     var scaleValue = planetData[0]["zoom"];
-    console.log(scaleValue);
+
     if (scaleValue > 0) {
         for (var i = 0; i < planetData.length; i++) {
-            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue +
-                planetData[i]["c"] * (planetData[i]["scaleFactor"] * scaleValue / 2);
+            this.planetsMeshes[i + 2].position.x =
+                planetData[i]["a"] * planetData[i]["scaleFactor"] * planetData[i]["zoom"] * 2;
         }
         this.scaleMeshesPositiveRangesliderValue(scaleValue);
 
     } else if (scaleValue < 0) {
         scaleValue *= -1;
         for (var i = 0; i < planetData.length; i++) {
-            this.planetsMeshes[i + 2].position.x = (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue +
-                planetData[i]["c"] * ((planetData[i]["scaleFactor"] / scaleValue) / 2);
+            this.planetsMeshes[i + 2].position.x =
+                (planetData[i]["a"] * planetData[i]["scaleFactor"]) / (planetData[i]["zoom"] * -1) / 2;
         }
         this.scaleMeshesNegativeRangesliderValue(scaleValue);
 
     } else {
         for (var i = 0; i < planetData.length; i++) {
-            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] +
-                planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2);
+            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"];
         }
         this.scaleMeshesToOriginalSize(scaleValue);
     }
@@ -243,14 +243,14 @@ Planet.prototype.setPlanetsDistanceFromSun = function(planetData) {
 
 Planet.prototype.scaleMeshesPositiveRangesliderValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
-        this.planetsMeshes[0].scale.set(scaleValue, scaleValue, scaleValue); // the Sun
+        this.planetsMeshes[0].scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue); // the Sun
         this.planetsMeshes[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
 Planet.prototype.scaleMeshesNegativeRangesliderValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
-        this.planetsMeshes[0].scale.set(1 / (-1 * scaleValue), 1 / (-1 * scaleValue), 1 / (-1 * scaleValue)); // the Sun
+        this.planetsMeshes[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
         // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
         this.planetsMeshes[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
     }
@@ -273,37 +273,41 @@ Planet.prototype.createOrbitShape = function(planetData) {
         ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
         this.orbits.push(ellipse);
-        //ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE?
+        //ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE? -> ak pouzite, treba otocit planety o 90stupnov
         this.scene.add(ellipse);
     }
 }
 
 Planet.prototype.createCurveForOrbit = function(planetData, i) {
     var curve;
-    if (planetData[i]["zoom"] > 0) {
+    var zoom = planetData[0]["zoom"];
+    if (zoom > 0) {
         curve = new THREE.EllipseCurve(
-            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0, // aX, aY (X/Y center of the ellipse)
-            planetData[i]["a"] * planetData[i]["scaleFactor"] * planetData[i]["zoom"], //xRadius
-            planetData[i]["b"] * planetData[i]["scaleFactor"] * planetData[i]["zoom"], //yRadius
+            planetData[i]["c"], 0, // aX, aY (X/Y center of the ellipse)
+            planetData[i]["a"] * planetData[i]["scaleFactor"] * planetData[i]["zoom"] * 2, //xRadius
+            planetData[i]["b"] * planetData[i]["scaleFactor"] * planetData[i]["zoom"] * 2, //yRadius
             0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
             false, 0 // aClockwise, aRotation
         );
-    } else if (planetData[i]["zoom"] < 0) {
+        console.log(zoom);
+    } else if (zoom < 0) {
         curve = new THREE.EllipseCurve(
-            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0,
-            (planetData[i]["a"] * planetData[i]["scaleFactor"]) / planetData[i]["zoom"],
-            (planetData[i]["b"] * planetData[i]["scaleFactor"]) / planetData[i]["zoom"],
+            planetData[i]["c"], 0,
+            (planetData[i]["a"] * planetData[i]["scaleFactor"]) / (planetData[i]["zoom"] * -1) / 2,
+            (planetData[i]["b"] * planetData[i]["scaleFactor"]) / (planetData[i]["zoom"] * -1) / 2,
             0, 2 * Math.PI,
             false, 0
         );
+        console.log(zoom);
     } else {
         curve = new THREE.EllipseCurve(
-            planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0,
+            planetData[i]["c"], 0,
             planetData[i]["a"] * planetData[i]["scaleFactor"],
             planetData[i]["b"] * planetData[i]["scaleFactor"],
             0, 2 * Math.PI,
             false, 0
         );
+        // planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2) -> pôvodné hodnoty pre všetky if
     }
     return curve;
 }
