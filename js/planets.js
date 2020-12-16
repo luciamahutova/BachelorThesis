@@ -212,24 +212,64 @@ Planet.prototype.setPlanetsRotationAngle = function() {
 }
 
 Planet.prototype.setPlanetsDistanceFromSun = function(planetData) {
-    var zoom = 0;
     // Changed scale for better view
-    for (var i = 0; i < planetData.length; i++) {
-        if (planetData[i]["zoom"] > 0) {
-            zoom = planetData[i]["zoom"];
-            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] * zoom +
-                planetData[i]["c"] * (planetData[i]["scaleFactor"] * zoom / 2)
-        } else if (planetData[i]["zoom"] < 0) {
-            zoom = (planetData[i]["zoom"] * -1);
-            this.planetsMeshes[i + 2].position.x = (planetData[i]["a"] * planetData[i]["scaleFactor"]) / zoom +
-                planetData[i]["c"] * ((planetData[i]["scaleFactor"] / zoom) / 2);
-        } else {
+    var scaleValue = planetData[0]["zoom"];
+
+    if (scaleValue > 1) {
+        for (var i = 0; i < planetData.length; i++) {
+            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue +
+                planetData[i]["c"] * (planetData[i]["scaleFactor"] * scaleValue / 2);
+        }
+
+        // if (scaleValue < this.scaleValue) {
+        //     this.scalePlanetsZoomOut(scaleValue);
+        //     console.log("v-out " + scaleValue);
+        // } else if (scaleValue > this.scaleValue) {
+        //     this.scalePlanetsZoomIn(scaleValue);
+        //     console.log("v-in " + scaleValue);
+        // }
+        // this.scaleValue = scaleValue;
+        this.scalePlanetsZoomIn(scaleValue);
+
+
+    } else if (scaleValue < -1) {
+        scaleValue = (planetData[0]["zoom"] * -1);
+        for (var i = 0; i < planetData.length; i++) {
+            this.planetsMeshes[i + 2].position.x = (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue +
+                planetData[i]["c"] * ((planetData[i]["scaleFactor"] / scaleValue) / 2);
+        }
+        this.scalePlanetsZoomOut(scaleValue);
+
+    } else {
+        for (var i = 0; i < planetData.length; i++) {
             this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] +
                 planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2);
         }
+        this.scalePlanetsToOriginalSize(scaleValue);
     }
+
     // Not proper value = set according to model
     this.moonMesh.position.x = 1;
+}
+
+Planet.prototype.scalePlanetsZoomIn = function(scaleValue) {
+    for (var i = 1; i < this.planetsMeshes.length; i++) {
+        this.planetsMeshes[0].scale.set(scaleValue, scaleValue, scaleValue); // the Sun
+        this.planetsMeshes[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
+    }
+}
+
+Planet.prototype.scalePlanetsZoomOut = function(scaleValue) {
+    for (var i = 1; i < this.planetsMeshes.length; i++) {
+        this.planetsMeshes[0].scale.set(1 / (-1 * scaleValue), 1 / (-1 * scaleValue), 1 / (-1 * scaleValue)); // the Sun
+        this.planetsMeshes[i].scale.set(2 / (-1 * scaleValue), 2 / (-1 * scaleValue), 2 / (-1 * scaleValue));
+    }
+}
+
+Planet.prototype.scalePlanetsToOriginalSize = function(scaleValue) {
+    for (var i = 0; i < this.planetsMeshes.length; i++) {
+        this.planetsMeshes[0].scale.set(1, 1, 1); // NEFUNGUJE, POTREBUJEM ORIGINALNE ROZMERY
+    }
 }
 
 Planet.prototype.createOrbitShape = function(planetData) {
@@ -300,7 +340,6 @@ Planet.prototype.zoomRangeslider = function(planetData, orbits) {
         sliderValue.innerHTML = slider.value;
         for (var i = 0; i < planetData.length; i++) {
             planetData[i]["zoom"] = sliderValue.innerHTML;
-            console.log(planetData[0]["zoom"]);
         }
 
         this.updateOrbitSize(planetData, orbits);
