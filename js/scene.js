@@ -38,7 +38,7 @@ class MainScene {
         this.scene.add(hemiLight);
 
         const pointLight = new THREE.PointLight(0xffffff, 0.8, window.innerHeight, 1.5);
-        pointLight.position.set(0, 8, 0);
+        pointLight.position.set(0, 10, 0);
         pointLight.castShadow = true;
         pointLight.shadow.camera.near = 0;
         pointLight.shadow.camera.far = window.innerWidth;

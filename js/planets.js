@@ -214,61 +214,51 @@ Planet.prototype.setPlanetsRotationAngle = function() {
 Planet.prototype.setPlanetsDistanceFromSun = function(planetData) {
     // Changed scale for better view
     var scaleValue = planetData[0]["zoom"];
-
-    if (scaleValue > 1) {
+    console.log(scaleValue);
+    if (scaleValue > 0) {
         for (var i = 0; i < planetData.length; i++) {
             this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue +
                 planetData[i]["c"] * (planetData[i]["scaleFactor"] * scaleValue / 2);
         }
+        this.scaleMeshesPositiveRangesliderValue(scaleValue);
 
-        // if (scaleValue < this.scaleValue) {
-        //     this.scalePlanetsZoomOut(scaleValue);
-        //     console.log("v-out " + scaleValue);
-        // } else if (scaleValue > this.scaleValue) {
-        //     this.scalePlanetsZoomIn(scaleValue);
-        //     console.log("v-in " + scaleValue);
-        // }
-        // this.scaleValue = scaleValue;
-        this.scalePlanetsZoomIn(scaleValue);
-
-
-    } else if (scaleValue < -1) {
-        scaleValue = (planetData[0]["zoom"] * -1);
+    } else if (scaleValue < 0) {
+        scaleValue *= -1;
         for (var i = 0; i < planetData.length; i++) {
             this.planetsMeshes[i + 2].position.x = (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue +
                 planetData[i]["c"] * ((planetData[i]["scaleFactor"] / scaleValue) / 2);
         }
-        this.scalePlanetsZoomOut(scaleValue);
+        this.scaleMeshesNegativeRangesliderValue(scaleValue);
 
     } else {
         for (var i = 0; i < planetData.length; i++) {
             this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] +
                 planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2);
         }
-        this.scalePlanetsToOriginalSize(scaleValue);
+        this.scaleMeshesToOriginalSize(scaleValue);
     }
-
     // Not proper value = set according to model
     this.moonMesh.position.x = 1;
 }
 
-Planet.prototype.scalePlanetsZoomIn = function(scaleValue) {
+Planet.prototype.scaleMeshesPositiveRangesliderValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
         this.planetsMeshes[0].scale.set(scaleValue, scaleValue, scaleValue); // the Sun
         this.planetsMeshes[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
-Planet.prototype.scalePlanetsZoomOut = function(scaleValue) {
+Planet.prototype.scaleMeshesNegativeRangesliderValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
         this.planetsMeshes[0].scale.set(1 / (-1 * scaleValue), 1 / (-1 * scaleValue), 1 / (-1 * scaleValue)); // the Sun
-        this.planetsMeshes[i].scale.set(2 / (-1 * scaleValue), 2 / (-1 * scaleValue), 2 / (-1 * scaleValue));
+        // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
+        this.planetsMeshes[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
     }
 }
 
-Planet.prototype.scalePlanetsToOriginalSize = function(scaleValue) {
+Planet.prototype.scaleMeshesToOriginalSize = function(scaleValue) {
     for (var i = 0; i < this.planetsMeshes.length; i++) {
-        this.planetsMeshes[0].scale.set(1, 1, 1); // NEFUNGUJE, POTREBUJEM ORIGINALNE ROZMERY
+        this.planetsMeshes[i].scale.set(1, 1, 1);
     }
 }
 
@@ -301,8 +291,8 @@ Planet.prototype.createCurveForOrbit = function(planetData, i) {
     } else if (planetData[i]["zoom"] < 0) {
         curve = new THREE.EllipseCurve(
             planetData[i]["c"] * (planetData[i]["scaleFactor"] / 2), 0,
-            (planetData[i]["a"] * planetData[i]["scaleFactor"]) / (planetData[i]["zoom"] * -1),
-            (planetData[i]["b"] * planetData[i]["scaleFactor"]) / (planetData[i]["zoom"] * -1),
+            (planetData[i]["a"] * planetData[i]["scaleFactor"]) / planetData[i]["zoom"],
+            (planetData[i]["b"] * planetData[i]["scaleFactor"]) / planetData[i]["zoom"],
             0, 2 * Math.PI,
             false, 0
         );
