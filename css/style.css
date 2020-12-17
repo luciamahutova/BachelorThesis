@@ -145,6 +145,7 @@ header img {
 #languages button {
     text-transform: uppercase;
     color: #BABABA;
+    outline: none;
 }
 
 #languages button:nth-of-type(2) {

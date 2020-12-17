@@ -27,7 +27,6 @@ function highlightChosenLanguage(event) {
         document.getElementById("cz").style.color = document.getElementById("en").style.color = "#BABABABA";
     }
     event.target.style.color = "#ffffff";
-    translatePage();
 }
 
 
