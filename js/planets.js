@@ -335,18 +335,14 @@ Planet.prototype.zoomRangeslider = function(planetData, orbits) {
     var updateZoomValue = () => {
         sliderValue.innerHTML = slider.value;
         for (var i = 0; i < planetData.length; i++) {
-            //planetData[i]["zoom"] = sliderValue.innerHTML;
             scaleValue = sliderValue.innerHTML;
         }
-
         this.setScaleToSceneObjects(planetData, scaleValue);
     }
 
     slider.addEventListener('input', updateZoomValue);
     updateZoomValue();
 }
-
-
 
 
 // NEDOKONCENE
