@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- JavaScript libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript " src="http://code.jquery.com/jquery-2.2.4.min.js "></script>
 </head>
 
 <body>
@@ -19,10 +20,10 @@
                 <li><a href="planetsPage.html" class="lang" key="planets">Planets</a></li>
                 <li><a href="#" class="lang" key="about">About application</a></li>
             </ul>
-            <div class="languages">
-                <a href="#" class="translate" id="cz">cz</a>
-                <a href="#" class="translate" id="en">en</a>
-                <a href="#" class="translate" id="sk">sk</a>
+            <div id="languages" onclick="highlightLang()">
+                <button class="translate" id="cz">cz</button>
+                <button class="translate" id="en">en</button>
+                <button class="translate" id="sk">sk</button>
             </div>
         </nav>
     </header>

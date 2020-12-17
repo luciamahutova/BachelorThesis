@@ -39,10 +39,9 @@ let arrLang = {
         'century': '',
         'rings': 'Prstence:',
         'exactDate': '',
-        'discovery': ''
-    },
-    // Translation for long text
-    cz: {
+        'discovery': '',
+
+        // Translation for long text
         'mercuryText': 'Merkur je planeta nejbližší ke Slunci. Na každé dvě oběžné dráhy Slunce absolvuje Merkur tři rotace kolem své osy. Třináctkrát za století lze pozorovat Merkur ze Země procházející kolem Slunce. Tato událost se nazývá tranzit.',
         'venusText': 'Venuše je druhou planetou od Slunce a je druhou největší suchozemskou planetou. Venuše se pro svou podobnou velikost a hmotnost někdy označuje jako sesterská planeta Země. Venuše je pojmenovaná po římské bohyni lásky a krásy.',
         'earthText': 'Země je třetí planetou od Slunce a je největší ze suchozemských planet. Země je jedinou planetou v naší sluneční soustavě, která není pojmenována podle řeckého nebo římského božství. Zemi vznikla asi před 4,54 miliardami let a je jedinou známou planetou, která podporuje život.',
@@ -93,10 +92,9 @@ let arrLang = {
         'century': '',
         'rings': 'Rings',
         'exactDate': '',
-        'discovery': ''
-    },
-    // Translation for long text
-    en: {
+        'discovery': '',
+
+        // Translation for long text
         'mercuryText': 'Mercury is the closest planet to the Sun. For every two orbits of the Sun, Mercury completes three      rotations about its axis. Thirteen times a century Mercury can be observed from the Earth passing across the face of the Sun in an event called a transit.',
         'venusText': 'Venus is the second planet from the Sun and is the second largest terrestrial planet. Venus is sometimes referred to as the Earth’s sister planet due to their similar size and mass. Venus is named after the Roman goddess of love and beauty.',
         'earthText': 'Earth is the third planet from the Sun and is the largest of the terrestrial planets. The Earth is the only planet in our solar system not to be named after a Greek or Roman deity. The Earth was formed approximately 4.54 billion years ago and is the only known planet to support life.',
@@ -146,10 +144,9 @@ let arrLang = {
         'century': '',
         'rings': 'Prstence:',
         'exactDate': '',
-        'discovery': ''
-    },
-    // Translation for long text
-    sk: {
+        'discovery': '',
+
+        // Translation for long text
         'mercuryText': 'Merkúr je planéta najbližšia k Slnku. Na každé dve obežné dráhy Slnka absolvuje Merkúr tri rotácie okolo svojej osi. Trinásťkrát za storočie je možné pozorovať Merkúr zo Zeme prechádzajúcej okolo Slnka. Táto udalosť sa nazýva tranzit.',
         'venusText': 'Venuša je druhou planétou od Slnka a je druhou najväčšou suchozemskou planétou. Venuša sa pre svoju podobnú veľkosť a hmotnosť niekedy označuje ako sesterská planéta Zeme. Venuša je pomenovaná po rímskej bohyni lásky a krásy.',
         'earthText': 'Zem je treťou planétou od Slnka a je najväčšou zo suchozemských planét. Zem je jedinou planétou v našej slnečnej sústave, ktorá nie je pomenovaná podľa gréckeho alebo rímskeho božstva. Zem vznikla asi pred 4,54 miliardami rokov a je jedinou známou planétou, ktorá podporuje život.',

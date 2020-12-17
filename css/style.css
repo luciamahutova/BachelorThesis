@@ -114,10 +114,12 @@ header img {
     z-index: 1;
 }
 
-#menu a {
+#menu a,
+#menu button {
     margin-left: 20px;
     font-size: 18px;
     text-decoration: none;
+    border: none;
     position: relative;
     transition: transform 0.3s ease;
 }
@@ -135,10 +137,19 @@ header img {
     transform: translateX(10px);
 }
 
-#menu .languages {
-    text-transform: uppercase;
+#menu #languages {
     position: absolute;
     bottom: 15px;
+}
+
+#languages button {
+    text-transform: uppercase;
+    color: #BABABA;
+}
+
+#languages button:nth-of-type(2) {
+    font-weight: bold;
+    color: #ffffff;
 }
 
 #menu .closebtn {

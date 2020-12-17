@@ -8,6 +8,29 @@ function closeNav() {
     document.getElementById("menu").style.right = "-300px"
 }
 
+function highlightLang() {
+    document.getElementById("languages").onclick = highlightChosenLanguage;
+}
+
+function highlightChosenLanguage(event) {
+    if (event.target.id == "cz") {
+        event.target.style.fontWeight = "bold";
+        document.getElementById("en").style.fontWeight = document.getElementById("sk").style.fontWeight = "normal";
+        document.getElementById("en").style.color = document.getElementById("sk").style.color = "#BABABABA";
+    } else if (event.target.id == "en") {
+        event.target.style.fontWeight = "bold";
+        document.getElementById("cz").style.fontWeight = document.getElementById("sk").style.fontWeight = "normal";
+        document.getElementById("cz").style.color = document.getElementById("sk").style.color = "#BABABABA";
+    } else if (event.target.id == "sk") {
+        event.target.style.fontWeight = "bold";
+        document.getElementById("cz").style.fontWeight = document.getElementById("en").style.fontWeight = "normal";
+        document.getElementById("cz").style.color = document.getElementById("en").style.color = "#BABABABA";
+    }
+    event.target.style.color = "#ffffff";
+    translatePage();
+}
+
+
 // Script for sidebar 
 ///////////////////////////////////////////////////////////////
 var isSidebarOpen = true;
