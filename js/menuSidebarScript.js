@@ -29,6 +29,17 @@ function highlightChosenLanguage(event) {
     event.target.style.color = "#ffffff";
 }
 
+//POKUS-UMIESTNIT INDE
+// NEFUNGUJE
+$(document).on("click", "#planetSwitch", function(event) {
+    var target = $(event.target);
+    console.log(target.is('#planetSwitch'));
+    if (target.is('#planet-1')) {
+        console.log("yes2");
+        document.getElementById("data-1").style.visibility = visible;
+    }
+});
+
 
 // Script for sidebar 
 ///////////////////////////////////////////////////////////////
