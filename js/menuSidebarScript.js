@@ -8,25 +8,19 @@ function closeNav() {
     document.getElementById("menu").style.right = "-300px"
 }
 
-function highlightLang() {
-    document.getElementById("languages").onclick = highlightChosenLanguage;
-}
-
-function highlightChosenLanguage(event) {
-    if (event.target.id == "cz") {
-        event.target.style.fontWeight = "bold";
+function highlightChosenLanguage(id) {
+    if (id == "cz") {
         document.getElementById("en").style.fontWeight = document.getElementById("sk").style.fontWeight = "normal";
         document.getElementById("en").style.color = document.getElementById("sk").style.color = "#BABABABA";
-    } else if (event.target.id == "en") {
-        event.target.style.fontWeight = "bold";
+    } else if (id == "en") {
         document.getElementById("cz").style.fontWeight = document.getElementById("sk").style.fontWeight = "normal";
         document.getElementById("cz").style.color = document.getElementById("sk").style.color = "#BABABABA";
-    } else if (event.target.id == "sk") {
-        event.target.style.fontWeight = "bold";
+    } else if (id == "sk") {
         document.getElementById("cz").style.fontWeight = document.getElementById("en").style.fontWeight = "normal";
         document.getElementById("cz").style.color = document.getElementById("en").style.color = "#BABABABA";
     }
-    event.target.style.color = "#ffffff";
+    document.getElementById(id).style.fontWeight = "bold";
+    document.getElementById(id).style.color = "#ffffff";
 }
 
 //POKUS-UMIESTNIT INDE
