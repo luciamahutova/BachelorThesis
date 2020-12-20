@@ -215,8 +215,8 @@ Planet.prototype.setScaleToSceneObjects = function(planetData, scaleValue) {
             this.planetsMeshes[i + 2].position.x =
                 planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2;
         }
-        this.scaleMeshesPositiveRangesliderValue(scaleValue);
-        this.scaleOrbitsPositiveRangesliderValue(this.orbits, scaleValue);
+        this.scaleMeshesRangesliderPositiveValue(scaleValue);
+        this.scaleOrbitsRangesliderPositiveValue(this.orbits, scaleValue);
 
     } else if (scaleValue < 0) {
         scaleValue *= -1;
@@ -224,8 +224,8 @@ Planet.prototype.setScaleToSceneObjects = function(planetData, scaleValue) {
             this.planetsMeshes[i + 2].position.x =
                 (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue / 2;
         }
-        this.scaleMeshesNegativeRangesliderValue(scaleValue);
-        this.scaleOrbitsNegativeRangesliderValue(this.orbits, scaleValue);
+        this.scaleMeshesRangesliderNegativeValue(scaleValue);
+        this.scaleOrbitsRangesliderNegativeValue(this.orbits, scaleValue);
 
     } else {
         for (var i = 0; i < planetData.length; i++) {
@@ -238,14 +238,14 @@ Planet.prototype.setScaleToSceneObjects = function(planetData, scaleValue) {
     this.moonMesh.position.x = 1;
 }
 
-Planet.prototype.scaleMeshesPositiveRangesliderValue = function(scaleValue) {
+Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
         this.planetsMeshes[0].scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue); // the Sun
         this.planetsMeshes[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
-Planet.prototype.scaleMeshesNegativeRangesliderValue = function(scaleValue) {
+Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
         this.planetsMeshes[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
         // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
@@ -307,13 +307,13 @@ Planet.prototype.createCurveForOrbit = function(planetData, i, scaleValue) {
     return curve;
 }
 
-Planet.prototype.scaleOrbitsPositiveRangesliderValue = function(orbits, scaleValue) {
+Planet.prototype.scaleOrbitsRangesliderPositiveValue = function(orbits, scaleValue) {
     for (var i = 0; i < orbits.length; i++) {
         orbits[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
-Planet.prototype.scaleOrbitsNegativeRangesliderValue = function(orbits, scaleValue) {
+Planet.prototype.scaleOrbitsRangesliderNegativeValue = function(orbits, scaleValue) {
     for (var i = 0; i < orbits.length; i++) {
         orbits[i].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue));
     }
