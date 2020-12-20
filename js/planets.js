@@ -40,7 +40,7 @@ class Planet {
             eulerDistanceFromSun: 2.0790e+3,
             scaleFactor: 19,
             tiltAxisZ: 0.03,
-            meshSize: 0.175
+            planetSize: 0.175
         };
         this.planetData.push(mercuryData);
 
@@ -53,7 +53,7 @@ class Planet {
             eulerDistanceFromSun: 3.8849e+3,
             scaleFactor: 17,
             tiltAxisZ: 177.4,
-            meshSize: 0.435
+            planetSize: 0.435
         };
         this.planetData.push(venusData);
 
@@ -66,7 +66,7 @@ class Planet {
             eulerDistanceFromSun: 5.3709e+3,
             scaleFactor: 17,
             tiltAxisZ: 23.4,
-            meshSize: 0.457
+            planetSize: 0.457
         };
         this.planetData.push(earthData);
 
@@ -79,7 +79,7 @@ class Planet {
             eulerDistanceFromSun: 8.1834e+3,
             scaleFactor: 13.5,
             tiltAxisZ: 25.2,
-            meshSize: 0.243
+            planetSize: 0.243
         };
         this.planetData.push(marsData);
 
@@ -92,7 +92,7 @@ class Planet {
             eulerDistanceFromSun: 2.7951e+4,
             scaleFactor: 5,
             tiltAxisZ: 3.1,
-            meshSize: 1.673
+            planetSize: 1.673
         };
         this.planetData.push(jupiterData);
 
@@ -105,7 +105,7 @@ class Planet {
             eulerDistanceFromSun: 5.1464e+4,
             scaleFactor: 3.5,
             tiltAxisZ: 26.7,
-            meshSize: 1.394
+            planetSize: 1.394
         };
         this.planetData.push(saturnData);
 
@@ -118,7 +118,7 @@ class Planet {
             eulerDistanceFromSun: 1.0328e+5,
             scaleFactor: 2,
             tiltAxisZ: 97.8,
-            meshSize: 0.607
+            planetSize: 0.607
         };
         this.planetData.push(uranusData);
 
@@ -131,7 +131,7 @@ class Planet {
             eulerDistanceFromSun: 1.6168e+5,
             scaleFactor: 1.5,
             tiltAxisZ: 28.3,
-            meshSize: 0.589
+            planetSize: 0.589
         };
         this.planetData.push(neptuneData);
     }
@@ -151,9 +151,9 @@ class Planet {
 
     // Called outside the class //////////////////////////////////////
     initializePlanets = function() {
-        this.createPlanets();
-        this.createPlanetsMesh(this.scene);
         this.addDataToPlanetObject();
+        this.createPlanets(this.planetData);
+        this.createPlanetsMesh(this.scene);
         this.setPlanetsRotationAngle();
         this.createOrbitShape(this.planetData);
         this.zoomRangeslider(this.planetData, this.orbits);
@@ -165,17 +165,17 @@ class Planet {
 Planet.prototype.createPlanets = function(planetData) {
     // 10x smaller scale for the Sun
     this.sun = this.createPlanetObject(4);
-    this.mercury = this.createPlanetObject(0.175);
-    this.venus = this.createPlanetObject(0.435);
-    this.earth = this.createPlanetObject(0.457);
+    this.mercury = this.createPlanetObject(planetData[0]["planetSize"]);
+    this.venus = this.createPlanetObject(planetData[1]["planetSize"]);
+    this.earth = this.createPlanetObject(planetData[2]["planetSize"]);
     this.moon = this.createPlanetObject(0.124);
-    this.mars = this.createPlanetObject(0.243);
+    this.mars = this.createPlanetObject(planetData[3]["planetSize"]);
 
     // // 3x smaller scale (4 planets)
-    this.jupiter = this.createPlanetObject(1.673);
-    this.saturn = this.createPlanetObject(1.394);
-    this.uranus = this.createPlanetObject(0.607);
-    this.neptune = this.createPlanetObject(0.589);
+    this.jupiter = this.createPlanetObject(planetData[4]["planetSize"]);
+    this.saturn = this.createPlanetObject(planetData[5]["planetSize"]);
+    this.uranus = this.createPlanetObject(planetData[6]["planetSize"]);
+    this.neptune = this.createPlanetObject(planetData[7]["planetSize"]);
 
     this.planetsObjects.push(this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars,
         this.jupiter, this.saturn, this.uranus, this.neptune);
@@ -239,7 +239,7 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) 
 Planet.prototype.positionMeshesOnRandesliderPositiveValueX = function(planetData, scaleValue) {
     var halfSizeOfPlanetMesh = 0;
     for (var i = 0; i < planetData.length; i++) {
-        halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
+        halfSizeOfPlanetMesh = planetData[i]["planetSize"] / 2;
         this.planetsMeshes[i + 2].position.x =
             planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
     }
@@ -270,7 +270,7 @@ Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue) {
 Planet.prototype.positionMeshesToOriginalPosition = function(planetData) {
     var halfSizeOfPlanetMesh = 0;
     for (var i = 0; i < planetData.length; i++) {
-        halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
+        halfSizeOfPlanetMesh = planetData[i]["planetSize"] / 2;
         this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] + halfSizeOfPlanetMesh;
     }
 }
