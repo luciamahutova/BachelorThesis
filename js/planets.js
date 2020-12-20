@@ -215,37 +215,34 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     }
 }
 
-Planet.prototype.setScaleForPlanets = function(planetData, scaleValue) {
+Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) {
     // Changed scale for better view
-    // Scale values for: planets' size, planet's position, orbits' size
     if (scaleValue > 0) {
-        for (var i = 0; i < planetData.length; i++) {
-            var halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
-            this.planetsMeshes[i + 2].position.x =
-                planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
-        }
+        this.positionMeshesOnRandesliderPositiveValueX(planetData, scaleValue);
         this.scaleMeshesRangesliderPositiveValue(scaleValue);
         this.scaleOrbitsRangesliderPositiveValue(this.orbits, scaleValue);
-
+        this.moveSceneOnMouseWheelEvent();
     } else if (scaleValue < 0) {
         scaleValue *= -1;
-        for (var i = 0; i < planetData.length; i++) {
-            this.planetsMeshes[i + 2].position.x =
-                (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue / 2;
-        }
+        this.positionMeshesOnRangesliderNegativeValueX(planetData, scaleValue);
         this.scaleMeshesRangesliderNegativeValue(scaleValue);
         this.scaleOrbitsRangesliderNegativeValue(this.orbits, scaleValue);
-
     } else {
-        for (var i = 0; i < planetData.length; i++) {
-            var halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
-            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] + halfSizeOfPlanetMesh;
-        }
+        this.positionMeshesToOriginalPosition(planetData);
         this.scaleMeshesToOriginalSize();
         this.scaleOrbitsToOriginalSize(this.orbits);
     }
     // Not proper value = set according to model
     this.moonMesh.position.x = 1;
+}
+
+Planet.prototype.positionMeshesOnRandesliderPositiveValueX = function(planetData, scaleValue) {
+    var halfSizeOfPlanetMesh = 0;
+    for (var i = 0; i < planetData.length; i++) {
+        halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
+        this.planetsMeshes[i + 2].position.x =
+            planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
+    }
 }
 
 Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue) {
@@ -255,11 +252,26 @@ Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue) {
     }
 }
 
+Planet.prototype.positionMeshesOnRangesliderNegativeValueX = function(planetData, scaleValue) {
+    for (var i = 0; i < planetData.length; i++) {
+        this.planetsMeshes[i + 2].position.x =
+            (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue / 2;
+    }
+}
+
 Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
         this.planetsMeshes[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
         // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
         this.planetsMeshes[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
+    }
+}
+
+Planet.prototype.positionMeshesToOriginalPosition = function(planetData) {
+    var halfSizeOfPlanetMesh = 0;
+    for (var i = 0; i < planetData.length; i++) {
+        halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
+        this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] + halfSizeOfPlanetMesh;
     }
 }
 
@@ -335,7 +347,7 @@ Planet.prototype.scaleOrbitsToOriginalSize = function(orbits) {
     }
 }
 
-// General function for zooming in/out (for planets and orbits)
+// Zooming in/out (for planets and orbits) + movement of the scene
 // -------------------------------------------------------------------------
 Planet.prototype.zoomRangeslider = function(planetData, orbits) {
     var slider = document.getElementById("rangesliderInput");
@@ -347,11 +359,19 @@ Planet.prototype.zoomRangeslider = function(planetData, orbits) {
         for (var i = 0; i < planetData.length; i++) {
             scaleValue = sliderValue.innerHTML;
         }
-        this.setScaleForPlanets(planetData, scaleValue);
+        this.setScaleForPlanetsAndOrbits(planetData, scaleValue);
     }
 
     slider.addEventListener('input', updateZoomValue);
     updateZoomValue();
+}
+
+// FUNGUJE NA OSI X, ZATIAL NEUZITOCNE, PLANETY POSOBIA DEFORMOVANE,
+// NEDA SA HYBAT HORE A DOLE
+Planet.prototype.moveSceneOnMouseWheelEvent = function() {
+    document.addEventListener('wheel', (event) => {
+        this.scene.position.x += event.deltaY / 500;
+    });
 }
 
 
