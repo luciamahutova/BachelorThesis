@@ -39,7 +39,8 @@ class Planet {
             rotationSpeedAroundSun: 1.607,
             eulerDistanceFromSun: 2.0790e+3,
             scaleFactor: 19,
-            tiltAxisZ: 0.03
+            tiltAxisZ: 0.03,
+            meshSize: 0.175
         };
         this.planetData.push(mercuryData);
 
@@ -51,7 +52,8 @@ class Planet {
             rotationSpeedAroundSun: 1.174,
             eulerDistanceFromSun: 3.8849e+3,
             scaleFactor: 17,
-            tiltAxisZ: 177.4
+            tiltAxisZ: 177.4,
+            meshSize: 0.435
         };
         this.planetData.push(venusData);
 
@@ -63,7 +65,8 @@ class Planet {
             rotationSpeedAroundSun: 1.000,
             eulerDistanceFromSun: 5.3709e+3,
             scaleFactor: 17,
-            tiltAxisZ: 23.4
+            tiltAxisZ: 23.4,
+            meshSize: 0.457
         };
         this.planetData.push(earthData);
 
@@ -75,7 +78,8 @@ class Planet {
             rotationSpeedAroundSun: 0.802,
             eulerDistanceFromSun: 8.1834e+3,
             scaleFactor: 13.5,
-            tiltAxisZ: 25.2
+            tiltAxisZ: 25.2,
+            meshSize: 0.243
         };
         this.planetData.push(marsData);
 
@@ -87,7 +91,8 @@ class Planet {
             rotationSpeedAroundSun: 0.434,
             eulerDistanceFromSun: 2.7951e+4,
             scaleFactor: 5,
-            tiltAxisZ: 3.1
+            tiltAxisZ: 3.1,
+            meshSize: 1.673
         };
         this.planetData.push(jupiterData);
 
@@ -99,7 +104,8 @@ class Planet {
             rotationSpeedAroundSun: 0.323,
             eulerDistanceFromSun: 5.1464e+4,
             scaleFactor: 3.5,
-            tiltAxisZ: 26.7
+            tiltAxisZ: 26.7,
+            meshSize: 1.394
         };
         this.planetData.push(saturnData);
 
@@ -111,7 +117,8 @@ class Planet {
             rotationSpeedAroundSun: 0.228,
             eulerDistanceFromSun: 1.0328e+5,
             scaleFactor: 2,
-            tiltAxisZ: 97.8
+            tiltAxisZ: 97.8,
+            meshSize: 0.607
         };
         this.planetData.push(uranusData);
 
@@ -123,7 +130,8 @@ class Planet {
             rotationSpeedAroundSun: 0.182,
             eulerDistanceFromSun: 1.6168e+5,
             scaleFactor: 1.5,
-            tiltAxisZ: 28.3
+            tiltAxisZ: 28.3,
+            meshSize: 0.589
         };
         this.planetData.push(neptuneData);
     }
@@ -212,8 +220,9 @@ Planet.prototype.setScaleForPlanets = function(planetData, scaleValue) {
     // Scale values for: planets' size, planet's position, orbits' size
     if (scaleValue > 0) {
         for (var i = 0; i < planetData.length; i++) {
+            var halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
             this.planetsMeshes[i + 2].position.x =
-                planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2;
+                planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
         }
         this.scaleMeshesRangesliderPositiveValue(scaleValue);
         this.scaleOrbitsRangesliderPositiveValue(this.orbits, scaleValue);
@@ -229,7 +238,8 @@ Planet.prototype.setScaleForPlanets = function(planetData, scaleValue) {
 
     } else {
         for (var i = 0; i < planetData.length; i++) {
-            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"];
+            var halfSizeOfPlanetMesh = planetData[i]["meshSize"] / 2;
+            this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] + halfSizeOfPlanetMesh;
         }
         this.scaleMeshesToOriginalSize();
         this.scaleOrbitsToOriginalSize(this.orbits);
