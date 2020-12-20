@@ -195,7 +195,7 @@ Planet.prototype.createPlanetsMesh = function(scene) {
 
     this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
-
+    this.earthMesh.add(this.moonMesh); // Earth is parent of the Moon - for correct rotation
     this.addMeshToScene(scene);
 }
 
@@ -232,17 +232,21 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) 
         this.scaleMeshesToOriginalSize();
         this.scaleOrbitsToOriginalSize(this.orbits);
     }
-    // Not proper value = set according to model
-    this.moonMesh.position.x = 1;
 }
 
 Planet.prototype.positionMeshesOnRandesliderPositiveValueX = function(planetData, scaleValue) {
     var halfSizeOfPlanetMesh = 0;
+    var halfSizeOfEarth = planetData[2]["planetSize"] / (scaleValue * 2);
+
     for (var i = 0; i < planetData.length; i++) {
-        halfSizeOfPlanetMesh = planetData[i]["planetSize"] / 2;
+        halfSizeOfPlanetMesh = planetData[i]["planetSize"] / (scaleValue * 2);
         this.planetsMeshes[i + 2].position.x =
             planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
     }
+    // Moon - position according its' parent object (Earth)
+    var earthPosition = this.planetsMeshes[4].position.x;
+    this.moonMesh.visible = true;
+    this.moonMesh.position.x = earthPosition + planetData[2]["a"] * scaleValue * 2 + halfSizeOfEarth;
 }
 
 Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue) {
@@ -257,6 +261,8 @@ Planet.prototype.positionMeshesOnRangesliderNegativeValueX = function(planetData
         this.planetsMeshes[i + 2].position.x =
             (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue / 2;
     }
+    // Hidden Moon when model is too small
+    this.moonMesh.visible = false;
 }
 
 Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue) {
@@ -273,6 +279,9 @@ Planet.prototype.positionMeshesToOriginalPosition = function(planetData) {
         halfSizeOfPlanetMesh = planetData[i]["planetSize"] / 2;
         this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] + halfSizeOfPlanetMesh;
     }
+    // Set original Moon position -> my value according to model
+    this.moonMesh.visible = true;
+    this.moonMesh.position.x = this.earthMesh.position.x + 1;
 }
 
 Planet.prototype.scaleMeshesToOriginalSize = function() {
