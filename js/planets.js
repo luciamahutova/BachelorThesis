@@ -207,7 +207,7 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     }
 }
 
-Planet.prototype.setScaleToSceneObjects = function(planetData, scaleValue) {
+Planet.prototype.setScaleForPlanets = function(planetData, scaleValue) {
     // Changed scale for better view
     // Scale values for: planets' size, planet's position, orbits' size
     if (scaleValue > 0) {
@@ -337,7 +337,7 @@ Planet.prototype.zoomRangeslider = function(planetData, orbits) {
         for (var i = 0; i < planetData.length; i++) {
             scaleValue = sliderValue.innerHTML;
         }
-        this.setScaleToSceneObjects(planetData, scaleValue);
+        this.setScaleForPlanets(planetData, scaleValue);
     }
 
     slider.addEventListener('input', updateZoomValue);
