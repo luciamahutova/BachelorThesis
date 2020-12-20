@@ -373,19 +373,3 @@ Planet.prototype.moveSceneOnMouseWheelEvent = function() {
         this.scene.position.x += event.deltaY / 500;
     });
 }
-
-
-// NEDOKONCENE
-Planet.prototype.addNamesToPlanets = function() {
-    // const map = new THREE.TextureLoader().load('sprite.png');
-    // const material = new THREE.SpriteMaterial({ map: map });
-    // const sprite = new THREE.Sprite(material);
-    // scene.add(sprite);
-}
-
-Planet.prototype.getPoint = function(curve, t) {
-    // var radians = 2 * Math.PI * t;
-    // return new THREE.Vector3(curve.xRadius * Math.cos(radians),
-    //     curve.yRadius * Math.sin(radians),
-    //     0);
-};
