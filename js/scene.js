@@ -84,14 +84,16 @@ class MainScene {
 
     moveSceneOnPressedArrow = function(e) {
         var moveSceneByValue = 10;
-        if (e.keyCode == '37') {
+        if (e.keyCode == '37') { // Left arrow key
             this.scene.position.x -= moveSceneByValue;
-        } else if (e.keyCode == '38') {
+        } else if (e.keyCode == '38') { // Top arrow key
             this.scene.position.z -= moveSceneByValue;
-        } else if (e.keyCode == '39') {
+        } else if (e.keyCode == '39') { // Right arrow key
             this.scene.position.x += moveSceneByValue;
-        } else if (e.keyCode == '40') {
+        } else if (e.keyCode == '40') { // Bottom arrow kes
             this.scene.position.z += moveSceneByValue;
+        } else if (e.keyCode == "27") { // Escape key
+            this.scene.position.set(0, 0, 0);
         }
     }
 
