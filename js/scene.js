@@ -1,6 +1,6 @@
 class MainScene {
     constructor() {
-        this.initScene();
+        this.scene = this.initScene();
         this.initRenderer();
         this.initCamera();
         this.bgMesh = this.setStaticBackground();
@@ -10,8 +10,8 @@ class MainScene {
     }
 
     initScene = function() {
-        this.scene = new THREE.Scene();
-        return this.scene;
+        var scene = new THREE.Scene();
+        return scene;
     }
 
     initRenderer = function() {
@@ -77,7 +77,26 @@ class MainScene {
         });
     }
 
+    // Movement of the scene by arrow keys on the keyboard
+    onKeyDown = function() {
+        window.addEventListener('keydown', this.moveSceneOnPressedArrow);
+    }
+
+    moveSceneOnPressedArrow = function(e) {
+        var moveSceneByValue = 10;
+        if (e.keyCode == '37') {
+            this.scene.position.x -= moveSceneByValue;
+        } else if (e.keyCode == '38') {
+            this.scene.position.z -= moveSceneByValue;
+        } else if (e.keyCode == '39') {
+            this.scene.position.x += moveSceneByValue;
+        } else if (e.keyCode == '40') {
+            this.scene.position.z += moveSceneByValue;
+        }
+    }
+
     animate = function() {
+        this.onKeyDown();
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
         this.renderer.render(this.bgScene, this.bgCamera);
