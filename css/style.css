@@ -282,20 +282,29 @@ input[type=number] {
 
 /* 2 icons for Solar system models ***********/
 
+.models {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    background-color: transparent;
+}
+
 .models button {
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    position: fixed;
-    bottom: 40px;
-    left: 40px;
+    position: relative;
+    float: left;
     margin-right: 20px;
     background-image: url(/icons/solarSystem2D.png);
 }
 
 .models button:nth-of-type(2) {
-    left: 110px;
     background-image: url(/icons/solarSystem3D.png);
+}
+
+.models button:last-of-type {
+    background-image: url(/icons/centerScene.png);
 }
 
 

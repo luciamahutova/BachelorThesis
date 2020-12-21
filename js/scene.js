@@ -77,7 +77,7 @@ class MainScene {
         });
     }
 
-    // Movement of the scene by arrow keys on the keyboard
+    // Movement of the scene by keyboard (4 arrows and Esc) + center the scene back
     onKeyDown = function() {
         window.addEventListener('keydown', this.moveSceneOnPressedArrow);
     }
