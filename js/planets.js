@@ -2,9 +2,10 @@ class Planet {
     constructor(scene) {
         this.scene = scene;
         this.planetData = [];
-        this.orbits = [];
         this.planetsObjects = [];
         this.planetsMeshes = [];
+        this.scaleValueScene = 0;
+        this.orbitClass = new Orbits(scene, this.planetData);
     }
 
     createPlanetObject = function(diameter) {
@@ -158,8 +159,8 @@ class Planet {
         this.createPlanets(this.planetData);
         this.createPlanetsMesh(this.scene);
         this.setPlanetsRotationAngle();
-        this.createOrbitShape(this.planetData);
-        this.zoomRangeslider(this.planetData, this.orbits);
+        this.orbitClass.createOrbitShape();
+        this.zoomRangeslider(this.planetData);
     }
 }
 
@@ -223,17 +224,17 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) 
     if (scaleValue > 0) {
         this.positionMeshesOnRandesliderPositiveValueX(planetData, scaleValue);
         this.scaleMeshesRangesliderPositiveValue(scaleValue);
-        this.scaleOrbitsRangesliderPositiveValue(this.orbits, scaleValue);
-        this.moveSceneOnMouseWheelEvent();
+        this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
+        //this.moveSceneOnMouseWheelEvent();
     } else if (scaleValue < 0) {
         scaleValue *= -1;
         this.positionMeshesOnRangesliderNegativeValueX(planetData, scaleValue);
         this.scaleMeshesRangesliderNegativeValue(scaleValue);
-        this.scaleOrbitsRangesliderNegativeValue(this.orbits, scaleValue);
+        this.orbitClass.scaleOrbitsRangesliderNegativeValue(scaleValue);
     } else {
         this.positionMeshesToOriginalPosition(planetData);
         this.scaleMeshesToOriginalSize();
-        this.scaleOrbitsToOriginalSize(this.orbits);
+        this.orbitClass.scaleOrbitsToOriginalSize();
     }
 }
 
@@ -293,85 +294,18 @@ Planet.prototype.scaleMeshesToOriginalSize = function() {
     }
 }
 
-// Orbits for planets
-// -------------------------------------------------------------------------
-Planet.prototype.createOrbitShape = function(planetData) {
-    var curve, geometry, material, ellipse;
-
-    for (var i = 0; i < planetData.length; i++) {
-        curve = this.createCurveForOrbit(planetData, i);
-
-        geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(500));
-        material = new THREE.LineBasicMaterial({ color: 0xffffff });
-        ellipse = new THREE.Line(geometry, material);
-        ellipse.rotation.x = THREE.Math.degToRad(90);
-        this.orbits.push(ellipse);
-        //ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE? -> ak pouzite, treba otocit planety o 90stupnov
-        this.scene.add(ellipse);
-    }
-}
-
-Planet.prototype.createCurveForOrbit = function(planetData, i, scaleValue) {
-    var curve;
-    if (scaleValue > 0) {
-        curve = new THREE.EllipseCurve(
-            planetData[i]["c"], 0, // aX, aY (X/Y center of the ellipse)
-            planetData[i]["a"] * planetData[i]["scaleFactor"], //xRadius 
-            planetData[i]["b"] * planetData[i]["scaleFactor"], //yRadius 
-            0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
-            false, 0 // aClockwise, aRotation
-        );
-    } else if (scaleValue < 0) {
-        curve = new THREE.EllipseCurve(
-            planetData[i]["c"], 0,
-            (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue / 2, // planetData[i]["zoom"]
-            (planetData[i]["b"] * planetData[i]["scaleFactor"]) / scaleValue / 2,
-            0, 2 * Math.PI,
-            false, 0
-        );
-    } else {
-        curve = new THREE.EllipseCurve(
-            planetData[i]["c"], 0,
-            planetData[i]["a"] * planetData[i]["scaleFactor"],
-            planetData[i]["b"] * planetData[i]["scaleFactor"],
-            0, 2 * Math.PI,
-            false, 0
-        );
-    }
-    return curve;
-}
-
-Planet.prototype.scaleOrbitsRangesliderPositiveValue = function(orbits, scaleValue) {
-    for (var i = 0; i < orbits.length; i++) {
-        orbits[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
-    }
-}
-
-Planet.prototype.scaleOrbitsRangesliderNegativeValue = function(orbits, scaleValue) {
-    for (var i = 0; i < orbits.length; i++) {
-        orbits[i].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue));
-    }
-}
-
-Planet.prototype.scaleOrbitsToOriginalSize = function(orbits) {
-    for (var i = 0; i < orbits.length; i++) {
-        orbits[i].scale.set(1, 1, 1);
-    }
-}
-
 // Zooming in/out (for planets and orbits) + movement of the scene
 // -------------------------------------------------------------------------
-Planet.prototype.zoomRangeslider = function(planetData, orbits) {
+Planet.prototype.zoomRangeslider = function(planetData) {
     var slider = document.getElementById("rangesliderInput");
     var sliderValue = document.getElementById("rangesliderValue");
-    var scaleValue = 0;
 
     var updateZoomValue = () => {
         sliderValue.innerHTML = slider.value;
         for (var i = 0; i < planetData.length; i++) {
-            scaleValue = sliderValue.innerHTML;
+            this.scaleValueScene = sliderValue.innerHTML;
         }
-        this.setScaleForPlanetsAndOrbits(planetData, scaleValue);
+        this.setScaleForPlanetsAndOrbits(planetData, this.scaleValueScene);
     }
 
     slider.addEventListener('input', updateZoomValue);
