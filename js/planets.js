@@ -149,6 +149,9 @@ class Planet {
         }
     }
 
+    // POKUS
+    getPlanetsMeshes = function() { return this.planetsMeshes }
+
     // Called outside the class //////////////////////////////////////
     initializePlanets = function() {
         this.addDataToPlanetObject();

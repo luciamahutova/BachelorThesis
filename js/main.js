@@ -10,6 +10,11 @@ mainScene.resizeBackground(renderer, camera);
 
 var planetObject = new Planet(scene);
 planetObject.initializePlanets();
+planetsMesh = planetObject.getPlanetsMeshes();
+
+// POKUS
+// var picker = new ObjectPicker();
+// picker.addEvent();
 
 
 function animate() {
