@@ -315,8 +315,7 @@ Planet.prototype.zoomRangeslider = function(planetData) {
 // Moving planets on their orbits (ellipses)
 // -------------------------------------------------------------------------
 Planet.prototype.movePlanetOnOrbit = function(planet, planetOrder) {
-    this.timestamp += 0.005; // CIM MENSIE CISLO, TYM SA TOCI POMALSIE
-    console.log(this.planetData[planetOrder]["rotationSpeedAroundSun"]);
+    this.timestamp += 0.005; // CIM MENSIE CISLO, TYM SA TOCI POMALSIE, TREBA ESTE UPRAVIT
     this.betha = Math.cos(planet.position.x / (planet.position.z + this.timestamp));
 
     planet.position.x = this.planetData[planetOrder]["c"] + (this.planetData[planetOrder]["a"] *
