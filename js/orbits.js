@@ -1,8 +1,9 @@
 class Orbits {
-    constructor(scene, planetData) {
+    constructor(scene, planetData, planetsMeshes) {
         this.scene = scene;
         this.orbits = [];
         this.planetData = planetData;
+        this.planetsMeshes = planetsMeshes;
     }
 }
 
@@ -10,18 +11,15 @@ class Orbits {
 // Creating orbits for planets
 // -------------------------------------------------------------------------
 Orbits.prototype.createOrbitShape = function() {
-    //this.addDataToPlanetObject(); //SPRAVIT INAK, POUZIT planetData FROM CLASS Planet
     var curve, geometry, material, ellipse;
-    console.log(this.planetData.length);
+
     for (var i = 0; i < this.planetData.length; i++) {
         curve = this.createCurveForOrbit(i);
-
         geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(500));
         material = new THREE.LineBasicMaterial({ color: 0xffffff });
         ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
         this.orbits.push(ellipse);
-        //ellipse.add(this.planetsMeshes[i + 2]); // POTREBNE? -> ak pouzite, treba otocit planety o 90stupnov
         this.scene.add(ellipse);
     }
 }

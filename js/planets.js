@@ -5,7 +5,9 @@ class Planet {
         this.planetsObjects = [];
         this.planetsMeshes = [];
         this.scaleValueScene = 0;
-        this.orbitClass = new Orbits(scene, this.planetData);
+        this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
+        this.betha = 0;
+        this.timestamp = Date.now() * 0.00000001;
     }
 
     createPlanetObject = function(diameter) {
@@ -225,7 +227,6 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) 
         this.positionMeshesOnRandesliderPositiveValueX(planetData, scaleValue);
         this.scaleMeshesRangesliderPositiveValue(scaleValue);
         this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
-        //this.moveSceneOnMouseWheelEvent();
     } else if (scaleValue < 0) {
         scaleValue *= -1;
         this.positionMeshesOnRangesliderNegativeValueX(planetData, scaleValue);
@@ -307,15 +308,29 @@ Planet.prototype.zoomRangeslider = function(planetData) {
         }
         this.setScaleForPlanetsAndOrbits(planetData, this.scaleValueScene);
     }
-
     slider.addEventListener('input', updateZoomValue);
     updateZoomValue();
 }
 
-// FUNGUJE NA OSI X, ZATIAL NEUZITOCNE, PLANETY POSOBIA DEFORMOVANE,
-// NEDA SA HYBAT HORE A DOLE
-Planet.prototype.moveSceneOnMouseWheelEvent = function() {
-    document.addEventListener('wheel', (event) => {
-        this.scene.position.x += event.deltaY / 500;
-    });
+// Moving planets on their orbits (ellipses)
+// -------------------------------------------------------------------------
+Planet.prototype.movePlanetOnOrbit = function(planet, planetOrder) {
+    this.timestamp += 0.005; // CIM MENSIE CISLO, TYM SA TOCI POMALSIE
+    console.log(this.planetData[planetOrder]["rotationSpeedAroundSun"]);
+    this.betha = Math.cos(planet.position.x / (planet.position.z + this.timestamp));
+
+    planet.position.x = this.planetData[planetOrder]["c"] + (this.planetData[planetOrder]["a"] *
+        this.planetData[planetOrder]["scaleFactor"] * Math.cos(this.betha + this.timestamp));
+    // -1 for anticlockwise rotation
+    planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
+        this.planetData[planetOrder]["scaleFactor"] * Math.sin(this.betha + this.timestamp));
+
+}
+
+Planet.prototype.rotateAllPlanets = function() {
+    var planet;
+    for (var i = 2, j = 0; i < this.planetsMeshes.length; i++, j++) {
+        planet = this.planetsMeshes[i];
+        this.movePlanetOnOrbit(planet, j);
+    }
 }

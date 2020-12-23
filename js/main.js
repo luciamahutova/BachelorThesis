@@ -20,6 +20,7 @@ planetsMesh = planetObject.getPlanetsMeshes();
 function animate() {
     //planetObject.setPlanetsRotationSpeedAroundSun(rotationValuesAroundSun);
     mainScene.animate();
+    planetObject.rotateAllPlanets();
     animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();
