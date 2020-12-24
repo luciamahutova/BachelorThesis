@@ -7,7 +7,7 @@ class Planet {
         this.scaleValueScene = 0;
         this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
         this.betha = 0;
-        this.timestamp = Date.now() * 0.00000001;
+        this.timestamp = Date.now() * 0.000001;
     }
 
     createPlanetObject = function(diameter) {
@@ -146,7 +146,7 @@ class Planet {
         this.createPlanetsMesh(this.scene);
         this.setPlanetsRotationAngle();
         this.orbitClass.createOrbitShape();
-        this.zoomRangeslider(this.planetData);
+        this.zoomRangeslider();
     }
 }
 
@@ -208,35 +208,17 @@ Planet.prototype.setPlanetsRotationAngle = function() {
 Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) {
     // Changed scale for better view
     if (scaleValue > 0) {
-        //this.positionMeshesOnRandesliderPositiveValue(planetData, scaleValue);
         this.scaleMeshesRangesliderPositiveValue(scaleValue);
         this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
     } else if (scaleValue < 0) {
         scaleValue *= -1;
-        //this.positionMeshesOnRangesliderNegativeValue(planetData, scaleValue);
         this.scaleMeshesRangesliderNegativeValue(scaleValue);
         this.orbitClass.scaleOrbitsRangesliderNegativeValue(scaleValue);
     } else {
-        //this.positionMeshesToOriginalPosition(planetData);
         this.scaleMeshesToOriginalSize();
         this.orbitClass.scaleOrbitsToOriginalSize();
     }
 }
-
-// Planet.prototype.positionMeshesOnRandesliderPositiveValue = function(planetData, scaleValue) {
-//     var halfSizeOfPlanetMesh = 0;
-//     var halfSizeOfEarth = planetData[2]["planetSize"] / (scaleValue * 2);
-
-//     for (var i = 0; i < planetData.length; i++) {
-//         halfSizeOfPlanetMesh = planetData[i]["planetSize"] / (scaleValue * 2);
-//         this.planetsMeshes[i + 2].position.x =
-//             planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
-//     }
-//     // Moon - position according its' parent object (Earth)
-//     var earthPosition = this.planetsMeshes[4].position.x;
-//     this.moonMesh.visible = true;
-//     this.moonMesh.position.x = earthPosition + planetData[2]["a"] * scaleValue * 2 + halfSizeOfEarth;
-// }
 
 Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
@@ -244,15 +226,6 @@ Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue) {
         this.planetsMeshes[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
-
-// Planet.prototype.positionMeshesOnRangesliderNegativeValue = function(planetData, scaleValue) {
-//     for (var i = 0; i < planetData.length; i++) {
-//         this.planetsMeshes[i + 2].position.x =
-//             (planetData[i]["a"] * planetData[i]["scaleFactor"]) / scaleValue / 2;
-//     }
-//     // Hidden Moon when model is too small
-//     this.moonMesh.visible = false;
-// }
 
 Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue) {
     for (var i = 1; i < this.planetsMeshes.length; i++) {
@@ -262,38 +235,10 @@ Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue) {
     }
 }
 
-// Planet.prototype.positionMeshesToOriginalPosition = function(planetData) {
-//     var halfSizeOfPlanetMesh = 0;
-//     for (var i = 0; i < planetData.length; i++) {
-//         halfSizeOfPlanetMesh = planetData[i]["planetSize"] / 2;
-//         this.planetsMeshes[i + 2].position.x = planetData[i]["a"] * planetData[i]["scaleFactor"] + halfSizeOfPlanetMesh;
-//     }
-//     // Set original Moon position -> my value according to model
-//     this.moonMesh.visible = true;
-//     this.moonMesh.position.x = this.earthMesh.position.x + 1;
-// }
-
 Planet.prototype.scaleMeshesToOriginalSize = function() {
     for (var i = 0; i < this.planetsMeshes.length; i++) {
         this.planetsMeshes[i].scale.set(1, 1, 1);
     }
-}
-
-// Zooming in/out (for planets and orbits) + movement of the scene
-// -------------------------------------------------------------------------
-Planet.prototype.zoomRangeslider = function(planetData) {
-    var slider = document.getElementById("rangesliderInput");
-    var sliderValue = document.getElementById("rangesliderValue");
-
-    var updateZoomValue = () => {
-        sliderValue.innerHTML = slider.value;
-        for (var i = 0; i < planetData.length; i++) {
-            this.scaleValueScene = sliderValue.innerHTML;
-        }
-        this.setScaleForPlanetsAndOrbits(planetData, this.scaleValueScene);
-    }
-    slider.addEventListener('input', updateZoomValue);
-    updateZoomValue();
 }
 
 // Moving planets on their orbits (ellipses)
@@ -301,7 +246,7 @@ Planet.prototype.zoomRangeslider = function(planetData) {
 Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue) {
     this.timestamp += 0.002; // CIM MENSIE CISLO, TYM SA TOCI POMALSIE, TREBA ESTE UPRAVIT
     this.betha = Math.cos(planet.position.x / (planet.position.z + this.timestamp));
-
+    // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
         this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue);
         this.positionMoonOnRangesliderPositiveValue(scaleValue);
@@ -314,6 +259,7 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
     }
 }
 
+// Called in f. animate() in main.js - movement needs to by redrawn by renderer
 Planet.prototype.rotateAllPlanets = function() {
     var planet;
     for (var i = 2, j = 0; i < this.planetsMeshes.length; i++, j++) {
@@ -347,10 +293,9 @@ Planet.prototype.positionPlanetToOriginalPosition = function(planet, planetOrder
 
 // Positions for the Moon - according to scale from rangeslider
 Planet.prototype.positionMoonOnRangesliderPositiveValue = function(scaleValue) {
-    var earthPosition = this.planetsMeshes[4].position.x;
-    var halfSizeOfEarth = this.planetData[2]["planetSize"] / (scaleValue * 2);
     this.moonMesh.visible = true;
-    this.moonMesh.position.x = earthPosition + this.planetData[2]["a"] * scaleValue * 2 + halfSizeOfEarth;
+    this.moonMesh.position.x = this.earthMesh.position.x + this.planetData[2]["a"] * scaleValue * 2;
+    this.moonMesh.position.z = this.earthMesh.position.z + 1;
 }
 
 Planet.prototype.positionMoonOnRangesliderNegativeValue = function() {
@@ -362,4 +307,22 @@ Planet.prototype.positionMoonToOriginalPosition = function() {
     // Set original Moon position -> my value according to model
     this.moonMesh.visible = true;
     this.moonMesh.position.x = this.earthMesh.position.x + 1;
+    this.moonMesh.position.z = this.earthMesh.position.z + 0.5;
+}
+
+// Zooming in/out (for planets and orbits) + movement of the scene
+// -------------------------------------------------------------------------
+Planet.prototype.zoomRangeslider = function() {
+    var slider = document.getElementById("rangesliderInput");
+    var sliderValue = document.getElementById("rangesliderValue");
+
+    var updateZoomValue = () => {
+        sliderValue.innerHTML = slider.value;
+        for (var i = 0; i < this.planetData.length; i++) {
+            this.scaleValueScene = sliderValue.innerHTML;
+        }
+        this.setScaleForPlanetsAndOrbits(this.planetData, this.scaleValueScene);
+    }
+    slider.addEventListener('input', updateZoomValue);
+    updateZoomValue();
 }
