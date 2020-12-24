@@ -208,13 +208,16 @@ Planet.prototype.setPlanetsRotationAngle = function() {
 Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) {
     // Changed scale for better view
     if (scaleValue > 0) {
+        //this.positionMeshesOnRandesliderPositiveValue(planetData, scaleValue);
         this.scaleMeshesRangesliderPositiveValue(scaleValue);
         this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
     } else if (scaleValue < 0) {
         scaleValue *= -1;
+        //this.positionMeshesOnRangesliderNegativeValue(planetData, scaleValue);
         this.scaleMeshesRangesliderNegativeValue(scaleValue);
         this.orbitClass.scaleOrbitsRangesliderNegativeValue(scaleValue);
     } else {
+        //this.positionMeshesToOriginalPosition(planetData);
         this.scaleMeshesToOriginalSize();
         this.orbitClass.scaleOrbitsToOriginalSize();
     }
@@ -241,10 +244,27 @@ Planet.prototype.scaleMeshesToOriginalSize = function() {
     }
 }
 
+// Zooming in/out (for planets and orbits) + movement of the scene
+// -------------------------------------------------------------------------
+Planet.prototype.zoomRangeslider = function() {
+    var slider = document.getElementById("rangesliderInput");
+    var sliderValue = document.getElementById("rangesliderValue");
+
+    var updateZoomValue = () => {
+        sliderValue.innerHTML = slider.value;
+        for (var i = 0; i < this.planetData.length; i++) {
+            this.scaleValueScene = sliderValue.innerHTML;
+        }
+        this.setScaleForPlanetsAndOrbits(this.planetData, this.scaleValueScene);
+    }
+    slider.addEventListener('input', updateZoomValue);
+    updateZoomValue();
+}
+
 // Moving planets on their orbits (ellipses)
 // -------------------------------------------------------------------------
 Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue) {
-    this.timestamp += 0.002; // CIM MENSIE CISLO, TYM SA TOCI POMALSIE, TREBA ESTE UPRAVIT
+    this.timestamp += 0.001; // CIM MENSIE CISLO, TYM SA TOCI POMALSIE, TREBA ESTE UPRAVIT
     this.betha = Math.cos(planet.position.x / (planet.position.z + this.timestamp));
     // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
@@ -259,7 +279,7 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
     }
 }
 
-// Called in f. animate() in main.js - movement needs to by redrawn by renderer
+// Called in f. animate() (main.js) - movement needs to by redrawn by renderer
 Planet.prototype.rotateAllPlanets = function() {
     var planet;
     for (var i = 2, j = 0; i < this.planetsMeshes.length; i++, j++) {
@@ -275,10 +295,28 @@ Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planet, pla
         this.planetData[planetOrder]["scaleFactor"] * scaleValue * 2 * Math.cos(this.betha + this.timestamp));
     planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
         this.planetData[planetOrder]["scaleFactor"] * scaleValue * 2 * Math.sin(this.betha + this.timestamp));
+
+    // POKUS
+    var halfSizeOfUranus = this.planetData[6]["planetSize"] / scaleValue / 2;
+    this.uranusMesh.position.x = this.planetData[6]["c"] + (this.planetData[6]["a"] *
+        this.planetData[6]["scaleFactor"] * scaleValue * 2 * Math.cos(this.betha + this.timestamp)) + halfSizeOfUranus;
+    this.uranusMesh.position.z = -1 * (this.planetData[6]["b"] *
+        this.planetData[6]["scaleFactor"] * scaleValue * 2 * Math.sin(this.betha + this.timestamp)) + halfSizeOfUranus;
 }
 
+// Planet.prototype.positionMeshesOnRandesliderPositiveValue = function(planetData, scaleValue) {
+//     var halfSizeOfPlanetMesh = 0;
+//     var halfSizeOfEarth = planetData[2]["planetSize"] / (scaleValue * 2);
+
+//     for (var i = 0; i < planetData.length; i++) {
+//         halfSizeOfPlanetMesh = planetData[i]["planetSize"] / (scaleValue * 2);
+//         this.planetsMeshes[i + 2].position.x =
+//             planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
+//     }
+// }
+
 Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planet, planetOrder, scaleValue) {
-    planet.position.x = this.planetData[planetOrder]["c"] + ((this.planetData[planetOrder]["a"] *
+    planet.position.x = ((this.planetData[planetOrder]["a"] *
         this.planetData[planetOrder]["scaleFactor"] / scaleValue / 2) * Math.cos(this.betha + this.timestamp));
     planet.position.z = -1 * ((this.planetData[planetOrder]["b"] *
         this.planetData[planetOrder]["scaleFactor"] / scaleValue / 2) * Math.sin(this.betha + this.timestamp));
@@ -308,21 +346,4 @@ Planet.prototype.positionMoonToOriginalPosition = function() {
     this.moonMesh.visible = true;
     this.moonMesh.position.x = this.earthMesh.position.x + 1;
     this.moonMesh.position.z = this.earthMesh.position.z + 0.5;
-}
-
-// Zooming in/out (for planets and orbits) + movement of the scene
-// -------------------------------------------------------------------------
-Planet.prototype.zoomRangeslider = function() {
-    var slider = document.getElementById("rangesliderInput");
-    var sliderValue = document.getElementById("rangesliderValue");
-
-    var updateZoomValue = () => {
-        sliderValue.innerHTML = slider.value;
-        for (var i = 0; i < this.planetData.length; i++) {
-            this.scaleValueScene = sliderValue.innerHTML;
-        }
-        this.setScaleForPlanetsAndOrbits(this.planetData, this.scaleValueScene);
-    }
-    slider.addEventListener('input', updateZoomValue);
-    updateZoomValue();
 }
