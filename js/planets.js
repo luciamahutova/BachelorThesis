@@ -205,19 +205,16 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     }
 }
 
-Planet.prototype.setScaleForPlanetsAndOrbits = function(planetData, scaleValue) {
+Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue) {
     // Changed scale for better view
     if (scaleValue > 0) {
-        //this.positionMeshesOnRandesliderPositiveValue(planetData, scaleValue);
         this.scaleMeshesRangesliderPositiveValue(scaleValue);
         this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
     } else if (scaleValue < 0) {
         scaleValue *= -1;
-        //this.positionMeshesOnRangesliderNegativeValue(planetData, scaleValue);
         this.scaleMeshesRangesliderNegativeValue(scaleValue);
         this.orbitClass.scaleOrbitsRangesliderNegativeValue(scaleValue);
     } else {
-        //this.positionMeshesToOriginalPosition(planetData);
         this.scaleMeshesToOriginalSize();
         this.orbitClass.scaleOrbitsToOriginalSize();
     }
@@ -255,7 +252,7 @@ Planet.prototype.zoomRangeslider = function() {
         for (var i = 0; i < this.planetData.length; i++) {
             this.scaleValueScene = sliderValue.innerHTML;
         }
-        this.setScaleForPlanetsAndOrbits(this.planetData, this.scaleValueScene);
+        this.setScaleForPlanetsAndOrbits(this.scaleValueScene);
     }
     slider.addEventListener('input', updateZoomValue);
     updateZoomValue();
@@ -264,8 +261,11 @@ Planet.prototype.zoomRangeslider = function() {
 // Moving planets on their orbits (ellipses)
 // -------------------------------------------------------------------------
 Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue) {
-    this.timestamp += 0.001; // CIM MENSIE CISLO, TYM SA TOCI POMALSIE, TREBA ESTE UPRAVIT
+    // PREROBIT, VSETKY SA TOCIA ROVNAKO RYCHLO
+    this.timestamp += (this.planetData[planetOrder]["rotationSpeedAroundSun"] / 5000);
+    //this.timestamp += 0.0001;
     this.betha = Math.cos(planet.position.x / (planet.position.z + this.timestamp));
+
     // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
         this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue);
@@ -291,27 +291,39 @@ Planet.prototype.rotateAllPlanets = function() {
 
 // Positions for planet - according to scale from rangeslider
 Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planet, planetOrder, scaleValue) {
+    var scale = scaleValue * 2;
     // (-1 * ...) for anticlockwise rotation
     planet.position.x = this.planetData[planetOrder]["c"] + (this.planetData[planetOrder]["a"] *
-        this.planetData[planetOrder]["scaleFactor"] * scaleValue * 2 * Math.cos(this.betha + this.timestamp));
+        this.planetData[planetOrder]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp));
     planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
-        this.planetData[planetOrder]["scaleFactor"] * scaleValue * 2 * Math.sin(this.betha + this.timestamp));
+        this.planetData[planetOrder]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp));
 }
 
 Planet.prototype.positionUranusOnRangesliderPositiveValue = function(scaleValue) {
+    var scale = scaleValue * 2;
     // Specially positioned because of its angle rotation (nearly 100 degrees)
     var halfSizeOfUranus = this.planetData[6]["planetSize"] / scaleValue / 2;
+
     this.uranusMesh.position.x = this.planetData[6]["c"] + (this.planetData[6]["a"] *
-        this.planetData[6]["scaleFactor"] * scaleValue * 2 * Math.cos(this.betha + this.timestamp)) + halfSizeOfUranus;
+        this.planetData[6]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp)) + halfSizeOfUranus;
     this.uranusMesh.position.z = -1 * (this.planetData[6]["b"] *
-        this.planetData[6]["scaleFactor"] * scaleValue * 2 * Math.sin(this.betha + this.timestamp)) + halfSizeOfUranus;
+        this.planetData[6]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp)) + halfSizeOfUranus;
 }
 
 Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planet, planetOrder, scaleValue) {
-    planet.position.x = ((this.planetData[planetOrder]["a"] *
-        this.planetData[planetOrder]["scaleFactor"] / scaleValue / 2) * Math.cos(this.betha + this.timestamp));
-    planet.position.z = -1 * ((this.planetData[planetOrder]["b"] *
-        this.planetData[planetOrder]["scaleFactor"] / scaleValue / 2) * Math.sin(this.betha + this.timestamp));
+    // The same scale as in class Orbits
+    var scale = 0.5 / (-1 * scaleValue);
+    var halfSizeOfUranus = this.planetData[6]["planetSize"] / scaleValue / 2;
+
+    planet.position.x = (this.planetData[planetOrder]["a"] *
+        this.planetData[planetOrder]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp));
+    planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
+        this.planetData[planetOrder]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp));
+
+    this.uranusMesh.position.x = (this.planetData[6]["a"] *
+        this.planetData[6]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp)) + halfSizeOfUranus;
+    this.uranusMesh.position.z = -1 * (this.planetData[6]["b"] *
+        this.planetData[6]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp)) + halfSizeOfUranus;
 }
 
 Planet.prototype.positionPlanetToOriginalPosition = function(planet, planetOrder) {

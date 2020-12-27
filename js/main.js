@@ -1,5 +1,4 @@
-// Values /////////////////////////////////////////////////////
-const rotationValuesAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.182];
+// Variables /////////////////////////////////////////////////////
 var scene, renderer, camera, zoomValue;
 
 var mainScene = new MainScene();
