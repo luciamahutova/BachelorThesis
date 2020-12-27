@@ -269,6 +269,7 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
     // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
         this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue);
+        this.positionUranusOnRangesliderPositiveValue(scaleValue);
         this.positionMoonOnRangesliderPositiveValue(scaleValue);
     } else if (scaleValue < 0) {
         this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue);
@@ -295,25 +296,16 @@ Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planet, pla
         this.planetData[planetOrder]["scaleFactor"] * scaleValue * 2 * Math.cos(this.betha + this.timestamp));
     planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
         this.planetData[planetOrder]["scaleFactor"] * scaleValue * 2 * Math.sin(this.betha + this.timestamp));
+}
 
-    // POKUS
+Planet.prototype.positionUranusOnRangesliderPositiveValue = function(scaleValue) {
+    // Specially positioned because of its angle rotation (nearly 100 degrees)
     var halfSizeOfUranus = this.planetData[6]["planetSize"] / scaleValue / 2;
     this.uranusMesh.position.x = this.planetData[6]["c"] + (this.planetData[6]["a"] *
         this.planetData[6]["scaleFactor"] * scaleValue * 2 * Math.cos(this.betha + this.timestamp)) + halfSizeOfUranus;
     this.uranusMesh.position.z = -1 * (this.planetData[6]["b"] *
         this.planetData[6]["scaleFactor"] * scaleValue * 2 * Math.sin(this.betha + this.timestamp)) + halfSizeOfUranus;
 }
-
-// Planet.prototype.positionMeshesOnRandesliderPositiveValue = function(planetData, scaleValue) {
-//     var halfSizeOfPlanetMesh = 0;
-//     var halfSizeOfEarth = planetData[2]["planetSize"] / (scaleValue * 2);
-
-//     for (var i = 0; i < planetData.length; i++) {
-//         halfSizeOfPlanetMesh = planetData[i]["planetSize"] / (scaleValue * 2);
-//         this.planetsMeshes[i + 2].position.x =
-//             planetData[i]["a"] * planetData[i]["scaleFactor"] * scaleValue * 2 + halfSizeOfPlanetMesh;
-//     }
-// }
 
 Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planet, planetOrder, scaleValue) {
     planet.position.x = ((this.planetData[planetOrder]["a"] *
