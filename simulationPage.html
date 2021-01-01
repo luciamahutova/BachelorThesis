@@ -75,27 +75,6 @@
             </section>
 
             <section>
-                <h3 class="lang" key="velocity">Velocity</h3>
-                <span class="lang" key="singlePlanet">For single planet</span>
-                <select>
-                    <option value="empty"></option>
-                    <option class="lang" key="mercury">Mercury</option>
-                    <option class="lang" key="venus">Venus</option>
-                    <option class="lang" key="earth">Earth</option>
-                    <option>Mars</option>
-                    <option>Jupiter</option>
-                    <option>Saturn</option>
-                    <option class="lang" key="uranus">Uranus</option>
-                    <option class="lang" key="neptune">Neptune</option>
-                </select>
-
-                <span class="lang" key="newValue">New value:</span><input type="number">
-                <label>
-                    <span class="checkmark lang" key="originalValues">Original values</span><input type="checkbox">
-                </label>
-            </section>
-
-            <section>
                 <h3 class="lang" key="cosmicObject">Cosmic object</h3>
                 <span class="lang" key="addToPlanet">Add to planet</span>
                 <select>
@@ -132,9 +111,15 @@
         <button type="button" onclick="moveSceneToOriginalPosition(scene)"></button>
     </section>
 
+    <!-- 1st rangeslider = planets' rotation speed -->
     <div class="slidecontainer">
-        <input type="range" min="-3" max="6" value="0" class="slider" id="rangesliderInput">
-        <p>Zoom: <span id="rangesliderValue"></span></p>
+        <input type="range" min="-5" max="5" value="0" class="slider" id="rangesliderSpeedInput">
+        <p>Rotation: <span id="rangesliderSpeedValue"></span>x</p>
+    </div>
+    <!-- 2nd rangeslider = zoom for scene and all its objects -->
+    <div class="slidecontainer">
+        <input type="range" min="-3" max="6" value="0" class="slider" id="rangesliderZoomInput">
+        <p>Zoom: <span id="rangesliderZoomValue"></span></p>
     </div>
 
     <div id="anime-container"></div>

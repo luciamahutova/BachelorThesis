@@ -175,7 +175,7 @@ header img {
     top: 160px;
     right: 40px;
     width: 270px;
-    height: 520px;
+    height: fit-content;
     border: none;
     border-radius: 5px 0;
     font-size: 16px;
@@ -183,8 +183,6 @@ header img {
 }
 
 #sidebar div:first-child {
-    width: 270px;
-    height: 520px;
     border: none;
     border-radius: 5px 0;
     box-shadow: 0 0 0 2px #ffffff;
@@ -254,6 +252,7 @@ input[type=number] {
 #sidebar button {
     position: relative;
     float: left;
+    margin-bottom: 15px;
 }
 
 .confirmChangesButton {
@@ -308,15 +307,22 @@ input[type=number] {
 }
 
 
-/* Rangeslider for zooming in-out in model */
+/* Rangesliders: 1st for planets' rotation speed, 2nd for scene scale */
 
 .slidecontainer {
     z-index: 20;
     position: fixed;
-    bottom: 20px;
     left: 38%;
     width: 25%;
     background-color: transparent;
+}
+
+.slidecontainer:first-of-type {
+    top: 20px;
+}
+
+.slidecontainer:nth-of-type(2) {
+    bottom: 20px;
 }
 
 .slidecontainer p {

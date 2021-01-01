@@ -241,8 +241,8 @@ Planet.prototype.scaleMeshesToOriginalSize = function() {
 // Zooming in/out (for planets and orbits) + movement of the scene
 // -------------------------------------------------------------------------
 Planet.prototype.zoomRangeslider = function() {
-    var slider = document.getElementById("rangesliderInput");
-    var sliderValue = document.getElementById("rangesliderValue");
+    var slider = document.getElementById("rangesliderZoomInput");
+    var sliderValue = document.getElementById("rangesliderZoomValue");
 
     var updateZoomValue = () => {
         sliderValue.innerHTML = slider.value;
