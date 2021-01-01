@@ -5,9 +5,16 @@ class Planet {
         this.planetsObjects = [];
         this.planetsMeshes = [];
         this.scaleValueScene = 0;
-        this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
         this.betha = 0;
         this.timestamp = Date.now() * 0.000001;
+        this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
+
+        this.addDataToPlanetObject();
+        this.createPlanets(this.planetData);
+        this.createPlanetsMesh(this.scene);
+        this.setPlanetsRotationAngle();
+        this.orbitClass.createOrbitShape();
+        this.zoomRangeslider();
     }
 
     createPlanetObject = function(diameter) {
@@ -137,16 +144,6 @@ class Planet {
             planetSize: 0.589
         };
         this.planetData.push(neptuneData);
-    }
-
-    // Called outside the class //////////////////////////////////////
-    initializePlanets = function() {
-        this.addDataToPlanetObject();
-        this.createPlanets(this.planetData);
-        this.createPlanetsMesh(this.scene);
-        this.setPlanetsRotationAngle();
-        this.orbitClass.createOrbitShape();
-        this.zoomRangeslider();
     }
 }
 

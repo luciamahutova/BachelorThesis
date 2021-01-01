@@ -8,7 +8,6 @@ camera = mainScene.getCamera();
 mainScene.resizeBackground(renderer, camera);
 
 var planetObject = new Planet(scene);
-planetObject.initializePlanets();
 
 // POKUS
 // var picker = new ObjectPicker();
