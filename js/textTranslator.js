@@ -24,6 +24,13 @@ let arrLang = {
         'uranus': 'Uran',
         'neptune': 'Neptun',
         'confirm': 'Potvrdit',
+        // Sidebar - planet physical info
+        'physicalValues': 'Fyzikální vlastnosti ',
+        'planetWeight': 'Hmotnost planety:',
+        'equatorPerimeter': 'Obvod rovníku:',
+        'currentRotation': 'Aktuální rychlost rotace (dráha):',
+        'orbitAroundSun': 'Oběžná doba kolem Slunce:',
+        'orbitAroundAxis': 'Oběžná doba kolem své osy:',
         // Planets
         'backToPlanets': 'Zpátky na planety',
         'diameter': 'Rovníkový poloměr:',
@@ -84,6 +91,13 @@ let arrLang = {
         'uranus': 'Uranus',
         'neptune': 'Neptune',
         'confirm': 'Confirm',
+        // Sidebar - planet physical info
+        'physicalValues': 'Physical values of ',
+        'planetWeight': 'Weight of planet:',
+        'equatorPerimeter': 'Equatorial perimeter:',
+        'currentRotation': 'Current rotation speed (orbit):',
+        'orbitAroundSun': 'Orbit time around the Sun:',
+        'orbitAroundAxis': 'Orbit time around its axis:',
         // Planets
         'backToPlanets': 'Back to planets',
         'diameter': 'Equatorial diameter:',
@@ -143,6 +157,13 @@ let arrLang = {
         'uranus': 'Urán',
         'neptune': 'Neptún',
         'confirm': 'Potvrdiť',
+        // Sidebar - planet physical info
+        'physicalValues': 'Fyzikálne vlastnosti ',
+        'planetWeight': 'Hmotnosť planéty:',
+        'equatorPerimeter': 'Obvod rovníka:',
+        'currentRotation': 'Aktuálna rýchlosť rotácie (dráha):',
+        'orbitAroundSun': 'Čas obehu okolo Slnka:',
+        'orbitAroundAxis': 'Čas obehu okolo svojej osi:',
         // Planets
         'backToPlanets': 'Späť na planéty',
         'diameter': 'Rovníkový polomer:',
