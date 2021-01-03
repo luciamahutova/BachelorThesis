@@ -1,17 +1,13 @@
 class MainScene {
     constructor() {
-        this.scene = this.initScene();
+        this.scene = new THREE.Scene();
         this.initRenderer();
         this.initCamera();
         this.bgMesh = this.setStaticBackground();
         this.bgScene = this.createBgScene(this.bgMesh);
         this.bgCamera = this.createBgCamera();
         this.setLights();
-    }
-
-    initScene = function() {
-        var scene = new THREE.Scene();
-        return scene;
+        this.planetObject = new Planet(this.scene);
     }
 
     initRenderer = function() {
@@ -99,6 +95,7 @@ class MainScene {
 
     animate = function() {
         this.onKeyDown();
+        this.planetObject.rotateAllPlanets();
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
         this.renderer.render(this.bgScene, this.bgCamera);

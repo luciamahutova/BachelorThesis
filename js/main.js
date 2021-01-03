@@ -7,16 +7,9 @@ renderer = mainScene.getRenderer();
 camera = mainScene.getCamera();
 mainScene.resizeBackground(renderer, camera);
 
-var planetObject = new Planet(scene);
-
-// POKUS
-// var picker = new ObjectPicker();
-// picker.addEvent();
-
 
 function animate() {
     mainScene.animate();
-    planetObject.rotateAllPlanets();
     animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();
