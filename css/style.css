@@ -160,7 +160,7 @@ header img {
 }
 
 
-/* Sidebar *************************************************************************************************
+/* Sidebars ************************************************************************************************
 ***********************************************************************************************************/
 
 .sidebarIcon {
@@ -170,10 +170,9 @@ header img {
     z-index: 1;
 }
 
-#sidebar {
+.sidebars {
     position: fixed;
     top: 160px;
-    right: 40px;
     width: 270px;
     height: fit-content;
     border: none;
@@ -182,32 +181,40 @@ header img {
     transition: 0.6s;
 }
 
-#sidebar div:first-child {
+#sidebarPlanetInfo {
+    left: 40px;
+}
+
+#sidebarRight {
+    right: 40px;
+}
+
+.sidebars div:first-child {
     border: none;
     border-radius: 5px 0;
     box-shadow: 0 0 0 2px #ffffff;
     display: inline-block;
 }
 
-#sidebar section {
+#sidebarRight section {
     margin: 10px 0 20px 12px;
 }
 
-#sidebar span {
+.sidebars span {
     display: inline-block;
     margin: 5px 0 0 15px;
 }
 
-#sidebar label {
+#sidebarRight label {
     display: block;
     margin-top: 5px;
 }
 
-#sidebar label span {
+#sidebarRight label span {
     margin-top: 0;
 }
 
-#sidebar select {
+#sidebarRight select {
     position: relative;
     float: right;
     margin-right: 15px;
@@ -218,7 +225,7 @@ header img {
 
 /* Inputs in Sidebar *********************/
 
-#sidebar input[type="number"] {
+.sidebars input[type="number"] {
     width: 100px;
     position: relative;
     float: right;
@@ -238,7 +245,7 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-#sidebar input[type="checkbox"] {
+#sidebarRight input[type="checkbox"] {
     position: relative;
     float: right;
     width: 16px;
@@ -249,7 +256,7 @@ input[type=number] {
 
 /* 3 buttons at the bottom of Sidebar ********/
 
-#sidebar button {
+#sidebarRight button {
     position: relative;
     float: left;
     margin-bottom: 15px;
