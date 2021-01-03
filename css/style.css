@@ -189,20 +189,36 @@ header img {
     right: 40px;
 }
 
-.sidebars div:first-child {
+.sidebars div {
+    /* for while frame */
     border: none;
     border-radius: 5px 0;
     box-shadow: 0 0 0 2px #ffffff;
     display: inline-block;
-}
-
-#sidebarRight section {
-    margin: 10px 0 20px 12px;
+    width: inherit;
 }
 
 .sidebars span {
     display: inline-block;
     margin: 5px 0 0 15px;
+}
+
+#sidebarPlanetInfo span {
+    /* for showing readonly input on the next line */
+    display: block;
+}
+
+.sidebars section {
+    padding: 10px 0 20px 12px;
+}
+
+.sidebars section:first-of-type {
+    margin-top: 10px;
+    padding-top: 0;
+}
+
+#sidebarPlanetInfo section:last-of-type {
+    margin-bottom: 20px;
 }
 
 #sidebarRight label {
@@ -230,6 +246,7 @@ header img {
     position: relative;
     float: right;
     margin-right: 15px;
+    margin-top: 5px;
     border: none;
     border-bottom: 1px solid #BABABA;
 }
@@ -245,7 +262,7 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-#sidebarRight input[type="checkbox"] {
+input[type="checkbox"] {
     position: relative;
     float: right;
     width: 16px;

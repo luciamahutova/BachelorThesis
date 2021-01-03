@@ -44,11 +44,11 @@ var animationFrameOutput = 0;
 function showHideSidebar() {
     if (!isSidebarOpen) {
         isSidebarOpen = true;
-        document.getElementById("sidebar").style.right = "40px";
+        document.getElementById("sidebarRight").style.right = "40px";
 
     } else {
         isSidebarOpen = false;
-        document.getElementById("sidebar").style.right = "-300px";
+        document.getElementById("sidebarRight").style.right = "-300px";
     }
 }
 
