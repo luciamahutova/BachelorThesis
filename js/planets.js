@@ -7,14 +7,8 @@ class Planet {
         this.scaleValueScene = 0;
         this.betha = 0;
         this.timestamp = Date.now() * 0.000001;
-        this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
 
-        this.addDataToPlanetObject();
-        this.createPlanets(this.planetData);
-        this.createPlanetsMesh(this.scene);
-        this.setPlanetsRotationAngle();
-        this.orbitClass.createOrbitShape();
-        this.zoomRangeslider();
+        this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
     }
 
     createPlanetObject = function(diameter) {
@@ -145,6 +139,24 @@ class Planet {
         };
         this.planetData.push(neptuneData);
     }
+
+    // Called in scene.js - class MainScene
+    initializePlanets = function() {
+        this.addDataToPlanetObject();
+        this.createPlanets(this.planetData);
+        this.createPlanetsMesh(this.scene);
+        this.setPlanetsRotationAngle();
+        this.orbitClass.createOrbitShape();
+        this.zoomRangeslider();
+    }
+
+    getPlanetMeshes = function() {
+        return this.planetsMeshes;
+    }
+
+    getScaleValue = function() {
+        return this.scaleValueScene;
+    }
 }
 
 // Creating planet objects
@@ -155,34 +167,30 @@ Planet.prototype.createPlanets = function(planetData) {
     this.mercury = this.createPlanetObject(planetData[0]["planetSize"]);
     this.venus = this.createPlanetObject(planetData[1]["planetSize"]);
     this.earth = this.createPlanetObject(planetData[2]["planetSize"]);
-    this.moon = this.createPlanetObject(0.124);
     this.mars = this.createPlanetObject(planetData[3]["planetSize"]);
-
-    // // 3x smaller scale (4 planets)
+    // 3x smaller scale (4 planets)
     this.jupiter = this.createPlanetObject(planetData[4]["planetSize"]);
     this.saturn = this.createPlanetObject(planetData[5]["planetSize"]);
     this.uranus = this.createPlanetObject(planetData[6]["planetSize"]);
     this.neptune = this.createPlanetObject(planetData[7]["planetSize"]);
 
-    this.planetsObjects.push(this.sun, this.moon, this.mercury, this.venus, this.earth, this.mars,
+    this.planetsObjects.push(this.sun, this.mercury, this.venus, this.earth, this.mars,
         this.jupiter, this.saturn, this.uranus, this.neptune);
 }
 
 Planet.prototype.createPlanetsMesh = function(scene) {
     this.sunMesh = this.createMesh(this.planetsObjects[0], '/images/textures/sunTexture2k.jpg');
-    this.moonMesh = this.createMesh(this.planetsObjects[1], '/images/textures/moonTexture2k.jpg');
-    this.mercuryMesh = this.createMesh(this.planetsObjects[2], '/images/textures/mercuryTexture2k.jpg');
-    this.venusMesh = this.createMesh(this.planetsObjects[3], '/images/textures/venusTexture2k.jpg');
-    this.earthMesh = this.createMesh(this.planetsObjects[4], '/images/textures/earthTexture2k.jpg');
-    this.marsMesh = this.createMesh(this.planetsObjects[5], '/images/textures/marsTexture2k.jpg');
-    this.jupiterMesh = this.createMesh(this.planetsObjects[6], '/images/textures/jupiterTexture2k.jpg');
-    this.saturnMesh = this.createMesh(this.planetsObjects[7], '/images/textures/saturnTexture2k.jpg');
-    this.uranusMesh = this.createMesh(this.planetsObjects[8], '/images/textures/uranusTexture2k.jpg');
-    this.neptuneMesh = this.createMesh(this.planetsObjects[9], '/images/textures/neptuneTexture2k.jpg');
+    this.mercuryMesh = this.createMesh(this.planetsObjects[1], '/images/textures/mercuryTexture2k.jpg');
+    this.venusMesh = this.createMesh(this.planetsObjects[2], '/images/textures/venusTexture2k.jpg');
+    this.earthMesh = this.createMesh(this.planetsObjects[3], '/images/textures/earthTexture2k.jpg');
+    this.marsMesh = this.createMesh(this.planetsObjects[4], '/images/textures/marsTexture2k.jpg');
+    this.jupiterMesh = this.createMesh(this.planetsObjects[5], '/images/textures/jupiterTexture2k.jpg');
+    this.saturnMesh = this.createMesh(this.planetsObjects[6], '/images/textures/saturnTexture2k.jpg');
+    this.uranusMesh = this.createMesh(this.planetsObjects[7], '/images/textures/uranusTexture2k.jpg');
+    this.neptuneMesh = this.createMesh(this.planetsObjects[8], '/images/textures/neptuneTexture2k.jpg');
 
-    this.planetsMeshes.push(this.sunMesh, this.moonMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
+    this.planetsMeshes.push(this.sunMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
-    this.earthMesh.add(this.moonMesh); // Earth is parent of the Moon - for correct rotation
     this.addMeshToScene(scene);
 }
 
@@ -195,7 +203,7 @@ Planet.prototype.addMeshToScene = function(scene) {
 // Setting properties of planets
 // -------------------------------------------------------------------------
 Planet.prototype.setPlanetsRotationAngle = function() {
-    for (var i = 2, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
+    for (var i = 1, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
         this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
             (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
         //this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90); //because orbits are rotated +90degrees
@@ -205,36 +213,36 @@ Planet.prototype.setPlanetsRotationAngle = function() {
 Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue) {
     // Changed scale for better view
     if (scaleValue > 0) {
-        this.scaleMeshesRangesliderPositiveValue(scaleValue);
+        this.scaleMeshesRangesliderPositiveValue(scaleValue, this.planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
     } else if (scaleValue < 0) {
         scaleValue *= -1;
-        this.scaleMeshesRangesliderNegativeValue(scaleValue);
+        this.scaleMeshesRangesliderNegativeValue(scaleValue, this.planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderNegativeValue(scaleValue);
     } else {
-        this.scaleMeshesToOriginalSize();
+        this.scaleMeshesToOriginalSize(this.planetsMeshes);
         this.orbitClass.scaleOrbitsToOriginalSize();
     }
 }
 
-Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue) {
-    for (var i = 1; i < this.planetsMeshes.length; i++) {
-        this.planetsMeshes[0].scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue); // the Sun
-        this.planetsMeshes[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
+Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, objects) {
+    for (var i = 1; i < objects.length; i++) {
+        objects[0].scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue); // the Sun
+        objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
-Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue) {
-    for (var i = 1; i < this.planetsMeshes.length; i++) {
-        this.planetsMeshes[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
+Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, objects) {
+    for (var i = 1; i < objects.length; i++) {
+        objects[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
         // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
-        this.planetsMeshes[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
+        objects[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
     }
 }
 
-Planet.prototype.scaleMeshesToOriginalSize = function() {
-    for (var i = 0; i < this.planetsMeshes.length; i++) {
-        this.planetsMeshes[i].scale.set(1, 1, 1);
+Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
+    for (var i = 0; i < objects.length; i++) {
+        objects[i].scale.set(1, 1, 1);
     }
 }
 
@@ -249,7 +257,7 @@ Planet.prototype.zoomRangeslider = function() {
         for (var i = 0; i < this.planetData.length; i++) {
             this.scaleValueScene = sliderValue.innerHTML;
         }
-        this.setScaleForPlanetsAndOrbits(this.scaleValueScene);
+        this.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetsMeshes);
     }
     slider.addEventListener('input', updateZoomValue);
     updateZoomValue();
@@ -267,20 +275,17 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
     if (scaleValue > 0) {
         this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue);
         this.positionUranusOnRangesliderPositiveValue(scaleValue);
-        this.positionMoonOnRangesliderPositiveValue(scaleValue);
     } else if (scaleValue < 0) {
         this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue);
-        this.positionMoonOnRangesliderNegativeValue();
     } else {
         this.positionPlanetToOriginalPosition(planet, planetOrder);
-        this.positionMoonToOriginalPosition();
     }
 }
 
-// Called in f. animate() (main.js) - movement needs to by redrawn by renderer
+// Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
 Planet.prototype.rotateAllPlanets = function() {
     var planet;
-    for (var i = 2, j = 0; i < this.planetsMeshes.length; i++, j++) {
+    for (var i = 1, j = 0; i < this.planetsMeshes.length; i++, j++) {
         planet = this.planetsMeshes[i];
         this.rotatePlanetOnOrbit(planet, j, this.scaleValueScene);
     }
@@ -328,23 +333,4 @@ Planet.prototype.positionPlanetToOriginalPosition = function(planet, planetOrder
         this.planetData[planetOrder]["scaleFactor"] * Math.cos(this.betha + this.timestamp));
     planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
         this.planetData[planetOrder]["scaleFactor"] * Math.sin(this.betha + this.timestamp));
-}
-
-// Positions for the Moon - according to scale from rangeslider
-Planet.prototype.positionMoonOnRangesliderPositiveValue = function(scaleValue) {
-    this.moonMesh.visible = true;
-    this.moonMesh.position.x = this.earthMesh.position.x + this.planetData[2]["a"] * scaleValue * 2;
-    this.moonMesh.position.z = this.earthMesh.position.z + 1;
-}
-
-Planet.prototype.positionMoonOnRangesliderNegativeValue = function() {
-    // Hidden Moon when model is too small
-    this.moonMesh.visible = false;
-}
-
-Planet.prototype.positionMoonToOriginalPosition = function() {
-    // Set original Moon position -> my value according to model
-    this.moonMesh.visible = true;
-    this.moonMesh.position.x = this.earthMesh.position.x + 1;
-    this.moonMesh.position.z = this.earthMesh.position.z + 0.5;
 }

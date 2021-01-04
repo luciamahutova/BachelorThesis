@@ -7,7 +7,11 @@ class MainScene {
         this.bgScene = this.createBgScene(this.bgMesh);
         this.bgCamera = this.createBgCamera();
         this.setLights();
+
         this.planetObject = new Planet(this.scene);
+        this.planetObject.initializePlanets();
+        this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes());
+        this.moonObject.initializeMoons();
     }
 
     initRenderer = function() {
@@ -96,6 +100,8 @@ class MainScene {
     animate = function() {
         this.onKeyDown();
         this.planetObject.rotateAllPlanets();
+        this.moonObject.rotateMoonAroundPlanet(this.planetObject.getScaleValue());
+
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
         this.renderer.render(this.bgScene, this.bgCamera);
