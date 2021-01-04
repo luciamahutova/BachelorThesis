@@ -12,6 +12,8 @@ class MainScene {
         this.planetObject.initializePlanets();
         this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes());
         this.moonObject.initializeMoons();
+        this.sunObject = new Sun(this.scene);
+        this.sunObject.initializeSun();
     }
 
     initRenderer = function() {

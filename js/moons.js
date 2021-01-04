@@ -10,6 +10,7 @@ class Moon extends Planet {
     }
 
     createMoonForEarth = function() {
+        // UPRAVIT DO FUNCKII, LEN POKUS O ZOBRAZENIE = FUNGUJE
         this.moon = this.createPlanetObject(0.124);
         this.moonsObjects.push(this.moon);
 
@@ -64,13 +65,13 @@ Moon.prototype.positionMoonToOriginalPosition = function() {
 // -------------------------------------------------------------------------
 Moon.prototype.setScaleForMoons = function(scaleValue) {
     if (scaleValue > 0) {
-        this.scaleMeshRangesliderPositiveValue(scaleValue, this.moonsMeshes);
+        this.scaleMeshesRangesliderPositiveValue(scaleValue, this.moonsMeshes);
     } else if (scaleValue == 0) {
         this.scaleMeshesToOriginalSize(this.moonsMeshes);
     }
 }
 
-Moon.prototype.scaleMeshRangesliderPositiveValue = function(scaleValue, objects) {
+Moon.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, objects) {
     for (var i = 1; i < objects.length; i++) {
         objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }

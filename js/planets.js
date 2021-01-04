@@ -163,7 +163,6 @@ class Planet {
 // -------------------------------------------------------------------------
 Planet.prototype.createPlanets = function(planetData) {
     // 10x smaller scale for the Sun
-    this.sun = this.createPlanetObject(4);
     this.mercury = this.createPlanetObject(planetData[0]["planetSize"]);
     this.venus = this.createPlanetObject(planetData[1]["planetSize"]);
     this.earth = this.createPlanetObject(planetData[2]["planetSize"]);
@@ -174,22 +173,21 @@ Planet.prototype.createPlanets = function(planetData) {
     this.uranus = this.createPlanetObject(planetData[6]["planetSize"]);
     this.neptune = this.createPlanetObject(planetData[7]["planetSize"]);
 
-    this.planetsObjects.push(this.sun, this.mercury, this.venus, this.earth, this.mars,
+    this.planetsObjects.push(this.mercury, this.venus, this.earth, this.mars,
         this.jupiter, this.saturn, this.uranus, this.neptune);
 }
 
 Planet.prototype.createPlanetsMesh = function(scene) {
-    this.sunMesh = this.createMesh(this.planetsObjects[0], '/images/textures/sunTexture2k.jpg');
-    this.mercuryMesh = this.createMesh(this.planetsObjects[1], '/images/textures/mercuryTexture2k.jpg');
-    this.venusMesh = this.createMesh(this.planetsObjects[2], '/images/textures/venusTexture2k.jpg');
-    this.earthMesh = this.createMesh(this.planetsObjects[3], '/images/textures/earthTexture2k.jpg');
-    this.marsMesh = this.createMesh(this.planetsObjects[4], '/images/textures/marsTexture2k.jpg');
-    this.jupiterMesh = this.createMesh(this.planetsObjects[5], '/images/textures/jupiterTexture2k.jpg');
-    this.saturnMesh = this.createMesh(this.planetsObjects[6], '/images/textures/saturnTexture2k.jpg');
-    this.uranusMesh = this.createMesh(this.planetsObjects[7], '/images/textures/uranusTexture2k.jpg');
-    this.neptuneMesh = this.createMesh(this.planetsObjects[8], '/images/textures/neptuneTexture2k.jpg');
+    this.mercuryMesh = this.createMesh(this.planetsObjects[0], '/images/textures/mercuryTexture2k.jpg');
+    this.venusMesh = this.createMesh(this.planetsObjects[1], '/images/textures/venusTexture2k.jpg');
+    this.earthMesh = this.createMesh(this.planetsObjects[2], '/images/textures/earthTexture2k.jpg');
+    this.marsMesh = this.createMesh(this.planetsObjects[3], '/images/textures/marsTexture2k.jpg');
+    this.jupiterMesh = this.createMesh(this.planetsObjects[4], '/images/textures/jupiterTexture2k.jpg');
+    this.saturnMesh = this.createMesh(this.planetsObjects[5], '/images/textures/saturnTexture2k.jpg');
+    this.uranusMesh = this.createMesh(this.planetsObjects[6], '/images/textures/uranusTexture2k.jpg');
+    this.neptuneMesh = this.createMesh(this.planetsObjects[7], '/images/textures/neptuneTexture2k.jpg');
 
-    this.planetsMeshes.push(this.sunMesh, this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
+    this.planetsMeshes.push(this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
     this.addMeshToScene(scene);
 }
@@ -203,7 +201,7 @@ Planet.prototype.addMeshToScene = function(scene) {
 // Setting properties of planets
 // -------------------------------------------------------------------------
 Planet.prototype.setPlanetsRotationAngle = function() {
-    for (var i = 1, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
+    for (var i = 0, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
         this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
             (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
         //this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90); //because orbits are rotated +90degrees
@@ -226,15 +224,15 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue) {
 }
 
 Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, objects) {
-    for (var i = 1; i < objects.length; i++) {
-        objects[0].scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue); // the Sun
+    for (var i = 0; i < objects.length; i++) {
+        // objects[0].scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue); // the Sun
         objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
 Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, objects) {
-    for (var i = 1; i < objects.length; i++) {
-        objects[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
+    for (var i = 0; i < objects.length; i++) {
+        // objects[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
         // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
         objects[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
     }
@@ -285,7 +283,7 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
 // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
 Planet.prototype.rotateAllPlanets = function() {
     var planet;
-    for (var i = 1, j = 0; i < this.planetsMeshes.length; i++, j++) {
+    for (var i = 0, j = 0; i < this.planetsMeshes.length; i++, j++) {
         planet = this.planetsMeshes[i];
         this.rotatePlanetOnOrbit(planet, j, this.scaleValueScene);
     }
