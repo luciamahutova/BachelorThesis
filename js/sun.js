@@ -2,7 +2,6 @@ class Sun extends Planet {
     constructor(scene) {
         super();
         this.scene = scene;
-        this.scaleValueScene = 0;
     }
 
     createSun = function() {
@@ -34,6 +33,10 @@ Sun.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, object)
     object.scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue);
 }
 
-Sun.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, objects) {
+Sun.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, object) {
     object.scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue));
+}
+
+Sun.prototype.scaleMeshesToOriginalSize = function(object) {
+    object.scale.set(1, 1, 1);
 }

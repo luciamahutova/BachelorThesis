@@ -5,8 +5,6 @@ class Moon extends Planet {
         this.planetsMeshes = planetsMeshes;
         this.moonsObjects = [];
         this.moonsMeshes = [];
-
-        this.scaleValueScene = 0;
     }
 
     createMoonForEarth = function() {
@@ -23,7 +21,7 @@ class Moon extends Planet {
 
     initializeMoons = function() {
         this.createMoonForEarth();
-        this.zoomRangeslider();
+        // this.zoomRangeslider();
     }
 }
 
@@ -44,9 +42,9 @@ Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
 // Positions for the Moon - according to scale from rangeslider
 Moon.prototype.positionMoonOnRangesliderPositiveValue = function(scaleValue) {
     this.moonMesh.visible = true;
-    this.moonMesh.position.x = this.planetsMeshes[3].position.x + 1.0027 * scaleValue * 2;
+    this.moonMesh.position.x = this.planetsMeshes[2].position.x + 1.0027 * scaleValue * 2;
     // this.planetData[2]["a"] = 1.0027 ... for Earth
-    this.moonMesh.position.z = this.planetsMeshes[3].position.z + 1;
+    this.moonMesh.position.z = this.planetsMeshes[2].position.z + 1;
 }
 
 Moon.prototype.positionMoonOnRangesliderNegativeValue = function() {
@@ -57,11 +55,11 @@ Moon.prototype.positionMoonOnRangesliderNegativeValue = function() {
 Moon.prototype.positionMoonToOriginalPosition = function() {
     // Set original Moon position -> my value according to model
     this.moonMesh.visible = true;
-    this.moonMesh.position.x = this.planetsMeshes[3].position.x + 1;
-    this.moonMesh.position.z = this.planetsMeshes[3].position.z + 0.5;
+    this.moonMesh.position.x = this.planetsMeshes[2].position.x + 1;
+    this.moonMesh.position.z = this.planetsMeshes[2].position.z + 0.5;
 }
 
-// Scaling the Moon - according to zoom
+// Scaling the Moon - according to zoom (functions ingerited from class Planet)
 // -------------------------------------------------------------------------
 Moon.prototype.setScaleForMoons = function(scaleValue) {
     if (scaleValue > 0) {
@@ -69,28 +67,4 @@ Moon.prototype.setScaleForMoons = function(scaleValue) {
     } else if (scaleValue == 0) {
         this.scaleMeshesToOriginalSize(this.moonsMeshes);
     }
-}
-
-Moon.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, objects) {
-    for (var i = 1; i < objects.length; i++) {
-        objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
-    }
-}
-
-// LEN POMOCKA - SCALE PRE ZVACSENIE MESIACOV - ZMAZAT
-// Zooming in/out (for moons) + movement of the scene
-// -------------------------------------------------------------------------
-Moon.prototype.zoomRangeslider = function() {
-    var slider = document.getElementById("rangesliderZoomInput");
-    var sliderValue = document.getElementById("rangesliderZoomValue");
-
-    var updateZoomValue = () => {
-        sliderValue.innerHTML = slider.value;
-        for (var i = 0; i < this.moonsMeshes.length; i++) {
-            this.scaleValueScene = sliderValue.innerHTML;
-        }
-        this.setScaleForMoons(this.scaleValueScene);
-    }
-    slider.addEventListener('input', updateZoomValue);
-    updateZoomValue();
 }

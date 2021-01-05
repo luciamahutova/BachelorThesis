@@ -14,6 +14,8 @@ class MainScene {
         this.moonObject.initializeMoons();
         this.sunObject = new Sun(this.scene);
         this.sunObject.initializeSun();
+
+        this.scaleValueScene = 0;
     }
 
     initRenderer = function() {
@@ -101,12 +103,32 @@ class MainScene {
 
     animate = function() {
         this.onKeyDown();
-        this.planetObject.rotateAllPlanets();
-        this.moonObject.rotateMoonAroundPlanet(this.planetObject.getScaleValue());
+        this.zoomRangeslider();
+        this.planetObject.rotateAllPlanets(this.scaleValueScene);
+        this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
         this.renderer.render(this.bgScene, this.bgCamera);
         this.renderer.render(this.scene, this.camera);
     };
+}
+
+// Zooming in/out (for planets and orbits) + movement of the scene
+// -------------------------------------------------------------------------
+MainScene.prototype.zoomRangeslider = function() {
+    var slider = document.getElementById("rangesliderZoomInput");
+    var sliderValue = document.getElementById("rangesliderZoomValue");
+
+    var updateZoomValue = () => {
+        sliderValue.innerHTML = slider.value;
+        for (var i = 0; i < 8; i++) {
+            this.scaleValueScene = sliderValue.innerHTML;
+        }
+        this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
+        this.moonObject.setScaleForMoons(this.scaleValueScene);
+        this.sunObject.setScaleForSun(this.scaleValueScene);
+    }
+    slider.addEventListener('input', updateZoomValue);
+    updateZoomValue();
 }

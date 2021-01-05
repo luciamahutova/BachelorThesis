@@ -4,7 +4,6 @@ class Planet {
         this.planetData = [];
         this.planetsObjects = [];
         this.planetsMeshes = [];
-        this.scaleValueScene = 0;
         this.betha = 0;
         this.timestamp = Date.now() * 0.000001;
 
@@ -147,7 +146,7 @@ class Planet {
         this.createPlanetsMesh(this.scene);
         this.setPlanetsRotationAngle();
         this.orbitClass.createOrbitShape();
-        this.zoomRangeslider();
+        // this.zoomRangeslider();
     }
 
     getPlanetMeshes = function() {
@@ -208,31 +207,29 @@ Planet.prototype.setPlanetsRotationAngle = function() {
     }
 }
 
-Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue) {
+Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshes) {
     // Changed scale for better view
     if (scaleValue > 0) {
-        this.scaleMeshesRangesliderPositiveValue(scaleValue, this.planetsMeshes);
+        this.scaleMeshesRangesliderPositiveValue(scaleValue, planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
     } else if (scaleValue < 0) {
         scaleValue *= -1;
-        this.scaleMeshesRangesliderNegativeValue(scaleValue, this.planetsMeshes);
+        this.scaleMeshesRangesliderNegativeValue(scaleValue, planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderNegativeValue(scaleValue);
     } else {
-        this.scaleMeshesToOriginalSize(this.planetsMeshes);
+        this.scaleMeshesToOriginalSize(planetsMeshes);
         this.orbitClass.scaleOrbitsToOriginalSize();
     }
 }
 
 Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, objects) {
     for (var i = 0; i < objects.length; i++) {
-        // objects[0].scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue); // the Sun
         objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
 Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, objects) {
     for (var i = 0; i < objects.length; i++) {
-        // objects[0].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue)); // the Sun
         // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
         objects[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
     }
@@ -242,23 +239,6 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
     for (var i = 0; i < objects.length; i++) {
         objects[i].scale.set(1, 1, 1);
     }
-}
-
-// Zooming in/out (for planets and orbits) + movement of the scene
-// -------------------------------------------------------------------------
-Planet.prototype.zoomRangeslider = function() {
-    var slider = document.getElementById("rangesliderZoomInput");
-    var sliderValue = document.getElementById("rangesliderZoomValue");
-
-    var updateZoomValue = () => {
-        sliderValue.innerHTML = slider.value;
-        for (var i = 0; i < this.planetData.length; i++) {
-            this.scaleValueScene = sliderValue.innerHTML;
-        }
-        this.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetsMeshes);
-    }
-    slider.addEventListener('input', updateZoomValue);
-    updateZoomValue();
 }
 
 // Moving planets on their orbits (ellipses)
@@ -281,11 +261,18 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
 }
 
 // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
-Planet.prototype.rotateAllPlanets = function() {
+// Planet.prototype.rotateAllPlanets = function() {
+//     var planet;
+//     for (var i = 0, j = 0; i < this.planetsMeshes.length; i++, j++) {
+//         planet = this.planetsMeshes[i];
+//         this.rotatePlanetOnOrbit(planet, j, this.scaleValueScene);
+//     }
+// }
+Planet.prototype.rotateAllPlanets = function(scaleValue) {
     var planet;
-    for (var i = 0, j = 0; i < this.planetsMeshes.length; i++, j++) {
+    for (var i = 0; i < this.planetsMeshes.length; i++) {
         planet = this.planetsMeshes[i];
-        this.rotatePlanetOnOrbit(planet, j, this.scaleValueScene);
+        this.rotatePlanetOnOrbit(planet, i, scaleValue);
     }
 }
 
