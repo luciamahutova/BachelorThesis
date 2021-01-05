@@ -146,7 +146,6 @@ class Planet {
         this.createPlanetsMesh(this.scene);
         this.setPlanetsRotationAngle();
         this.orbitClass.createOrbitShape();
-        // this.zoomRangeslider();
     }
 
     getPlanetMeshes = function() {
@@ -261,13 +260,6 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
 }
 
 // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
-// Planet.prototype.rotateAllPlanets = function() {
-//     var planet;
-//     for (var i = 0, j = 0; i < this.planetsMeshes.length; i++, j++) {
-//         planet = this.planetsMeshes[i];
-//         this.rotatePlanetOnOrbit(planet, j, this.scaleValueScene);
-//     }
-// }
 Planet.prototype.rotateAllPlanets = function(scaleValue) {
     var planet;
     for (var i = 0; i < this.planetsMeshes.length; i++) {
@@ -277,6 +269,7 @@ Planet.prototype.rotateAllPlanets = function(scaleValue) {
 }
 
 // Positions for planet - according to scale from rangeslider
+// -------------------------------------------------------------------------
 Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planet, planetOrder, scaleValue) {
     var scale = scaleValue * 2;
     // (-1 * ...) for anticlockwise rotation

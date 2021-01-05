@@ -30,7 +30,8 @@ Sun.prototype.setScaleForSun = function(scaleValue) {
 }
 
 Sun.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, object) {
-    object.scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue);
+    // object.scale.set(1.5 * scaleValue, 1.5 * scaleValue, 1.5 * scaleValue);
+    object.scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
 }
 
 Sun.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, object) {
