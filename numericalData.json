@@ -84,7 +84,7 @@
             "planetSize": 0.607
         },
         {
-            "planet": "Nßeptune",
+            "planet": "Neptune",
             "a": 30.0806,
             "b": 30.0788,
             "c": 0.2587,
@@ -96,23 +96,21 @@
             "planetSize": 0.589
         }
     ],
-    "astronomicalSymbol": [{
-            "meanDistanceFromPrimary": "km",
-            "meanRadius": "km",
-            "surfaceArea": "1×106 km2",
-            "volume": "1×109 km3",
-            "mass": "1×1022 kg",
-            "density": "g/cm3",
-            "equatorialGravity": "m/s2",
-            "escapeVelocity": "km/s",
-            "rotationPeriod": "days",
-            "meanOrbitalSpeed": "km/s",
-            "eccentricity": "",
-            "inclinationToPrimaryEquator": "degrees",
-            "meanSurfaceTemperature": "Kelvin"
-        }
-
-    ],
+    "astronomicalSymbol": {
+        "meanDistanceFromPrimary": "km",
+        "meanRadius": "km",
+        "surfaceArea": "1×106 km2",
+        "volume": "1×109 km3",
+        "mass": "1×1022 kg",
+        "density": "g/cm3",
+        "equatorialGravity": "m/s2",
+        "escapeVelocity": "km/s",
+        "rotationPeriod": "days",
+        "meanOrbitalSpeed": "km/s",
+        "eccentricity": "",
+        "inclinationToPrimaryEquator": "degrees",
+        "meanSurfaceTemperature": "Kelvin"
+    },
     "moonData": [{
         "Earth": {
             "moon": "Moon",
