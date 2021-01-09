@@ -8,6 +8,7 @@ class Planet {
         this.timestamp = Date.now() * 0.000001;
 
         this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
+        this.jsonManager = new JSONManager();
     }
 
     createPlanetObject = function(diameter) {
@@ -204,6 +205,12 @@ Planet.prototype.setPlanetsRotationAngle = function() {
             (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
         //this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90); //because orbits are rotated +90degrees
     }
+
+    // POKUS
+    //this.jsonManager.readJsonFile("/numericalData.json");
+    //var e = this.jsonManager.getPlanetData('Venus', 'e');
+    var e = this.jsonManager.readPlanetData('Venus', 'e'); // NEFUNGUJE PREDANIE HODNOTY
+    console.log(e);
 }
 
 Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshes) {
