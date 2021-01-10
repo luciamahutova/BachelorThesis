@@ -1,7 +1,6 @@
 class Planet {
     constructor(scene) {
         this.scene = scene;
-        this.planetData = [];
         this.planetsObjects = [];
         this.planetsMeshes = [];
         this.betha = 0;
@@ -9,6 +8,9 @@ class Planet {
 
         this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
         this.jsonManager = new JSONManager();
+
+        this.allDataJSON = [];
+        this.addAllDataJSON();
     }
 
     createPlanetObject = function(diameter) {
@@ -27,125 +29,11 @@ class Planet {
         return new THREE.Mesh(planetObject, this.setNewMesh(imageSrc));
     }
 
-    // Values for planets
-    addDataToPlanetObject = function() {
-        // a: semi-major axis, which is the largest distance between the center of the ellipse and the curve of the orbit
-        // b: semi-minor axis, which is the shortest distance between the center of the ellipse and the curve of the orbit
-        // c: distance between the center of the orbit and the focus of the orbit, which is where the Sun would be in a     planetary orbit.
-        // e: eccentricity, which is the measure of the deviation of the shape of an orbit from that of a perfect circle (a measure of how elliptical an orbit is). The higher the eccentricity of an orbit, the more elliptical it is;
-        // tiltAxisZ: planets' tilt angle around its axis = Z
-        // scaleFaktor: my values for better view of all planets
-        var mercuryData = {
-            a: 0.3870,
-            b: 0.3788,
-            c: 0.0796,
-            e: 0.2056,
-            rotationSpeedAroundSun: 1.607,
-            eulerDistanceFromSun: 2.0790e+3,
-            scaleFactor: 19,
-            tiltAxisZ: 0.03,
-            planetSize: 0.175
-        };
-        this.planetData.push(mercuryData);
-
-        var venusData = {
-            a: 0.7219,
-            b: 0.7219,
-            c: 0.0049,
-            e: 0.0068,
-            rotationSpeedAroundSun: 1.174,
-            eulerDistanceFromSun: 3.8849e+3,
-            scaleFactor: 17,
-            tiltAxisZ: 177.4,
-            planetSize: 0.435
-        };
-        this.planetData.push(venusData);
-
-        var earthData = {
-            a: 1.0027,
-            b: 1.0025,
-            c: 0.0167,
-            e: 0.0167,
-            rotationSpeedAroundSun: 1.000,
-            eulerDistanceFromSun: 5.3709e+3,
-            scaleFactor: 17,
-            tiltAxisZ: 23.4,
-            planetSize: 0.457
-        };
-        this.planetData.push(earthData);
-
-        var marsData = {
-            a: 1.5241,
-            b: 1.5173,
-            c: 0.1424,
-            e: 0.0934,
-            rotationSpeedAroundSun: 0.802,
-            eulerDistanceFromSun: 8.1834e+3,
-            scaleFactor: 13.5,
-            tiltAxisZ: 25.2,
-            planetSize: 0.243
-        };
-        this.planetData.push(marsData);
-
-        var jupiterData = {
-            a: 5.2073,
-            b: 5.2010,
-            c: 0.2520,
-            e: 0.0484,
-            rotationSpeedAroundSun: 0.434,
-            eulerDistanceFromSun: 2.7951e+4,
-            scaleFactor: 5,
-            tiltAxisZ: 3.1,
-            planetSize: 1.673
-        };
-        this.planetData.push(jupiterData);
-
-        var saturnData = {
-            a: 9.5590,
-            b: 9.5231,
-            c: 0.5181,
-            e: 0.0542,
-            rotationSpeedAroundSun: 0.323,
-            eulerDistanceFromSun: 5.1464e+4,
-            scaleFactor: 3.5,
-            tiltAxisZ: 26.7,
-            planetSize: 1.394
-        };
-        this.planetData.push(saturnData);
-
-        var uranusData = {
-            a: 19.1848,
-            b: 19.1645,
-            c: 0.9055,
-            e: 0.0472,
-            rotationSpeedAroundSun: 0.228,
-            eulerDistanceFromSun: 1.0328e+5,
-            scaleFactor: 2,
-            tiltAxisZ: 97.8,
-            planetSize: 0.607
-        };
-        this.planetData.push(uranusData);
-
-        var neptuneData = {
-            a: 30.0806,
-            b: 30.0788,
-            c: 0.2587,
-            e: 0.0086,
-            rotationSpeedAroundSun: 0.182,
-            eulerDistanceFromSun: 1.6168e+5,
-            scaleFactor: 1.5,
-            tiltAxisZ: 28.3,
-            planetSize: 0.589
-        };
-        this.planetData.push(neptuneData);
-    }
-
     // Called in scene.js - class MainScene
     initializePlanets = function() {
-        this.addDataToPlanetObject();
         this.createPlanets(this.planetData);
         this.createPlanetsMesh(this.scene);
-        this.setPlanetsRotationAngle();
+        this.setRotationAngleForAllPlanets();
         this.orbitClass.createOrbitShape();
     }
 
@@ -156,6 +44,30 @@ class Planet {
     getScaleValue = function() {
         return this.scaleValueScene;
     }
+}
+
+
+// Read data from JSON and save them
+// -------------------------------------------------------------------------
+Planet.prototype.addAllDataJSON = function() {
+    this.mercuryDataJSON = this.jsonManager.readPlanetData("Mercury");
+    this.venusDataJSON = this.jsonManager.readPlanetData("Venus");
+    this.earthDataJSON = this.jsonManager.readPlanetData("Earth");
+    this.marsDataJSON = this.jsonManager.readPlanetData("Mars");
+    this.jupiterDataJSON = this.jsonManager.readPlanetData("Jupiter");
+    this.saturnDataJSON = this.jsonManager.readPlanetData("Saturn");
+    this.uranusDataJSON = this.jsonManager.readPlanetData("Uranus");
+    this.neptuneDataJSON = this.jsonManager.readPlanetData("Neptune");
+
+    this.allDataJSON.push(this.mercuryDataJSON, this.venusDataJSON, this.earthDataJSON, this.marsDataJSON,
+        this.jupiterDataJSON, this.saturnDataJSON, this.uranusDataJSON, this.neptuneDataJSON);
+
+    // a: semi-major axis, which is the largest distance between the center of the ellipse and the curve of the orbit
+    // b: semi-minor axis, which is the shortest distance between the center of the ellipse and the curve of the orbit
+    // c: distance between the center of the orbit and the focus of the orbit, which is where the Sun would be in a     planetary orbit.
+    // e: eccentricity, which is the measure of the deviation of the shape of an orbit from that of a perfect circle (a measure of how elliptical an orbit is). The higher the eccentricity of an orbit, the more elliptical it is;
+    // tiltAxisZ: planets' tilt angle around its axis = Z
+    // scaleFaktor: my values for better view of all planets
 }
 
 // Creating planet objects
@@ -197,22 +109,28 @@ Planet.prototype.addMeshToScene = function(scene) {
     }
 }
 
-// Setting properties of planets
+// Setting rotation angle for planets on Z-axis 
 // -------------------------------------------------------------------------
-Planet.prototype.setPlanetsRotationAngle = function() {
-    for (var i = 0, angle = 0; i < this.planetsMeshes.length; i++, angle++) {
-        this.planetsMeshes[i].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
-            (this.planetData[angle]["tiltAxisZ"] * Math.PI) / 180);
-        //this.planetsMeshes[i].rotation.x = THREE.Math.degToRad(-90); //because orbits are rotated +90degrees
-    }
+Planet.prototype.setRotationAngleForSinglePlanet = function(planetMesh, planetOrder) {
+    var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
 
-    // POKUS
-    //this.jsonManager.readJsonFile("/numericalData.json");
-    //var e = this.jsonManager.getPlanetData('Venus', 'e');
-    var e = this.jsonManager.readPlanetData('Venus', 'e'); // NEFUNGUJE PREDANIE HODNOTY
-    console.log(e);
+    dataOfCurrentPlanetJSON.then(function(result) {
+        planetMesh.setRotationFromAxisAngle(
+            new THREE.Vector3(0, 0, 1),
+            (result["tiltAxisZ"] * Math.PI) / 180
+        );
+        console.log(result["tiltAxisZ"]);
+    });
 }
 
+Planet.prototype.setRotationAngleForAllPlanets = function() {
+    for (var i = 0; i < this.planetsMeshes.length; i++) {
+        this.setRotationAngleForSinglePlanet(this.planetsMeshes[i], i);
+    }
+}
+
+// Setting scale for planets and orbits (according to rangeslider value)
+// -------------------------------------------------------------------------
 Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshes) {
     // Changed scale for better view
     if (scaleValue > 0) {
@@ -251,18 +169,19 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
 // -------------------------------------------------------------------------
 Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue) {
     // PREROBIT, VSETKY SA TOCIA ROVNAKO RYCHLO
-    this.timestamp += (this.planetData[planetOrder]["rotationSpeedAroundSun"] / 5000);
-    //this.timestamp += 0.0001;
+    // this.timestamp += (this.planetData[planetOrder]["rotationSpeedAroundSun"] / 5000);
+    this.timestamp += 0.0001;
     this.betha = Math.cos(planet.position.x / (planet.position.z + this.timestamp));
 
     // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
-        this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue);
-        this.positionUranusOnRangesliderPositiveValue(scaleValue);
+        this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue, this.betha, this.timestamp);
+        this.positionUranusOnRangesliderPositiveValue(this.uranusMesh, scaleValue, this.betha, this.timestamp);
     } else if (scaleValue < 0) {
-        this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue);
+        this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue, this.betha, this.timestamp);
+        this.positionUranusOnRangesliderNegativeValue(this.uranusMesh, scaleValue, this.betha, this.timestamp);
     } else {
-        this.positionPlanetToOriginalPosition(planet, planetOrder);
+        this.positionPlanetToOriginalPosition(planet, planetOrder, this.betha, this.timestamp);
     }
 }
 
@@ -277,45 +196,61 @@ Planet.prototype.rotateAllPlanets = function(scaleValue) {
 
 // Positions for planet - according to scale from rangeslider
 // -------------------------------------------------------------------------
-Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planet, planetOrder, scaleValue) {
+Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planetMesh, planetOrder, scaleValue, betha, timestamp) {
     var scale = scaleValue * 2;
+    var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
+
     // (-1 * ...) for anticlockwise rotation
-    planet.position.x = this.planetData[planetOrder]["c"] + (this.planetData[planetOrder]["a"] *
-        this.planetData[planetOrder]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp));
-    planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
-        this.planetData[planetOrder]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp));
+    dataOfCurrentPlanetJSON.then(function(result) {
+        planetMesh.position.x = result["c"] + (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp));
+        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp));
+    });
 }
 
-Planet.prototype.positionUranusOnRangesliderPositiveValue = function(scaleValue) {
+Planet.prototype.positionUranusOnRangesliderPositiveValue = function(planetMesh, scaleValue, betha, timestamp) {
     var scale = scaleValue * 2;
+    var dataOfCurrentPlanetJSON = this.allDataJSON[6];
     // Specially positioned because of its angle rotation (nearly 100 degrees)
-    var halfSizeOfUranus = this.planetData[6]["planetSize"] / scaleValue / 2;
 
-    this.uranusMesh.position.x = this.planetData[6]["c"] + (this.planetData[6]["a"] *
-        this.planetData[6]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp)) + halfSizeOfUranus;
-    this.uranusMesh.position.z = -1 * (this.planetData[6]["b"] *
-        this.planetData[6]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp)) + halfSizeOfUranus;
+    dataOfCurrentPlanetJSON.then(function(result) {
+        var halfSizeOfUranus = result["planetSize"] / scaleValue / 2;
+
+        planetMesh.position.x = result["c"] + (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp)) +
+            halfSizeOfUranus;
+        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp)) +
+            halfSizeOfUranus;
+    });
 }
 
-Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planet, planetOrder, scaleValue) {
+Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planetMesh, planetOrder, scaleValue, betha, timestamp) {
     // The same scale as in class Orbits
     var scale = 0.5 / (-1 * scaleValue);
-    var halfSizeOfUranus = this.planetData[6]["planetSize"] / scaleValue / 2;
+    var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
 
-    planet.position.x = (this.planetData[planetOrder]["a"] *
-        this.planetData[planetOrder]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp));
-    planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
-        this.planetData[planetOrder]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp));
-
-    this.uranusMesh.position.x = (this.planetData[6]["a"] *
-        this.planetData[6]["scaleFactor"] * scale * Math.cos(this.betha + this.timestamp)) + halfSizeOfUranus;
-    this.uranusMesh.position.z = -1 * (this.planetData[6]["b"] *
-        this.planetData[6]["scaleFactor"] * scale * Math.sin(this.betha + this.timestamp)) + halfSizeOfUranus;
+    dataOfCurrentPlanetJSON.then(function(result) {
+        planetMesh.position.x = (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp));
+        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp));
+    });
 }
 
-Planet.prototype.positionPlanetToOriginalPosition = function(planet, planetOrder) {
-    planet.position.x = this.planetData[planetOrder]["c"] + (this.planetData[planetOrder]["a"] *
-        this.planetData[planetOrder]["scaleFactor"] * Math.cos(this.betha + this.timestamp));
-    planet.position.z = -1 * (this.planetData[planetOrder]["b"] *
-        this.planetData[planetOrder]["scaleFactor"] * Math.sin(this.betha + this.timestamp));
+Planet.prototype.positionUranusOnRangesliderNegativeValue = function(planetMesh, scaleValue, betha, timestamp) {
+    var scale = 0.5 / (-1 * scaleValue);
+    var dataOfCurrentPlanetJSON = this.allDataJSON[6];
+
+    dataOfCurrentPlanetJSON.then(function(result) {
+        var halfSizeOfUranus = result["planetSize"] / scaleValue / 2;
+
+        planetMesh.position.x = (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp)) + halfSizeOfUranus;
+        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp)) +
+            halfSizeOfUranus;
+    });
+}
+
+Planet.prototype.positionPlanetToOriginalPosition = function(planetMesh, planetOrder, betha, timestamp) {
+    var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
+    // "dataOfCurrentPlanetJSON" is equal to Promise, we need data from the Promise
+    dataOfCurrentPlanetJSON.then(function(result) {
+        planetMesh.position.x = result["c"] + (result["a"] * result["scaleFactor"] * Math.cos(betha + timestamp));
+        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * Math.sin(betha + timestamp));
+    });
 }

@@ -1,59 +1,61 @@
 class JSONManager {
     constructor() {
-        this.planetData = [];
-        this.moonData = [];
-        this.astronomicalSymbol = [];
-        this.currentValue = 0;
+        this.allDataJSON = {};
     }
 
-    readJsonFile = function(url) {
-        fetch(url)
+    // PLANÉTY
+    // ----------------------------------------------------------------
+    // 1.možnosť
+    readPlanetData = async function(planet) {
+        this.currentValue = await fetch("/numericalData.json")
             .then(response => response.json())
             .then(data => {
-                this.planetData = data.planetData;
-                this.moonData = data.moonData;
-                this.astronomicalSymbol = data.astronomicalSymbol;
-            });
+                console.log("read again");
+                return data["planetData"][planet]
+            })
+            .catch((error) => { console.warn(error); });
+        return this.currentValue;
     }
-    readPlanetData = function(planet, property) {
+
+    // 2.možnosť 
+    getPlanetData = async function(planet) {
+        // returns Promise
+        const response = await fetch("/numericalData.json");
+        this.allDataJSON = await response.json();
+        return this.allDataJSON["planetData"][planet];
+    }
+
+    // MESIACE
+    // ----------------------------------------------------------------
+    readMoonData = function(planetOrder, moonOrder) {
         fetch("/numericalData.json")
             .then(response => response.json())
             .then(data => {
-                this.planetData = data.planetData;
-                console.log(this.planetData[planet][property]); // DOBRA HODNOTA
-                return this.planetData[planet][property];
-            });
+                return data.moonData[planetOrder][moonOrder];
+            })
+            .catch((error) => { console.warn(error); });
     }
 
-    readMoonData = function(moon, moonOrder, property) {
-        fetch("/numericalData.json")
-            .then(response => response.json())
-            .then(data => {
-                this.moonData = data.moonData;
-                return this.moonData[moon][moonOrder][property];
-            });
+    getMoonData = async function(planetOrder, moonOrder) {
+        const response = await fetch("/numericalData.json");
+        this.allDataJSON = await response.json();
+        return this.allDataJSON["moonData"][planetOrder][moonOrder];
     }
 
+    // SYMBOLY  
+    // ----------------------------------------------------------------
     readAstronomicalSymbol = function(property) {
         fetch("/numericalData.json")
             .then(response => response.json())
             .then(data => {
-                this.astronomicalSymbol = data.astronomicalSymbol;
-                return this.astronomicalSymbol[property];
-            });
+                return data.astronomicalSymbol[property];
+            })
+            .catch((error) => { console.warn(error); });
     }
 
-
-    // PRIKLAD POUZITIA - PRISTUPY FUNGUJU
-    // var planet, moon, astro = [];
-    // fetch("/numericalData.json")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         planet = data.planetData;
-    //         moon = data.moonData;
-    //         astro = data.astronomicalSymbol;
-    //         console.log(astro['meanRadius']); // zanorenie v {}
-    //         console.log(planet['Venus']['e']); // zanorenie v {{}}
-    //         console.log(moon['Mars'][1]['mass']); // zanorenie v {[{}]}
-    //     });
+    getAstronomicalSymbol = async function(property) {
+        const response = await fetch("/numericalData.json");
+        this.allDataJSON = await response.json();
+        return this.allDataJSON["astronomicalSymbol"][property];
+    }
 }

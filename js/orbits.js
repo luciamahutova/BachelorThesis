@@ -13,7 +13,7 @@ class Orbits {
 Orbits.prototype.createOrbitShape = function() {
     var curve, geometry, material, ellipse;
 
-    for (var i = 0; i < this.planetData.length; i++) {
+    for (var i = 0; i < 8; i++) {
         curve = this.createCurveForOrbit(i);
         geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(500));
         material = new THREE.LineBasicMaterial({ color: 0xffffff });
