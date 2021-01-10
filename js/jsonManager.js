@@ -6,11 +6,20 @@ class JSONManager {
     // PLANÉTY
     // ----------------------------------------------------------------
     // 1.možnosť
+    readData = async function() {
+        this.currentValue = await fetch("/numericalData.json")
+            .then(response => response.json())
+            .then(data => {
+                return data["planetData"]
+            })
+            .catch((error) => { console.warn(error); });
+        return this.currentValue;
+    }
+
     readPlanetData = async function(planet) {
         this.currentValue = await fetch("/numericalData.json")
             .then(response => response.json())
             .then(data => {
-                console.log("read again");
                 return data["planetData"][planet]
             })
             .catch((error) => { console.warn(error); });

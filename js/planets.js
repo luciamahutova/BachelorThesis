@@ -4,13 +4,13 @@ class Planet {
         this.planetsObjects = [];
         this.planetsMeshes = [];
         this.betha = 0;
+        this.allDataJSON = [];
         this.timestamp = Date.now() * 0.000001;
 
-        this.orbitClass = new Orbits(scene, this.planetData, this.planetsMeshes);
         this.jsonManager = new JSONManager();
-
-        this.allDataJSON = [];
         this.addAllDataJSON();
+
+        this.orbitClass = new Orbits(scene, this.allDataJSON, this.planetsMeshes);
     }
 
     createPlanetObject = function(diameter) {
@@ -31,8 +31,9 @@ class Planet {
 
     // Called in scene.js - class MainScene
     initializePlanets = function() {
-        this.createPlanets(this.planetData);
-        this.createPlanetsMesh(this.scene);
+        //this.createAllPlanets(this.planetsObjects);
+        this.createPlanets();
+        this.createPlanetsMesh(this.scene, this.planetsObjects);
         this.setRotationAngleForAllPlanets();
         this.orbitClass.createOrbitShape();
     }
@@ -72,31 +73,48 @@ Planet.prototype.addAllDataJSON = function() {
 
 // Creating planet objects
 // -------------------------------------------------------------------------
-Planet.prototype.createPlanets = function(planetData) {
-    // 10x smaller scale for the Sun
-    this.mercury = this.createPlanetObject(planetData[0]["planetSize"]);
-    this.venus = this.createPlanetObject(planetData[1]["planetSize"]);
-    this.earth = this.createPlanetObject(planetData[2]["planetSize"]);
-    this.mars = this.createPlanetObject(planetData[3]["planetSize"]);
-    // 3x smaller scale (4 planets)
-    this.jupiter = this.createPlanetObject(planetData[4]["planetSize"]);
-    this.saturn = this.createPlanetObject(planetData[5]["planetSize"]);
-    this.uranus = this.createPlanetObject(planetData[6]["planetSize"]);
-    this.neptune = this.createPlanetObject(planetData[7]["planetSize"]);
+// DOCASNE, OPRAVIT ABY NEBOLI HODNOTY NASTAVOVANE PRIAMO
+Planet.prototype.createPlanets = function() {
+    // 10x smaller scale: Sun; 3x smaller scale: Jupiter, Saturn, Uranus, Neptune
+    this.mercury = this.createPlanetObject(0.175);
+    this.venus = this.createPlanetObject(0.435);
+    this.earth = this.createPlanetObject(0.457);
+    this.mars = this.createPlanetObject(0.243);
+    this.jupiter = this.createPlanetObject(1.673);
+    this.saturn = this.createPlanetObject(1.394);
+    this.uranus = this.createPlanetObject(0.607);
+    this.neptune = this.createPlanetObject(0.589);
 
     this.planetsObjects.push(this.mercury, this.venus, this.earth, this.mars,
         this.jupiter, this.saturn, this.uranus, this.neptune);
 }
 
-Planet.prototype.createPlanetsMesh = function(scene) {
-    this.mercuryMesh = this.createMesh(this.planetsObjects[0], '/images/textures/mercuryTexture2k.jpg');
-    this.venusMesh = this.createMesh(this.planetsObjects[1], '/images/textures/venusTexture2k.jpg');
-    this.earthMesh = this.createMesh(this.planetsObjects[2], '/images/textures/earthTexture2k.jpg');
-    this.marsMesh = this.createMesh(this.planetsObjects[3], '/images/textures/marsTexture2k.jpg');
-    this.jupiterMesh = this.createMesh(this.planetsObjects[4], '/images/textures/jupiterTexture2k.jpg');
-    this.saturnMesh = this.createMesh(this.planetsObjects[5], '/images/textures/saturnTexture2k.jpg');
-    this.uranusMesh = this.createMesh(this.planetsObjects[6], '/images/textures/uranusTexture2k.jpg');
-    this.neptuneMesh = this.createMesh(this.planetsObjects[7], '/images/textures/neptuneTexture2k.jpg');
+// ZATIAL NEFUNGUJE, PLANETY SA NEZOBRAZIA
+// Planet.prototype.createSinglePlanet = function(planetOrder, planetsObjects) {
+//     var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
+
+//     dataOfCurrentPlanetJSON.then(function(result) {
+//         // 10x smaller scale: Sun; 3x smaller scale: Jupiter, Saturn, Uranus, Neptune
+//         var planet = new THREE.SphereBufferGeometry(result["planetSize"], 50, 50);
+//         planetsObjects.push(planet);
+//     });
+// }
+
+// Planet.prototype.createAllPlanets = function(planetsObjects) {
+//     for (var i = 0; i < 8; i++) {
+//         this.createSinglePlanet(i, planetsObjects);
+//     }
+// }
+
+Planet.prototype.createPlanetsMesh = function(scene, planetsObjects) {
+    this.mercuryMesh = this.createMesh(planetsObjects[0], '/images/textures/mercuryTexture2k.jpg');
+    this.venusMesh = this.createMesh(planetsObjects[1], '/images/textures/venusTexture2k.jpg');
+    this.earthMesh = this.createMesh(planetsObjects[2], '/images/textures/earthTexture2k.jpg');
+    this.marsMesh = this.createMesh(planetsObjects[3], '/images/textures/marsTexture2k.jpg');
+    this.jupiterMesh = this.createMesh(planetsObjects[4], '/images/textures/jupiterTexture2k.jpg');
+    this.saturnMesh = this.createMesh(planetsObjects[5], '/images/textures/saturnTexture2k.jpg');
+    this.uranusMesh = this.createMesh(planetsObjects[6], '/images/textures/uranusTexture2k.jpg');
+    this.neptuneMesh = this.createMesh(planetsObjects[7], '/images/textures/neptuneTexture2k.jpg');
 
     this.planetsMeshes.push(this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
@@ -119,7 +137,6 @@ Planet.prototype.setRotationAngleForSinglePlanet = function(planetMesh, planetOr
             new THREE.Vector3(0, 0, 1),
             (result["tiltAxisZ"] * Math.PI) / 180
         );
-        console.log(result["tiltAxisZ"]);
     });
 }
 
