@@ -1,5 +1,5 @@
 // Variables /////////////////////////////////////////////////////
-var scene, renderer, camera;
+var scene, renderer, camera, isAppRunning;
 
 var mainScene = new MainScene();
 scene = mainScene.getScene();
@@ -7,6 +7,7 @@ renderer = mainScene.getRenderer();
 camera = mainScene.getCamera();
 mainScene.resizeBackground(renderer, camera);
 
+var sidebarScript = new SidebarScript();
 
 function animate() {
     mainScene.animate();

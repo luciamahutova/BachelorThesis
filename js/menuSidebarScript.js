@@ -1,3 +1,50 @@
+class SidebarScript {
+    constructor() {
+        this.isSidebarOpen = true;
+        this.isAppRunning = true;
+        this.animationFrameOutput = 0;
+
+        this.pauseApplication();
+        this.playApplication();
+    }
+
+    showHideSidebar = function() {
+        if (!this.isSidebarOpen) {
+            this.isSidebarOpen = true;
+            document.getElementById("sidebarRight").style.right = "40px";
+
+        } else {
+            this.isSidebarOpen = false;
+            document.getElementById("sidebarRight").style.right = "-300px";
+        }
+    }
+
+    // Functions for play/pause the application
+    // -------------------------------------------------------------------------
+    pauseApplication = function() {
+        var isRunning = this.getIsAppRunning();
+        if (isRunning) {
+            this.setIsAppRunning(false);
+            $(".pauseButton").on("click", function() {
+                cancelAnimationFrame(animationFrameOutput);
+            });
+        }
+    }
+
+    playApplication = function() {
+        var isRunning = this.getIsAppRunning();
+        if (!isRunning) {
+            this.setIsAppRunning(true);
+            $(".playButton").on("click", function() {
+                animationFrameOutput = requestAnimationFrame(animate);
+            });
+        }
+    }
+
+    getIsAppRunning = function() { return this.isAppRunning; }
+    setIsAppRunning = function(value) { return this.isAppRunning = value; }
+}
+
 // Script for menu
 ///////////////////////////////////////////////////////////////
 function openNav() {
@@ -22,52 +69,3 @@ function highlightChosenLanguage(id) {
     document.getElementById(id).style.fontWeight = "bold";
     document.getElementById(id).style.color = "#ffffff";
 }
-
-//POKUS-UMIESTNIT INDE
-// NEFUNGUJE
-$(document).on("click", "#planetSwitch", function(event) {
-    var target = $(event.target);
-    console.log(target.is('#planetSwitch'));
-    if (target.is('#planet-1')) {
-        console.log("yes2");
-        document.getElementById("data-1").style.visibility = visible;
-    }
-});
-
-
-// Script for sidebar 
-///////////////////////////////////////////////////////////////
-var isSidebarOpen = true;
-var isAppRunning = true;
-var animationFrameOutput = 0;
-
-function showHideSidebar() {
-    if (!isSidebarOpen) {
-        isSidebarOpen = true;
-        document.getElementById("sidebarRight").style.right = "40px";
-
-    } else {
-        isSidebarOpen = false;
-        document.getElementById("sidebarRight").style.right = "-300px";
-    }
-}
-
-function pauseApplication() {
-    $(".pauseButton").on("click", function() {
-        if (isAppRunning) {
-            isAppRunning = false;
-            cancelAnimationFrame(animationFrameOutput);
-        }
-    });
-}
-pauseApplication();
-
-function playApplication() {
-    $(".playButton").on("click", function() {
-        if (!isAppRunning) {
-            isAppRunning = true;
-            animationFrameOutput = requestAnimationFrame(animate);
-        }
-    });
-}
-playApplication();
