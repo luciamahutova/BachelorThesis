@@ -1,27 +1,27 @@
 class Moon extends Planet {
-    constructor(scene, planetsMeshes) {
+    constructor(scene, planetsMeshes, allDataJSON) {
         super();
         this.scene = scene;
         this.planetsMeshes = planetsMeshes;
         this.moonsObjects = [];
         this.moonsMeshes = [];
+        this.allDataJSON = allDataJSON;
     }
 
     createMoonForEarth = function() {
-        // UPRAVIT DO FUNCKII, LEN POKUS O ZOBRAZENIE = FUNGUJE
+        // PRE VIAC MESIACOV = UPRAVIT DO FUNCKII, LEN DOCASNE ROZLOZENIE
         this.moon = this.createPlanetObject(0.124);
         this.moonsObjects.push(this.moon);
 
         this.moonMesh = this.createMesh(this.moonsObjects[0], '/images/textures/moonTexture2k.jpg');
         this.moonsMeshes.push(this.moonMesh);
 
-        this.planetsMeshes[3].add(this.moonMesh); // Earth is parent of the Moon - for correct rotation
+        this.planetsMeshes[2].add(this.moonMesh); // Earth is parent of the Moon - for correct rotation
         this.scene.add(this.moonMesh);
     }
 
     initializeMoons = function() {
         this.createMoonForEarth();
-        // this.zoomRangeslider();
     }
 }
 
@@ -31,7 +31,7 @@ class Moon extends Planet {
 Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
     // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
-        this.positionMoonOnRangesliderPositiveValue(scaleValue);
+        this.positionMoonOnRangesliderPositiveValue(scaleValue, this.moonMesh, this.planetsMeshes);
     } else if (scaleValue < 0) {
         this.positionMoonOnRangesliderNegativeValue();
     } else {
@@ -40,11 +40,14 @@ Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
 }
 
 // Positions for the Moon - according to scale from rangeslider
-Moon.prototype.positionMoonOnRangesliderPositiveValue = function(scaleValue) {
-    this.moonMesh.visible = true;
-    this.moonMesh.position.x = this.planetsMeshes[2].position.x + 1.0027 * scaleValue * 2;
-    // this.planetData[2]["a"] = 1.0027 ... for Earth
-    this.moonMesh.position.z = this.planetsMeshes[2].position.z + 1;
+Moon.prototype.positionMoonOnRangesliderPositiveValue = function(scaleValue, moonMesh, planetsMeshes) {
+    moonMesh.visible = true;
+    var dataOfCurrentPlanetJSON = this.allDataJSON[2];
+
+    dataOfCurrentPlanetJSON.then(function(result) {
+        moonMesh.position.x = planetsMeshes[2].position.x + result["a"] * scaleValue * 2;
+        moonMesh.position.z = planetsMeshes[2].position.z + 1;
+    });
 }
 
 Moon.prototype.positionMoonOnRangesliderNegativeValue = function() {

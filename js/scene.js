@@ -10,12 +10,12 @@ class MainScene {
 
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
-        this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes());
+        this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes(), this.planetObject.getDataJSON());
         this.moonObject.initializeMoons();
         this.sunObject = new Sun(this.scene);
         this.sunObject.initializeSun();
 
-        this.scaleValueScene = 0;
+        this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
     }
 
     initRenderer = function() {
@@ -50,7 +50,7 @@ class MainScene {
     }
 
     setStaticBackground = function() {
-        const bgTexture = THREE.ImageUtils.loadTexture('/images/2k-starsMilkyWay.jpg');
+        const bgTexture = new THREE.TextureLoader().load('/images/2k-starsMilkyWay.jpg');
         const bgGeometry = new THREE.PlaneGeometry(2, 2, 0);
         const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
         this.bgMesh = new THREE.Mesh(bgGeometry, bgMaterial);
@@ -101,6 +101,11 @@ class MainScene {
         }
     }
 
+    moveSceneToOriginalPosition = function(scene) {
+        scene.position.set(0, 0, 0);
+    }
+
+    // Animate function: called in app.js 
     animate = function() {
         this.onKeyDown();
         this.zoomRangeslider();

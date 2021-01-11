@@ -38,13 +38,9 @@ class Planet {
         this.orbitClass.createOrbitShape();
     }
 
-    getPlanetMeshes = function() {
-        return this.planetsMeshes;
-    }
-
-    getScaleValue = function() {
-        return this.scaleValueScene;
-    }
+    getPlanetMeshes = function() { return this.planetsMeshes; }
+    getScaleValue = function() { return this.scaleValueScene; }
+    getDataJSON = function() { return this.allDataJSON; }
 }
 
 
