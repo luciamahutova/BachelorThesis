@@ -3,10 +3,10 @@ class Planet {
         this.scene = scene;
         this.planetsObjects = [];
         this.planetsMeshes = [];
-        this.betha = 0;
         this.allDataJSON = [];
         this.planetSizes = [];
-        this.timestamp = Date.now() * 0.000001;
+        this.betha = 0;
+        this.timestamp = 0;
 
         this.jsonManager = new JSONManager();
         this.addAllDataJSON();
@@ -159,27 +159,33 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
     }
 }
 
-// Moving planets on their orbits (ellipses)
+// Moving planets on their orbits (ellipses) = PREROBIT, VSETKY SA TOCIA ROVNAKO RYCHLO
 // -------------------------------------------------------------------------
+Planet.prototype.calculateRotationSpeed = function(planetOrder) {
+    var rotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
+    this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now());
+    return this.timestamp;
+}
+
 Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue) {
-    // PREROBIT, VSETKY SA TOCIA ROVNAKO RYCHLO
-    // this.timestamp += (this.planetData[planetOrder]["rotationSpeedAroundSun"] / 5000);
-    this.timestamp += 0.0001;
-    this.betha = Math.cos(planet.position.x / (planet.position.z + this.timestamp));
+    var rotationSpeed = this.calculateRotationSpeed(planetOrder);
+    // + timestamp: because of division by zero
+    this.betha = Math.cos(planet.position.x / (planet.position.z + rotationSpeed));
 
     // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
-        this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue, this.betha, this.timestamp);
+        this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue, this.betha, rotationSpeed);
     } else if (scaleValue < 0) {
-        this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue, this.betha, this.timestamp);
+        this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue, this.betha, rotationSpeed);
     } else {
-        this.positionPlanetToOriginalPosition(planet, planetOrder, this.betha, this.timestamp);
+        this.positionPlanetToOriginalPosition(planet, planetOrder, this.betha, rotationSpeed);
     }
 }
 
 // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
 Planet.prototype.rotateAllPlanets = function(scaleValue) {
     var planet;
+
     for (var i = 0; i < this.planetsMeshes.length; i++) {
         planet = this.planetsMeshes[i];
         this.rotatePlanetOnOrbit(planet, i, scaleValue);

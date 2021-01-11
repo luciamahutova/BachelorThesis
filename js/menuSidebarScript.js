@@ -45,7 +45,7 @@ class SidebarScript {
     setIsAppRunning = function(value) { return this.isAppRunning = value; }
 }
 
-// Script for menu
+// Script for menu - NIEKDE ZARADIT
 ///////////////////////////////////////////////////////////////
 function openNav() {
     document.getElementById("menu").style.right = "0"
