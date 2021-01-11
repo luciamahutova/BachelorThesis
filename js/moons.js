@@ -1,11 +1,10 @@
 class Moon extends Planet {
-    constructor(scene, planetsMeshes, allDataJSON) {
+    constructor(scene, planetsMeshes) {
         super();
         this.scene = scene;
         this.planetsMeshes = planetsMeshes;
         this.moonsObjects = [];
         this.moonsMeshes = [];
-        this.allDataJSON = allDataJSON;
     }
 
     createMoonForEarth = function() {

@@ -10,7 +10,7 @@ class MainScene {
 
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
-        this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes(), this.planetObject.getDataJSON());
+        this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes());
         this.moonObject.initializeMoons();
         this.sunObject = new Sun(this.scene);
         this.sunObject.initializeSun();
