@@ -1,5 +1,5 @@
 // Variables /////////////////////////////////////////////////////
-var scene, renderer, camera, zoomValue;
+var scene, renderer, camera;
 
 var mainScene = new MainScene();
 scene = mainScene.getScene();
@@ -13,8 +13,4 @@ function animate() {
     animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();
-
-moveSceneToOriginalPosition = function(scene) {
-    scene.position.set(0, 0, 0);
-}
-moveSceneToOriginalPosition(scene);
+mainScene.moveSceneToOriginalPosition(scene);
