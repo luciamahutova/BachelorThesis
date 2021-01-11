@@ -5,6 +5,7 @@ class Planet {
         this.planetsMeshes = [];
         this.betha = 0;
         this.allDataJSON = [];
+        this.planetSizes = [];
         this.timestamp = Date.now() * 0.000001;
 
         this.jsonManager = new JSONManager();
@@ -31,7 +32,6 @@ class Planet {
 
     // Called in scene.js - class MainScene
     initializePlanets = function() {
-        //this.createAllPlanets(this.planetsObjects);
         this.createPlanets();
         this.createPlanetsMesh(this.scene, this.planetsObjects);
         this.setRotationAngleForAllPlanets();
@@ -62,13 +62,6 @@ Planet.prototype.addAllDataJSON = function() {
 
     this.allDataJSON.push(this.mercuryDataJSON, this.venusDataJSON, this.earthDataJSON, this.marsDataJSON,
         this.jupiterDataJSON, this.saturnDataJSON, this.uranusDataJSON, this.neptuneDataJSON);
-
-    // a: semi-major axis, which is the largest distance between the center of the ellipse and the curve of the orbit
-    // b: semi-minor axis, which is the shortest distance between the center of the ellipse and the curve of the orbit
-    // c: distance between the center of the orbit and the focus of the orbit, which is where the Sun would be in a     planetary orbit.
-    // e: eccentricity, which is the measure of the deviation of the shape of an orbit from that of a perfect circle (a measure of how elliptical an orbit is). The higher the eccentricity of an orbit, the more elliptical it is;
-    // tiltAxisZ: planets' tilt angle around its axis = Z
-    // scaleFaktor: my values for better view of all planets
 }
 
 // Creating planet objects
@@ -76,33 +69,21 @@ Planet.prototype.addAllDataJSON = function() {
 // DOCASNE, OPRAVIT ABY NEBOLI HODNOTY NASTAVOVANE PRIAMO
 Planet.prototype.createPlanets = function() {
     // 10x smaller scale: Sun; 3x smaller scale: Jupiter, Saturn, Uranus, Neptune
-    this.mercury = this.createPlanetObject(0.175);
-    this.venus = this.createPlanetObject(0.435);
-    this.earth = this.createPlanetObject(0.457);
-    this.mars = this.createPlanetObject(0.243);
-    this.jupiter = this.createPlanetObject(1.673);
-    this.saturn = this.createPlanetObject(1.394);
-    this.uranus = this.createPlanetObject(0.607);
-    this.neptune = this.createPlanetObject(0.589);
-
-    this.planetsObjects.push(this.mercury, this.venus, this.earth, this.mars,
-        this.jupiter, this.saturn, this.uranus, this.neptune);
+    var planetSizes = [0.175, 0.435, 0.457, 0.243, 1.673, 1.394, 0.607, 0.589];
+    for (var i = 0; i < planetSizes.length; i++) {
+        this.planetsObjects.push(this.createPlanetObject(planetSizes[i]));
+    }
 }
 
-// ZATIAL NEFUNGUJE, PLANETY SA NEZOBRAZIA
-// Planet.prototype.createSinglePlanet = function(planetOrder, planetsObjects) {
-//     var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
+// NEFUNGUJE, PLANETY NIE SU V  POLI "planetsObjects" PRISTUPNE MIMO FUNKCIE .then 
+// Planet.prototype.getPlanetSizes = function(planetsObjects) {
+//     var dataOfCurrentPlanetJSON;
 
-//     dataOfCurrentPlanetJSON.then(function(result) {
-//         // 10x smaller scale: Sun; 3x smaller scale: Jupiter, Saturn, Uranus, Neptune
-//         var planet = new THREE.SphereBufferGeometry(result["planetSize"], 50, 50);
-//         planetsObjects.push(planet);
-//     });
-// }
-
-// Planet.prototype.createAllPlanets = function(planetsObjects) {
 //     for (var i = 0; i < 8; i++) {
-//         this.createSinglePlanet(i, planetsObjects);
+//         dataOfCurrentPlanetJSON = this.allDataJSON[i];
+//         dataOfCurrentPlanetJSON.then(function(result) {
+//             planetsObjects.push(new THREE.SphereBufferGeometry(result["planetSize"], 50, 50));
+//         });
 //     }
 // }
 
@@ -193,10 +174,8 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
     // scaleValue is used because of zooming in/out by rangeslider
     if (scaleValue > 0) {
         this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue, this.betha, this.timestamp);
-        this.positionUranusOnRangesliderPositiveValue(this.uranusMesh, scaleValue, this.betha, this.timestamp);
     } else if (scaleValue < 0) {
         this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue, this.betha, this.timestamp);
-        this.positionUranusOnRangesliderNegativeValue(this.uranusMesh, scaleValue, this.betha, this.timestamp);
     } else {
         this.positionPlanetToOriginalPosition(planet, planetOrder, this.betha, this.timestamp);
     }
@@ -216,50 +195,36 @@ Planet.prototype.rotateAllPlanets = function(scaleValue) {
 Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planetMesh, planetOrder, scaleValue, betha, timestamp) {
     var scale = scaleValue * 2;
     var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
-
-    // (-1 * ...) for anticlockwise rotation
-    dataOfCurrentPlanetJSON.then(function(result) {
-        planetMesh.position.x = result["c"] + (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp));
-        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp));
-    });
-}
-
-Planet.prototype.positionUranusOnRangesliderPositiveValue = function(planetMesh, scaleValue, betha, timestamp) {
-    var scale = scaleValue * 2;
-    var dataOfCurrentPlanetJSON = this.allDataJSON[6];
-    // Specially positioned because of its angle rotation (nearly 100 degrees)
+    var halfSizeOfUranus = 0;
 
     dataOfCurrentPlanetJSON.then(function(result) {
-        var halfSizeOfUranus = result["planetSize"] / scaleValue / 2;
+        if (planetOrder == 6) {
+            halfSizeOfUranus = result["planetSize"] / scaleValue / 2;
+        } else { halfSizeOfUranus = 0; }
 
         planetMesh.position.x = result["c"] + (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp)) +
             halfSizeOfUranus;
         planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp)) +
             halfSizeOfUranus;
     });
+
 }
 
 Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planetMesh, planetOrder, scaleValue, betha, timestamp) {
     // The same scale as in class Orbits
     var scale = 0.5 / (-1 * scaleValue);
     var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
+    var quarterSizeOfUranus = 0;
 
     dataOfCurrentPlanetJSON.then(function(result) {
-        planetMesh.position.x = (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp));
-        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp));
-    });
-}
+        if (planetOrder == 6) {
+            quarterSizeOfUranus = result["planetSize"] / scaleValue / 4;
+        } else { quarterSizeOfUranus = 0; }
 
-Planet.prototype.positionUranusOnRangesliderNegativeValue = function(planetMesh, scaleValue, betha, timestamp) {
-    var scale = 0.5 / (-1 * scaleValue);
-    var dataOfCurrentPlanetJSON = this.allDataJSON[6];
-
-    dataOfCurrentPlanetJSON.then(function(result) {
-        var halfSizeOfUranus = result["planetSize"] / scaleValue / 2;
-
-        planetMesh.position.x = (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp)) + halfSizeOfUranus;
+        planetMesh.position.x = (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp)) +
+            quarterSizeOfUranus;
         planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp)) +
-            halfSizeOfUranus;
+            quarterSizeOfUranus;
     });
 }
 
