@@ -123,7 +123,7 @@ Planet.prototype.setRotationAngleForAllPlanets = function() {
     }
 }
 
-// Setting scale for planets and orbits (according to rangeslider value)
+// Setting planets' and orbits' positions - according to rangeslider scale value
 // -------------------------------------------------------------------------
 Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshes) {
     // Changed scale for better view
@@ -161,15 +161,22 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
 
 // Moving planets on their orbits (ellipses) = PREROBIT, VSETKY SA TOCIA ROVNAKO RYCHLO
 // -------------------------------------------------------------------------
-Planet.prototype.calculateRotationSpeed = function(planetOrder) {
+Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue) {
     var rotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
-    this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now());
+
+    if (speedValue == 0) {
+        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now());
+    } else if (speedValue > 0) {
+        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now()) * speedValue;
+    } else if (speedValue < 0) {
+        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now()) / Math.abs(speedValue);
+    }
     return this.timestamp;
 }
 
-Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue) {
-    var rotationSpeed = this.calculateRotationSpeed(planetOrder);
-    // + timestamp: because of division by zero
+Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue, speedValue) {
+    var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue);
+    // + rotationSpeed: because of division by zero
     this.betha = Math.cos(planet.position.x / (planet.position.z + rotationSpeed));
 
     // scaleValue is used because of zooming in/out by rangeslider
@@ -183,12 +190,12 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue)
 }
 
 // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
-Planet.prototype.rotateAllPlanets = function(scaleValue) {
+Planet.prototype.rotateAllPlanets = function(scaleValue, speedValue) {
     var planet;
 
     for (var i = 0; i < this.planetsMeshes.length; i++) {
         planet = this.planetsMeshes[i];
-        this.rotatePlanetOnOrbit(planet, i, scaleValue);
+        this.rotatePlanetOnOrbit(planet, i, scaleValue, speedValue);
     }
 }
 
@@ -209,7 +216,6 @@ Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planetMesh,
         planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp)) +
             halfSizeOfUranus;
     });
-
 }
 
 Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planetMesh, planetOrder, scaleValue, betha, timestamp) {

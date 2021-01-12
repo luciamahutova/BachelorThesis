@@ -16,6 +16,7 @@ class MainScene {
         this.sunObject.initializeSun();
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
+        this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
     }
 
     initRenderer = function() {
@@ -110,7 +111,8 @@ class MainScene {
     animate = function() {
         this.onKeyDown();
         this.zoomRangeslider();
-        this.planetObject.rotateAllPlanets(this.scaleValueScene);
+        this.speedRangeslider();
+        //this.planetObject.rotateAllPlanets(this.scaleValueScene); //PRESUNUTE DO speedRangeslider()
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
         this.bgMesh.material.depthTest = false;
@@ -128,13 +130,28 @@ MainScene.prototype.zoomRangeslider = function() {
 
     var updateZoomValue = () => {
         sliderValue.innerHTML = slider.value;
-        for (var i = 0; i < 8; i++) {
-            this.scaleValueScene = sliderValue.innerHTML;
-        }
+        this.scaleValueScene = sliderValue.innerHTML;
+
         this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
         this.moonObject.setScaleForMoons(this.scaleValueScene);
         this.sunObject.setScaleForSun(this.scaleValueScene);
     }
     slider.addEventListener('input', updateZoomValue);
     updateZoomValue();
+}
+
+MainScene.prototype.speedRangeslider = function() {
+    var slider = document.getElementById("rangesliderSpeedInput");
+    var sliderValue = document.getElementById("rangesliderSpeedValue");
+
+    var updateSpeedValue = () => {
+        sliderValue.innerHTML = slider.value;
+        this.speedValuePlanets = sliderValue.innerHTML;
+
+        // ROTACIE FUNGUJU, ALE KVOLI POUZITIU "timestamp" (VO VYPOCTE POLOHY PLANETY)
+        // SA PLANETY POSUNU NA INE MIESTO (ZAROVEN SO ZRYCHLENIM ROTACIE)
+        this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets);
+    }
+    slider.addEventListener('input', updateSpeedValue);
+    updateSpeedValue();
 }
