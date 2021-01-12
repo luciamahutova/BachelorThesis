@@ -1,4 +1,4 @@
-class SidebarScript {
+class SidebarManager {
     constructor() {
         this.isSidebarOpen = true;
         this.isAppRunning = true;
@@ -8,7 +8,7 @@ class SidebarScript {
         this.playApplication();
     }
 
-    showHideSidebar = function() {
+    showHideSidebarToRight = function() {
         if (!this.isSidebarOpen) {
             this.isSidebarOpen = true;
             document.getElementById("sidebarRight").style.right = "40px";
@@ -18,6 +18,11 @@ class SidebarScript {
             document.getElementById("sidebarRight").style.right = "-300px";
         }
     }
+
+    hideSidebarToLeft = function() {
+        document.getElementById("sidebarPlanetInfo").style.left = "-300px";
+    }
+
 
     // Functions for play/pause the application
     // -------------------------------------------------------------------------

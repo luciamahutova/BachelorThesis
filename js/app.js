@@ -7,7 +7,7 @@ renderer = mainScene.getRenderer();
 camera = mainScene.getCamera();
 mainScene.resizeBackground(renderer, camera);
 
-var sidebarScript = new SidebarScript();
+var sidebarManager = new SidebarManager();
 
 function animate() {
     mainScene.animate();
