@@ -112,7 +112,6 @@ class MainScene {
         this.onKeyDown();
         this.zoomRangeslider();
         this.speedRangeslider();
-        //this.planetObject.rotateAllPlanets(this.scaleValueScene); //PRESUNUTE DO speedRangeslider()
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
         this.bgMesh.material.depthTest = false;
