@@ -148,7 +148,7 @@ header img {
     outline: none;
 }
 
-#languages button:nth-of-type(2) {
+#languages button:first-of-type {
     font-weight: bold;
     color: #ffffff;
 }

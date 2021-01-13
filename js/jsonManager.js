@@ -3,9 +3,9 @@ class JSONManager {
         this.allDataJSON = {};
     }
 
-    // PLANÉTY
+    // Planets
     // ----------------------------------------------------------------
-    // 1.možnosť
+    // 1.possibile solution
     readData = async function() {
         this.currentValue = await fetch("/numericalData.json")
             .then(response => response.json())
@@ -26,7 +26,7 @@ class JSONManager {
         return this.currentValue;
     }
 
-    // 2.možnosť 
+    // 2.possible solution
     getPlanetData = async function(planet) {
         // returns Promise
         const response = await fetch("/numericalData.json");
@@ -34,7 +34,7 @@ class JSONManager {
         return this.allDataJSON["planetData"][planet];
     }
 
-    // MESIACE
+    // Moons
     // ----------------------------------------------------------------
     readMoonData = function(planetOrder, moonOrder) {
         fetch("/numericalData.json")
@@ -51,7 +51,7 @@ class JSONManager {
         return this.allDataJSON["moonData"][planetOrder][moonOrder];
     }
 
-    // SYMBOLY  
+    // Symbols
     // ----------------------------------------------------------------
     readAstronomicalSymbol = function(property) {
         fetch("/numericalData.json")
