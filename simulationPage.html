@@ -18,9 +18,15 @@
         <nav id="menu">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <ul>
-                <li><a href="simulationPage.html" class="lang" key="ssm">Solar system model</a></li>
-                <li><a href="planetsPage.html" class="lang" key="planets">Planets</a></li>
-                <li><a href="#" class="lang" key="about">About application</a></li>
+                <li>
+                    <a href="simulationPage.html" class="lang" key="ssm"></a>
+                </li>
+                <li>
+                    <a href="planetsPage.html" class="lang" key="planets"></a>
+                </li>
+                <li>
+                    <a href="#" class="lang" key="about"></a>
+                </li>
             </ul>
             <div id="languages">
                 <button type="button" class="translate" id="cz" onclick="highlightChosenLanguage(this.id)">cz</button>
@@ -125,8 +131,8 @@
             </section>
 
             <button class="confirmChangesButton lang" type="submit" key="confirm">Confirm</button>
-            <button class="pauseButton" type="button"></button>
-            <button class="playButton" type="button"></button>
+            <button class="pauseButton" id="pause" type="button"></button>
+            <button class="playButton" id="play" type="button"></button>
         </div>
     </section>
 

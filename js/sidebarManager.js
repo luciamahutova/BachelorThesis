@@ -27,11 +27,16 @@ class SidebarManager {
     // Functions for play/pause the application
     // -------------------------------------------------------------------------
     pauseApplication = function() {
+        // playButton, disabled at the beginning
+        document.getElementById("play").disabled = true;
         var isRunning = this.getIsAppRunning();
+
         if (isRunning) {
             this.setIsAppRunning(false);
             $(".pauseButton").on("click", function() {
                 cancelAnimationFrame(animationFrameOutput);
+                document.getElementById("pause").disabled = true; // pauseButton
+                document.getElementById("play").disabled = false; // playButton
             });
         }
     }
@@ -42,6 +47,8 @@ class SidebarManager {
             this.setIsAppRunning(true);
             $(".playButton").on("click", function() {
                 animationFrameOutput = requestAnimationFrame(animate);
+                document.getElementById("pause").disabled = false; // pauseButton
+                document.getElementById("play").disabled = true; // playButton
             });
         }
     }

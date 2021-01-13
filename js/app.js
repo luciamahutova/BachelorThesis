@@ -9,6 +9,8 @@ mainScene.resizeBackground(renderer, camera);
 
 var sidebarManager = new SidebarManager();
 
+
+
 function animate() {
     mainScene.animate();
     animationFrameOutput = requestAnimationFrame(animate);
