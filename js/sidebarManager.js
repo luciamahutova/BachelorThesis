@@ -28,15 +28,15 @@ class SidebarManager {
     // -------------------------------------------------------------------------
     pauseApplication = function() {
         // playButton, disabled at the beginning
-        document.getElementById("play").disabled = true;
+        $('.playButton').prop('disabled', true);
         var isRunning = this.getIsAppRunning();
 
         if (isRunning) {
             this.setIsAppRunning(false);
             $(".pauseButton").on("click", function() {
                 cancelAnimationFrame(animationFrameOutput);
-                document.getElementById("pause").disabled = true; // pauseButton
-                document.getElementById("play").disabled = false; // playButton
+                $('.pauseButton').prop('disabled', true);
+                $('.playButton').prop('disabled', false);
             });
         }
     }
@@ -47,8 +47,8 @@ class SidebarManager {
             this.setIsAppRunning(true);
             $(".playButton").on("click", function() {
                 animationFrameOutput = requestAnimationFrame(animate);
-                document.getElementById("pause").disabled = false; // pauseButton
-                document.getElementById("play").disabled = true; // playButton
+                $('.pauseButton').prop('disabled', false);
+                $('.playButton').prop('disabled', true);
             });
         }
     }
