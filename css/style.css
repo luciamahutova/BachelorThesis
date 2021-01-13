@@ -442,8 +442,11 @@ header+a {
     display: grid;
     grid-template-columns: 40px auto auto auto 40px;
     grid-template-rows: 250px auto auto;
-    visibility: collapse;
-    height: 0px;
+    /* visibility: collapse;
+    height: 0px; */
+    visibility: hidden;
+    height: 0;
+    width: 0;
 }
 
 

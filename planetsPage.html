@@ -35,60 +35,70 @@
     </header>
     <h1 class="lang" key="planets"></h1>
 
-    <section id="planetSwitch">
-        <article>
-            <a>
-                <h3 class="lang" key="mercury"></h3>
-                <img src="/images/planets/mercuryTransparent.png" width="200" height="200">
+    <section>
+        <article id="planet-1" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
+                <h3 class=" lang " key="mercury "></h3>
+                <img src="/images/planets/mercuryTransparent.png " width="200 " height="200 ">
             </a>
         </article>
-        <article>
-            <a href="planetInfo.html">
-                <h3 class="lang" key="venus"></h3>
-                <img src="/images/planets/venusTransparent.png" width="200" height="200">
+        <article id="planet-2" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
+                <h3 class="lang " key="venus "></h3>
+                <img src="/images/planets/venusTransparent.png " width="200 " height="200 ">
             </a>
         </article>
-        <article>
-            <a href="planetInfo.html">
-                <h3 class="lang" key="earth"></h3>
-                <img src="/images/planets/earthTransparent.png" width="200" height="200">
+        <article id="planet-3" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
+                <h3 class="lang " key="earth "></h3>
+                <img src="/images/planets/earthTransparent.png " width="200 " height="200 ">
             </a>
         </article>
-        <article>
-            <a href="planetInfo.html">
+        <article id="planet-4" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
                 <h3>Mars</h3>
-                <img src="/images/planets/marsTransparent.png" width="200" height="200">
+                <img src="/images/planets/marsTransparent.png " width="200 " height="200 ">
             </a>
         </article>
-        <article>
-            <a href="planetInfo.html">
+        <article id="planet-5" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
                 <h3>Jupiter</h3>
-                <img src="/images/planets/jupiterTransparent.png" width="200" height="200">
+                <img src="/images/planets/jupiterTransparent.png " width="200 " height="200 ">
             </a>
         </article>
-        <article>
-            <a href="planetInfo.html">
+        <article id="planet-6" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
                 <h3>Saturn</h3>
-                <img src="/images/planets/saturnTransparent.png" width="200" height="200">
+                <img src="/images/planets/saturnTransparent.png " width="200 " height="200 ">
             </a>
         </article>
-        <article>
-            <a href="planetInfo.html">
-                <h3 class="lang" key="uranus"></h3>
-                <img src="/images/planets/uranusTransparent.png" width="200" height="200">
+        <article id="planet-7" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
+                <h3 class="lang " key="uranus "></h3>
+                <img src="/images/planets/uranusTransparent.png " width="200 " height="200 ">
             </a>
         </article>
-        <article>
-            <a href="planetInfo.html">
-                <h3 class="lang" key="neptune"></h3>
-                <img src="/images/planets/neptuneTransparent.png" width="200" height="200">
+        <article id="planet-8" onclick="showPageForChosenPlanet(this.id)">
+            <a href="planetInfo.html ">
+                <h3 class="lang " key="neptune "></h3>
+                <img src="/images/planets/neptuneTransparent.png " width="200 " height="200 ">
             </a>
         </article>
     </section>
 
     <!-- Scripts -->
-    <script src="/js/sidebarManager.js "></script>
     <script src="/js/textTranslator.js "></script>
+    <script>
+        // LET TEST
+        showPageForChosenPlanet = function(id) {
+            console.error();
+            console.log(id);
+            if (id == "planet-1") {
+                document.getElementById("info-1").style.visibility = "visible";
+                document.getElementById("info-1").style.width = "fit-content";
+            }
+        }
+    </script>
 
 </body>
 
