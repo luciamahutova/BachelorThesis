@@ -349,7 +349,7 @@ input[type="checkbox"] {
     bottom: 20px;
 }
 
-.slidecontainer p {
+.slidecontainer span {
     background-color: transparent;
     position: relative;
     left: 40%;
