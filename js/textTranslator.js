@@ -212,7 +212,7 @@ let arrLang = {
 $(function() {
     // First set current language to CZ
     var currentLang = (localStorage.getItem('lang') === '' || localStorage.getItem('lang') === null) ? 'cz' : localStorage.getItem('lang');
-    console.log(currentLang);
+
     $('.lang').each(function() {
         $(this).text(arrLang[currentLang][$(this).attr('key')]);
     });
