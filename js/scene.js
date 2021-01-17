@@ -129,7 +129,7 @@ MainScene.prototype.zoomRangeslider = function() {
 
     var updateZoomValue = () => {
         sliderValue.innerHTML = slider.value;
-        this.scaleValueScene = sliderValue.innerHTML;
+        this.scaleValueScene = sliderValue.innerHTML / 200;
 
         this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
         this.moonObject.setScaleForMoons(this.scaleValueScene);
