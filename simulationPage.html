@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
 
 <head>
     <meta charset="UTF-8">
     <title>Solar system simulation</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- JavaScript libraries -->
-    <script type="text/javascript" src="/numericalData.json"></script>
+    <script src="/numericalData.json"></script>
     <script src="/node_modules/three/build/three.js "></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js "></script>
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js "></script>
 </head>
 
 <body>
@@ -19,13 +18,13 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
-                    <a href="simulationPage.html" class="lang" key="ssm"></a>
+                    <a href="simulationPage.html" class="lang" id="ssm"></a>
                 </li>
                 <li>
-                    <a href="planetsPage.html" class="lang" key="planets"></a>
+                    <a href="planetsPage.html" class="lang" id="planets"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" key="about"></a>
+                    <a href="#" class="lang" id="about"></a>
                 </li>
             </ul>
             <div id="languages">
@@ -39,23 +38,23 @@
     <section class="sidebars" id="sidebarPlanetInfo" onclick="sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
-                <h3 class="lang" key="physicalValues"></h3><span></span>
-                <span class="lang" key="planetWeight"></span><input type="number" readonly>
+                <h3 class="lang" id="physicalValues"></h3><span></span>
+                <span class="lang" id="planetWeight"></span><input type="number" readonly>
             </section>
             <section>
-                <span class="lang" key="diameter"></span><input type="number" readonly>
+                <span class="lang" id="diameter"></span><input type="number" readonly>
             </section>
             <section>
-                <span class="lang" key="equatorPerimeter"></span><input type="number" readonly>
+                <span class="lang" id="equatorPerimeter"></span><input type="number" readonly>
             </section>
             <section>
-                <span class="lang" key="currentRotation"></span><input type="number" readonly>
+                <span class="lang" id="currentRotation"></span><input type="number" readonly>
             </section>
             <section>
-                <span class="lang" key="orbitAroundSun"></span><input type="number" readonly>
+                <span class="lang" id="orbitAroundSun"></span><input type="number" readonly>
             </section>
             <section>
-                <span class="lang" key="orbitAroundAxis"></span><input type="number" readonly>
+                <span class="lang" id="orbitAroundAxis"></span><input type="number" readonly>
             </section>
         </div>
     </section>
@@ -64,73 +63,70 @@
     <section class="sidebars" id="sidebarRight">
         <div>
             <section>
-                <h3 class="lang" key="names"></h3>
+                <h3 class="lang" id="names"></h3>
                 <label>
-                    <span class="checkmark lang" key="allPlanets"></span><input type="checkbox">
+                    <span class="checkmark lang" id="allPlanets"></span><input type="checkbox">
                 </label>
-                <span class="lang" key="singlePlanet"></span>
-                <select>
-                    <option value="empty"></option>
-                    <option class="lang" key="mercury"></option>
-                    <option class="lang" key="venus"></option>
-                    <option class="lang" key="earth"></option>
+                <span class="lang" id="singlePlanet"></span>
+                <select>           
+                    <option class="lang" id="mercury">Mercury</option>
+                    <option class="lang" id="venus">Venus</option>
+                    <option class="lang" id="earth">Earth</option>
                     <option>Mars</option>
                     <option>Jupiter</option>
                     <option>Saturn</option>
-                    <option class="lang" key="uranus"></option>
-                    <option class="lang" key="neptune"></option>
+                    <option class="lang" id="uranus">Uranus</option>
+                    <option class="lang" id="neptune">Neptune</option>
                 </select>
             </section>
 
             <section>
-                <h3 class="lang" key="orbit"></h3>
+                <h3 class="lang" id="orbit"></h3>
                 <label>
-                    <span class="checkmark lang" key="allPlanets"></span><input type="checkbox">
+                    <span class="checkmark lang" id="allPlanets"></span><input type="checkbox">
                 </label>
-                <span class="lang" key="singlePlanet"></span>
+                <span class="lang" id="singlePlanet"></span>
                 <select>
-                    <option value="empty"></option>
-                    <option class="lang" key="mercury"></option>
-                    <option class="lang" key="venus"></option>
-                    <option class="lang" key="earth"></option>
+                    <option class="lang" id="mercury">Mercury</option>
+                    <option class="lang" id="venus">Venus</option>
+                    <option class="lang" id="earth">Earth</option>
                     <option>Mars</option>
                     <option>Jupiter</option>
                     <option>Saturn</option>
-                    <option class="lang" key="uranus"></option>
-                    <option class="lang" key="neptune"></option>
+                    <option class="lang" id="uranus">Uranus</option>
+                    <option class="lang" id="neptune">Neptune</option>
                 </select>
 
                 <label>
-                    <span class="checkmark lang" key="moonOrbit"></span><input type="checkbox">
+                    <span class="checkmark lang" id="moonOrbit"></span><input type="checkbox">
                 </label>
             </section>
 
             <section>
-                <h3 class="lang" key="cosmicObject"></h3>
-                <span class="lang" key="addToPlanet"></span>
+                <h3 class="lang" id="cosmicObject"></h3>
+                <span class="lang" id="addToPlanet"></span>
                 <select>
-                    <option value="empty"></option>
-                    <option class="lang" key="mercury"></option>
-                    <option class="lang" key="venus"></option>
-                    <option class="lang" key="earth"></option>
+                    <option class="lang" id="mercury">Mercury</option>
+                    <option class="lang" id="venus">Venus</option>
+                    <option class="lang" id="earth">Earth</option>
                     <option>Mars</option>
                     <option>Jupiter</option>
                     <option>Saturn</option>
-                    <option class="lang" key="uranus"></option>
-                    <option class="lang" key="neptune"></option>
+                    <option class="lang" id="uranus">Uranus</option>
+                    <option class="lang" id="neptune">Neptune</option>
                 </select>
 
                 <label>
-                    <span class="checkmark lang" key="objectOrbit"></span><input type="checkbox">
+                    <span class="checkmark lang" id="objectOrbit"></span><input type="checkbox">
                 </label>
-                <span class="lang" key="changeVelocity"></span><input type="number">
-                <span class="lang" key="changeForce"></span><input type="number">
+                <span class="lang" id="changeVelocity"></span><input type="number">
+                <span class="lang" id="changeForce"></span><input type="number">
                 <label>
-                    <span class="checkmark lang" key="originalValues"></span><input type="checkbox">
+                    <span class="checkmark lang" id="originalValues"></span><input type="checkbox">
                 </label>
             </section>
 
-            <button class="confirmChangesButton lang" type="submit" key="confirm"></button>
+            <button class="confirmChangesButton lang" type="submit" id="confirm"></button>
             <button class="pauseButton" type="button"></button>
             <button class="playButton" type="button"></button>
         </div>
@@ -145,12 +141,12 @@
     <!-- 1st rangeslider = planets' rotation speed -->
     <div class="slidecontainer">
         <input type="range" min="-3" max="6" value="0" class="slider" id="rangesliderSpeedInput">
-        <span class="lang" key="rotation"></span><span id="rangesliderSpeedValue"></span><span>x</span>
+        <span class="lang" id="rotation"></span><span id="rangesliderSpeedValue"></span><span>x</span>
     </div>
     <!-- 2nd rangeslider = zoom for scene and all its objects -->
     <div class="slidecontainer">
         <input type="range" min="-3" max="6" value="0" class="slider" id="rangesliderZoomInput">
-        <span class="lang" key="zoom"></span><span id="rangesliderZoomValue"></span>
+        <span class="lang" id="zoom"></span><span id="rangesliderZoomValue"></span>
     </div>
 
     <div id="anime-container"></div>
@@ -162,7 +158,6 @@
     <script src="/js/sun.js"></script>
     <script src="/js/moons.js"></script>
     <script src="/js/jsonManager.js"></script>
-    <!-- <script src="/js/objectPicker.js"></script> -->
     <script src="/js/sidebarManager.js "></script>
     <script src="/js/textTranslator.js "></script>
     <script src="/js/app.js"></script>

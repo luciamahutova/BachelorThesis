@@ -6,8 +6,8 @@
     <title>Planets</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- JavaScript libraries -->
-    <script src="/node_modules/three/build/three.js "></script>
-    <script type="text/javascript " src="http://code.jquery.com/jquery-2.2.4.min.js "></script>
+    <script src="/node_modules/three/build/three.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 
 <body>
@@ -17,13 +17,13 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
-                    <a href="simulationPage.html" class="lang" key="ssm"></a>
+                    <a href="simulationPage.html" class="lang" id="ssm"></a>
                 </li>
                 <li>
-                    <a href="planetsPage.html" class="lang" key="planets"></a>
+                    <a href="planetsPage.html" class="lang" id="planets"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" key="about"></a>
+                    <a href="#" class="lang" id="about"></a>
                 </li>
             </ul>
             <div id="languages">
@@ -33,61 +33,61 @@
             </div>
         </nav>
     </header>
-    <h1 class="lang" key="planets"></h1>
+    <h1 class="lang" id="planetsH1"></h1>
 
     <section>
         <article id="planet-1" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
-                <h3 class=" lang " key="mercury "></h3>
-                <img src="/images/planets/mercuryTransparent.png " width="200 " height="200 ">
+            <a href="planetInfo.html">
+                <h3 class="lang" id="mercury"></h3>
+                <img src="/images/planets/mercuryTransparent.png" alt="Mercury" width="200" height="200">
             </a>
         </article>
         <article id="planet-2" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
-                <h3 class="lang " key="venus "></h3>
-                <img src="/images/planets/venusTransparent.png " width="200 " height="200 ">
+            <a href="planetInfo.html">
+                <h3 class="lang" id="venus"></h3>
+                <img src="/images/planets/venusTransparent.png" alt="Venus" width="200" height="200">
             </a>
         </article>
         <article id="planet-3" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
-                <h3 class="lang " key="earth "></h3>
-                <img src="/images/planets/earthTransparent.png " width="200 " height="200 ">
+            <a href="planetInfo.html">
+                <h3 class="lang" id="earth"></h3>
+                <img src="/images/planets/earthTransparent.png" alt="Earth" width="200" height="200">
             </a>
         </article>
         <article id="planet-4" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
+            <a href="planetInfo.html">
                 <h3>Mars</h3>
-                <img src="/images/planets/marsTransparent.png " width="200 " height="200 ">
+                <img src="/images/planets/marsTransparent.png" alt="Mars" width="200" height="200">
             </a>
         </article>
         <article id="planet-5" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
+            <a href="planetInfo.html">
                 <h3>Jupiter</h3>
-                <img src="/images/planets/jupiterTransparent.png " width="200 " height="200 ">
+                <img src="/images/planets/jupiterTransparent.png" alt="Jupiter" width="200" height="200">
             </a>
         </article>
         <article id="planet-6" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
+            <a href="planetInfo.html">
                 <h3>Saturn</h3>
-                <img src="/images/planets/saturnTransparent.png " width="200 " height="200 ">
+                <img src="/images/planets/saturnTransparent.png" alt="Saturn" width="200" height="200">
             </a>
         </article>
         <article id="planet-7" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
-                <h3 class="lang " key="uranus "></h3>
-                <img src="/images/planets/uranusTransparent.png " width="200 " height="200 ">
+            <a href="planetInfo.html">
+                <h3 class="lang " id="uranus"></h3>
+                <img src="/images/planets/uranusTransparent.png" alt="Uranus" width="200" height="200">
             </a>
         </article>
         <article id="planet-8" onclick="showPageForChosenPlanet(this.id)">
-            <a href="planetInfo.html ">
-                <h3 class="lang " key="neptune "></h3>
-                <img src="/images/planets/neptuneTransparent.png " width="200 " height="200 ">
+            <a href="planetInfo.html">
+                <h3 class="lang" id="neptune"></h3>
+                <img src="/images/planets/neptuneTransparent.png" alt="Neptune" width="200" height="200">
             </a>
         </article>
     </section>
 
     <!-- Scripts -->
-    <script src="/js/textTranslator.js "></script>
+    <script src="/js/textTranslator.js"></script>
     <script>
         // LET TEST
         showPageForChosenPlanet = function(id) {

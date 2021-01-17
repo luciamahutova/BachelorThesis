@@ -1,5 +1,6 @@
 let arrLang = {
     cz: {
+        'planetsH1': 'Planety',
         // Menu
         'ssm': 'Model sluneční soustavy',
         'planets': 'Planety',
@@ -70,6 +71,7 @@ let arrLang = {
 
     },
     en: {
+        'planetsH1': 'Planets',
         // Menu
         'ssm': 'Solar system model',
         'planets': 'Planets',
@@ -139,6 +141,7 @@ let arrLang = {
         'neptuneText': 'Neptune is the eighth planet from the Sun, making it the most distant in the solar system. This gas giant may have formed much closer to the Sun in the early solar system history before migrating out to its current position.'
     },
     sk: {
+        'planetsH1': 'Planéty',
         // Menu
         'ssm': 'Model slnečnej sústavy',
         'planets': 'Planéty',
@@ -214,14 +217,14 @@ $(function() {
     var currentLang = (localStorage.getItem('lang') === '' || localStorage.getItem('lang') === null) ? 'cz' : localStorage.getItem('lang');
 
     $('.lang').each(function() {
-        $(this).text(arrLang[currentLang][$(this).attr('key')]);
+        $(this).text(arrLang[currentLang][$(this).attr('id')]);
     });
 
     // Translate to chosen language
     $('.translate').click(function() {
         currentLang = $(this).attr('id');
         $('.lang').each(function() {
-            $(this).text(arrLang[currentLang][$(this).attr('key')]);
+            $(this).text(arrLang[currentLang][$(this).attr('id')]);
         });
     });
 })
