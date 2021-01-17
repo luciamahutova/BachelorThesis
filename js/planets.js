@@ -47,17 +47,15 @@ class Planet {
 // Read data from JSON and save them
 // -------------------------------------------------------------------------
 Planet.prototype.addAllDataJSON = function() {
-    this.mercuryDataJSON = this.jsonManager.readPlanetData("Mercury");
-    this.venusDataJSON = this.jsonManager.readPlanetData("Venus");
-    this.earthDataJSON = this.jsonManager.readPlanetData("Earth");
-    this.marsDataJSON = this.jsonManager.readPlanetData("Mars");
-    this.jupiterDataJSON = this.jsonManager.readPlanetData("Jupiter");
-    this.saturnDataJSON = this.jsonManager.readPlanetData("Saturn");
-    this.uranusDataJSON = this.jsonManager.readPlanetData("Uranus");
-    this.neptuneDataJSON = this.jsonManager.readPlanetData("Neptune");
+    var data = [this.mercuryDataJSON, this.venusDataJSON, this.earthDataJSON, this.marsDataJSON,
+        this.jupiterDataJSON, this.saturnDataJSON, this.uranusDataJSON, this.neptuneDataJSON
+    ];
+    var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
 
-    this.allDataJSON.push(this.mercuryDataJSON, this.venusDataJSON, this.earthDataJSON, this.marsDataJSON,
-        this.jupiterDataJSON, this.saturnDataJSON, this.uranusDataJSON, this.neptuneDataJSON);
+    for (var i = 0; i < planetNames.length; i++) {
+        data[i] = this.jsonManager.readPlanetData(planetNames[i]);
+        this.allDataJSON.push(data[i]);
+    }
 }
 
 // Creating planet objects
@@ -127,10 +125,10 @@ Planet.prototype.setRotationAngleForAllPlanets = function() {
 // -------------------------------------------------------------------------
 Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshes) {
     // Changed scale for better view
-    if (scaleValue > 0) {
+    if (scaleValue > 100) {
         this.scaleMeshesRangesliderPositiveValue(scaleValue, planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderPositiveValue(scaleValue);
-    } else if (scaleValue < 0) {
+    } else if (scaleValue < 100) {
         scaleValue *= -1;
         this.scaleMeshesRangesliderNegativeValue(scaleValue, planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderNegativeValue(scaleValue);
@@ -149,7 +147,7 @@ Planet.prototype.scaleMeshesRangesliderPositiveValue = function(scaleValue, obje
 Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, objects) {
     for (var i = 0; i < objects.length; i++) {
         // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
-        objects[i].scale.set(0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue), 0.8 / (-1 * scaleValue));
+        objects[i].scale.set((-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5);
     }
 }
 
@@ -159,7 +157,7 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
     }
 }
 
-// Moving planets on their orbits (ellipses) = PREROBIT, VSETKY SA TOCIA ROVNAKO RYCHLO
+// Moving planets on their orbits (ellipses)
 // -------------------------------------------------------------------------
 Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue) {
     var rotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
@@ -180,9 +178,9 @@ Planet.prototype.rotatePlanetOnOrbit = function(planet, planetOrder, scaleValue,
     this.betha = Math.cos(planet.position.x / (planet.position.z + rotationSpeed));
 
     // scaleValue is used because of zooming in/out by rangeslider
-    if (scaleValue > 0) {
+    if (scaleValue > 100) {
         this.positionPlanetOnRangesliderPositiveValue(planet, planetOrder, scaleValue, this.betha, rotationSpeed);
-    } else if (scaleValue < 0) {
+    } else if (scaleValue < 100) {
         this.positionPlanetOnRangesliderNegativeValue(planet, planetOrder, scaleValue, this.betha, rotationSpeed);
     } else {
         this.positionPlanetToOriginalPosition(planet, planetOrder, this.betha, rotationSpeed);
@@ -220,7 +218,7 @@ Planet.prototype.positionPlanetOnRangesliderPositiveValue = function(planetMesh,
 
 Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planetMesh, planetOrder, scaleValue, betha, timestamp) {
     // The same scale as in class Orbits
-    var scale = 0.5 / (-1 * scaleValue);
+    var scale = (-1 * scaleValue) / 0.5;
     var dataOfCurrentPlanetJSON = this.allDataJSON[planetOrder];
     var quarterSizeOfUranus = 0;
 
@@ -229,10 +227,8 @@ Planet.prototype.positionPlanetOnRangesliderNegativeValue = function(planetMesh,
             quarterSizeOfUranus = result["planetSize"] / scaleValue / 4;
         } else { quarterSizeOfUranus = 0; }
 
-        planetMesh.position.x = (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp)) +
-            quarterSizeOfUranus;
-        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp)) +
-            quarterSizeOfUranus;
+        planetMesh.position.x = (result["a"] * result["scaleFactor"] * scale * Math.cos(betha + timestamp)) + quarterSizeOfUranus;
+        planetMesh.position.z = -1 * (result["b"] * result["scaleFactor"] * scale * Math.sin(betha + timestamp));
     });
 }
 

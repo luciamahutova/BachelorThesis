@@ -59,7 +59,7 @@ Orbits.prototype.scaleOrbitsRangesliderPositiveValue = function(scaleValue) {
 
 Orbits.prototype.scaleOrbitsRangesliderNegativeValue = function(scaleValue) {
     for (var i = 0; i < this.orbits.length; i++) {
-        this.orbits[i].scale.set(0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue), 0.5 / (-1 * scaleValue));
+        this.orbits[i].scale.set((-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5);
     }
 }
 
