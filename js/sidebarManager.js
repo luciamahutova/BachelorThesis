@@ -21,6 +21,7 @@ class SidebarManager {
 
     hideSidebarToLeft = function() {
         document.getElementById("sidebarPlanetInfo").style.left = "-300px";
+        // Call in the 1st sidebar will be: onclick="sidebarManager.hideSidebarToLeft()"
     }
 
 
