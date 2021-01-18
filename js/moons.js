@@ -28,28 +28,29 @@ class Moon extends Planet {
 // Positions for the Moon - according to zoom
 // -------------------------------------------------------------------------
 Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
+    var scale = scaleValue * 200;
     // scaleValue is used because of zooming in/out by rangeslider
-    if (scaleValue > 0) {
-        this.positionMoonOnRangesliderPositiveValue(scaleValue, this.moonMesh, this.planetsMeshes);
-    } else if (scaleValue < 0) {
-        this.positionMoonOnRangesliderNegativeValue();
+    if (scale > 100) {
+        this.positionMoonRangesliderZoomIn(scaleValue, this.planetsMeshes);
+    } else if (scale < 100) {
+        this.positionMoonRangesliderZoomOut();
     } else {
         this.positionMoonToOriginalPosition();
     }
 }
 
 // Positions for the Moon - according to scale from rangeslider
-Moon.prototype.positionMoonOnRangesliderPositiveValue = function(scaleValue, moonMesh, planetsMeshes) {
-    moonMesh.visible = true;
+Moon.prototype.positionMoonRangesliderZoomIn = function(scaleValue, planetsMeshes) {
+    this.moonMesh.visible = true;
     var dataOfCurrentPlanetJSON = this.allDataJSON[2];
 
     dataOfCurrentPlanetJSON.then(function(result) {
-        moonMesh.position.x = planetsMeshes[2].position.x + result["a"] * scaleValue * 2;
-        moonMesh.position.z = planetsMeshes[2].position.z + 1;
+        this.moonMesh.position.x = planetsMeshes[2].position.x + result["a"] * scaleValue * 2;
+        this.moonMesh.position.z = planetsMeshes[2].position.z + 1;
     });
 }
 
-Moon.prototype.positionMoonOnRangesliderNegativeValue = function() {
+Moon.prototype.positionMoonRangesliderZoomOut = function() {
     // Hidden Moon when model is too small
     this.moonMesh.visible = false;
 }
@@ -64,9 +65,10 @@ Moon.prototype.positionMoonToOriginalPosition = function() {
 // Scaling the Moon - according to zoom (functions ingerited from class Planet)
 // -------------------------------------------------------------------------
 Moon.prototype.setScaleForMoons = function(scaleValue) {
-    if (scaleValue > 0) {
-        this.scaleMeshesRangesliderPositiveValue(scaleValue, this.moonsMeshes);
-    } else if (scaleValue == 0) {
+    var scale = scaleValue * 200;
+    if (scale > 100) {
+        this.scaleMeshesRangesliderZoomIn(scaleValue, this.moonsMeshes);
+    } else if (scale == 100) {
         this.scaleMeshesToOriginalSize(this.moonsMeshes);
     }
 }

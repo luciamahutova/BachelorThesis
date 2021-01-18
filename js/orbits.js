@@ -41,23 +41,24 @@ Orbits.prototype.createCurveForOrbit = function(i, orbits, scene) {
 // Scaling orbits according to zoom value from rangeslider
 // -------------------------------------------------------------------------
 Orbits.prototype.setScaleForOrbits = function(scaleValue) {
-    if (scaleValue > 0) {
-        this.scaleOrbitsRangesliderPositiveValue(scaleValue);
-    } else if (scaleValue < 0) {
+    var scale = scaleValue * 200;
+    if (scale > 100) {
+        this.scaleOrbitsRangesliderZoomIn(scaleValue);
+    } else if (scale < 100) {
         scaleValue *= -1;
-        this.scaleOrbitsRangesliderNegativeValue(scaleValue);
+        this.scaleOrbitsRangesliderZoomOut(scaleValue);
     } else {
         this.scaleOrbitsToOriginalSize();
     }
 }
 
-Orbits.prototype.scaleOrbitsRangesliderPositiveValue = function(scaleValue) {
+Orbits.prototype.scaleOrbitsRangesliderZoomIn = function(scaleValue) {
     for (var i = 0; i < this.orbits.length; i++) {
         this.orbits[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }
 
-Orbits.prototype.scaleOrbitsRangesliderNegativeValue = function(scaleValue) {
+Orbits.prototype.scaleOrbitsRangesliderZoomOut = function(scaleValue) {
     for (var i = 0; i < this.orbits.length; i++) {
         this.orbits[i].scale.set((-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5);
     }
