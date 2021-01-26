@@ -392,7 +392,6 @@ h1+section {
     width: 2000px;
     max-height: 230px;
     overflow-x: visible;
-    /* overflow-y: hidden; */
 }
 
 h1+section article {
