@@ -36,6 +36,8 @@ class Planet {
         this.createPlanetsMesh(this.scene, this.planetsObjects);
         this.setRotationAngleForAllPlanets();
         this.orbitClass.createOrbitShape();
+        //POKUS
+        this.addTextToPlanetObjects(this.planetsMeshes);
     }
 
     getPlanetMeshes = function() { return this.planetsMeshes; }
@@ -74,6 +76,32 @@ Planet.prototype.createPlanetsMesh = function(scene, planetsObjects) {
     this.planetsMeshes.push(this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
     this.addMeshToScene(scene);
+}
+
+// POKUS - nazvy pre planety
+Planet.prototype.addTextToPlanetObjects = function(planetsMeshes) {
+    const loader = new THREE.FontLoader();
+    loader.load('node_modules/three/examples/fonts/gentilis_regular.typeface.json', function(font) {
+
+        const geometry = new THREE.TextGeometry('Mercury', {
+            font: font,
+            size: 1,
+            height: 0,
+            bevelEnabled: false
+        });
+        var material = new THREE.MeshNormalMaterial();
+        material.transparent = true;
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.setRotationFromAxisAngle(
+            new THREE.Vector3(1, 0, 0),
+            (Math.PI / 2 * 3)
+        );
+
+        planetsMeshes[0].add(mesh);
+        // mesh.rotation.x = planetsMeshes[0].rotation.x;
+        // mesh.rotation.y = planetsMeshes[0].rotation.y;
+        this.scene.add(mesh);
+    });
 }
 
 Planet.prototype.addMeshToScene = function(scene) {
