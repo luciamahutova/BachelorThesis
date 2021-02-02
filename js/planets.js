@@ -36,8 +36,7 @@ class Planet {
         this.createPlanetsMesh(this.scene, this.planetsObjects);
         this.setRotationAngleForAllPlanets();
         this.orbitClass.createOrbitShape();
-        //POKUS
-        this.addTextToPlanetObjects(this.planetsMeshes);
+        this.addAllNamesOfPlanetsToScene();
     }
 
     getPlanetMeshes = function() { return this.planetsMeshes; }
@@ -78,12 +77,19 @@ Planet.prototype.createPlanetsMesh = function(scene, planetsObjects) {
     this.addMeshToScene(scene);
 }
 
-// POKUS - nazvy pre planety
-Planet.prototype.addTextToPlanetObjects = function(planetsMeshes) {
+Planet.prototype.addMeshToScene = function(scene) {
+    for (var i = 0; i < this.planetsMeshes.length; i++) {
+        scene.add(this.planetsMeshes[i]);
+    }
+}
+
+// Names for planets
+// -------------------------------------------------------------------------
+Planet.prototype.addNameToPlanetObject = function(planetsMeshes, planetName, planetOrder) {
     const loader = new THREE.FontLoader();
     loader.load('node_modules/three/examples/fonts/gentilis_regular.typeface.json', function(font) {
 
-        const geometry = new THREE.TextGeometry('Mercury', {
+        let geometry = new THREE.TextGeometry(planetName, {
             font: font,
             size: 1,
             height: 0,
@@ -97,16 +103,18 @@ Planet.prototype.addTextToPlanetObjects = function(planetsMeshes) {
             (Math.PI / 2 * 3)
         );
 
-        planetsMeshes[0].add(mesh);
+        planetsMeshes[planetOrder].add(mesh);
         // mesh.rotation.x = planetsMeshes[0].rotation.x;
         // mesh.rotation.y = planetsMeshes[0].rotation.y;
         this.scene.add(mesh);
+        console.log(mesh);
     });
 }
 
-Planet.prototype.addMeshToScene = function(scene) {
-    for (var i = 0; i < this.planetsMeshes.length; i++) {
-        scene.add(this.planetsMeshes[i]);
+Planet.prototype.addAllNamesOfPlanetsToScene = function() {
+    var planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+    for (i = 0; i < 8; i++) {
+        this.addNameToPlanetObject(this.planetsMeshes, planets[i], i);
     }
 }
 
