@@ -1,10 +1,11 @@
 class Moon extends Planet {
-    constructor(scene, planetsMeshes) {
+    constructor(scene, planetsMeshes, allPlanetDataJSON) {
         super();
         this.scene = scene;
         this.planetsMeshes = planetsMeshes;
         this.moonsObjects = [];
         this.moonsMeshes = [];
+        this.allPlanetDataJSON = allPlanetDataJSON;
     }
 
     createMoonForEarth = function() {
@@ -31,7 +32,7 @@ Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
     var scale = scaleValue * 200;
     // scaleValue is used because of zooming in/out by rangeslider
     if (scale > 100) {
-        this.positionMoonRangesliderZoomIn(scaleValue, this.planetsMeshes);
+        this.positionMoonRangesliderZoomIn(scaleValue, this.planetsMeshes, this.moonsMeshes[0]);
     } else if (scale < 100) {
         this.positionMoonRangesliderZoomOut();
     } else {
@@ -40,13 +41,13 @@ Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
 }
 
 // Positions for the Moon - according to scale from rangeslider
-Moon.prototype.positionMoonRangesliderZoomIn = function(scaleValue, planetsMeshes) {
+Moon.prototype.positionMoonRangesliderZoomIn = function(scaleValue, planetsMeshes, moonMesh) {
     this.moonMesh.visible = true;
-    var dataOfCurrentPlanetJSON = this.allDataJSON[2];
+    var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
 
     dataOfCurrentPlanetJSON.then(function(result) {
-        this.moonMesh.position.x = planetsMeshes[2].position.x + result["a"] * scaleValue * 2;
-        this.moonMesh.position.z = planetsMeshes[2].position.z + 1;
+        moonMesh.position.x = planetsMeshes[2].position.x + result["Earth"]["a"] * scaleValue * 2;
+        moonMesh.position.z = planetsMeshes[2].position.z + 1;
     });
 }
 

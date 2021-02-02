@@ -6,7 +6,7 @@ class JSONManager {
     // Planets
     // ----------------------------------------------------------------
     // 1.possibile solution
-    readData = async function() {
+    readPlanetsData = async function() {
         this.currentValue = await fetch("/numericalData.json")
             .then(response => response.json())
             .then(data => {
@@ -16,7 +16,7 @@ class JSONManager {
         return this.currentValue;
     }
 
-    readPlanetData = async function(planet) {
+    readSinglePlanetData = async function(planet) {
         this.currentValue = await fetch("/numericalData.json")
             .then(response => response.json())
             .then(data => {

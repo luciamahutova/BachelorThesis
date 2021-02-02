@@ -1,8 +1,8 @@
 class Orbits {
-    constructor(scene, allDataJSON, planetsMeshes) {
+    constructor(scene, allPlanetDataJSON, planetsMeshes) {
         this.scene = scene;
         this.orbits = [];
-        this.allDataJSON = allDataJSON;
+        this.allPlanetDataJSON = allPlanetDataJSON;
         this.planetsMeshes = planetsMeshes;
         this.allCurves = [];
     }
@@ -12,20 +12,21 @@ class Orbits {
 // Creating orbits for planets
 // -------------------------------------------------------------------------
 Orbits.prototype.createOrbitShape = function() {
+    var planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
     for (var i = 0; i < 8; i++) {
-        this.createCurveForOrbit(i, this.orbits, this.scene);
+        this.createCurveForOrbit(planets[i], this.orbits, this.scene);
     }
 }
 
-Orbits.prototype.createCurveForOrbit = function(i, orbits, scene) {
+Orbits.prototype.createCurveForOrbit = function(planetName, orbits, scene) {
     var curve, geometry, material, ellipse;
-    var dataOfCurrentPlanetJSON = this.allDataJSON[i];
+    var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
 
     dataOfCurrentPlanetJSON.then(function(result) {
         curve = new THREE.EllipseCurve(
-            result["c"], 0, // aX, aY (X/Y center of the ellipse)
-            result["a"] * result["scaleFactor"], //xRadius 
-            result["b"] * result["scaleFactor"], //yRadius 
+            result[planetName]["c"], 0, // aX, aY (X/Y center of the ellipse)
+            result[planetName]["a"] * result[planetName]["scaleFactor"], //xRadius 
+            result[planetName]["b"] * result[planetName]["scaleFactor"], //yRadius 
             0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
             false, 0 // aClockwise, aRotation
         );
