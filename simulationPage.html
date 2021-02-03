@@ -84,19 +84,19 @@
             <section>
                 <h3 class="lang" id="orbit"></h3>
                 <label>
-                    <span class="checkmark lang" id="allPlanets"></span><input type="checkbox">
+                    <span class="checkmark lang" id="allPlanets"></span><input type="checkbox" checked id="allPlanetOrbitsChecked">
                 </label>
                 <span class="lang" id="singlePlanet"></span>
-                <select>
-                    <option>-</option>
-                    <option class="lang" id="mercury">Mercury</option>
-                    <option class="lang" id="venus">Venus</option>
-                    <option class="lang" id="earth">Earth</option>
-                    <option>Mars</option>
-                    <option>Jupiter</option>
-                    <option>Saturn</option>
-                    <option class="lang" id="uranus">Uranus</option>
-                    <option class="lang" id="neptune">Neptune</option>
+                <select id="singlePlanetOrbitSelected">
+                    <option value="-1">-</option>      
+                    <option class="lang" id="mercury" value="0">Mercury</option>
+                    <option class="lang" id="venus" value="1">Venus</option>
+                    <option class="lang" id="earth" value="2">Earth</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Jupiter</option>
+                    <option value="5">Saturn</option>
+                    <option class="lang" id="uranus" value="6">Uranus</option>
+                    <option class="lang" id="neptune" value="7">Neptune</option>
                 </select>
 
                 <label>

@@ -6,6 +6,8 @@ class Orbits {
         this.planetsMeshes = planetsMeshes;
         this.allCurves = [];
     }
+
+    getAllOrbits = function() { return this.orbits; }
 }
 
 

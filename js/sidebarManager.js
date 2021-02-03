@@ -1,14 +1,14 @@
 class SidebarManager {
-    constructor(planetsNamesOnScene, scene) {
+    constructor(planetsNamesOnScene, scene, orbits) {
         this.isSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;
         this.planetsNamesOnScene = planetsNamesOnScene;
         this.scene = scene;
+        this.orbits = orbits;
 
         this.pauseApplication();
         this.playApplication();
-        //this.confirmButtonBehavior();
     }
 
     showHideSidebarToRight = function() {
@@ -61,13 +61,17 @@ class SidebarManager {
     setIsAppRunning = function(value) { return this.isAppRunning = value; }
 }
 
-// Confirm button and functions for Sidebar
+// Sidebar - Confirm button 
 // -------------------------------------------------------------------------
 SidebarManager.prototype.confirmButtonBehavior = function() {
     this.showHideAllNamesOfPlanetsOnScene();
     this.showHideSingleNameOfPlanetOnScene();
+    this.showHideAllPlanetOrbitsOnScene();
+    this.showHideSinglePlanetOrbitOnScene();
 }
 
+// Sidebar - functions for planets' names
+// -------------------------------------------------------------------------
 SidebarManager.prototype.showHideAllNamesOfPlanetsOnScene = function() {
     if (document.getElementById("allPlanetNamesChecked").checked == true) {
         for (i = 0; i < 8; i++) {
@@ -92,6 +96,31 @@ SidebarManager.prototype.showHideSingleNameOfPlanetOnScene = function() {
     }
 }
 
+// Sidebar - functions for planets' orbits
+// -------------------------------------------------------------------------
+SidebarManager.prototype.showHideAllPlanetOrbitsOnScene = function() {
+    if (document.getElementById("allPlanetOrbitsChecked").checked == true) {
+        for (i = 0; i < 8; i++) {
+            this.scene.add(this.orbits[i]);
+        }
+    } else if (document.getElementById("allPlanetOrbitsChecked").checked == false) {
+        for (i = 0; i < 8; i++) {
+            this.scene.remove(this.orbits[i]);
+        }
+    }
+}
+
+SidebarManager.prototype.showHideSinglePlanetOrbitOnScene = function() {
+    var selectedElem = document.getElementById("singlePlanetOrbitSelected");
+    var allPlanetOrbitsSelected = document.getElementById("allPlanetOrbitsChecked").checked;
+    // -1 is for option with no planet name
+    if (selectedElem.value != -1 && allPlanetOrbitsSelected == false) {
+        for (i = 0; i < 8; i++) {
+            this.scene.remove(this.orbits[i]);
+        }
+        this.scene.add(this.orbits[selectedElem.value]);
+    }
+}
 
 // Script for menu - NIEKDE ZARADIT
 ///////////////////////////////////////////////////////////////
