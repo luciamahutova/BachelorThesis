@@ -6,6 +6,7 @@ class SidebarManager {
 
         this.pauseApplication();
         this.playApplication();
+        this.confirmButtonBehavior();
     }
 
     showHideSidebarToRight = function() {
@@ -56,6 +57,12 @@ class SidebarManager {
 
     getIsAppRunning = function() { return this.isAppRunning; }
     setIsAppRunning = function(value) { return this.isAppRunning = value; }
+}
+
+SidebarManager.prototype.confirmButtonBehavior = function() {
+    $(".confirmChangesButton").on("click", function() {
+        console.log("yes");
+    });
 }
 
 // Script for menu - NIEKDE ZARADIT
