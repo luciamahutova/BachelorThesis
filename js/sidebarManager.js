@@ -65,6 +65,7 @@ class SidebarManager {
 // -------------------------------------------------------------------------
 SidebarManager.prototype.confirmButtonBehavior = function() {
     this.showHideAllNamesOfPlanetsOnScene();
+    this.showHideSingleNameOfPlanetOnScene();
 }
 
 SidebarManager.prototype.showHideAllNamesOfPlanetsOnScene = function() {
@@ -76,6 +77,18 @@ SidebarManager.prototype.showHideAllNamesOfPlanetsOnScene = function() {
         for (i = 0; i < 8; i++) {
             this.scene.remove(this.planetsNamesOnScene[i]);
         }
+    }
+}
+
+SidebarManager.prototype.showHideSingleNameOfPlanetOnScene = function() {
+    var selectedElem = document.getElementById("singlePlanetNameSelected");
+    var allPlanetNamesSelected = document.getElementById("allPlanetNamesChecked").checked;
+    // -1 is for option with no planet name
+    if (selectedElem.value != -1 && allPlanetNamesSelected == false) {
+        for (i = 0; i < 8; i++) {
+            this.scene.remove(this.planetsNamesOnScene[i]);
+        }
+        this.scene.add(this.planetsNamesOnScene[selectedElem.value]);
     }
 }
 
