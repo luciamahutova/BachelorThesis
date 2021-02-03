@@ -3,6 +3,7 @@ class Planet {
         this.scene = scene;
         this.planetsObjects = [];
         this.planetsMeshes = [];
+        this.planetsNamesOnScene = [];
         this.allPlanetDataJSON = [];
         this.planetSizes = [];
         this.betha = 0;
@@ -36,7 +37,7 @@ class Planet {
         this.createPlanetsMesh(this.scene, this.planetsObjects);
         this.setRotationAngleForAllPlanets();
         this.orbitClass.createOrbitShape();
-        this.addAllNamesOfPlanetsToScene();
+        this.addNamesToPlanetObject(this.planetsMeshes, this.planetsNamesOnScene);
     }
 
     getPlanetMeshes = function() { return this.planetsMeshes; }
@@ -85,37 +86,33 @@ Planet.prototype.addMeshToScene = function(scene) {
 
 // Names for planets
 // -------------------------------------------------------------------------
-Planet.prototype.addNameToPlanetObject = function(planetsMeshes, planetName, planetOrder) {
+Planet.prototype.addNamesToPlanetObject = function(planetsMeshes, planetsNamesOnScene) {
+    var geometry, textMesh;
+    var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
     const loader = new THREE.FontLoader();
-    loader.load('node_modules/three/examples/fonts/gentilis_regular.typeface.json', function(font) {
 
-        let geometry = new THREE.TextGeometry(planetName, {
-            font: font,
-            size: 1,
-            height: 0,
-            bevelEnabled: false
-        });
+    loader.load('node_modules/three/examples/fonts/gentilis_regular.typeface.json', function(font) {
         var material = new THREE.MeshNormalMaterial();
         material.transparent = true;
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.setRotationFromAxisAngle(
-            new THREE.Vector3(1, 0, 0),
-            (Math.PI / 2 * 3)
-        );
 
-        planetsMeshes[planetOrder].add(mesh);
-        // mesh.rotation.x = planetsMeshes[0].rotation.x;
-        // mesh.rotation.y = planetsMeshes[0].rotation.y;
-        this.scene.add(mesh);
-        console.log(mesh);
+        for (i = 0; i < 8; i++) {
+            geometry = new THREE.TextGeometry(planetNames[i], {
+                font: font,
+                size: 1,
+                height: 0,
+                bevelEnabled: false
+            });
+            textMesh = new THREE.Mesh(geometry, material);
+            textMesh.setRotationFromAxisAngle(
+                new THREE.Vector3(1, 0, 0),
+                (Math.PI / 2 * 3)
+            );
+
+            planetsNamesOnScene.push(textMesh);
+            planetsMeshes[i].add(textMesh);
+            this.scene.add(textMesh);
+        }
     });
-}
-
-Planet.prototype.addAllNamesOfPlanetsToScene = function() {
-    var planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-    for (i = 0; i < 8; i++) {
-        this.addNameToPlanetObject(this.planetsMeshes, planets[i], i);
-    }
 }
 
 // Setting rotation angle for planets on Z-axis 
@@ -198,11 +195,14 @@ Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetN
 
     // scaleValue is used because of zooming in/out by rangeslider
     if (scale > 100) {
-        this.positionPlanetRangesliderZoomIn(planetMesh, planetName, scaleValue, this.betha, rotationSpeed);
+        this.positionPlanetRangesliderZoomIn(planetMesh, planetName, this.planetsNamesOnScene,
+            planetOrder, scaleValue, this.betha, rotationSpeed);
     } else if (scale < 100) {
-        this.positionPlanetRandesliderZoomOut(planetMesh, planetName, scaleValue, this.betha, rotationSpeed);
+        this.positionPlanetRandesliderZoomOut(planetMesh, planetName, this.planetsNamesOnScene,
+            planetOrder, scaleValue, this.betha, rotationSpeed);
     } else {
-        this.positionPlanetToOriginalPosition(planetMesh, planetName, this.betha, rotationSpeed);
+        this.positionPlanetToOriginalPosition(planetMesh, planetName, this.planetsNamesOnScene,
+            planetOrder, this.betha, rotationSpeed);
     }
 }
 
@@ -219,7 +219,7 @@ Planet.prototype.rotateAllPlanets = function(scaleValue, speedValue) {
 
 // Positions for 1 planet - according to scale from rangeslider
 // -------------------------------------------------------------------------
-Planet.prototype.positionPlanetRangesliderZoomIn = function(planetMesh, planetName, scaleValue, betha, timestamp) {
+Planet.prototype.positionPlanetRangesliderZoomIn = function(planetMesh, planetName, planetsNamesOnScene, planetOrder, scaleValue, betha, timestamp) {
     var scale = scaleValue * 2;
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
     var halfSizeOfUranus = 0;
@@ -231,12 +231,15 @@ Planet.prototype.positionPlanetRangesliderZoomIn = function(planetMesh, planetNa
 
         planetMesh.position.x = result[planetName]["c"] +
             (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(betha + timestamp)) + halfSizeOfUranus;
+        planetsNamesOnScene[planetOrder].position.x = planetMesh.position.x + result[planetName]["planetSize"] * scale + 1;
+
         planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale *
             Math.sin(betha + timestamp));
+        planetsNamesOnScene[planetOrder].position.z = planetMesh.position.z;
     });
 }
 
-Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetName, scaleValue, betha, timestamp) {
+Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetName, planetsNamesOnScene, planetOrder, scaleValue, betha, timestamp) {
     // The same scale as in class Orbits
     var scale = (-1 * scaleValue) / 0.5;
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
@@ -252,18 +255,24 @@ Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetN
 
         planetMesh.position.x = result[planetName]["c"] +
             (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(betha + timestamp)) - halfSizeOfUranus;
+        planetsNamesOnScene[planetOrder].position.x = planetMesh.position.x + 1;
+
         planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] *
             scale * Math.sin(betha + timestamp));
+        planetsNamesOnScene[planetOrder].position.z = planetMesh.position.z;
     });
 }
 
-Planet.prototype.positionPlanetToOriginalPosition = function(planetMesh, planetName, betha, timestamp) {
+Planet.prototype.positionPlanetToOriginalPosition = function(planetMesh, planetName, planetsNamesOnScene, planetOrder, betha, timestamp) {
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
 
     // "dataOfCurrentPlanetJSON" is equal to Promise, we need data from the Promise
     dataOfCurrentPlanetJSON.then(function(result) {
         planetMesh.position.x = result[planetName]["c"] +
             (result[planetName]["a"] * result[planetName]["scaleFactor"] * Math.cos(betha + timestamp));
+        planetsNamesOnScene[planetOrder].position.x = planetMesh.position.x + result[planetName]["planetSize"] + 1;
+
         planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * Math.sin(betha + timestamp));
+        planetsNamesOnScene[planetOrder].position.z = planetMesh.position.z;
     });
 }
