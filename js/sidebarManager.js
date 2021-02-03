@@ -1,12 +1,14 @@
 class SidebarManager {
-    constructor() {
+    constructor(planetsNamesOnScene, scene) {
         this.isSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;
+        this.planetsNamesOnScene = planetsNamesOnScene;
+        this.scene = scene;
 
         this.pauseApplication();
         this.playApplication();
-        this.confirmButtonBehavior();
+        //this.confirmButtonBehavior();
     }
 
     showHideSidebarToRight = function() {
@@ -59,11 +61,24 @@ class SidebarManager {
     setIsAppRunning = function(value) { return this.isAppRunning = value; }
 }
 
+// Confirm button and functions for Sidebar
+// -------------------------------------------------------------------------
 SidebarManager.prototype.confirmButtonBehavior = function() {
-    $(".confirmChangesButton").on("click", function() {
-        console.log("yes");
-    });
+    this.showHideAllNamesOfPlanetsOnScene();
 }
+
+SidebarManager.prototype.showHideAllNamesOfPlanetsOnScene = function() {
+    if (document.getElementById("allPlanetNamesChecked").checked == true) {
+        for (i = 0; i < 8; i++) {
+            this.scene.add(this.planetsNamesOnScene[i]);
+        }
+    } else if (document.getElementById("allPlanetNamesChecked").checked == false) {
+        for (i = 0; i < 8; i++) {
+            this.scene.remove(this.planetsNamesOnScene[i]);
+        }
+    }
+}
+
 
 // Script for menu - NIEKDE ZARADIT
 ///////////////////////////////////////////////////////////////

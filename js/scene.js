@@ -17,6 +17,7 @@ class MainScene {
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
+        this.planetsNamesOnScene = this.planetObject.getPlanetsNamesOnScene();
     }
 
     initRenderer = function() {
@@ -73,6 +74,7 @@ class MainScene {
     getScene = function() { return this.scene }
     getRenderer = function() { return this.renderer }
     getCamera = function() { return this.camera }
+    getPlanetsNamesOnScene = function() { return this.planetsNamesOnScene; }
 
     resizeBackground = function(renderer, camera) {
         window.addEventListener('resize', function() {

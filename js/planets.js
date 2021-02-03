@@ -43,6 +43,7 @@ class Planet {
     getPlanetMeshes = function() { return this.planetsMeshes; }
     getScaleValue = function() { return this.scaleValueScene; }
     getPlanetData = function() { return this.allPlanetDataJSON; }
+    getPlanetsNamesOnScene = function() { return this.planetsNamesOnScene; }
 }
 
 
