@@ -16,6 +16,7 @@ class JSONManager {
         return this.currentValue;
     }
 
+    // Not used, too many threads
     readSinglePlanetData = async function(planet) {
         this.currentValue = await fetch("/numericalData.json")
             .then(response => response.json())
