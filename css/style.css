@@ -391,7 +391,7 @@ input[type="checkbox"] {
     background-color: transparent;
 }
 
-.tooltip .tooltiptext {
+.tooltip span {
     visibility: hidden;
     width: 100px;
     background-color: #BABABA;
@@ -402,11 +402,28 @@ input[type="checkbox"] {
     z-index: 100;
     position: absolute;
     bottom: 120%;
-    left: -35%;
+    left: -40%;
 }
 
-.tooltip:hover .tooltiptext {
+.tooltip:hover span {
     visibility: visible;
+}
+
+
+/* Tooltips arrow *************************/
+
+.tooltip span::after {
+    content: " ";
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.tooltip span::after {
+    /* At the bottom of the tooltip */
+    top: 100%;
+    left: 45%;
+    border-color: #BABABA transparent transparent transparent;
 }
 
 
