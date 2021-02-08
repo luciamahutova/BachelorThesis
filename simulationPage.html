@@ -136,9 +136,20 @@
     </section>
 
     <section class="models">
-        <button></button>
-        <button></button>
-        <button type="button" onclick="mainScene.moveSceneToOriginalPosition(scene)"></button>
+        <div class="tooltip">
+            <button></button>
+            <span class="tooltiptext">2D model</span>
+        </div>
+
+        <div class="tooltip">
+            <button></button>
+            <span class="tooltiptext">3D model</span>
+        </div>
+
+        <div class="tooltip">
+            <button type="button" onclick="mainScene.moveSceneToOriginalPosition(scene)"></button>
+            <span class="tooltiptext lang" id="centerModel"></span>
+        </div>
     </section>
 
     <!-- 1st rangeslider = planets' rotation speed -->

@@ -35,6 +35,7 @@ let arrLang = {
         // Rangesliders
         'rotation': 'Rotace: ',
         'zoom': 'Přiblížení: ',
+        'centerModel': 'Vycentrovat',
         // Planets
         'backToPlanets': 'Zpátky na planety',
         'diameter': 'Rovníkový poloměr:',
@@ -106,6 +107,7 @@ let arrLang = {
         // Rangesliders
         'rotation': 'Rotation: ',
         'zoom': 'Zoom: ',
+        'centerModel': 'Center model',
         // Planets
         'backToPlanets': 'Back to planets',
         'diameter': 'Equatorial diameter:',
@@ -176,6 +178,7 @@ let arrLang = {
         // Rangesliders
         'rotation': 'Rotácia: ',
         'zoom': 'Priblíženie: ',
+        'centerModel': 'Vycentrovať',
         // Planets
         'backToPlanets': 'Späť na planéty',
         'diameter': 'Rovníkový polomer:',

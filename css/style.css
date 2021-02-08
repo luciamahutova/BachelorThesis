@@ -322,11 +322,11 @@ input[type="checkbox"] {
     background-image: url(/icons/solarSystem2D.png);
 }
 
-.models button:nth-of-type(2) {
+.models div:nth-of-type(2) button {
     background-image: url(/icons/solarSystem3D.png);
 }
 
-.models button:last-of-type {
+.models div:last-of-type button {
     background-image: url(/icons/centerScene.png);
 }
 
@@ -379,6 +379,34 @@ input[type="checkbox"] {
     border-radius: 50%;
     border-color: #061327;
     background: #BABABA;
+}
+
+
+/* Tooltips **********************************/
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px transparent;
+    background-color: transparent;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 100px;
+    background-color: #BABABA;
+    color: #fff;
+    text-align: center;
+    padding: 3px;
+    border-radius: 5px;
+    z-index: 100;
+    position: absolute;
+    bottom: 120%;
+    left: -35%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
 
 
