@@ -228,9 +228,9 @@ Planet.prototype.positionPlanetRangesliderZoomIn = function(planetMesh, planetNa
         } else { halfSizeOfUranus = 0; }
 
         planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp - betha)) + halfSizeOfUranus;
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp)) + halfSizeOfUranus;
         planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale *
-            Math.sin(timestamp - betha));
+            Math.sin(timestamp));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
             planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scale + 1;
