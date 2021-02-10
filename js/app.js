@@ -11,10 +11,11 @@ mainScene.resizeBackground(renderer, camera);
 
 
 var sidebarManager = new SidebarManager(planetsNamesOnScene, scene, orbits);
-
+var i = 0;
 
 function animate() {
-    mainScene.animate();
+    mainScene.animate(sidebarManager.getPlayTime() - sidebarManager.getPlayPauseTimeDifference() + i);
+    i += 50;
     animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();

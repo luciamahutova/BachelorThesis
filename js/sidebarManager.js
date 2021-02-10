@@ -6,6 +6,7 @@ class SidebarManager {
         this.planetsNamesOnScene = planetsNamesOnScene;
         this.scene = scene;
         this.orbits = orbits;
+        this.pauseTime = this.playTime = Date.now();
 
         this.pauseApplication();
         this.playApplication();
@@ -37,6 +38,7 @@ class SidebarManager {
 
         if (isRunning) {
             this.setIsAppRunning(false);
+            this.setPauseTime(Date.now());
             $(".pauseButton").on("click", function() {
                 cancelAnimationFrame(animationFrameOutput);
                 $('.pauseButton').prop('disabled', true);
@@ -49,6 +51,7 @@ class SidebarManager {
         var isRunning = this.getIsAppRunning();
         if (!isRunning) {
             this.setIsAppRunning(true);
+            this.setPlayTime(Date.now());
             $(".playButton").on("click", function() {
                 animationFrameOutput = requestAnimationFrame(animate);
                 $('.pauseButton').prop('disabled', false);
@@ -58,7 +61,15 @@ class SidebarManager {
     }
 
     getIsAppRunning = function() { return this.isAppRunning; }
-    setIsAppRunning = function(value) { return this.isAppRunning = value; }
+    setIsAppRunning = function(value) { this.isAppRunning = value; }
+
+    getPauseTime = function() { return this.pauseTime; }
+    setPauseTime = function(value) { this.pauseTime = value; }
+    getPlayTime = function() { return this.playTime; }
+    setPlayTime = function(value) { this.playTime = value; }
+    getPlayPauseTimeDifference = function() {
+        return this.playTime - this.getPauseTime();
+    }
 }
 
 // Sidebar - Confirm button 

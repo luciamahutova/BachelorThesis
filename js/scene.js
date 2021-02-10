@@ -14,6 +14,7 @@ class MainScene {
         this.moonObject.initializeMoons();
         this.sunObject = new Sun(this.scene);
         this.sunObject.initializeSun();
+        this.raycaster = new PickHelper();
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
@@ -108,10 +109,10 @@ class MainScene {
     }
 
     // Animate function: called in app.js 
-    animate = function() {
+    animate = function(time) {
         this.onKeyDown();
         this.zoomRangeslider();
-        this.speedRangeslider();
+        this.speedRangeslider(time);
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
         this.bgMesh.material.depthTest = false;
@@ -139,7 +140,7 @@ MainScene.prototype.zoomRangeslider = function() {
     updateZoomValue();
 }
 
-MainScene.prototype.speedRangeslider = function() {
+MainScene.prototype.speedRangeslider = function(time) {
     var slider = document.getElementById("rangesliderSpeedInput");
     var sliderValue = document.getElementById("rangesliderSpeedValue");
 
@@ -149,7 +150,7 @@ MainScene.prototype.speedRangeslider = function() {
 
         // ROTACIE FUNGUJU, ALE KVOLI POUZITIU "timestamp" (VO VYPOCTE POLOHY PLANETY)
         // SA PLANETY POSUNU NA INE MIESTO (ZAROVEN SO ZRYCHLENIM ROTACIE)
-        this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets);
+        this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
     }
     slider.addEventListener('input', updateSpeedValue);
     updateSpeedValue();
