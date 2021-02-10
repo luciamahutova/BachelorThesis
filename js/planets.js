@@ -175,21 +175,21 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
 
 // Moving planets on their orbits (ellipses)
 // -------------------------------------------------------------------------
-Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue) {
+Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue, time) {
     var rotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
 
     if (speedValue == 0) {
-        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now());
+        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * time);
     } else if (speedValue > 0) {
-        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now()) * speedValue;
+        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * time) * speedValue;
     } else if (speedValue < 0) {
-        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * Date.now()) / Math.abs(speedValue);
+        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * time) / Math.abs(speedValue);
     }
     return this.timestamp;
 }
 
-Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetName, planetNameOnScene, scaleValue, speedValue) {
-    var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue);
+Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetName, planetNameOnScene, scaleValue, speedValue, time) {
+    var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue, time);
     // + rotationSpeed: because of division by zero
     this.betha = Math.cos(planetMesh.position.x / (planetMesh.position.z + rotationSpeed));
     var scale = scaleValue * 200;
@@ -205,13 +205,13 @@ Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetN
 }
 
 // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
-Planet.prototype.rotateAllPlanets = function(scaleValue, speedValue) {
+Planet.prototype.rotateAllPlanets = function(scaleValue, speedValue, time) {
     var planetMesh;
     var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
 
     for (var i = 0; i < this.planetsMeshes.length; i++) {
         planetMesh = this.planetsMeshes[i];
-        this.rotatePlanetOnOrbit(planetMesh, i, planetNames[i], this.planetsNamesOnScene[i], scaleValue, speedValue);
+        this.rotatePlanetOnOrbit(planetMesh, i, planetNames[i], this.planetsNamesOnScene[i], scaleValue, speedValue, time);
     }
 }
 
@@ -224,13 +224,13 @@ Planet.prototype.positionPlanetRangesliderZoomIn = function(planetMesh, planetNa
 
     dataOfCurrentPlanetJSON.then(function(result) {
         if (planetName == "Uranus") {
-            halfSizeOfUranus = result[planetName]["planetSize"] * scale / 2;
+            halfSizeOfUranus = result[planetName]["planetSize"] * scaleValue;
         } else { halfSizeOfUranus = 0; }
 
         planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(betha + timestamp)) + halfSizeOfUranus;
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp - betha)) + halfSizeOfUranus;
         planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale *
-            Math.sin(betha + timestamp));
+            Math.sin(timestamp - betha));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
             planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scale + 1;
@@ -241,7 +241,7 @@ Planet.prototype.positionPlanetRangesliderZoomIn = function(planetMesh, planetNa
 
 Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetName, planetNameOnScene, scaleValue, betha, timestamp) {
     // The same scale as in class Orbits
-    var scale = (-1 * scaleValue) / 0.5;
+    var scale = -2 * scaleValue;
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
     var halfSizeOfUranus = 0;
 
@@ -254,9 +254,9 @@ Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetN
         }
 
         planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(betha + timestamp)) - halfSizeOfUranus;
-        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] *
-            scale * Math.sin(betha + timestamp));
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp - betha)) - halfSizeOfUranus;
+        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale *
+            Math.sin(timestamp - betha));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
             planetNameOnScene.position.x = planetMesh.position.x + 1;
@@ -271,8 +271,8 @@ Planet.prototype.positionPlanetToOriginalPosition = function(planetMesh, planetN
     // "dataOfCurrentPlanetJSON" is equal to Promise, we need data from the Promise
     dataOfCurrentPlanetJSON.then(function(result) {
         planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * Math.cos(betha + timestamp));
-        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * Math.sin(betha + timestamp));
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * Math.cos(timestamp));
+        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * Math.sin(timestamp));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
             planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] + 1;
