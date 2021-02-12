@@ -8,6 +8,7 @@ class Planet {
         this.planetSizes = [];
         this.betha = 0;
         this.timestamp = 0;
+        //this.speedValueChanger = 1;
 
         this.jsonManager = new JSONManager();
         this.addAllPlanetDataJSON();
@@ -44,6 +45,9 @@ class Planet {
     getScaleValue = function() { return this.scaleValueScene; }
     getPlanetData = function() { return this.allPlanetDataJSON; }
     getPlanetsNamesOnScene = function() { return this.planetsNamesOnScene; }
+        // getRotationSpeedValue = function() { return this.speedValueChanger; }
+        // setRotationSpeedValue = function(value) { this.speedValueChanger += value; }
+        // resetRotationSpeedValue = function() { this.speedValueChanger = 1; }
 }
 
 
@@ -177,6 +181,7 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
 // -------------------------------------------------------------------------
 Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue, time) {
     var rotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
+    //window.setTimeout(this.timeOutForSpeedCalculation(speedValue), 10000);
 
     if (speedValue == 0) {
         this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * time);
@@ -187,6 +192,13 @@ Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue, time
     }
     return this.timestamp;
 }
+
+// Planet.prototype.timeOutForSpeedCalculation = function(speedValue) {
+//     if (this.getRotationSpeedValue() < speedValue && speedValue > 1) {
+//         this.setRotationSpeedValue(0.5);
+//         console.log(this.getRotationSpeedValue());
+//     }
+// }
 
 Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetName, planetNameOnScene, scaleValue, speedValue, time) {
     var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue, time);
