@@ -14,7 +14,7 @@ class MainScene {
         this.moonObject.initializeMoons();
         this.sunObject = new Sun(this.scene);
         this.sunObject.initializeSun();
-        this.raycaster = new PickHelper();
+        this.raycaster = new RayCaster(this.camera);
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
@@ -113,6 +113,9 @@ class MainScene {
         this.onKeyDown();
         this.zoomRangeslider(time);
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
+
+        window.addEventListener('mousemove', this.raycaster.onMouseMove, false);
+        //this.raycaster.render();
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
