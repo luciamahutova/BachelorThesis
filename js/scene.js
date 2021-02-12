@@ -114,7 +114,7 @@ class MainScene {
         this.zoomRangeslider(time);
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
-        window.addEventListener('mousemove', this.raycaster.onMouseMove, false);
+        window.addEventListener('click', this.raycaster.onMouseMove, false);
         //this.raycaster.render();
 
         this.bgMesh.material.depthTest = false;
