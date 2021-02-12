@@ -80,12 +80,21 @@ Planet.prototype.createPlanetsMesh = function(scene, planetsObjects) {
 
     this.planetsMeshes.push(this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
+    this.addNamesToPlanetMeshes();
     this.addMeshToScene(scene);
 }
 
 Planet.prototype.addMeshToScene = function(scene) {
     for (var i = 0; i < this.planetsMeshes.length; i++) {
         scene.add(this.planetsMeshes[i]);
+    }
+}
+
+Planet.prototype.addNamesToPlanetMeshes = function() {
+    var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+
+    for (i = 0; i < planetNames.length; i++) {
+        (this.planetsMeshes[i]).name = planetNames[i];
     }
 }
 

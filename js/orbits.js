@@ -36,6 +36,7 @@ Orbits.prototype.createCurveForOrbit = function(planetName, orbits, scene) {
         material = new THREE.LineBasicMaterial({ color: 0xffffff });
         ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
+        ellipse.name = planetName;
         orbits.push(ellipse);
         scene.add(ellipse);
     });
