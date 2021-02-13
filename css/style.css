@@ -182,7 +182,8 @@ header img {
 }
 
 #sidebarPlanetInfo {
-    left: 40px;
+    left: -300px;
+    transition: 0.6s;
 }
 
 #sidebarRight {

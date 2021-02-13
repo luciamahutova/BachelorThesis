@@ -1,6 +1,7 @@
 class SidebarManager {
     constructor(planetsNamesOnScene, scene, orbits) {
         this.isSidebarOpen = true;
+        this.isLeftSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;
         this.planetsNamesOnScene = planetsNamesOnScene;
@@ -24,9 +25,11 @@ class SidebarManager {
     }
 
     hideSidebarToLeft = function() {
+        this.isLeftSidebarOpen = false;
         document.getElementById("sidebarPlanetInfo").style.left = "-300px";
-        // Call in the 1st sidebar will be: onclick="sidebarManager.hideSidebarToLeft()"
     }
+
+    //getIsLeftSidebarOpen = function() { return this.isLeftSidebarOpen; }
 
 
     // Functions for play/pause the application

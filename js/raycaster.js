@@ -6,6 +6,7 @@ class RayCaster {
         // this.raycaster = new THREE.Raycaster();
         // this.mouse = new THREE.Vector2(0, 0);
         this.camera = camera;
+        this.isLeftSidebarOpen = false;
     }
 
     onMouseMove = function(event) {
@@ -21,6 +22,10 @@ class RayCaster {
         var intersects = raycaster.intersectObjects(scene.children);
         for (let i = 0; i < intersects.length; i++) {
             intersects[i].object.material.color.set(0xff0000);
+            //if (this.isLeftSidebarOpen = false) {
+            document.getElementById("sidebarPlanetInfo").style.left = "40px";
+            //document.getElementById("sidebarPlanetInfo").style.visibility = "visible";
+            //}
         }
     }
 }
