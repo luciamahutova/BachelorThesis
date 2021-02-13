@@ -84,10 +84,6 @@ class MainScene {
     }
 
     // Movement of the scene by keyboard (4 arrows and Esc) + center the scene back
-    onKeyDown = function() {
-        window.addEventListener('keydown', this.moveSceneOnPressedArrow);
-    }
-
     moveSceneOnPressedArrow = function(e) {
         // Movement in opposite direction - seems more natural
         var moveSceneByValue = 10;
@@ -108,13 +104,16 @@ class MainScene {
         scene.position.set(0, 0, 0);
     }
 
+    addEventListenerFunctions = function() {
+        window.addEventListener('keydown', this.moveSceneOnPressedArrow);
+        window.addEventListener('click', this.raycaster.onMouseMove, false);
+    }
+
     // Animate function: called in app.js 
     animate = function(time) {
-        this.onKeyDown();
+        this.addEventListenerFunctions();
         this.zoomRangeslider(time);
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
-
-        window.addEventListener('click', this.raycaster.onMouseMove, false);
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
