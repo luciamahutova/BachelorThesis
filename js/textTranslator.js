@@ -28,10 +28,11 @@ let arrLang = {
         // Sidebar - planet physical info
         'physicalValues': 'Fyzikální vlastnosti ',
         'planetWeight': 'Hmotnost planety:',
-        'equatorPerimeter': 'Obvod rovníku:',
+        'perimeter': 'Obvod planety:',
         'currentRotation': 'Aktuální rychlost rotace (dráha):',
         'orbitAroundSun': 'Oběžná doba kolem Slunce:',
         'orbitAroundAxis': 'Oběžná doba kolem své osy:',
+        'distanceFromSun': 'Vzdálenost od Slunce:',
         // Rangesliders
         'rotation': 'Rotace: ',
         'zoom': 'Přiblížení: ',
@@ -100,10 +101,11 @@ let arrLang = {
         // Sidebar - planet physical info
         'physicalValues': 'Physical values of ',
         'planetWeight': 'Weight of planet:',
-        'equatorPerimeter': 'Equatorial perimeter:',
+        'perimeter': 'Perimeter of planet:',
         'currentRotation': 'Current rotation speed (orbit):',
         'orbitAroundSun': 'Orbit time around the Sun:',
         'orbitAroundAxis': 'Orbit time around its axis:',
+        'distanceFromSun': 'Distance from Sun:',
         // Rangesliders
         'rotation': 'Rotation: ',
         'zoom': 'Zoom: ',
@@ -171,10 +173,11 @@ let arrLang = {
         // Sidebar - planet physical info
         'physicalValues': 'Fyzikálne vlastnosti ',
         'planetWeight': 'Hmotnosť planéty:',
-        'equatorPerimeter': 'Obvod rovníka:',
+        'perimeter': 'Obvod planéty:',
         'currentRotation': 'Aktuálna rýchlosť rotácie (dráha):',
         'orbitAroundSun': 'Čas obehu okolo Slnka:',
         'orbitAroundAxis': 'Čas obehu okolo svojej osi:',
+        'distanceFromSun': 'Vzdialenosť od Slnka:',
         // Rangesliders
         'rotation': 'Rotácia: ',
         'zoom': 'Priblíženie: ',
