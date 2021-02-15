@@ -1,5 +1,5 @@
 class Planet {
-    constructor(scene, camera) {
+    constructor(scene) {
         this.scene = scene;
         this.planetsObjects = [];
         this.planetsMeshes = [];
@@ -14,7 +14,6 @@ class Planet {
         this.addAllPlanetDataJSON();
 
         this.orbitClass = new Orbits(scene, this.allPlanetDataJSON, this.planetsMeshes);
-        this.raycaster = new RayCaster(camera);
     }
 
     createPlanetObject = function(diameter) {

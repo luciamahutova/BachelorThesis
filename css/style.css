@@ -239,6 +239,10 @@ header img {
     border-color: #BABABA;
 }
 
+.sidebars h3:first-of-type {
+    float: left;
+}
+
 
 /* Inputs in Sidebar *********************/
 

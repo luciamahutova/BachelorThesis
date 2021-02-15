@@ -1,27 +1,32 @@
 // This class is for detecting clicked objects in scene
 // Basic code is used from: https://threejs.org/docs/index.html#api/en/core/Raycaster
 
-class RayCaster {
+class RayCaster extends Planet {
     constructor(camera) {
+        super();
         this.camera = camera;
+        window.myParam = this.getPlanetData();
     }
 
     onMouseMove = function(event) {
         var mouse = new THREE.Vector2(0, 0);
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        // console.log("X: " + mouse.x);
-        // console.log("Y: " + mouse.y);
 
         var raycaster = new THREE.Raycaster();
         raycaster.setFromCamera(mouse, this.camera);
 
         var intersects = raycaster.intersectObjects(scene.children);
-        for (let i = 0; i < intersects.length; i++) {
-            intersects[i].object.material.color.set(0xff0000);
+        if (intersects.length > 0) {
             document.getElementById("sidebarPlanetInfo").style.left = "40px";
+            document.getElementById("nameOfChosenPlanet").textContent = intersects[0].object.name; // ZATIAL LEN PO ANGLICKY
+            //intersects[0].object.material.color.set(0xff0000);
+            //this.getPlanetPhysicalValueFromJSON(intersects); // NEBERIE AKO FUNKCIU
         }
 
+
+
+        // POTREBNE PREROBIT NASTAVOVANIE HODNÔT DO TABULKY
         // Planet info: Weight, diameter, perimeter, current rotation, orbital velocity around Sun, distance from Sun
         var mercuryValues = ["0.330 × 10^24 kg", "4 879 km", "15 329 km", "?", "47.4 km/s", "57.9 × 10^6 km"];
         var venusValues = ["4.87 × 10^24 kg", "12 104 km", "38 025 km", "?", "35.0 km/s", "108.2 × 10^6 km"];
@@ -91,6 +96,20 @@ class RayCaster {
                 document.getElementById("distanceFromSunInput").value = neptuneValues[5];
             }
         }
+    }
 
+    // OPRAVIT ABY FUNGOVALO ZAVOLANIE
+    getPlanetPhysicalValueFromJSON = function(intersects) {
+        if (intersects.length > 0) {
+            var dataOfCurrentPlanetJSON = window.myParam;
+            dataOfCurrentPlanetJSON.then(function(result) {
+                document.getElementById("planetWeightInput").value = result[intersects[0].object.name]["weight"];
+                document.getElementById("diameterInput").value = result[intersects[0].object.name]["diameter"];
+                document.getElementById("perimeterInput").value = result[intersects[0].object.name]["perimeter"];
+                document.getElementById("currentRotationInput").value = result[intersects[0].object.name]["currentRotationSpeed"];
+                document.getElementById("orbitAroundSunInput").value = result[intersects[0].object.name]["orbitalVelocityAroundSun"];
+                document.getElementById("distanceFromSunInput").value = result[intersects[0].object.name]["distanceFromSun"];
+            });
+        }
     }
 }

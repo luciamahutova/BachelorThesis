@@ -8,12 +8,15 @@ class MainScene {
         this.bgCamera = this.createBgCamera();
         this.setLights();
 
-        this.planetObject = new Planet(this.scene, this.camera);
+        this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
         this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes(), this.planetObject.getPlanetData());
         this.moonObject.initializeMoons();
         this.sunObject = new Sun(this.scene);
         this.sunObject.initializeSun();
+
+        this.raycaster = new RayCaster(this.camera);
+
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
@@ -105,7 +108,7 @@ class MainScene {
 
     addEventListenerFunctions = function() {
         window.addEventListener('keydown', this.moveSceneOnPressedArrow);
-        window.addEventListener('click', this.planetObject.raycaster.onMouseMove, false);
+        window.addEventListener('click', this.raycaster.onMouseMove);
     }
 
     // Animate function: called in app.js 
