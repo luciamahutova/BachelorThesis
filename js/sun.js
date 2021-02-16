@@ -7,6 +7,7 @@ class Sun extends Planet {
     createSun = function() {
         this.sun = this.createPlanetObject(4); // size
         this.sunMesh = this.createMesh(this.sun, '/images/textures/sunTexture2k.jpg');
+        this.sunMesh.name = "Sun";
         this.scene.add(this.sunMesh);
     }
 
