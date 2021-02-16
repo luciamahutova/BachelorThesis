@@ -27,9 +27,20 @@ class SidebarManager {
     hideSidebarToLeft = function() {
         this.isLeftSidebarOpen = false;
         document.getElementById("sidebarPlanetInfo").style.left = "-300px";
-    }
 
-    //getIsLeftSidebarOpen = function() { return this.isLeftSidebarOpen; }
+        // "window.myParam" - from raycaster.js, represents the last clicked planet/orbit = for clearing the colour
+        if (window.myParam != undefined) {
+            var clearObjectColor = window.myParam;
+            clearObjectColor[0].object.material.color.set(0xffffff);
+            var indexOfClickedObject = clearObjectColor[0].object.parent.children.indexOf(clearObjectColor[0].object);
+
+            if (clearObjectColor[0].object.type == "Mesh") {
+                clearObjectColor[0].object.parent.children[indexOfClickedObject + 10].material.color.set(0xffffff);
+            } else if (clearObjectColor[0].object.type == "Line") {
+                clearObjectColor[0].object.parent.children[indexOfClickedObject - 10].material.color.set(0xffffff);
+            }
+        }
+    }
 
 
     // Functions for play/pause the application

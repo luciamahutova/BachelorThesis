@@ -18,8 +18,29 @@ class RayCaster extends Planet {
         var intersects = raycaster.intersectObjects(scene.children);
         if (intersects.length > 0 && intersects[0].object.name != "Sun") {
             document.getElementById("sidebarPlanetInfo").style.left = "40px";
-            document.getElementById("nameOfChosenPlanet").textContent = intersects[0].object.name; // ZATIAL LEN PO ANGLICKY
-            //intersects[0].object.material.color.set(0xff0000);
+
+            // Clear the last coloured planet/orbit, using "window.myParam"
+            if (window.myParam != undefined) {
+                var clearObjectColor = window.myParam;
+                clearObjectColor[0].object.material.color.set(0xffffff);
+                var indexOfClickedObject = clearObjectColor[0].object.parent.children.indexOf(clearObjectColor[0].object);
+
+                if (clearObjectColor[0].object.type == "Mesh") {
+                    clearObjectColor[0].object.parent.children[indexOfClickedObject + 10].material.color.set(0xffffff);
+                } else if (clearObjectColor[0].object.type == "Line") {
+                    clearObjectColor[0].object.parent.children[indexOfClickedObject - 10].material.color.set(0xffffff);
+                }
+            }
+
+            // Colour clicked object (planet and orbit)
+            intersects[0].object.material.color.set(0x792128);
+            var indexOfClickedObject = intersects[0].object.parent.children.indexOf(intersects[0].object);
+            if (intersects[0].object.type == "Mesh") {
+                intersects[0].object.parent.children[indexOfClickedObject + 10].material.color.set(0x792128);
+            } else if (intersects[0].object.type == "Line") {
+                intersects[0].object.parent.children[indexOfClickedObject - 10].material.color.set(0x792128);
+            }
+            // Save the last clicked object, used for colouring back and for getting info from JSON
             window.myParam = intersects;
         }
     }
