@@ -26,7 +26,7 @@ let arrLang = {
         'neptune': 'Neptun',
         'confirm': 'Potvrdit',
         // Sidebar - planet physical info
-        'physicalValues': 'Fyzikální vlastnosti ',
+        'physicalValues': 'Fyzikální vlastnosti:  ',
         'planetWeight': 'Hmotnost planety:',
         'perimeter': 'Obvod planety:',
         'currentRotation': 'Aktuální rychlost rotace (dráha):',
@@ -99,7 +99,7 @@ let arrLang = {
         'neptune': 'Neptune',
         'confirm': 'Confirm',
         // Sidebar - planet physical info
-        'physicalValues': 'Physical values of ',
+        'physicalValues': 'Physical values of: ',
         'planetWeight': 'Weight of planet:',
         'perimeter': 'Perimeter of planet:',
         'currentRotation': 'Current rotation speed (orbit):',
@@ -171,7 +171,7 @@ let arrLang = {
         'neptune': 'Neptún',
         'confirm': 'Potvrdiť',
         // Sidebar - planet physical info
-        'physicalValues': 'Fyzikálne vlastnosti ',
+        'physicalValues': 'Fyzikálne vlastnosti: ',
         'planetWeight': 'Hmotnosť planéty:',
         'perimeter': 'Obvod planéty:',
         'currentRotation': 'Aktuálna rýchlosť rotácie (dráha):',

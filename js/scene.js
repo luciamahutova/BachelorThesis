@@ -14,9 +14,7 @@ class MainScene {
         this.moonObject.initializeMoons();
         this.sunObject = new Sun(this.scene);
         this.sunObject.initializeSun();
-
         this.raycaster = new RayCaster(this.camera);
-
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
@@ -114,7 +112,9 @@ class MainScene {
     // Animate function: called in app.js 
     animate = function(time) {
         this.addEventListenerFunctions();
-        this.zoomRangeslider(time);
+        this.raycaster.getPlanetPhysicalValuesFromJSON(this.planetObject.getPlanetData());
+
+        this.zoomAndSpeedRangesliders(time);
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
         this.bgMesh.material.depthTest = false;
@@ -126,7 +126,7 @@ class MainScene {
 
 // Zooming in/out (for planets and orbits) + movement of the scene
 // -------------------------------------------------------------------------
-MainScene.prototype.zoomRangeslider = function(time) {
+MainScene.prototype.zoomAndSpeedRangesliders = function(time) {
     var zoomSlider = document.getElementById("rangesliderZoomInput");
     var zoomSliderValue = document.getElementById("rangesliderZoomValue");
     var speedSlider = document.getElementById("rangesliderSpeedInput");
