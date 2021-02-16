@@ -239,8 +239,9 @@ header img {
     border-color: #BABABA;
 }
 
-.sidebars h3:first-of-type {
+#sidebarPlanetInfo h3:first-of-type {
     float: left;
+    margin-right: 10px;
 }
 
 
