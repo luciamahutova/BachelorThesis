@@ -28,10 +28,11 @@ let arrLang = {
         // Sidebar - planet physical info
         'physicalValues': 'Fyzikální vlastnosti',
         'planetWeight': 'Hmotnost planety:',
-        'perimeter': 'Obvod planety:',
-        'currentRotation': 'Aktuální rychlost rotace (dráha):',
-        'orbitAroundSun': 'Oběžná doba kolem Slunce:',
-        'orbitAroundAxis': 'Oběžná doba kolem své osy:',
+        'diameter': 'Rovníkový poloměr (km):',
+        'perimeter': 'Obvod planety (km):',
+        'currentRotation': 'Aktuální rotace na orbitě (km/s):',
+        'rotationPeriod': 'Oběžná doba kolem své osy (hod): ',
+        'orbitalPeriod': 'Oběžná doba kolem Slunce (dny): ',
         'distanceFromSun': 'Vzdálenost od Slunce:',
         // Rangesliders
         'rotation': 'Rotace: ',
@@ -39,7 +40,6 @@ let arrLang = {
         'centerModel': 'Vycentrovat',
         // Planets
         'backToPlanets': 'Zpátky na planety',
-        'diameter': 'Rovníkový poloměr:',
         'mass': 'Hmotnost:',
         'earths': 'Zemí',
         'moons': 'Měsíce:',
@@ -101,10 +101,11 @@ let arrLang = {
         // Sidebar - planet physical info
         'physicalValues': 'Physical values of',
         'planetWeight': 'Weight of planet:',
-        'perimeter': 'Perimeter of planet:',
-        'currentRotation': 'Current rotation speed (orbit):',
-        'orbitAroundSun': 'Orbit time around the Sun:',
-        'orbitAroundAxis': 'Orbit time around its axis:',
+        'diameter': 'Equatorial diameter (km):',
+        'perimeter': 'Perimeter of planet (km):',
+        'currentRotation': 'Current rotation on orbit (km/s):',
+        'rotationPeriod': 'Rotation time around its axis (h): ',
+        'orbitalPeriod': 'Orbital time around the Sun (days): ',
         'distanceFromSun': 'Distance from Sun:',
         // Rangesliders
         'rotation': 'Rotation: ',
@@ -112,7 +113,6 @@ let arrLang = {
         'centerModel': 'Center model',
         // Planets
         'backToPlanets': 'Back to planets',
-        'diameter': 'Equatorial diameter:',
         'mass': 'Mass:',
         'earths': 'Earths',
         'moons': 'Moons:',
@@ -173,10 +173,11 @@ let arrLang = {
         // Sidebar - planet physical info
         'physicalValues': 'Fyzikálne vlastnosti',
         'planetWeight': 'Hmotnosť planéty:',
-        'perimeter': 'Obvod planéty:',
-        'currentRotation': 'Aktuálna rýchlosť rotácie (dráha):',
-        'orbitAroundSun': 'Čas obehu okolo Slnka:',
-        'orbitAroundAxis': 'Čas obehu okolo svojej osi:',
+        'diameter': 'Rovníkový polomer (km):',
+        'perimeter': 'Obvod planéty (km):',
+        'currentRotation': 'Aktuálna rotácia na orbite (km/s):',
+        'rotationPeriod': 'Čas obehu okolo svojej osi (hod): ',
+        'orbitalPeriod': 'Čas obehu okolo Slnka (dni): ',
         'distanceFromSun': 'Vzdialenosť od Slnka:',
         // Rangesliders
         'rotation': 'Rotácia: ',
@@ -184,7 +185,6 @@ let arrLang = {
         'centerModel': 'Vycentrovať',
         // Planets
         'backToPlanets': 'Späť na planéty',
-        'diameter': 'Rovníkový polomer:',
         'mass': 'Hmotnosť:',
         'earths': 'Zemí',
         'moons': 'Mesiace:',

@@ -184,6 +184,7 @@ header img {
 #sidebarPlanetInfo {
     left: -300px;
     transition: 0.6s;
+    width: 285px;
 }
 
 #sidebarRight {
@@ -243,7 +244,7 @@ header img {
 /* Inputs in Sidebar *********************/
 
 .sidebars input[type="text"] {
-    width: 110px;
+    width: 115px;
     position: relative;
     float: right;
     margin-right: 15px;
