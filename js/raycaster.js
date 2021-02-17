@@ -60,15 +60,15 @@ class RayCaster extends Planet {
                 document.getElementById("planetWeightInput").value = result[intersects[0].object.name]["weight"];
                 document.getElementById("diameterInput").value = result[intersects[0].object.name]["diameter"];
                 document.getElementById("perimeterInput").value = result[intersects[0].object.name]["perimeter"];
-                document.getElementById("currentRotationInput").value = result[intersects[0].object.name]["currentRotationSpeed"];
+                document.getElementById("rotationSpeedInput").value = result[intersects[0].object.name]["rotationSpeed"];
                 document.getElementById("rotationPeriodInput").value = result[intersects[0].object.name]["rotationPeriod"];
                 document.getElementById("orbitalPeriodInput").value = result[intersects[0].object.name]["orbitalPeriod"];
                 document.getElementById("distanceFromSunInput").value = result[intersects[0].object.name]["distanceFromSun"];
             });
-            this.setCurrentSpeedOfClickedPlanet();
         }
     }
 
+    // NEPOUZITE
     setCurrentSpeedOfClickedPlanet = function() {
         var speedSlider = document.getElementById("rangesliderSpeedInput");
         var speedSliderValue = document.getElementById("rangesliderSpeedValue");
