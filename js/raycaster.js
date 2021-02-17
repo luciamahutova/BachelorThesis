@@ -61,9 +61,30 @@ class RayCaster extends Planet {
                 document.getElementById("diameterInput").value = result[intersects[0].object.name]["diameter"];
                 document.getElementById("perimeterInput").value = result[intersects[0].object.name]["perimeter"];
                 document.getElementById("currentRotationInput").value = result[intersects[0].object.name]["currentRotationSpeed"];
-                document.getElementById("orbitAroundSunInput").value = result[intersects[0].object.name]["orbitalVelocityAroundSun"];
+                document.getElementById("rotationPeriodInput").value = result[intersects[0].object.name]["rotationPeriod"];
+                document.getElementById("orbitalPeriodInput").value = result[intersects[0].object.name]["orbitalPeriod"];
                 document.getElementById("distanceFromSunInput").value = result[intersects[0].object.name]["distanceFromSun"];
             });
+            this.setCurrentSpeedOfClickedPlanet();
         }
+    }
+
+    setCurrentSpeedOfClickedPlanet = function() {
+        var speedSlider = document.getElementById("rangesliderSpeedInput");
+        var speedSliderValue = document.getElementById("rangesliderSpeedValue");
+        var currentSpeedOfPlanet = document.getElementById("currentRotationInput").value;
+
+        speedSliderValue.innerHTML = speedSlider.value;
+        var speedValue = speedSliderValue.innerHTML;
+        //console.log(speedValue);
+
+        if (speedValue > 0) {
+            currentSpeedOfPlanet = currentSpeedOfPlanet * speedValue;
+        } else if (speedValue < 0) {
+            currentSpeedOfPlanet = currentSpeedOfPlanet / Math.abs(speedValue);
+        }
+        //console.log(currentSpeedOfPlanet);
+        // HODNOTA DOBRÁ, ALE NEVYPÍŠE SA DO TABUĽKY, PREČO?
+        document.getElementById("currentRotationInput").value = currentSpeedOfPlanet;
     }
 }
