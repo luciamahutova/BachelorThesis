@@ -31,13 +31,21 @@ class SidebarManager {
         // "window.myParam" - from raycaster.js, represents the last clicked planet/orbit = for clearing the colour
         if (window.myParam != undefined) {
             var clearObjectColor = window.myParam;
+            var moveAbout = 0; // Difference between Mesh (planet) and Line (orbit) in scene.children
+
+            if (clearObjectColor[0].object.parent.children[12].type == "Line") {
+                moveAbout = 10;
+            } else if (clearObjectColor[0].object.parent.children[20].type == "Line") {
+                moveAbout = 18;
+            }
+
             clearObjectColor[0].object.material.color.set(0xffffff);
             var indexOfClickedObject = clearObjectColor[0].object.parent.children.indexOf(clearObjectColor[0].object);
 
             if (clearObjectColor[0].object.type == "Mesh") {
-                clearObjectColor[0].object.parent.children[indexOfClickedObject + 10].material.color.set(0xffffff);
+                clearObjectColor[0].object.parent.children[indexOfClickedObject + moveAbout].material.color.set(0xffffff);
             } else if (clearObjectColor[0].object.type == "Line") {
-                clearObjectColor[0].object.parent.children[indexOfClickedObject - 10].material.color.set(0xffffff);
+                clearObjectColor[0].object.parent.children[indexOfClickedObject - moveAbout].material.color.set(0xffffff);
             }
         }
     }
@@ -89,6 +97,7 @@ class SidebarManager {
 // Sidebar - Confirm button 
 // -------------------------------------------------------------------------
 SidebarManager.prototype.confirmButtonBehavior = function() {
+    // Cannot add/remove names or orbits in for-cycle, planets will jump to different position
     this.showHideAllNamesOfPlanetsOnScene();
     this.showHideSingleNameOfPlanetOnScene();
     this.showHideAllPlanetOrbitsOnScene();
@@ -99,13 +108,23 @@ SidebarManager.prototype.confirmButtonBehavior = function() {
 // -------------------------------------------------------------------------
 SidebarManager.prototype.showHideAllNamesOfPlanetsOnScene = function() {
     if (document.getElementById("allPlanetNamesChecked").checked == true) {
-        for (i = 0; i < 8; i++) {
-            this.scene.add(this.planetsNamesOnScene[i]);
-        }
+        this.scene.add(this.planetsNamesOnScene[0]);
+        this.scene.add(this.planetsNamesOnScene[1]);
+        this.scene.add(this.planetsNamesOnScene[2]);
+        this.scene.add(this.planetsNamesOnScene[3]);
+        this.scene.add(this.planetsNamesOnScene[4]);
+        this.scene.add(this.planetsNamesOnScene[5]);
+        this.scene.add(this.planetsNamesOnScene[6]);
+        this.scene.add(this.planetsNamesOnScene[7]);
     } else if (document.getElementById("allPlanetNamesChecked").checked == false) {
-        for (i = 0; i < 8; i++) {
-            this.scene.remove(this.planetsNamesOnScene[i]);
-        }
+        this.scene.remove(this.planetsNamesOnScene[0]);
+        this.scene.remove(this.planetsNamesOnScene[1]);
+        this.scene.remove(this.planetsNamesOnScene[2]);
+        this.scene.remove(this.planetsNamesOnScene[3]);
+        this.scene.remove(this.planetsNamesOnScene[4]);
+        this.scene.remove(this.planetsNamesOnScene[5]);
+        this.scene.remove(this.planetsNamesOnScene[6]);
+        this.scene.remove(this.planetsNamesOnScene[7]);
     }
 }
 
@@ -114,9 +133,14 @@ SidebarManager.prototype.showHideSingleNameOfPlanetOnScene = function() {
     var allPlanetNamesSelected = document.getElementById("allPlanetNamesChecked").checked;
     // -1 is for option with no planet name
     if (selectedElem.value != -1 && allPlanetNamesSelected == false) {
-        for (i = 0; i < 8; i++) {
-            this.scene.remove(this.planetsNamesOnScene[i]);
-        }
+        this.scene.remove(this.planetsNamesOnScene[0]);
+        this.scene.remove(this.planetsNamesOnScene[1]);
+        this.scene.remove(this.planetsNamesOnScene[2]);
+        this.scene.remove(this.planetsNamesOnScene[3]);
+        this.scene.remove(this.planetsNamesOnScene[4]);
+        this.scene.remove(this.planetsNamesOnScene[5]);
+        this.scene.remove(this.planetsNamesOnScene[6]);
+        this.scene.remove(this.planetsNamesOnScene[7]);
         this.scene.add(this.planetsNamesOnScene[selectedElem.value]);
     }
 }
@@ -125,13 +149,23 @@ SidebarManager.prototype.showHideSingleNameOfPlanetOnScene = function() {
 // -------------------------------------------------------------------------
 SidebarManager.prototype.showHideAllPlanetOrbitsOnScene = function() {
     if (document.getElementById("allPlanetOrbitsChecked").checked == true) {
-        for (i = 0; i < 8; i++) {
-            this.scene.add(this.orbits[i]);
-        }
+        this.scene.add(this.orbits[0]);
+        this.scene.add(this.orbits[1]);
+        this.scene.add(this.orbits[2]);
+        this.scene.add(this.orbits[3]);
+        this.scene.add(this.orbits[4]);
+        this.scene.add(this.orbits[5]);
+        this.scene.add(this.orbits[6]);
+        this.scene.add(this.orbits[7]);
     } else if (document.getElementById("allPlanetOrbitsChecked").checked == false) {
-        for (i = 0; i < 8; i++) {
-            this.scene.remove(this.orbits[i]);
-        }
+        this.scene.remove(this.orbits[0]);
+        this.scene.remove(this.orbits[1]);
+        this.scene.remove(this.orbits[2]);
+        this.scene.remove(this.orbits[3]);
+        this.scene.remove(this.orbits[4]);
+        this.scene.remove(this.orbits[5]);
+        this.scene.remove(this.orbits[6]);
+        this.scene.remove(this.orbits[7]);
     }
 }
 
@@ -140,9 +174,14 @@ SidebarManager.prototype.showHideSinglePlanetOrbitOnScene = function() {
     var allPlanetOrbitsSelected = document.getElementById("allPlanetOrbitsChecked").checked;
     // -1 is for option with no planet name
     if (selectedElem.value != -1 && allPlanetOrbitsSelected == false) {
-        for (i = 0; i < 8; i++) {
-            this.scene.remove(this.orbits[i]);
-        }
+        this.scene.remove(this.orbits[0]);
+        this.scene.remove(this.orbits[1]);
+        this.scene.remove(this.orbits[2]);
+        this.scene.remove(this.orbits[3]);
+        this.scene.remove(this.orbits[4]);
+        this.scene.remove(this.orbits[5]);
+        this.scene.remove(this.orbits[6]);
+        this.scene.remove(this.orbits[7]);
         this.scene.add(this.orbits[selectedElem.value]);
     }
 }
