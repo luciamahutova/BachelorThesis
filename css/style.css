@@ -243,7 +243,8 @@ header img {
 
 /* Inputs in Sidebar *********************/
 
-.sidebars input[type="text"] {
+.sidebars input[type="text"],
+.sidebars input[type="number"] {
     width: 115px;
     position: relative;
     float: right;
