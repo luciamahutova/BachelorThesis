@@ -132,11 +132,11 @@ class MainScene {
 
     // Event listener functions
     addEventListenerFunctions = function() {
-        window.addEventListener('keydown', this.moveSceneOnPressedArrow);
-        window.addEventListener('click', this.raycaster.onMouseMove);
-        window.addEventListener('mousedown', this.mouseDownEvent);
-        window.addEventListener('mousemove', this.mouseMoveEvent);
-        window.addEventListener('mouseup', this.mouseUpEvent);
+        window.addEventListener('keydown', this.moveSceneOnPressedArrow, false);
+        window.addEventListener('click', this.raycaster.onMouseMove, false);
+        window.addEventListener('mousedown', this.mouseDownEvent, false);
+        window.addEventListener('mousemove', this.mouseMoveEvent, false);
+        window.addEventListener('mouseup', this.mouseUpEvent, false);
     }
 
     // Animate function: called in app.js 
