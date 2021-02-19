@@ -21,10 +21,10 @@
                     <a href="simulationPage.html" class="lang" id="ssm"></a>
                 </li>
                 <li>
-                    <a href="planetsPage.html" class="lang" id="planets"></a>
+                    <a href="#" class="lang" id="planets" onclick="sidebarManager.openNewTabForPlanets()"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" id="about"></a>
+                    <a href="#" class="lang" id="about" onclick="openNewTabForInfo()"></a>
                 </li>
             </ul>
             <div id="languages">
@@ -181,6 +181,20 @@
     <script src="/js/sidebarManager.js "></script>
     <script src="/js/textTranslator.js "></script>
     <script src="/js/app.js"></script>
+
+    <script type='text/javascript'>
+        var count = playInterval = 0;
+
+        window.addEventListener('focus', function() {
+            playInterval = window.setInterval(count++, 1000);
+            sidebarManager.playApplicationOnActiveWindow();
+            closeNav();
+        });
+        window.addEventListener('blur', function() {
+            window.clearInterval(playInterval);
+            sidebarManager.pauseApplicationOnInactiveWindow();
+        });
+    </script>
 </body>
 
 </html>

@@ -50,8 +50,7 @@ class SidebarManager {
         }
     }
 
-
-    // Functions for play/pause the application
+    // Functions for play/pause the application (on click or for active/inactive window)
     // -------------------------------------------------------------------------
     pauseApplication = function() {
         // playButton, disabled at the beginning
@@ -69,6 +68,11 @@ class SidebarManager {
         }
     }
 
+    pauseApplicationOnInactiveWindow = function() {
+        cancelAnimationFrame(animationFrameOutput);
+        this.setIsAppRunning(false);
+    }
+
     playApplication = function() {
         var isRunning = this.getIsAppRunning();
         if (!isRunning) {
@@ -82,16 +86,27 @@ class SidebarManager {
         }
     }
 
+    playApplicationOnActiveWindow = function() {
+        animationFrameOutput = requestAnimationFrame(animate);
+        this.setIsAppRunning(true);
+        $('.pauseButton').prop('disabled', false);
+        $('.playButton').prop('disabled', true);
+    }
+
+    // Open new tab and Pause application
+    openNewTabForPlanets = function() {
+        window.open("planetsPage.html", '_blank');
+    }
+
+    // Get and Set functions
+    // -------------------------------------------------------------------------
     getIsAppRunning = function() { return this.isAppRunning; }
     setIsAppRunning = function(value) { this.isAppRunning = value; }
-
     getPauseTime = function() { return this.pauseTime; }
     setPauseTime = function(value) { this.pauseTime = value; }
     getPlayTime = function() { return this.playTime; }
     setPlayTime = function(value) { this.playTime = value; }
-    getPlayPauseTimeDifference = function() {
-        return this.playTime - this.getPauseTime();
-    }
+    getPlayPauseTimeDifference = function() { return this.playTime - this.getPauseTime(); }
 }
 
 // Sidebar - Confirm button 
@@ -209,4 +224,9 @@ function highlightChosenLanguage(id) {
     }
     document.getElementById(id).style.fontWeight = "bold";
     document.getElementById(id).style.color = "#ffffff";
+}
+
+
+function openNewTabForInfo() {
+    window.open("infoPage.html", '_blank');
 }
