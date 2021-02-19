@@ -93,9 +93,13 @@ class SidebarManager {
         $('.playButton').prop('disabled', true);
     }
 
-    // Open new tab and Pause application
+    // Open in new tab 
     openNewTabForPlanets = function() {
         window.open("planetsPage.html", '_blank');
+    }
+
+    openNewTabForInfo = function() {
+        window.open("infoPage.html", '_blank');
     }
 
     // Get and Set functions
@@ -224,9 +228,4 @@ function highlightChosenLanguage(id) {
     }
     document.getElementById(id).style.fontWeight = "bold";
     document.getElementById(id).style.color = "#ffffff";
-}
-
-
-function openNewTabForInfo() {
-    window.open("infoPage.html", '_blank');
 }
