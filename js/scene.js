@@ -18,6 +18,8 @@ class MainScene {
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
+        this.mouseDown = false; // Used for drag events
+        this.mousePositionX = this.mousePositionY = 0; // Used for drag events
     }
 
     initRenderer = function() {
@@ -104,9 +106,37 @@ class MainScene {
         scene.position.set(0, 0, 0);
     }
 
+    // Drag function for scene: https://uxdesign.cc/implementing-a-custom-drag-event-function-in-javascript-and-three-js-dc79ee545d85
+    mouseMoveEvent = function(event) {
+        if (this.mouseDown) {
+            var moveToX = event.clientX - this.mousePositionX;
+            var moveToY = event.clientY - this.mousePositionY;
+            this.mousePositionX = event.clientX;
+            this.mousePositionY = event.clientY;
+
+            // Move the scene
+            this.scene.position.x += moveToX / 10;
+            this.scene.position.z += moveToY / 10;
+        }
+    }
+
+    mouseDownEvent = function(event) {
+        this.mouseDown = true;
+        this.mousePositionX = event.clientX;
+        this.mousePositionY = event.clientY;
+    }
+
+    mouseUpEvent = function() {
+        this.mouseDown = false;
+    }
+
+    // Event listener functions
     addEventListenerFunctions = function() {
         window.addEventListener('keydown', this.moveSceneOnPressedArrow);
         window.addEventListener('click', this.raycaster.onMouseMove);
+        window.addEventListener('mousedown', this.mouseDownEvent);
+        window.addEventListener('mousemove', this.mouseMoveEvent);
+        window.addEventListener('mouseup', this.mouseUpEvent);
     }
 
     // Animate function: called in app.js 
@@ -116,7 +146,6 @@ class MainScene {
 
         this.zoomAndSpeedRangesliders(time);
         this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
-        this.dragSceneControls();
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
@@ -148,35 +177,4 @@ MainScene.prototype.zoomAndSpeedRangesliders = function(time) {
     }
     zoomSlider.addEventListener('input', updateRangesliderValues);
     updateRangesliderValues();
-}
-
-// Used from: https://uxdesign.cc/implementing-a-custom-drag-event-function-in-javascript-and-three-js-dc79ee545d85
-MainScene.prototype.dragSceneControls = function() {
-    var mouseDown = false;
-    var mouseX = mouseY = 0;
-
-    window.addEventListener('mousemove', function(evt) {
-        if (mouseDown) {
-            var deltaX = evt.clientX - mouseX,
-                deltaY = evt.clientY - mouseY;
-            mouseX = evt.clientX;
-            mouseY = evt.clientY;
-
-            // Move
-            scene.position.x += deltaX / 1500;
-            scene.position.z += deltaY / 1500;
-        }
-    }, false);
-
-    window.addEventListener('mousedown', function(evt) {
-        mouseDown = true;
-        mouseX = evt.clientX;
-        mouseY = evt.clientY;
-    }, false);
-
-    window.addEventListener('mouseup', function(evt) {
-        mouseDown = false;
-    }, false);
-
-
 }
