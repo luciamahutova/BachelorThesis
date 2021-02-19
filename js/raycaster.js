@@ -1,9 +1,8 @@
 // This class is for detecting clicked objects in scene
 // Basic code is used from: https://threejs.org/docs/index.html#api/en/core/Raycaster
 
-class RayCaster extends Planet {
+class RayCaster {
     constructor(camera) {
-        super();
         this.camera = camera;
     }
 
