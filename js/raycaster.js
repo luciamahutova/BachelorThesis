@@ -19,10 +19,10 @@ class RayCaster {
             document.getElementById("sidebarPlanetInfo").style.left = "40px";
 
             var moveAbout = 0; // Difference between Mesh (planet) and Line (orbit) in scene.children
-            if (intersects[0].object.parent.children[32].type == "Line") {
-                moveAbout = 30;
-            } else if (intersects[0].object.parent.children[40].type == "Line") {
-                moveAbout = 38;
+            if (intersects[0].object.parent.children[27].type == "Line") {
+                moveAbout = 25;
+            } else if (intersects[0].object.parent.children[35].type == "Line") {
+                moveAbout = 33;
             }
 
             // Clear the last coloured planet/orbit, using "window.myParam"

@@ -33,10 +33,10 @@ class SidebarManager {
             var clearObjectColor = window.myParam;
             var moveAbout = 0; // Difference between Mesh (planet) and Line (orbit) in scene.children
 
-            if (clearObjectColor[0].object.parent.children[32].type == "Line") {
-                moveAbout = 30;
-            } else if (clearObjectColor[0].object.parent.children[40].type == "Line") {
-                moveAbout = 38;
+            if (clearObjectColor[0].object.parent.children[27].type == "Line") {
+                moveAbout = 25;
+            } else if (clearObjectColor[0].object.parent.children[35].type == "Line") {
+                moveAbout = 33;
             }
 
             clearObjectColor[0].object.material.color.set(0xffffff);

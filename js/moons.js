@@ -29,20 +29,15 @@ class Moon extends Planet {
 Moon.prototype.createMoons = function() {
     var moonSizeAndParent = {
         "earthMoon": 0.2727,
-        "marsPhobos": 0.3, // 11.267km
-        "marsDeimos": 0.3, // 6.2 ± 0.18km
         "jupiterIo": 0.2859,
         "jupiterEuropa": 0.2450,
         "jupiterGanymede": 0.4135,
         "jupiterCallisto": 0.3783,
-        "saturnMimas": 0.3, // 198.2 ± 0.4km
-        "saturnEnceladus": 0.3, // 252.1 ± 0.2km
         "saturnTethys": 0.0834,
         "saturnDione": 0.0881,
         "saturnRhea": 0.1199,
         "saturnTitan": 0.4037,
         "saturnIapetus": 0.1153,
-        "uranusMiranda": 0.3, // 235.8 ± 0.7km
         "uranusAriel": 0.0909,
         "uranusUmbriel": 0.0918,
         "uranusTitania": 0.1237,
