@@ -21,8 +21,48 @@ class Moon extends Planet {
     }
 
     initializeMoons = function() {
-        this.createMoonForEarth();
+        this.createMoonForEarth(); //ODOBRAT PO PRIRADENI RODICOV, POVRCHOV A FUNKCIONALITY PRE OSTATNE MESIACE
+        this.createMoons();
     }
+}
+
+Moon.prototype.createMoons = function() {
+    var moonSizeAndParent = {
+        "earthMoon": 0.2727,
+        "marsPhobos": 0.3, // 11.267km
+        "marsDeimos": 0.3, // 6.2 ± 0.18km
+        "jupiterIo": 0.2859,
+        "jupiterEuropa": 0.2450,
+        "jupiterGanymede": 0.4135,
+        "jupiterCallisto": 0.3783,
+        "saturnMimas": 0.3, // 198.2 ± 0.4km
+        "saturnEnceladus": 0.3, // 252.1 ± 0.2km
+        "saturnTethys": 0.0834, // SMALL
+        "saturnDione": 0.0881, // SMALL
+        "saturnRhea": 0.1199,
+        "saturnTitan": 0.4037,
+        "saturnIapetus": 0.1153,
+        "uranusMiranda": 0.3, // 235.8 ± 0.7km
+        "uranusAriel": 0.0909, // SMALL
+        "uranusUmbriel": 0.0918, // SMALL
+        "uranusTitania": 0.1237,
+        "uranusOberon": 0.1195,
+        "neptuneTriton": 0.2124
+    };
+
+    var moon, moonMesh, property;
+    var material = new THREE.MeshBasicMaterial({ color: 0xBABABA });
+    for (i = 0; i < Object.keys(moonSizeAndParent).length; i++) {
+        property = Object.keys(moonSizeAndParent)[i];
+        moon = this.createPlanetObject(moonSizeAndParent[property]);
+        this.moonsObjects.push(moon);
+
+        moonMesh = new THREE.Mesh(this.moonsObjects[i], material);
+        moonMesh.name = property;
+        this.moonsMeshes.push(moonMesh);
+        moonMesh.position.x = 10 + i * 3;
+    }
+    this.addMeshToScene(this.scene, this.moonsMeshes);
 }
 
 
