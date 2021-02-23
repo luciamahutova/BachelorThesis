@@ -178,7 +178,7 @@
             "meanSurfaceTemperature": 220
         }],
         "Mars": [{
-                "moon": "Fobos",
+                "moon": "Phobos",
                 "diameter": 22.2,
                 "surfaceArea": 1548,
                 "semimajorAxis": 9377,
