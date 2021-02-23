@@ -173,7 +173,7 @@ header img {
 .sidebars {
     position: fixed;
     top: 160px;
-    width: 270px;
+    width: 285px;
     height: fit-content;
     border: none;
     border-radius: 5px 0;
@@ -184,7 +184,6 @@ header img {
 #sidebarPlanetInfo {
     left: -300px;
     transition: 0.6s;
-    width: 285px;
 }
 
 #sidebarRight {
