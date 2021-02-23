@@ -81,12 +81,12 @@ Planet.prototype.createPlanetsMesh = function(scene, planetsObjects) {
     this.planetsMeshes.push(this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
         this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
     this.addNamesToPlanetMeshes();
-    this.addMeshToScene(scene);
+    this.addMeshToScene(scene, this.planetsMeshes);
 }
 
-Planet.prototype.addMeshToScene = function(scene) {
-    for (var i = 0; i < this.planetsMeshes.length; i++) {
-        scene.add(this.planetsMeshes[i]);
+Planet.prototype.addMeshToScene = function(scene, planetsMeshes) {
+    for (var i = 0; i < planetsMeshes.length; i++) {
+        scene.add(planetsMeshes[i]);
     }
 }
 
@@ -201,13 +201,6 @@ Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue, time
     }
     return this.timestamp;
 }
-
-// Planet.prototype.timeOutForSpeedCalculation = function(speedValue) {
-//     if (this.getRotationSpeedValue() < speedValue && speedValue > 1) {
-//         this.setRotationSpeedValue(0.5);
-//         console.log(this.getRotationSpeedValue());
-//     }
-// }
 
 Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetName, planetNameOnScene, scaleValue, speedValue, time) {
     var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue, time);
