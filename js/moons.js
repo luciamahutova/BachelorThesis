@@ -37,14 +37,14 @@ Moon.prototype.createMoons = function() {
         "jupiterCallisto": 0.3783,
         "saturnMimas": 0.3, // 198.2 ± 0.4km
         "saturnEnceladus": 0.3, // 252.1 ± 0.2km
-        "saturnTethys": 0.0834, // SMALL
-        "saturnDione": 0.0881, // SMALL
+        "saturnTethys": 0.0834,
+        "saturnDione": 0.0881,
         "saturnRhea": 0.1199,
         "saturnTitan": 0.4037,
         "saturnIapetus": 0.1153,
         "uranusMiranda": 0.3, // 235.8 ± 0.7km
-        "uranusAriel": 0.0909, // SMALL
-        "uranusUmbriel": 0.0918, // SMALL
+        "uranusAriel": 0.0909,
+        "uranusUmbriel": 0.0918,
         "uranusTitania": 0.1237,
         "uranusOberon": 0.1195,
         "neptuneTriton": 0.2124
