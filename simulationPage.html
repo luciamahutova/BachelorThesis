@@ -124,6 +124,25 @@
             </section>
 
             <section>
+                <h3 class="lang" id="moonsTable"></h3>
+                <label>
+                    <span class="checkmark lang" id="allMoonsObjects"></span><input type="checkbox" checked id="allPlanetOrbitsChecked">
+                </label>
+                <span class="lang" id="allMoonsOfSinglePlanet"></span>
+                <select id="singleMoonNameSelected">     
+                    <option value="-1">-</option>      
+                    <option class="lang" id="mercury" value="0">Mercury</option>
+                    <option class="lang" id="venus" value="1">Venus</option>
+                    <option class="lang" id="earth" value="2">Earth</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Jupiter</option>
+                    <option value="5">Saturn</option>
+                    <option class="lang" id="uranus" value="6">Uranus</option>
+                    <option class="lang" id="neptune" value="7">Neptune</option>
+                </select>
+            </section>
+
+            <section>
                 <h3 class="lang" id="orbit"></h3>
                 <label>
                     <span class="checkmark lang" id="allPlanets"></span><input type="checkbox" checked id="allPlanetOrbitsChecked">
@@ -140,10 +159,28 @@
                     <option class="lang" id="uranus" value="6">Uranus</option>
                     <option class="lang" id="neptune" value="7">Neptune</option>
                 </select>
-
                 <label>
-                    <span class="checkmark lang" id="moonOrbit"></span><input type="checkbox">
+                    <span class="checkmark lang" id="allMoons"></span><input type="checkbox">
                 </label>
+                <span class="lang" id="singleMoon"></span>
+                <select id="singleMoonNameSelected">     
+                    <option value="-1">-</option>      
+                    <option class="lang" id="earthMoon" value="0"></option>
+                    <option id="jupiterIo" value="1">Io</option>
+                    <option id="jupiterEuropa" value="2">Europa</option>
+                    <option id="jupiterGanymede" value="3">Ganymede</option>
+                    <option id="jupiterCallisto" value="4">Callisto</option>
+                    <option id="saturnTethys" value="5">Tethys</option>
+                    <option id="saturnDione" value="6">Dione</option>
+                    <option id="saturnRhea" value="7">Rhea</option>
+                    <option id="saturnTitan" value="8">Titan</option>
+                    <option id="saturnIapetus" value="9">Iapetus</option>
+                    <option id="uranusAriel" value="10">Ariel</option>
+                    <option id="uranusUmbriel" value="11">Umbriel</option>
+                    <option id="uranusTitania" value="12">Titania</option>
+                    <option cid="uranusOberon" value="13">Oberon</option>
+                    <option id="neptuneTriton" value="14">Triton</option>
+                </select>
             </section>
 
             <section>
@@ -160,15 +197,8 @@
                     <option class="lang" id="uranus">Uranus</option>
                     <option class="lang" id="neptune">Neptune</option>
                 </select>
-
-                <label>
-                    <span class="checkmark lang" id="objectOrbit"></span><input type="checkbox">
-                </label>
                 <span class="lang" id="changeVelocity"></span><input type="text">
                 <span class="lang" id="changeForce"></span><input type="text">
-                <label>
-                    <span class="checkmark lang" id="originalValues"></span><input type="checkbox">
-                </label>
             </section>
 
             <button class="confirmChangesButton lang" type="submit" id="confirm" onclick="sidebarManager.confirmButtonBehavior()"></button>
