@@ -228,4 +228,5 @@ function highlightChosenLanguage(id) {
     }
     document.getElementById(id).style.fontWeight = "bold";
     document.getElementById(id).style.color = "#ffffff";
+    closeNav();
 }
