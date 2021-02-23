@@ -69,11 +69,48 @@
         <div>
             <section>
                 <h3 class="lang" id="names"></h3>
+                <!-- Planets' names -->
                 <label>
                     <span class="checkmark lang" id="allPlanets"></span><input type="checkbox" checked id="allPlanetNamesChecked">
                 </label>
                 <span class="lang" id="singlePlanet"></span>
                 <select id="singlePlanetNameSelected">     
+                    <option value="-1">-</option>      
+                    <option class="lang" id="mercury" value="0">Mercury</option>
+                    <option class="lang" id="venus" value="1">Venus</option>
+                    <option class="lang" id="earth" value="2">Earth</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Jupiter</option>
+                    <option value="5">Saturn</option>
+                    <option class="lang" id="uranus" value="6">Uranus</option>
+                    <option class="lang" id="neptune" value="7">Neptune</option>
+                </select>
+
+                <!-- Moons' names -->
+                <label>
+                    <span class="checkmark lang" id="allMoons"></span><input type="checkbox" checked id="allMoonNamesChecked">
+                </label>
+                <span class="lang" id="singleMoon"></span>
+                <select id="singleMoonNameSelected">     
+                    <option value="-1">-</option>      
+                    <option class="lang" id="earthMoon" value="0"></option>
+                    <option class="lang" id="jupiterIo" value="1"></option>
+                    <option class="lang" id="jupiterEuropa" value="2"></option>
+                    <option class="lang" id="jupiterGanymede" value="3"></option>
+                    <option class="lang" id="jupiterCallisto" value="4"></option>
+                    <option class="lang" id="saturnTethys" value="5"></option>
+                    <option class="lang" id="saturnDione" value="6"></option>
+                    <option class="lang" id="saturnRhea" value="7"></option>
+                    <option class="lang" id="saturnTitan" value="8"></option>
+                    <option class="lang" id="saturnIapetus" value="9"></option>
+                    <option class="lang" id="uranusAriel" value="10"></option>
+                    <option class="lang" id="uranusUmbriel" value="11"></option>
+                    <option class="lang" id="uranusTitania" value="12"></option>
+                    <option class="lang" id="uranusOberon" value="13"></option>
+                    <option class="lang" id="neptuneTriton" value="14"></option>
+                </select>
+                <span class="lang" id="allMoonsOfSinglePlanet"></span>
+                <select id="singleMoonNameSelected">     
                     <option value="-1">-</option>      
                     <option class="lang" id="mercury" value="0">Mercury</option>
                     <option class="lang" id="venus" value="1">Venus</option>
