@@ -9,20 +9,7 @@ class Moon extends Planet {
         this.allPlanetDataJSON = allPlanetDataJSON;
     }
 
-    createMoonForEarth = function() {
-        // PRE VIAC MESIACOV = UPRAVIT DO FUNCKII, LEN DOCASNE ROZLOZENIE
-        this.moon = this.createPlanetObject(0.124);
-        this.moonsObjects.push(this.moon);
-
-        this.moonMesh = this.createMesh(this.moonsObjects[0], '/images/textures/moonTexture2k.jpg');
-        this.moonsMeshes.push(this.moonMesh);
-
-        this.planetsMeshes[2].add(this.moonMesh); // Earth is parent of the Moon - for correct rotation
-        this.scene.add(this.moonMesh);
-    }
-
     initializeMoons = function() {
-        this.createMoonForEarth(); //ODOBRAT PO PRIRADENI RODICOV, POVRCHOV A FUNKCIONALITY PRE OSTATNE MESIACE
         this.createMoons();
         this.addNamesToMoonObject(this.moonsMeshes, this.moonsNamesOnScene, this.scene);
     }
@@ -64,7 +51,7 @@ Moon.prototype.createMoons = function() {
         moonMesh.position.x = 10 + i * 2;
     }
     // RODIČ NENASTAVENÝ, RODIČOM OSTÁVA Scene
-    //this.addParentToMoon(moonSizeAndParent, this.planetsMeshes, this.moonsMeshes);
+    this.addParentToMoon(moonSizeAndParent, this.planetsMeshes, this.moonsMeshes);
     this.addMeshToScene(this.scene, this.moonsMeshes);
 }
 

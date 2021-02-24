@@ -123,6 +123,7 @@ Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScen
 
             planetsNamesOnScene.push(textMesh);
             planetsMeshes[i].add(textMesh);
+            textMesh.position.x = 10 + i * 4; // LEN PRE DOČASNÉ ZOBRAZENIE
             scene.add(textMesh);
         }
     });

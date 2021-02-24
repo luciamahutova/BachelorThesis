@@ -120,8 +120,10 @@ SidebarManager.prototype.confirmButtonBehavior = function() {
     // Cannot add/remove names or orbits in for-cycle, planets will jump to different position
     this.showHideAllNamesOfPlanetsOnScene();
     this.showHideSingleNameOfPlanetOnScene();
+
     this.showHideAllNamesOfMoonsOnScene();
     this.showHideSingleNameOfMoonOnScene();
+
     this.showHideAllPlanetOrbitsOnScene();
     this.showHideSinglePlanetOrbitOnScene();
 }
@@ -173,7 +175,7 @@ SidebarManager.prototype.showHideAllNamesOfMoonsOnScene = function() {
 SidebarManager.prototype.showHideSingleNameOfMoonOnScene = function() {
     var selectedElem = document.getElementById("singleMoonNameSelected");
     var allMoonNamesSelected = document.getElementById("allMoonNamesChecked").checked;
-    // -1 is for option with no planet name
+
     if (selectedElem.value != -1 && allMoonNamesSelected == false) {
         this.scene.remove(this.moonsNamesOnScene[0], this.moonsNamesOnScene[1], this.moonsNamesOnScene[2],
             this.moonsNamesOnScene[3], this.moonsNamesOnScene[4], this.moonsNamesOnScene[5], this.moonsNamesOnScene[6],

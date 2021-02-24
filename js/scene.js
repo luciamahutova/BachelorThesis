@@ -145,7 +145,7 @@ class MainScene {
         this.raycaster.getPlanetPhysicalValuesFromJSON(this.planetObject.getPlanetData());
 
         this.zoomAndSpeedRangesliders(time);
-        this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
+        //this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
@@ -170,7 +170,7 @@ MainScene.prototype.zoomAndSpeedRangesliders = function(time) {
         this.speedValuePlanets = speedSliderValue.innerHTML;
 
         this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
-        this.moonObject.setScaleForMoons(this.scaleValueScene);
+        //this.moonObject.setScaleForMoons(this.scaleValueScene);
         this.sunObject.setScaleForSun(this.scaleValueScene);
 
         this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
