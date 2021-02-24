@@ -98,18 +98,17 @@ Planet.prototype.addNamesToPlanetMeshes = function() {
     }
 }
 
-// Names for planets
+// Names for planets on Scene
 // -------------------------------------------------------------------------
-Planet.prototype.addNamesToPlanetObject = function(planetsMeshes, planetsNamesOnScene, scene) {
+Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScene, scene, planetNames) {
     var geometry, textMesh;
-    var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
     const loader = new THREE.FontLoader();
 
     loader.load('node_modules/three/examples/fonts/gentilis_regular.typeface.json', function(font) {
         var material = new THREE.MeshNormalMaterial();
         material.transparent = true;
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < planetsMeshes.length; i++) {
             geometry = new THREE.TextGeometry(planetNames[i], {
                 font: font,
                 size: 1,
@@ -127,6 +126,12 @@ Planet.prototype.addNamesToPlanetObject = function(planetsMeshes, planetsNamesOn
             scene.add(textMesh);
         }
     });
+}
+
+Planet.prototype.addNamesToPlanetObject = function(planetsMeshes, planetsNamesOnScene, scene) {
+    var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+    this.createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, planetNames);
+
 }
 
 // Setting rotation angle for planets on Z-axis 
