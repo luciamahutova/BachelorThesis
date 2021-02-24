@@ -26,6 +26,8 @@ class Moon extends Planet {
         this.createMoons();
         this.addNamesToMoonObject(this.moonsMeshes, this.moonsNamesOnScene, this.scene);
     }
+
+    getMoonsNamesOnScene = function() { return this.moonsNamesOnScene; }
 }
 
 Moon.prototype.createMoons = function() {

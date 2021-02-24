@@ -1,16 +1,17 @@
 // Variables /////////////////////////////////////////////////////
-var scene, renderer, camera, isAppRunning, planetsNamesOnScene, orbits;
+var scene, renderer, camera, isAppRunning, planetsNamesOnScene, moonsNamesOnScene, orbits;
 
 var mainScene = new MainScene();
 scene = mainScene.getScene();
 renderer = mainScene.getRenderer();
 camera = mainScene.getCamera();
 planetsNamesOnScene = mainScene.planetObject.getPlanetsNamesOnScene();
+moonsNamesOnScene = mainScene.moonObject.getMoonsNamesOnScene();
 orbits = mainScene.planetObject.orbitClass.getAllOrbits();
 mainScene.resizeBackground(renderer, camera);
 
 
-var sidebarManager = new SidebarManager(planetsNamesOnScene, scene, orbits);
+var sidebarManager = new SidebarManager(planetsNamesOnScene, moonsNamesOnScene, scene, orbits);
 var i = 0;
 
 function animate() {
