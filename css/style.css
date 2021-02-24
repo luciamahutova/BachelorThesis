@@ -234,9 +234,10 @@ header img {
 #sidebarRight select {
     position: relative;
     float: right;
-    margin-right: 15px;
     border-radius: 5px;
+    margin: 3px 15px 0 0;
     border-color: #BABABA;
+    height: 18px;
 }
 
 
