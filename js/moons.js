@@ -5,6 +5,7 @@ class Moon extends Planet {
         this.planetsMeshes = planetsMeshes;
         this.moonsObjects = [];
         this.moonsMeshes = [];
+        this.moonsNamesOnScene = [];
         this.allPlanetDataJSON = allPlanetDataJSON;
     }
 
@@ -23,41 +24,65 @@ class Moon extends Planet {
     initializeMoons = function() {
         this.createMoonForEarth(); //ODOBRAT PO PRIRADENI RODICOV, POVRCHOV A FUNKCIONALITY PRE OSTATNE MESIACE
         this.createMoons();
+        this.addNamesToMoonObject(this.moonsMeshes, this.moonsNamesOnScene, this.scene);
     }
 }
 
 Moon.prototype.createMoons = function() {
     var moonSizeAndParent = {
-        "earthMoon": 0.2727,
-        "jupiterIo": 0.2859,
-        "jupiterEuropa": 0.2450,
-        "jupiterGanymede": 0.4135,
-        "jupiterCallisto": 0.3783,
-        "saturnTethys": 0.0834,
-        "saturnDione": 0.0881,
-        "saturnRhea": 0.1199,
-        "saturnTitan": 0.4037,
-        "saturnIapetus": 0.1153,
-        "uranusAriel": 0.0909,
-        "uranusUmbriel": 0.0918,
-        "uranusTitania": 0.1237,
-        "uranusOberon": 0.1195,
-        "neptuneTriton": 0.2124
+        "Moon": [0.2727, "Earth"],
+        "Io": [0.2859, "Jupiter"],
+        "Europa": [0.2450, "Jupiter"],
+        "Ganymede": [0.4135, "Jupiter"],
+        "Callisto": [0.3783, "Jupiter"],
+        "Tethys": [0.0834, "Saturn"],
+        "Dione": [0.0881, "Saturn"],
+        "Rhea": [0.1199, "Saturn"],
+        "Titan": [0.4037, "Saturn"],
+        "Iapetus": [0.1153, "Saturn"],
+        "Ariel": [0.0909, "Uranus"],
+        "Umbriel": [0.0918, "Uranus"],
+        "Titania": [0.1237, "Uranus"],
+        "Oberon": [0.1195, "Uranus"],
+        "Triton": [0.2124, "Neptune"]
     };
 
-    var moon, moonMesh, property;
+    var moon, moonMesh, property, size;
     var material = new THREE.MeshBasicMaterial({ color: 0xBABABA });
     for (i = 0; i < Object.keys(moonSizeAndParent).length; i++) {
         property = Object.keys(moonSizeAndParent)[i];
-        moon = this.createPlanetObject(moonSizeAndParent[property]);
+        size = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][0];
+        moon = this.createPlanetObject(size);
         this.moonsObjects.push(moon);
 
         moonMesh = new THREE.Mesh(this.moonsObjects[i], material);
         moonMesh.name = property;
+
         this.moonsMeshes.push(moonMesh);
-        moonMesh.position.x = 10 + i * 3;
+        moonMesh.position.x = 10 + i * 2;
     }
+    // RODIČ NENASTAVENÝ, RODIČOM OSTÁVA Scene
+    //this.addParentToMoon(moonSizeAndParent, this.planetsMeshes, this.moonsMeshes);
     this.addMeshToScene(this.scene, this.moonsMeshes);
+}
+
+Moon.prototype.addParentToMoon = function(moonSizeAndParent, planetsMeshes, moonsMeshes) {
+    var moonParent, moonName;
+    for (i = 0, j = 0; i < 15;) {
+        moonParent = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][1];
+        moonName = Object.keys(moonSizeAndParent)[i];
+        if (planetsMeshes[j].name == moonParent) {
+            planetsMeshes[j].add(moonsMeshes[i]);
+            i++;
+        } else { j++; }
+    }
+}
+
+Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, scene) {
+    var moonNames = ["Moon", "Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
+        "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+    ];
+    this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames);
 }
 
 
