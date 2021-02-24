@@ -75,9 +75,9 @@
 
             var val = GetItem(ItemType.Local);
             var tabObj = (val == "" ? null : JSON.parse(val)) || null;
-            console.log(val);
-            console.log(sessionGuid);
-            console.log(tabObj);
+            // console.log(val);
+            // console.log(sessionGuid);
+            // console.log(tabObj);
 
             // If no or stale tab object, our session is the winner.  If the guid matches, ours is still the winner
             if (tabObj === null || (tabObj.timestamp < (new Date().getTime() - localStorageTimeout)) || tabObj.guid === sessionGuid) {
