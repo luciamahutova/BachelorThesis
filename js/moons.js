@@ -51,13 +51,13 @@ Moon.prototype.createMoons = function() {
         moonMesh.position.x = 10 + i * 2;
     }
     // RODIČ NENASTAVENÝ, RODIČOM OSTÁVA Scene
-    this.addParentToMoon(moonSizeAndParent, this.planetsMeshes, this.moonsMeshes);
+    //this.addParentToMoon(moonSizeAndParent, this.planetsMeshes, this.moonsMeshes);
     this.addMeshToScene(this.scene, this.moonsMeshes);
 }
 
 Moon.prototype.addParentToMoon = function(moonSizeAndParent, planetsMeshes, moonsMeshes) {
     var moonParent, moonName;
-    for (i = 0, j = 0; i < 15;) {
+    for (i = 0, j = 0; i < 14;) {
         moonParent = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][1];
         moonName = Object.keys(moonSizeAndParent)[i];
         if (planetsMeshes[j].name == moonParent) {
@@ -68,7 +68,7 @@ Moon.prototype.addParentToMoon = function(moonSizeAndParent, planetsMeshes, moon
 }
 
 Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, scene) {
-    var moonNames = ["Moon", "Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
+    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
         "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
     this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames);
