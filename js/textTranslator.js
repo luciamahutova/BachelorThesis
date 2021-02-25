@@ -36,7 +36,9 @@ let arrLang = {
         // Sidebar - planet physical info
         'moonWeight': 'Hmotnost měsíce:',
         'orbitalPeriodMoon': 'Oběžná doba kolem planety (dny):',
-        'satelliteOfPlanet': 'Satelit planety:',
+        'distanceFromPlanet': 'Vzdálenost od planety (km):',
+        'minTemperature': 'Minimální teplota:',
+        'maxTemperature': 'Maximální teplota:',
         // Rangesliders
         'rotation': 'Rotace: ',
         'zoom': 'Přiblížení: ',
@@ -112,7 +114,9 @@ let arrLang = {
         // Sidebar - planet physical info
         'moonWeight': 'Weight of moon:',
         'orbitalPeriodMoon': 'Orbital period around planet (days):',
-        'satelliteOfPlanet': 'Satellite of planet:',
+        'distanceFromPlanet': 'Distance from planet (km):',
+        'minTemperature': 'Minimum temperature:',
+        'maxTemperature': 'Maximum temperature:',
         // Rangesliders
         'rotation': 'Rotation: ',
         'zoom': 'Zoom: ',
@@ -188,6 +192,9 @@ let arrLang = {
         'moonWeight': 'Hmotnosť mesiaca:',
         'orbitalPeriodMoon': 'Čas obehu okolo planéty (dni):',
         'satelliteOfPlanet': 'Satelit planéty:',
+        'distanceFromPlanet': 'Vzdialenosť od planéty (km):',
+        'minTemperature': 'Minimálna teplota:',
+        'maxTemperature': 'Maximálna teplota:',
         // Rangesliders
         'rotation': 'Rotácia: ',
         'zoom': 'Priblíženie: ',
