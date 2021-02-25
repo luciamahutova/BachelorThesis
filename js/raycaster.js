@@ -16,7 +16,14 @@ class RayCaster {
 
         var intersects = raycaster.intersectObjects(scene.children);
         if (intersects.length > 0 && intersects[0].object.name != "Sun") {
-            document.getElementById("sidebarPlanetInfo").style.left = "40px";
+            // Show only the 1 table with physical info for planet/moon
+            document.getElementById("sidebarPlanetInfo").style.left = "-300px";
+            document.getElementById("sidebarMoonInfo").style.left = "-300px";
+            var physicalTable;
+            (intersects[0].object.name == "Mercury" || intersects[0].object.name == "Venus" || intersects[0].object.name == "Earth" || intersects[0].object.name == "Mars" || intersects[0].object.name == "Jupiter" || intersects[0].object.name == "Saturn" ||
+                intersects[0].object.name == "Uranus" || intersects[0].object.name == "Neptune") ?
+            physicalTable = "sidebarPlanetInfo": physicalTable = "sidebarMoonInfo";
+            document.getElementById(physicalTable).style.left = "40px";
 
             // Clear the last coloured planet/orbit, using "window.myParam"
             if (window.myParam != undefined) {
@@ -27,6 +34,7 @@ class RayCaster {
                     }
                 });
             }
+
             // Colour clicked object (planet and orbit)
             scene.traverse(function(children) {
                 if (children.name == intersects[0].object.name) {

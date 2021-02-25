@@ -1,7 +1,6 @@
 class SidebarManager {
     constructor(planetsNamesOnScene, moonsNamesOnScene, moonMeshes, scene, orbits) {
         this.isSidebarOpen = true;
-        this.isLeftSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;
         this.planetsNamesOnScene = planetsNamesOnScene;
@@ -27,8 +26,10 @@ class SidebarManager {
     }
 
     hideSidebarToLeft = function() {
-        this.isLeftSidebarOpen = false;
-        document.getElementById("sidebarPlanetInfo").style.left = "-300px";
+        var physicalTable;
+        (document.getElementById("sidebarPlanetInfo").style.left == "40px") ? physicalTable = "sidebarPlanetInfo":
+            physicalTable = "sidebarMoonInfo";
+        document.getElementById(physicalTable).style.left = "-300px";
 
         // "window.myParam" - from raycaster.js, represents the last clicked planet/orbit = for clearing the colour        
         if (window.myParam != undefined) {
@@ -94,7 +95,6 @@ class SidebarManager {
     }
 
     // Get and Set functions
-    // -------------------------------------------------------------------------
     getIsAppRunning = function() { return this.isAppRunning; }
     setIsAppRunning = function(value) { this.isAppRunning = value; }
     getPauseTime = function() { return this.pauseTime; }

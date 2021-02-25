@@ -181,7 +181,8 @@ header img {
     transition: 0.6s;
 }
 
-#sidebarPlanetInfo {
+#sidebarPlanetInfo,
+#sidebarMoonInfo {
     left: -300px;
     transition: 0.6s;
 }
@@ -204,7 +205,8 @@ header img {
     margin: 5px 0 0 15px;
 }
 
-#sidebarPlanetInfo span {
+#sidebarPlanetInfo span,
+#sidebarMoonInfo span {
     /* for showing readonly input on the next line */
     display: block;
 }
@@ -218,7 +220,8 @@ header img {
     padding-top: 0;
 }
 
-#sidebarPlanetInfo section:last-of-type {
+#sidebarPlanetInfo section:last-of-type,
+#sidebarMoonInfo section:last-of-type {
     margin-bottom: 20px;
 }
 

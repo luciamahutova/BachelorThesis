@@ -33,6 +33,10 @@ let arrLang = {
         'rotationPeriod': 'Oběžná doba kolem své osy (hod): ',
         'orbitalPeriod': 'Oběžná doba kolem Slunce (dny): ',
         'distanceFromSun': 'Vzdálenost od Slunce:',
+        // Sidebar - planet physical info
+        'moonWeight': 'Hmotnost měsíce:',
+        'orbitalPeriodMoon': 'Oběžná doba kolem planety (dny):',
+        'satelliteOfPlanet': 'Satelit planety:',
         // Rangesliders
         'rotation': 'Rotace: ',
         'zoom': 'Přiblížení: ',
@@ -102,9 +106,13 @@ let arrLang = {
         'diameter': 'Equatorial diameter (km):',
         'perimeter': 'Perimeter of planet (km):',
         'rotationSpeed': 'Rotation speed on orbit (km/s):',
-        'rotationPeriod': 'Rotation time around its axis (h): ',
-        'orbitalPeriod': 'Orbital time around the Sun (days): ',
+        'rotationPeriod': 'Rotation period around its axis (h): ',
+        'orbitalPeriod': 'Orbital period around the Sun (days): ',
         'distanceFromSun': 'Distance from Sun:',
+        // Sidebar - planet physical info
+        'moonWeight': 'Weight of moon:',
+        'orbitalPeriodMoon': 'Orbital period around planet (days):',
+        'satelliteOfPlanet': 'Satellite of planet:',
         // Rangesliders
         'rotation': 'Rotation: ',
         'zoom': 'Zoom: ',
@@ -176,6 +184,10 @@ let arrLang = {
         'rotationPeriod': 'Čas obehu okolo svojej osi (hod): ',
         'orbitalPeriod': 'Čas obehu okolo Slnka (dni): ',
         'distanceFromSun': 'Vzdialenosť od Slnka:',
+        // Sidebar - planet physical info
+        'moonWeight': 'Hmotnosť mesiaca:',
+        'orbitalPeriodMoon': 'Čas obehu okolo planéty (dni):',
+        'satelliteOfPlanet': 'Satelit planéty:',
         // Rangesliders
         'rotation': 'Rotácia: ',
         'zoom': 'Priblíženie: ',
