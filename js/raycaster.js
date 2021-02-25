@@ -18,35 +18,21 @@ class RayCaster {
         if (intersects.length > 0 && intersects[0].object.name != "Sun") {
             document.getElementById("sidebarPlanetInfo").style.left = "40px";
 
-            var moveAbout = 0; // Difference between Mesh (planet) and Line (orbit) in scene.children
-            if (intersects[0].object.parent.children[27].type == "Line") {
-                moveAbout = 25;
-            } else if (intersects[0].object.parent.children[35].type == "Line") {
-                moveAbout = 33;
-            }
-
             // Clear the last coloured planet/orbit, using "window.myParam"
             if (window.myParam != undefined) {
                 var clearObjectColor = window.myParam;
-                clearObjectColor[0].object.material.color.set(0xffffff);
-                var indexOfClickedObject = clearObjectColor[0].object.parent.children.indexOf(clearObjectColor[0].object);
-
-                if (clearObjectColor[0].object.type == "Mesh") {
-                    clearObjectColor[0].object.parent.children[indexOfClickedObject + moveAbout].material.color.set(0xffffff);
-                } else if (clearObjectColor[0].object.type == "Line") {
-                    clearObjectColor[0].object.parent.children[indexOfClickedObject - moveAbout].material.color.set(0xffffff);
-                }
+                scene.traverse(function(children) {
+                    if (children.name == clearObjectColor[0].object.name) {
+                        children.material.color.set(0xffffff);
+                    }
+                });
             }
-
             // Colour clicked object (planet and orbit)
-            intersects[0].object.material.color.set(0x792128);
-            var indexOfClickedObject = intersects[0].object.parent.children.indexOf(intersects[0].object);
-            if (intersects[0].object.type == "Mesh") {
-                intersects[0].object.parent.children[indexOfClickedObject + moveAbout].material.color.set(0x792128);
-            } else if (intersects[0].object.type == "Line") {
-                intersects[0].object.parent.children[indexOfClickedObject - moveAbout].material.color.set(0x792128);
-            }
-            // Save the last clicked object, used for colouring back and for getting info from JSON
+            scene.traverse(function(children) {
+                if (children.name == intersects[0].object.name) {
+                    children.material.color.set(0x792128);
+                }
+            });
             window.myParam = intersects;
         }
     }
