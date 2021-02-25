@@ -34,11 +34,10 @@ class Planet {
 
     // Called in scene.js - class MainScene
     initializePlanets = function() {
-        this.createPlanets();
+        this.orbitClass.createOrbitShape();
         this.createPlanetsMesh(this.scene, this.planetsObjects);
         this.addNamesToPlanetObject(this.planetsMeshes, this.planetsNamesOnScene, this.scene);
         this.setRotationAngleForAllPlanets();
-        this.orbitClass.createOrbitShape();
     }
 
     getPlanetMeshes = function() { return this.planetsMeshes; }
@@ -69,6 +68,7 @@ Planet.prototype.createPlanets = function() {
 }
 
 Planet.prototype.createPlanetsMesh = function(scene, planetsObjects) {
+    this.createPlanets();
     this.mercuryMesh = this.createMesh(planetsObjects[0], '/images/textures/mercuryTexture2k.jpg');
     this.venusMesh = this.createMesh(planetsObjects[1], '/images/textures/venusTexture2k.jpg');
     this.earthMesh = this.createMesh(planetsObjects[2], '/images/textures/earthTexture2k.jpg');

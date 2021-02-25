@@ -1,11 +1,12 @@
 class SidebarManager {
-    constructor(planetsNamesOnScene, moonsNamesOnScene, scene, orbits) {
+    constructor(planetsNamesOnScene, moonsNamesOnScene, moonMeshes, scene, orbits) {
         this.isSidebarOpen = true;
         this.isLeftSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;
         this.planetsNamesOnScene = planetsNamesOnScene;
         this.moonsNamesOnScene = moonsNamesOnScene;
+        this.moonMeshes = moonMeshes;
         this.scene = scene;
         this.orbits = orbits;
         this.pauseTime = this.playTime = Date.now();
@@ -29,25 +30,14 @@ class SidebarManager {
         this.isLeftSidebarOpen = false;
         document.getElementById("sidebarPlanetInfo").style.left = "-300px";
 
-        // "window.myParam" - from raycaster.js, represents the last clicked planet/orbit = for clearing the colour
+        // "window.myParam" - from raycaster.js, represents the last clicked planet/orbit = for clearing the colour        
         if (window.myParam != undefined) {
             var clearObjectColor = window.myParam;
-            var moveAbout = 0; // Difference between Mesh (planet) and Line (orbit) in scene.children
-
-            if (clearObjectColor[0].object.parent.children[27].type == "Line") {
-                moveAbout = 25;
-            } else if (clearObjectColor[0].object.parent.children[35].type == "Line") {
-                moveAbout = 33;
-            }
-
-            clearObjectColor[0].object.material.color.set(0xffffff);
-            var indexOfClickedObject = clearObjectColor[0].object.parent.children.indexOf(clearObjectColor[0].object);
-
-            if (clearObjectColor[0].object.type == "Mesh") {
-                clearObjectColor[0].object.parent.children[indexOfClickedObject + moveAbout].material.color.set(0xffffff);
-            } else if (clearObjectColor[0].object.type == "Line") {
-                clearObjectColor[0].object.parent.children[indexOfClickedObject - moveAbout].material.color.set(0xffffff);
-            }
+            scene.traverse(function(children) {
+                if (children.name == clearObjectColor[0].object.name) {
+                    children.material.color.set(0xffffff);
+                }
+            });
         }
     }
 
@@ -120,9 +110,10 @@ SidebarManager.prototype.confirmButtonBehavior = function() {
     // Cannot add/remove names or orbits in for-cycle, planets will jump to different position
     this.showHideAllNamesOfPlanetsOnScene();
     this.showHideSingleNameOfPlanetOnScene();
-
     this.showHideAllNamesOfMoonsOnScene();
     this.showHideSingleNameOfMoonOnScene();
+
+    this.showHideAllMoonsOnScene();
 
     this.showHideAllPlanetOrbitsOnScene();
     this.showHideSinglePlanetOrbitOnScene();
@@ -163,7 +154,6 @@ SidebarManager.prototype.showHideAllNamesOfMoonsOnScene = function() {
             this.moonsNamesOnScene[3], this.moonsNamesOnScene[4], this.moonsNamesOnScene[5], this.moonsNamesOnScene[6],
             this.moonsNamesOnScene[7], this.moonsNamesOnScene[8], this.moonsNamesOnScene[9], this.moonsNamesOnScene[10],
             this.moonsNamesOnScene[11], this.moonsNamesOnScene[12], this.moonsNamesOnScene[13], this.moonsNamesOnScene[14]);
-
     } else if (document.getElementById("allMoonNamesChecked").checked == false) {
         this.scene.remove(this.moonsNamesOnScene[0], this.moonsNamesOnScene[1], this.moonsNamesOnScene[2],
             this.moonsNamesOnScene[3], this.moonsNamesOnScene[4], this.moonsNamesOnScene[5], this.moonsNamesOnScene[6],
@@ -182,6 +172,20 @@ SidebarManager.prototype.showHideSingleNameOfMoonOnScene = function() {
             this.moonsNamesOnScene[7], this.moonsNamesOnScene[8], this.moonsNamesOnScene[9], this.moonsNamesOnScene[10],
             this.moonsNamesOnScene[11], this.moonsNamesOnScene[12], this.moonsNamesOnScene[13], this.moonsNamesOnScene[14]);
         this.scene.add(this.moonsNamesOnScene[selectedElem.value]);
+    }
+}
+
+SidebarManager.prototype.showHideAllMoonsOnScene = function() {
+    if (document.getElementById("allMoonObjectsChecked").checked == true) {
+        this.scene.add(this.moonMeshes[0], this.moonMeshes[1], this.moonMeshes[2], this.moonMeshes[3],
+            this.moonMeshes[4], this.moonMeshes[5], this.moonMeshes[6], this.moonMeshes[7],
+            this.moonMeshes[8], this.moonMeshes[9], this.moonMeshes[10], this.moonMeshes[11],
+            this.moonMeshes[12], this.moonMeshes[13], this.moonMeshes[14]);
+    } else if (document.getElementById("allMoonObjectsChecked").checked == false) {
+        this.scene.remove(this.moonMeshes[0], this.moonMeshes[1], this.moonMeshes[2], this.moonMeshes[3],
+            this.moonMeshes[4], this.moonMeshes[5], this.moonMeshes[6], this.moonMeshes[7],
+            this.moonMeshes[8], this.moonMeshes[9], this.moonMeshes[10], this.moonMeshes[11],
+            this.moonMeshes[12], this.moonMeshes[13], this.moonMeshes[14]);
     }
 }
 
