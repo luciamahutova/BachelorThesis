@@ -100,18 +100,18 @@ Planet.prototype.addNamesToPlanetMeshes = function() {
 
 // Names for planets on Scene
 // -------------------------------------------------------------------------
-Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScene, scene, planetNames) {
+Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScene, scene, planetNames, fontSize) {
     var geometry, textMesh;
     const loader = new THREE.FontLoader();
 
-    loader.load('node_modules/three/examples/fonts/gentilis_regular.typeface.json', function(font) {
+    loader.load('node_modules/three/examples/fonts/helvetiker_regular.typeface.json', function(font) {
         var material = new THREE.MeshNormalMaterial();
         material.transparent = true;
 
         for (i = 0; i < planetsMeshes.length; i++) {
             geometry = new THREE.TextGeometry(planetNames[i], {
                 font: font,
-                size: 1,
+                size: fontSize,
                 height: 0,
                 bevelEnabled: false
             });
@@ -131,7 +131,7 @@ Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScen
 
 Planet.prototype.addNamesToPlanetObject = function(planetsMeshes, planetsNamesOnScene, scene) {
     var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-    this.createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, planetNames);
+    this.createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, planetNames, 1.2);
 
 }
 

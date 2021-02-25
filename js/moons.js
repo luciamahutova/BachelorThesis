@@ -72,7 +72,7 @@ Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, s
     var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
         "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
-    this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames);
+    this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames, 0.9);
 }
 
 
