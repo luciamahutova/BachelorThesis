@@ -45,19 +45,37 @@ class RayCaster {
         }
     }
 
-    getPlanetPhysicalValuesFromJSON = function(allPlanetDataJSON) {
+    getPhysicalValuesOfClickedObjectFromJSON = function(allPlanetDataJSON, allMoonDataJSON) {
         var intersects = window.myParam;
+        var showPlanetTable;
+
         if (intersects != undefined) {
-            var dataOfCurrentPlanetJSON = allPlanetDataJSON[0];
-            dataOfCurrentPlanetJSON.then(function(result) {
-                document.getElementById("planetWeightInput").value = result[intersects[0].object.name]["weight"];
-                document.getElementById("diameterInput").value = result[intersects[0].object.name]["diameter"];
-                document.getElementById("perimeterInput").value = result[intersects[0].object.name]["perimeter"];
-                document.getElementById("rotationSpeedInput").value = result[intersects[0].object.name]["rotationSpeed"];
-                document.getElementById("rotationPeriodInput").value = result[intersects[0].object.name]["rotationPeriod"];
-                document.getElementById("orbitalPeriodInput").value = result[intersects[0].object.name]["orbitalPeriod"];
-                document.getElementById("distanceFromSunInput").value = result[intersects[0].object.name]["distanceFromSun"];
-            });
+            (intersects[0].object.name == "Mercury" || intersects[0].object.name == "Venus" || intersects[0].object.name == "Earth" || intersects[0].object.name == "Mars" || intersects[0].object.name == "Jupiter" || intersects[0].object.name == "Saturn" ||
+                intersects[0].object.name == "Uranus" || intersects[0].object.name == "Neptune") ? showPlanetTable = true: showPlanetTable = false;
+
+            if (showPlanetTable) {
+                var dataOfCurrentPlanetJSON = allPlanetDataJSON[0];
+                dataOfCurrentPlanetJSON.then(function(result) {
+                    document.getElementById("planetMassInput").value = result[intersects[0].object.name]["mass"];
+                    document.getElementById("diameterInput").value = result[intersects[0].object.name]["diameter"];
+                    document.getElementById("perimeterInput").value = result[intersects[0].object.name]["perimeter"];
+                    document.getElementById("rotationSpeedInput").value = result[intersects[0].object.name]["rotationSpeed"];
+                    document.getElementById("rotationPeriodInput").value = result[intersects[0].object.name]["rotationPeriod"];
+                    document.getElementById("orbitalPeriodInput").value = result[intersects[0].object.name]["orbitalPeriod"];
+                    document.getElementById("distanceFromSunInput").value = result[intersects[0].object.name]["distanceFromSun"];
+                });
+            } else if (!showPlanetTable) {
+                var dataOfCurrentPlanetJSON = allMoonDataJSON[0];
+                dataOfCurrentPlanetJSON.then(function(result) {
+                    document.getElementById("moonMassInput").value = result[intersects[0].object.name]["mass"];
+                    document.getElementById("diameterInputMoon").value = result[intersects[0].object.name]["diameter"];
+                    document.getElementById("orbitalSpeedInputMoon").value = result[intersects[0].object.name]["orbitalSpeed"];
+                    document.getElementById("orbitalPeriodInputMoon").value = result[intersects[0].object.name]["orbitalPeriod"];
+                    document.getElementById("distanceFromPlanetInput").value = result[intersects[0].object.name]["distanceFromPlanet"];
+                    document.getElementById("minTemperatureInput").value = result[intersects[0].object.name]["minTemperature"];
+                    document.getElementById("maxTemperatureInput").value = result[intersects[0].object.name]["maxTemperature"];
+                });
+            }
         }
     }
 

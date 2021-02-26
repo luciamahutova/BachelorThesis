@@ -38,8 +38,9 @@ Moon.prototype.createMoons = function() {
     };
 
     var moon, moonMesh, property, size;
-    var material = new THREE.MeshBasicMaterial({ color: 0xBABABA });
+    var material;
     for (i = 0; i < Object.keys(moonSizeAndParent).length; i++) {
+        material = new THREE.MeshPhongMaterial({ color: 0xBABABA });
         property = Object.keys(moonSizeAndParent)[i];
         size = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][0];
         moon = this.createPlanetObject(size);
@@ -49,7 +50,7 @@ Moon.prototype.createMoons = function() {
         moonMesh.name = property;
 
         this.moonsMeshes.push(moonMesh);
-        moonMesh.position.x = 10 + i * 2;
+        moonMesh.position.x = 10 + i * 3;
     }
     // RODIČ NENASTAVENÝ, RODIČOM OSTÁVA Scene
     //this.addParentToMoon(moonSizeAndParent, this.planetsMeshes, this.moonsMeshes);

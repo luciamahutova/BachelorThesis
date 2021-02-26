@@ -142,7 +142,7 @@ class MainScene {
     // Animate function: called in app.js 
     animate = function(time) {
         this.addEventListenerFunctions();
-        this.raycaster.getPlanetPhysicalValuesFromJSON(this.planetObject.getPlanetData());
+        this.raycaster.getPhysicalValuesOfClickedObjectFromJSON(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
 
         this.zoomAndSpeedRangesliders(time);
         //this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);

@@ -10,7 +10,7 @@
             "scaleFactor": 19,
             "tiltAxisZ": 0.03,
             "planetSize": 0.175,
-            "weight": "0.330 × 10^24 kg",
+            "mass": "0.330 × 10^24 kg",
             "diameter": "4 879",
             "perimeter": "15 329",
             "rotationSpeed": 47.4,
@@ -28,7 +28,7 @@
             "scaleFactor": 17,
             "tiltAxisZ": 177.4,
             "planetSize": 0.435,
-            "weight": "4.87 × 10^24 kg",
+            "mass": "4.87 × 10^24 kg",
             "diameter": "12 104",
             "perimeter": "38 025",
             "rotationSpeed": 35.0,
@@ -46,7 +46,7 @@
             "scaleFactor": 17,
             "tiltAxisZ": 23.4,
             "planetSize": 0.457,
-            "weight": "5.97 × 10^24 kg",
+            "mass": "5.97 × 10^24 kg",
             "diameter": "12 756",
             "perimeter": "40 075",
             "rotationSpeed": 29.8,
@@ -64,7 +64,7 @@
             "scaleFactor": 13.5,
             "tiltAxisZ": 25.2,
             "planetSize": 0.243,
-            "weight": "0.642 × 10^24 kg",
+            "mass": "0.642 × 10^24 kg",
             "diameter": "6 792",
             "perimeter": "21 344",
             "rotationSpeed": 24.1,
@@ -82,7 +82,7 @@
             "scaleFactor": 5,
             "tiltAxisZ": 3.1,
             "planetSize": 1.673,
-            "weight": "1898 × 10^24 kg",
+            "mass": "1898 × 10^24 kg",
             "diameter": "142 984",
             "perimeter": "439 264",
             "rotationSpeed": 13.1,
@@ -100,7 +100,7 @@
             "scaleFactor": 3.5,
             "tiltAxisZ": 26.7,
             "planetSize": 1.394,
-            "weight": "568 × 10^24 kg",
+            "mass": "568 × 10^24 kg",
             "diameter": "120 536",
             "perimeter": "378 675",
             "rotationSpeed": 9.7,
@@ -118,7 +118,7 @@
             "scaleFactor": 2,
             "tiltAxisZ": 97.8,
             "planetSize": 0.607,
-            "weight": "86.8 × 10^24 kg",
+            "mass": "86.8 × 10^24 kg",
             "diameter": "51 118",
             "perimeter": "160 590",
             "rotationSpeed": 6.8,
@@ -136,7 +136,7 @@
             "scaleFactor": 1.5,
             "tiltAxisZ": 28.3,
             "planetSize": 0.589,
-            "weight": "102 × 10^24 kg",
+            "mass": "102 × 10^24 kg",
             "diameter": "49 528",
             "perimeter": "155 600",
             "rotationSpeed": 5.4,
@@ -146,158 +146,155 @@
         }
     },
     "moonData": {
-        "Earth": [{
-            "moon": "Moon",
+        "Moon": {
+            "planet": "Earth",
             "mass": "7.3477 x 10^22 kg",
-            "radius": 1737.1,
+            "diameter": "1 737.1",
             "orbitalSpeed": 1.022,
-            "orbitalPeriod": 27.321582,
+            "orbitalPeriod": 27.3216,
             "distanceFromPlanet": "384 399",
             "minTemperature": "-173 °C",
             "maxTemperature": "116 °C"
-        }],
-        "Jupiter": [{
-                "moon": "Io",
-                "mass": "8.94 x 10^22 kg",
-                "radius": 41.910,
-                "orbitalSpeed": 17.34,
-                "orbitalPeriod": 1.769138,
-                "distanceFromPlanet": "421 600",
-                "minTemperature": "-183 °C",
-                "maxTemperature": "-143 °C"
-            },
-            {
-                "moon": "Europa",
-                "mass": "4.799844 × 10^22 kg",
-                "radius": 1560.8,
-                "orbitalSpeed": 13.740,
-                "orbitalPeriod": 3.551181,
-                "distanceFromPlanet": "421 600",
-                "minTemperature": "-223 °C",
-                "maxTemperature": "-148 °C"
-            },
-            {
-                "moon": "Ganymede",
-                "mass": "14.819 × 10^22 kg",
-                "radius": "2 634.1",
-                "orbitalSpeed": 10.880,
-                "orbitalPeriod": 7.154553,
-                "distanceFromPlanet": "1 070 400",
-                "minTemperature": "-203 °C",
-                "maxTemperature": "-121 °C"
-            },
-            {
-                "moon": "Callisto",
-                "mass": "10.758 × 10^22 kg",
-                "radius": "2 410.3",
-                "orbitalSpeed": 8.204,
-                "orbitalPeriod": 16.68902,
-                "distanceFromPlanet": "1 882 700",
-                "minTemperature": "-193 °C",
-                "maxTemperature": "-108 °C"
-            }
-        ],
-        "Saturn": [{
-                "moon": "Tethys",
-                "mass": "0.06174 × 10^22 kg",
-                "radius": 533,
-                "orbitalSpeed": 11.35,
-                "orbitalPeriod": 1.887802,
-                "distanceFromPlanet": "294 619",
-                "minTemperature": "-187 °C",
-                "maxTemperature": "-187 °C"
-            },
-            {
-                "moon": "Dione",
-                "mass": "0.1095 × 10^22 kg",
-                "radius": 561.7,
-                "orbitalSpeed": 10.03,
-                "orbitalPeriod": 2.736915,
-                "distanceFromPlanet": "377 396",
-                "minTemperature": "-186 °C",
-                "maxTemperature": "-186 °C"
-            },
-            {
-                "moon": "Rhea",
-                "mass": "0.2306 × 10^22 kg",
-                "radius": 764.3,
-                "orbitalSpeed": 8.48,
-                "orbitalPeriod": 4.518212,
-                "distanceFromPlanet": "527 108",
-                "minTemperature": "-220 °C",
-                "maxTemperature": "-174 °C"
-            },
-            {
-                "moon": "Titan",
-                "mass": "13.452 × 10^22 kg",
-                "radius": "2 576",
-                "orbitalSpeed": 5.57,
-                "orbitalPeriod": 15.945,
-                "distanceFromPlanet": "1 221 870",
-                "minTemperature": "−179.5 °C",
-                "maxTemperature": "−179.5 °C"
-            },
-            {
-                "moon": "Iapetus",
-                "mass": "0.18053 × 10^22 kg",
-                "radius": 735.60,
-                "orbitalSpeed": 3.265,
-                "orbitalPeriod": 79.322,
-                "distanceFromPlanet": "3 560 820",
-                "minTemperature": "-183 °C",
-                "maxTemperature": "−143 °C"
-            }
-        ],
-        "Uranus": [{
-                "moon": "Ariel",
-                "mass": "0.135 × 10^22 kg",
-                "radius": 578.9,
-                "orbitalSpeed": 5.50898,
-                "orbitalPeriod": 2.520,
-                "distanceFromPlanet": "190 900",
-                "minTemperature": "? °C",
-                "maxTemperature": "−189 °C"
-            },
-            {
-                "moon": "Umbriel",
-                "mass": "0.12 × 10^22 kg",
-                "radius": 584.7,
-                "orbitalSpeed": 4.66797,
-                "orbitalPeriod": 4.144,
-                "distanceFromPlanet": "266 000",
-                "minTemperature": "? °C",
-                "maxTemperature": "−188 °C"
-            },
-            {
-                "moon": "Titania",
-                "mass": "0.35 × 10^22 kg",
-                "radius": 788.9,
-                "orbitalSpeed": 3.644,
-                "orbitalPeriod": 8.706,
-                "distanceFromPlanet": "436 300",
-                "minTemperature": "-213 °C",
-                "maxTemperature": "−184 °C"
-            },
-            {
-                "moon": "Oberon",
-                "mass": "0.3014 × 10^22 kg",
-                "radius": 761.4,
-                "orbitalSpeed": 3.152,
-                "orbitalPeriod": 13.46,
-                "distanceFromPlanet": "583 519",
-                "minTemperature": "-203 °C",
-                "maxTemperature": "−193 °C"
-            }
-        ],
-        "Neptune": [{
-            "moon": "Triton",
+        },
+        "Io": {
+            "planet": "Jupiter",
+            "mass": "8.94 x 10^22 kg",
+            "diameter": "41.910",
+            "orbitalSpeed": 17.34,
+            "orbitalPeriod": 1.7691,
+            "distanceFromPlanet": "421 600",
+            "minTemperature": "-183 °C",
+            "maxTemperature": "-143 °C"
+        },
+        "Europa": {
+            "planet": "Jupiter",
+            "mass": "4.7998 × 10^22 kg",
+            "diameter": "1 560.8",
+            "orbitalSpeed": 13.740,
+            "orbitalPeriod": 3.5512,
+            "distanceFromPlanet": "421 600",
+            "minTemperature": "-223 °C",
+            "maxTemperature": "-148 °C"
+        },
+        "Ganymede": {
+            "planet": "Jupiter",
+            "mass": "14.819 × 10^22 kg",
+            "diameter": "2 634.1",
+            "orbitalSpeed": 10.880,
+            "orbitalPeriod": 7.1546,
+            "distanceFromPlanet": "1 070 400",
+            "minTemperature": "-203 °C",
+            "maxTemperature": "-121 °C"
+        },
+        "Callisto": {
+            "planet": "Jupiter",
+            "mass": "10.758 × 10^22 kg",
+            "diameter": "2 410.3",
+            "orbitalSpeed": 8.204,
+            "orbitalPeriod": 16.6890,
+            "distanceFromPlanet": "1 882 700",
+            "minTemperature": "-193 °C",
+            "maxTemperature": "-108 °C"
+        },
+        "Tethys": {
+            "planet": "Saturn",
+            "mass": "0.0617 × 10^22 kg",
+            "diameter": "533",
+            "orbitalSpeed": 11.35,
+            "orbitalPeriod": 1.8878,
+            "distanceFromPlanet": "294 619",
+            "minTemperature": "-187 °C",
+            "maxTemperature": "-187 °C"
+        },
+        "Dione": {
+            "planet": "Saturn",
+            "mass": "0.1095 × 10^22 kg",
+            "diameter": "561.7",
+            "orbitalSpeed": 10.03,
+            "orbitalPeriod": 2.7369,
+            "distanceFromPlanet": "377 396",
+            "minTemperature": "-186 °C",
+            "maxTemperature": "-186 °C"
+        },
+        "Rhea": {
+            "planet": "Saturn",
+            "mass": "0.2306 × 10^22 kg",
+            "diameter": "764.3",
+            "orbitalSpeed": 8.48,
+            "orbitalPeriod": 4.5182,
+            "distanceFromPlanet": "527 108",
+            "minTemperature": "-220 °C",
+            "maxTemperature": "-174 °C"
+        },
+        "Titan": {
+            "planet": "Saturn",
+            "mass": "13.452 × 10^22 kg",
+            "diameter": "2 576",
+            "orbitalSpeed": 5.57,
+            "orbitalPeriod": 15.945,
+            "distanceFromPlanet": "1 221 870",
+            "minTemperature": "−179.5 °C",
+            "maxTemperature": "−179.5 °C"
+        },
+        "Iapetus": {
+            "planet": "Saturn",
+            "mass": "0.1805 × 10^22 kg",
+            "diameter": "735.60",
+            "orbitalSpeed": 3.265,
+            "orbitalPeriod": 79.322,
+            "distanceFromPlanet": "3 560 820",
+            "minTemperature": "-183 °C",
+            "maxTemperature": "−143 °C"
+        },
+        "Ariel": {
+            "planet": "Uranus",
+            "mass": "0.135 × 10^22 kg",
+            "diameter": "578.9",
+            "orbitalSpeed": 5.5090,
+            "orbitalPeriod": 2.520,
+            "distanceFromPlanet": "190 900",
+            "minTemperature": "? °C",
+            "maxTemperature": "−189 °C"
+        },
+        "Umbriel": {
+            "planet": "Uranus",
+            "mass": "0.12 × 10^22 kg",
+            "diameter": "584.7",
+            "orbitalSpeed": 4.6680,
+            "orbitalPeriod": 4.144,
+            "distanceFromPlanet": "266 000",
+            "minTemperature": "? °C",
+            "maxTemperature": "−188 °C"
+        },
+        "Titania": {
+            "planet": "Uranus",
+            "mass": "0.35 × 10^22 kg",
+            "diameter": "788.9",
+            "orbitalSpeed": 3.644,
+            "orbitalPeriod": 8.706,
+            "distanceFromPlanet": "436 300",
+            "minTemperature": "-213 °C",
+            "maxTemperature": "−184 °C"
+        },
+        "Oberon": {
+            "planet": "Uranus",
+            "mass": "0.3014 × 10^22 kg",
+            "diameter": "761.4",
+            "orbitalSpeed": 3.152,
+            "orbitalPeriod": 13.46,
+            "distanceFromPlanet": "583 519",
+            "minTemperature": "-203 °C",
+            "maxTemperature": "−193 °C"
+        },
+        "Triton": {
+            "planet": "Neptune",
             "mass": "2.14 × 10^22 kg",
-            "radius": "1 353.4",
+            "diameter": "1 353.4",
             "orbitalSpeed": 4.39,
             "orbitalPeriod": 5.877,
             "distanceFromPlanet": "354 759",
             "minTemperature": "−235.2 °C",
             "maxTemperature": "−235.2 °C"
-        }]
+        }
     }
 }

@@ -5,6 +5,7 @@ class Planet {
         this.planetsMeshes = [];
         this.planetsNamesOnScene = [];
         this.allPlanetDataJSON = [];
+        this.allMoonDataJSON = [];
         this.planetSizes = [];
         this.betha = 0;
         this.timestamp = 0;
@@ -12,6 +13,7 @@ class Planet {
 
         this.jsonManager = new JSONManager();
         this.addAllPlanetDataJSON();
+        this.addAllMoonDataJSON();
 
         this.orbitClass = new Orbits(scene, this.allPlanetDataJSON, this.planetsMeshes);
     }
@@ -43,6 +45,7 @@ class Planet {
     getPlanetMeshes = function() { return this.planetsMeshes; }
     getScaleValue = function() { return this.scaleValueScene; }
     getPlanetData = function() { return this.allPlanetDataJSON; }
+    getMoonData = function() { return this.allMoonDataJSON; }
     getPlanetsNamesOnScene = function() { return this.planetsNamesOnScene; }
         // getRotationSpeedValue = function() { return this.speedValueChanger; }
         // setRotationSpeedValue = function(value) { this.speedValueChanger += value; }
@@ -54,6 +57,10 @@ class Planet {
 // -------------------------------------------------------------------------
 Planet.prototype.addAllPlanetDataJSON = function() {
     this.allPlanetDataJSON.push(this.jsonManager.readPlanetsData());
+}
+
+Planet.prototype.addAllMoonDataJSON = function() {
+    this.allMoonDataJSON.push(this.jsonManager.readMoonsData());
 }
 
 // Creating planet objects

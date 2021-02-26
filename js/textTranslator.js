@@ -26,7 +26,7 @@ let arrLang = {
         'confirm': 'Potvrdit',
         // Sidebar - planet physical info
         'physicalValues': 'Fyzikální vlastnosti',
-        'planetWeight': 'Hmotnost planety:',
+        'planetMass': 'Hmotnost planety:',
         'diameter': 'Rovníkový poloměr (km):',
         'perimeter': 'Obvod planety (km):',
         'rotationSpeed': 'Rychlost rotace na orbitě (km/s):',
@@ -34,7 +34,7 @@ let arrLang = {
         'orbitalPeriod': 'Oběžná doba kolem Slunce (dny): ',
         'distanceFromSun': 'Vzdálenost od Slunce:',
         // Sidebar - planet physical info
-        'moonWeight': 'Hmotnost měsíce:',
+        'moonMass': 'Hmotnost měsíce:',
         'orbitalPeriodMoon': 'Oběžná doba kolem planety (dny):',
         'distanceFromPlanet': 'Vzdálenost od planety (km):',
         'minTemperature': 'Minimální teplota:',
@@ -104,7 +104,7 @@ let arrLang = {
         'confirm': 'Confirm',
         // Sidebar - planet physical info
         'physicalValues': 'Physical values of',
-        'planetWeight': 'Weight of planet:',
+        'planetMass': 'Weight of planet:',
         'diameter': 'Equatorial diameter (km):',
         'perimeter': 'Perimeter of planet (km):',
         'rotationSpeed': 'Rotation speed on orbit (km/s):',
@@ -112,7 +112,7 @@ let arrLang = {
         'orbitalPeriod': 'Orbital period around the Sun (days): ',
         'distanceFromSun': 'Distance from Sun:',
         // Sidebar - planet physical info
-        'moonWeight': 'Weight of moon:',
+        'moonMass': 'Weight of moon:',
         'orbitalPeriodMoon': 'Orbital period around planet (days):',
         'distanceFromPlanet': 'Distance from planet (km):',
         'minTemperature': 'Minimum temperature:',
@@ -181,7 +181,7 @@ let arrLang = {
         'confirm': 'Potvrdiť',
         // Sidebar - planet physical info
         'physicalValues': 'Fyzikálne vlastnosti',
-        'planetWeight': 'Hmotnosť planéty:',
+        'planetMass': 'Hmotnosť planéty:',
         'diameter': 'Rovníkový polomer (km):',
         'perimeter': 'Obvod planéty (km):',
         'rotationSpeed': 'Rýchlosť rotácie na orbite (km/s):',
@@ -189,7 +189,7 @@ let arrLang = {
         'orbitalPeriod': 'Čas obehu okolo Slnka (dni): ',
         'distanceFromSun': 'Vzdialenosť od Slnka:',
         // Sidebar - planet physical info
-        'moonWeight': 'Hmotnosť mesiaca:',
+        'moonMass': 'Hmotnosť mesiaca:',
         'orbitalPeriodMoon': 'Čas obehu okolo planéty (dni):',
         'satelliteOfPlanet': 'Satelit planéty:',
         'distanceFromPlanet': 'Vzdialenosť od planéty (km):',
