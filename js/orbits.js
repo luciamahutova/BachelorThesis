@@ -64,7 +64,7 @@ Orbits.prototype.scaleOrbitsRangesliderZoomIn = function(scaleValue) {
 
 Orbits.prototype.scaleOrbitsRangesliderZoomOut = function(scaleValue) {
     for (var i = 0; i < this.orbits.length; i++) {
-        this.orbits[i].scale.set((-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5);
+        this.orbits[i].scale.set(-2 * scaleValue, -2 * scaleValue, -2 * scaleValue);
     }
 }
 

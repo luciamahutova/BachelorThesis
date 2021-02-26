@@ -67,8 +67,8 @@ Planet.prototype.addAllMoonDataJSON = function() {
 // -------------------------------------------------------------------------
 // DOCASNE, OPRAVIT ABY NEBOLI HODNOTY NASTAVOVANE PRIAMO
 Planet.prototype.createPlanets = function() {
-    // 10x smaller scale: Sun; 3x smaller scale: Jupiter, Saturn, Uranus, Neptune
-    var planetSizes = [0.175, 0.435, 0.457, 0.243, 1.673, 1.394, 0.607, 0.589];
+    // 27x smaller scale for Sun; 5x smaller scale for Jupiter, Saturn, Uranus, Neptune
+    var planetSizes = [0.3829, 0.9499, 1, 0.5320, 10.97 / 5, 9.140 / 5, 3.981 / 5, 3.865 / 5];
     for (var i = 0; i < planetSizes.length; i++) {
         this.planetsObjects.push(this.createPlanetObject(planetSizes[i]));
     }
@@ -276,14 +276,12 @@ Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetN
         if (planetName == "Uranus") {
             halfSizeOfUranus = result[planetName]["planetSize"] * scaleValue;
         } else {
-            halfSizeOfUranus = 0;
-            result[planetName]["c"] = 0;
+            halfSizeOfUranus = result[planetName]["c"] = 0;
         }
 
         planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp - betha)) - halfSizeOfUranus;
-        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale *
-            Math.sin(timestamp - betha));
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp)) - halfSizeOfUranus;
+        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale * Math.sin(timestamp));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
             planetNameOnScene.position.x = planetMesh.position.x + 1;
