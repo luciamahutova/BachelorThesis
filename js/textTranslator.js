@@ -25,7 +25,8 @@ let arrLang = {
         'neptune': 'Neptun',
         'confirm': 'Potvrdit',
         // Sidebar - planet physical info
-        'physicalValues': 'Fyzikální vlastnosti',
+        'physicalValuesPlanet': 'Fyzikální vlastnosti planety',
+        'physicalValuesMoon': 'Fyzikální vlastnosti měsíce',
         'planetMass': 'Hmotnost planety:',
         'diameter': 'Rovníkový poloměr (km):',
         'perimeter': 'Obvod planety (km):',
@@ -103,7 +104,8 @@ let arrLang = {
         'neptune': 'Neptune',
         'confirm': 'Confirm',
         // Sidebar - planet physical info
-        'physicalValues': 'Physical values of',
+        'physicalValuesPlanet': 'Physical values of planet',
+        'physicalValuesMoon': 'Physical values of moon',
         'planetMass': 'Weight of planet:',
         'diameter': 'Equatorial diameter (km):',
         'perimeter': 'Perimeter of planet (km):',
@@ -180,7 +182,8 @@ let arrLang = {
         'neptune': 'Neptún',
         'confirm': 'Potvrdiť',
         // Sidebar - planet physical info
-        'physicalValues': 'Fyzikálne vlastnosti',
+        'physicalValuesPlanet': 'Fyzikálne vlastnosti planéty',
+        'physicalValuesMoon': 'Fyzikálne vlastnosti mesiaca',
         'planetMass': 'Hmotnosť planéty:',
         'diameter': 'Rovníkový polomer (km):',
         'perimeter': 'Obvod planéty (km):',
