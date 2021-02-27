@@ -47,6 +47,7 @@ class Planet {
     getPlanetData = function() { return this.allPlanetDataJSON; }
     getMoonData = function() { return this.allMoonDataJSON; }
     getPlanetsNamesOnScene = function() { return this.planetsNamesOnScene; }
+    getTimestamp = function() { return this.timestamp; }
         // getRotationSpeedValue = function() { return this.speedValueChanger; }
         // setRotationSpeedValue = function(value) { this.speedValueChanger += value; }
         // resetRotationSpeedValue = function() { this.speedValueChanger = 1; }
@@ -228,7 +229,7 @@ Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetN
     } else if (scale < 100) {
         this.positionPlanetRandesliderZoomOut(planetMesh, planetName, planetNameOnScene, scaleValue, this.betha, rotationSpeed);
     } else {
-        this.positionPlanetToOriginalPosition(planetMesh, planetName, planetNameOnScene, this.betha, rotationSpeed);
+        this.positionPlanetToOriginalPosition(planetMesh, planetName, planetNameOnScene, rotationSpeed);
     }
 }
 
@@ -291,7 +292,7 @@ Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetN
     });
 }
 
-Planet.prototype.positionPlanetToOriginalPosition = function(planetMesh, planetName, planetNameOnScene, betha, timestamp) {
+Planet.prototype.positionPlanetToOriginalPosition = function(planetMesh, planetName, planetNameOnScene, timestamp) {
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
 
     // "dataOfCurrentPlanetJSON" is equal to Promise, we need data from the Promise
