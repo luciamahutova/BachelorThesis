@@ -3,7 +3,6 @@ class Moon extends Planet {
         super();
         this.scene = scene;
         this.planetsMeshes = planetsMeshes;
-        this.moonsObjects = [];
         this.moonsMeshes = [];
         this.moonsNamesOnScene = [];
         this.allPlanetDataJSON = allPlanetDataJSON;
@@ -44,9 +43,9 @@ Moon.prototype.createMoons = function() {
         property = Object.keys(moonSizeAndParent)[i];
         size = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][0];
         moon = this.createPlanetObject(size);
-        this.moonsObjects.push(moon);
+        //this.moonsObjects.push(moon);
 
-        moonMesh = new THREE.Mesh(this.moonsObjects[i], material);
+        moonMesh = new THREE.Mesh(moon, material);
         moonMesh.name = property;
 
         this.moonsMeshes.push(moonMesh);
@@ -84,7 +83,8 @@ Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
     // scaleValue is used because of zooming in/out by rangeslider
     if (scale > 100) {
         this.positionMoonRangesliderZoomIn(scaleValue, this.planetsMeshes, this.moonsMeshes[0]);
-    } else if (scale < 100) {
+    } else
+    if (scale < 100) {
         this.positionMoonRangesliderZoomOut();
     } else {
         this.positionMoonToOriginalPosition();
@@ -93,25 +93,42 @@ Moon.prototype.rotateMoonAroundPlanet = function(scaleValue) {
 
 // Positions for the Moon - according to scale from rangeslider
 Moon.prototype.positionMoonRangesliderZoomIn = function(scaleValue, planetsMeshes, moonMesh) {
-    this.moonMesh.visible = true;
-    var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
+    this.traverseSceneToFindMoons(true, "");
+    this.traverseSceneToFindMoons(true, "name")
 
-    dataOfCurrentPlanetJSON.then(function(result) {
-        moonMesh.position.x = planetsMeshes[2].position.x + result["Earth"]["a"] * scaleValue * 2;
-        moonMesh.position.z = planetsMeshes[2].position.z + 1;
-    });
+    // var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
+    // dataOfCurrentPlanetJSON.then(function(result) {
+    //     moonMesh.position.x = planetsMeshes[2].position.x + result["Earth"]["a"] * scaleValue * 2;
+    //     moonMesh.position.z = planetsMeshes[2].position.z + 1;
+    // });
 }
 
 Moon.prototype.positionMoonRangesliderZoomOut = function() {
-    // Hidden Moon when model is too small
-    this.moonMesh.visible = false;
+    this.traverseSceneToFindMoons(false, "");
+    this.traverseSceneToFindMoons(false, "name");
+    //document.getElementById("allMoonNamesChecked").checked = false;
 }
 
 Moon.prototype.positionMoonToOriginalPosition = function() {
-    // Set original Moon position -> my value according to model
-    this.moonMesh.visible = true;
-    this.moonMesh.position.x = this.planetsMeshes[2].position.x + 1;
-    this.moonMesh.position.z = this.planetsMeshes[2].position.z + 0.5;
+    this.traverseSceneToFindMoons(true, "");
+    this.traverseSceneToFindMoons(true, "name")
+
+    // this.moonMesh.position.x = this.planetsMeshes[2].position.x + 1;
+    // this.moonMesh.position.z = this.planetsMeshes[2].position.z + 0.5;
+}
+
+Moon.prototype.traverseSceneToFindMoons = function(showObjectsBoolean, name) {
+    // Hide all moons, orbits and name (cannot remove from scene in scene.traverse)
+    // Arg.: empty name for moons and orbits, "name" for TextGeometry
+    this.scene.traverse(function(children) {
+        if (children.name == name + "Moon" || children.name == name + "Io" || children.name == name + "Europa" ||
+            children.name == name + "Ganymede" || children.name == name + "Callisto" || children.name == name + "Tethys" ||
+            children.name == name + "Dione" || children.name == name + "Rhea" || children.name == name + "Titan" ||
+            children.name == name + "Iapetus" || children.name == name + "Ariel" || children.name == name + "Umbriel" ||
+            children.name == name + "Titania" || children.name == name + "Oberon" || children.name == name + "Triton") {
+            children.visible = showObjectsBoolean;
+        }
+    });
 }
 
 // Scaling the Moon - according to zoom (functions ingerited from class Planet)

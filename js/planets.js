@@ -107,7 +107,7 @@ Planet.prototype.addNamesToPlanetMeshes = function() {
 
 // Names for planets on Scene
 // -------------------------------------------------------------------------
-Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScene, scene, planetNames, fontSize) {
+Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScene, scene, objectNames, fontSize) {
     var geometry, textMesh;
     const loader = new THREE.FontLoader();
 
@@ -116,7 +116,7 @@ Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScen
         material.transparent = true;
 
         for (i = 0; i < planetsMeshes.length; i++) {
-            geometry = new THREE.TextGeometry(planetNames[i], {
+            geometry = new THREE.TextGeometry(objectNames[i], {
                 font: font,
                 size: fontSize,
                 height: 0,
@@ -130,6 +130,7 @@ Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScen
 
             planetsNamesOnScene.push(textMesh);
             planetsMeshes[i].add(textMesh);
+            textMesh.name = "name" + objectNames[i];
             textMesh.position.x = 10 + i * 4; // LEN PRE DOČASNÉ ZOBRAZENIE
             scene.add(textMesh);
         }

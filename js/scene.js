@@ -145,7 +145,7 @@ class MainScene {
         this.raycaster.getPhysicalValuesOfClickedObjectFromJSON(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
 
         this.zoomAndSpeedRangesliders(time);
-        //this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
+        this.moonObject.rotateMoonAroundPlanet(this.scaleValueScene);
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
