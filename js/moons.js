@@ -1,9 +1,10 @@
 class Moon extends Planet {
-    constructor(scene, planetsMeshes, allPlanetDataJSON) {
+    constructor(scene, planetsMeshes, allPlanetDataJSON, orbits) {
         super();
         this.scene = scene;
         this.planetsMeshes = planetsMeshes;
         this.moonsMeshes = [];
+        this.orbits = orbits;
         this.moonsNamesOnScene = [];
         this.allPlanetDataJSON = allPlanetDataJSON;
     }
@@ -43,7 +44,6 @@ Moon.prototype.createMoons = function() {
         property = Object.keys(moonSizeAndParent)[i];
         size = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][0];
         moon = this.createPlanetObject(size);
-        //this.moonsObjects.push(moon);
 
         moonMesh = new THREE.Mesh(moon, material);
         moonMesh.name = property;
@@ -82,7 +82,7 @@ Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, planetsMesh
     var scale = scaleValue * 200;
     // scaleValue is used because of zooming in/out by rangeslider
     if (scale > 100) {
-        this.positionMoonRangesliderZoomIn();
+        this.positionMoonRangesliderZoomIn(moonMesh, moonName, planetOrder, planetName, scaleValue);
     } else
     if (scale < 100) {
         this.positionMoonRangesliderZoomOut();
@@ -93,27 +93,33 @@ Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, planetsMesh
 
 Moon.prototype.rotateAllMoons = function(scaleValue, speedValue, time) {
     var moonMesh;
-    var planetOrder = [2, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7];
-    var planetNamesOrder = ["Earth", "Jupiter", "Jupiter", "Jupiter", "Jupiter", "Saturn", "Saturn",
-        "Saturn", "Saturn", "Saturn", "Uranus", "Uranus", "Uranus", "Uranus", "Neptune"
+    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
+        "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
 
     for (var i = 0; i < this.moonsMeshes.length; i++) {
         moonMesh = this.moonsMeshes[i];
-        this.rotateMoonAroundPlanet(moonMesh, this.moonsNamesOnScene[i], this.planetsMeshes,
-            planetOrder[i], planetNamesOrder[i], scaleValue);
+        this.rotateMoonAroundPlanet(moonMesh, moonNames[i], this.orbits, i, this.moonsNamesOnScene[i], scaleValue);
     }
 }
 
-Moon.prototype.positionMoonRangesliderZoomIn = function() {
+Moon.prototype.positionMoonRangesliderZoomIn = function(moonMesh, moonName, planetOrder, moonNameOnScene, scaleValue) {
     this.traverseSceneToFindMoons(true, "");
     this.traverseSceneToFindMoons(true, "name");
 
-    // var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
-    // dataOfCurrentPlanetJSON.then(function(result) {
-    //     moonMesh.position.x = planetsMeshes[2].position.x + result["Earth"]["a"] * scaleValue * 2;
-    //     moonMesh.position.z = planetsMeshes[2].position.z + 1;
-    // });
+    var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
+    dataOfCurrentPlanetJSON.then(function(result) {
+        moonMesh.position.x = orbits[planetOrder + 8].position.x + result[moonName]["a"] * result[moonName]["scaleFactor"] * scaleValue *
+            Math.cos(1) * 2 + result[moonName]["c"];
+        moonMesh.position.z = orbits[planetOrder + 8].position.z + result[moonName]["b"] * result[moonName]["scaleFactor"] * scaleValue *
+            2 * Math.sin(1);
+
+        if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
+            moonNameOnScene.position.x = moonMesh.position.x + 1;
+            moonNameOnScene.position.z = moonMesh.position.z;
+        }
+    });
+
 }
 
 Moon.prototype.positionMoonRangesliderZoomOut = function() {
@@ -121,20 +127,20 @@ Moon.prototype.positionMoonRangesliderZoomOut = function() {
     this.traverseSceneToFindMoons(false, "name");
 }
 
-Moon.prototype.positionMoonToOriginalPosition = function(moonMesh, moonName, planetsMeshes, planetOrder, planetName, scaleValue) {
+Moon.prototype.positionMoonToOriginalPosition = function(moonMesh, moonName, orbits, planetOrder, moonNameOnScene, scaleValue) {
     this.traverseSceneToFindMoons(true, "");
     this.traverseSceneToFindMoons(true, "name");
 
-    // var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
-    // dataOfCurrentPlanetJSON.then(function(result) {
-    //     moonMesh.position.x = planetsMeshes[planetOrder].position.x + result[planetName]["a"] * scaleValue * 2;
-    //     moonMesh.position.z = planetsMeshes[planetOrder].position.z + 1;
+    var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
+    dataOfCurrentPlanetJSON.then(function(result) {
+        moonMesh.position.x = orbits[planetOrder + 8].position.x + result[moonName]["a"] + result[moonName]["c"];
+        moonMesh.position.z = orbits[planetOrder + 8].position.z + result[moonName]["b"] * 1.7;
 
-    //     if (moonName != undefined && moonName.visible == true) {
-    //         moonName.position.x = moonMesh.position.x + 1;
-    //         moonName.position.z = moonMesh.position.z;
-    //     }
-    // });
+        if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
+            moonNameOnScene.position.x = moonMesh.position.x + 1;
+            moonNameOnScene.position.z = moonMesh.position.z;
+        }
+    });
 }
 
 Moon.prototype.traverseSceneToFindMoons = function(showObjectsBoolean, name) {

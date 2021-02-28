@@ -132,7 +132,6 @@ Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScen
             planetsNamesOnScene.push(textMesh);
             planetsMeshes[i].add(textMesh);
             textMesh.name = "name" + objectNames[i];
-            textMesh.position.x = 10 + i * 4; // LEN PRE DOČASNÉ ZOBRAZENIE
             scene.add(textMesh);
         }
     });
@@ -172,7 +171,7 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshe
     if (scale > 100) {
         this.scaleMeshesRangesliderZoomIn(scaleValue, planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderZoomIn(scaleValue);
-        this.orbitClass.positionAllMoonOrbits(scaleValue);
+        this.orbitClass.positionAllMoonOrbits();
     } else if (scale < 100) {
         scaleValue *= -1;
         this.scaleMeshesRangesliderNegativeValue(scaleValue, planetsMeshes);
@@ -180,7 +179,7 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshe
     } else {
         this.scaleMeshesToOriginalSize(planetsMeshes);
         this.orbitClass.scaleOrbitsToOriginalSize();
-        this.orbitClass.positionAllMoonOrbits(scaleValue);
+        this.orbitClass.positionAllMoonOrbits();
     }
 }
 

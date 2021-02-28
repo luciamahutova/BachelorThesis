@@ -49,7 +49,7 @@ Orbits.prototype.createCurveForOrbit = function(planetName, orbits, scene, dataJ
     });
 }
 
-Orbits.prototype.positionSingleMoonOrbit = function(moonOrbit, planetsMeshes, planetOrder, moonName, scaleValue) {
+Orbits.prototype.positionSingleMoonOrbit = function(moonOrbit, planetsMeshes, planetOrder, moonName) {
     var dataOfCurrentOrbitJSON = this.allMoonDataJSON[0];
     dataOfCurrentOrbitJSON.then(function(result) {
         moonOrbit.position.x = planetsMeshes[planetOrder].position.x + result[moonName]["c"];
@@ -57,7 +57,7 @@ Orbits.prototype.positionSingleMoonOrbit = function(moonOrbit, planetsMeshes, pl
     });
 }
 
-Orbits.prototype.positionAllMoonOrbits = function(scaleValue) {
+Orbits.prototype.positionAllMoonOrbits = function() {
     var planetOrder = [2, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7];
     var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
         "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
@@ -65,7 +65,7 @@ Orbits.prototype.positionAllMoonOrbits = function(scaleValue) {
 
     for (var i = 8, j = 0; i < this.orbits.length; i++, j++) {
         moonOrbit = this.orbits[i];
-        this.positionSingleMoonOrbit(moonOrbit, this.planetsMeshes, planetOrder[j], moonNames[j], scaleValue);
+        this.positionSingleMoonOrbit(moonOrbit, this.planetsMeshes, planetOrder[j], moonNames[j]);
     }
 }
 

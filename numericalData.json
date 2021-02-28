@@ -161,8 +161,8 @@
             "maxTemperature": "116 °C"
         },
         "Io": {
-            "a": 2,
-            "b": 3,
+            "a": 1.5,
+            "b": 1.5,
             "c": 0.4,
             "scaleFactor": 2,
             "planet": "Jupiter",
@@ -175,8 +175,8 @@
             "maxTemperature": "-143 °C"
         },
         "Europa": {
-            "a": 1,
-            "b": 2.5,
+            "a": 2,
+            "b": 2,
             "c": 0.4,
             "scaleFactor": 2,
             "planet": "Jupiter",
@@ -189,8 +189,8 @@
             "maxTemperature": "-148 °C"
         },
         "Ganymede": {
-            "a": 3,
-            "b": 2,
+            "a": 2.5,
+            "b": 2.5,
             "c": 0.4,
             "scaleFactor": 2,
             "planet": "Jupiter",
@@ -203,8 +203,8 @@
             "maxTemperature": "-121 °C"
         },
         "Callisto": {
-            "a": 1.5,
-            "b": 2,
+            "a": 3,
+            "b": 3,
             "c": 0.4,
             "scaleFactor": 2,
             "planet": "Jupiter",
