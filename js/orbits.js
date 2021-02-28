@@ -1,7 +1,7 @@
 class Orbits {
     constructor(scene, allPlanetDataJSON, allMoonDataJSON, planetsMeshes) {
         this.scene = scene;
-        this.orbits = this.orbits = [];
+        this.orbits = [];
         this.allPlanetDataJSON = allPlanetDataJSON;
         this.allMoonDataJSON = allMoonDataJSON;
         this.planetsMeshes = planetsMeshes;
