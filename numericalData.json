@@ -147,6 +147,10 @@
     },
     "moonData": {
         "Moon": {
+            "a": 2,
+            "b": 2,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Earth",
             "mass": "7.3477 x 10^22 kg",
             "diameter": "1 737.1",
@@ -157,6 +161,10 @@
             "maxTemperature": "116 °C"
         },
         "Io": {
+            "a": 2,
+            "b": 3,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Jupiter",
             "mass": "8.94 x 10^22 kg",
             "diameter": "41.910",
@@ -167,6 +175,10 @@
             "maxTemperature": "-143 °C"
         },
         "Europa": {
+            "a": 1,
+            "b": 2.5,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Jupiter",
             "mass": "4.7998 × 10^22 kg",
             "diameter": "1 560.8",
@@ -177,6 +189,10 @@
             "maxTemperature": "-148 °C"
         },
         "Ganymede": {
+            "a": 3,
+            "b": 2,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Jupiter",
             "mass": "14.819 × 10^22 kg",
             "diameter": "2 634.1",
@@ -187,6 +203,10 @@
             "maxTemperature": "-121 °C"
         },
         "Callisto": {
+            "a": 1.5,
+            "b": 2,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Jupiter",
             "mass": "10.758 × 10^22 kg",
             "diameter": "2 410.3",
@@ -197,6 +217,10 @@
             "maxTemperature": "-108 °C"
         },
         "Tethys": {
+            "a": 1,
+            "b": 3.2,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Saturn",
             "mass": "0.0617 × 10^22 kg",
             "diameter": "533",
@@ -207,6 +231,10 @@
             "maxTemperature": "-187 °C"
         },
         "Dione": {
+            "a": 3,
+            "b": 3.1,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Saturn",
             "mass": "0.1095 × 10^22 kg",
             "diameter": "561.7",
@@ -217,6 +245,10 @@
             "maxTemperature": "-186 °C"
         },
         "Rhea": {
+            "a": 2.8,
+            "b": 3.8,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Saturn",
             "mass": "0.2306 × 10^22 kg",
             "diameter": "764.3",
@@ -227,6 +259,10 @@
             "maxTemperature": "-174 °C"
         },
         "Titan": {
+            "a": 3.7,
+            "b": 2,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Saturn",
             "mass": "13.452 × 10^22 kg",
             "diameter": "2 576",
@@ -237,6 +273,10 @@
             "maxTemperature": "−179.5 °C"
         },
         "Iapetus": {
+            "a": 3.4,
+            "b": 3.5,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Saturn",
             "mass": "0.1805 × 10^22 kg",
             "diameter": "735.60",
@@ -247,6 +287,10 @@
             "maxTemperature": "−143 °C"
         },
         "Ariel": {
+            "a": 3.8,
+            "b": 2.1,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Uranus",
             "mass": "0.135 × 10^22 kg",
             "diameter": "578.9",
@@ -257,6 +301,10 @@
             "maxTemperature": "−189 °C"
         },
         "Umbriel": {
+            "a": 2.4,
+            "b": 1.8,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Uranus",
             "mass": "0.12 × 10^22 kg",
             "diameter": "584.7",
@@ -267,6 +315,10 @@
             "maxTemperature": "−188 °C"
         },
         "Titania": {
+            "a": 4,
+            "b": 2.7,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Uranus",
             "mass": "0.35 × 10^22 kg",
             "diameter": "788.9",
@@ -277,6 +329,10 @@
             "maxTemperature": "−184 °C"
         },
         "Oberon": {
+            "a": 4,
+            "b": 2,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Uranus",
             "mass": "0.3014 × 10^22 kg",
             "diameter": "761.4",
@@ -287,6 +343,10 @@
             "maxTemperature": "−193 °C"
         },
         "Triton": {
+            "a": 3.5,
+            "b": 2.5,
+            "c": 0.4,
+            "scaleFactor": 2,
             "planet": "Neptune",
             "mass": "2.14 × 10^22 kg",
             "diameter": "1 353.4",

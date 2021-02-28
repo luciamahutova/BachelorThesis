@@ -15,7 +15,7 @@ class Planet {
         this.addAllPlanetDataJSON();
         this.addAllMoonDataJSON();
 
-        this.orbitClass = new Orbits(scene, this.allPlanetDataJSON, this.planetsMeshes);
+        this.orbitClass = new Orbits(scene, this.allPlanetDataJSON, this.allMoonDataJSON, this.planetsMeshes);
     }
 
     createPlanetObject = function(diameter) {
@@ -36,8 +36,8 @@ class Planet {
 
     // Called in scene.js - class MainScene
     initializePlanets = function() {
-        this.orbitClass.createOrbitShape();
         this.createPlanetsMesh(this.scene, this.planetsObjects);
+        this.orbitClass.createOrbitShape();
         this.addNamesToPlanetObject(this.planetsMeshes, this.planetsNamesOnScene, this.scene);
         this.setRotationAngleForAllPlanets();
     }
@@ -172,6 +172,7 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshe
     if (scale > 100) {
         this.scaleMeshesRangesliderZoomIn(scaleValue, planetsMeshes);
         this.orbitClass.scaleOrbitsRangesliderZoomIn(scaleValue);
+        this.orbitClass.positionAllMoonOrbits(scaleValue);
     } else if (scale < 100) {
         scaleValue *= -1;
         this.scaleMeshesRangesliderNegativeValue(scaleValue, planetsMeshes);
@@ -179,6 +180,7 @@ Planet.prototype.setScaleForPlanetsAndOrbits = function(scaleValue, planetsMeshe
     } else {
         this.scaleMeshesToOriginalSize(planetsMeshes);
         this.orbitClass.scaleOrbitsToOriginalSize();
+        this.orbitClass.positionAllMoonOrbits(scaleValue);
     }
 }
 
@@ -190,8 +192,7 @@ Planet.prototype.scaleMeshesRangesliderZoomIn = function(scaleValue, objects) {
 
 Planet.prototype.scaleMeshesRangesliderNegativeValue = function(scaleValue, objects) {
     for (var i = 0; i < objects.length; i++) {
-        // cannot use number 1 for planets, because: (1 / -1 * 1) = 1, so -1 would not zoom out
-        objects[i].scale.set((-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5, (-1 * scaleValue) / 0.5);
+        objects[i].scale.set(-2 * scaleValue, -2 * scaleValue, -2 * scaleValue);
     }
 }
 
