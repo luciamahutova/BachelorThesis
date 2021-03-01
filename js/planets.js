@@ -225,11 +225,11 @@ Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetN
 
     // scaleValue is used because of zooming in/out by rangeslider
     if (scale > 100) {
-        this.positionPlanetRangesliderZoomIn(planetMesh, planetName, planetNameOnScene, scaleValue, this.betha, rotationSpeed);
+        this.positionPlanetToOrbit(planetMesh, planetName, planetNameOnScene, scaleValue * 2, true, rotationSpeed);
     } else if (scale < 100) {
         this.positionPlanetRandesliderZoomOut(planetMesh, planetName, planetNameOnScene, scaleValue, this.betha, rotationSpeed);
     } else {
-        this.positionPlanetToOriginalPosition(planetMesh, planetName, planetNameOnScene, rotationSpeed);
+        this.positionPlanetToOrbit(planetMesh, planetName, planetNameOnScene, 1, false, rotationSpeed);
     }
 }
 
@@ -246,43 +246,22 @@ Planet.prototype.rotateAllPlanets = function(scaleValue, speedValue, time) {
 
 // Positions for 1 planet - according to scale from rangeslider
 // -------------------------------------------------------------------------
-Planet.prototype.positionPlanetRangesliderZoomIn = function(planetMesh, planetName, planetNameOnScene, scaleValue, betha, timestamp) {
-    var scale = scaleValue * 2;
-    var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
-    var halfSizeOfUranus = 0;
-
-    dataOfCurrentPlanetJSON.then(function(result) {
-        if (planetName == "Uranus") {
-            halfSizeOfUranus = result[planetName]["planetSize"] * scaleValue;
-        } else { halfSizeOfUranus = 0; }
-
-        planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp)) + halfSizeOfUranus;
-        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale *
-            Math.sin(timestamp));
-
-        if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
-            planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scale + 1;
-            planetNameOnScene.position.z = planetMesh.position.z;
-        }
-    });
-}
-
+// POTREBA PREROBIŤ A ZJEDNOTIŤ S F. positionPlanetOnOrbit
 Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetName, planetNameOnScene, scaleValue, betha, timestamp) {
     // The same scale as in class Orbits
     var scale = -2 * scaleValue;
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
-    var halfSizeOfUranus = 0;
+    var halfSizeOfPlanet = 0;
 
     dataOfCurrentPlanetJSON.then(function(result) {
-        if (planetName == "Uranus") {
-            halfSizeOfUranus = result[planetName]["planetSize"] * scaleValue;
-        } else {
-            halfSizeOfUranus = result[planetName]["c"] = 0;
-        }
+        if (planetName == "Saturn") {
+            halfSizeOfPlanet = result[planetName]["planetSize"] * scaleValue;
+        } else if (planetName == "Uranus") {
+            halfSizeOfPlanet = result[planetName]["planetSize"] / scaleValue / 2;
+        } else { halfSizeOfPlanet = 0; }
 
-        planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp)) - halfSizeOfUranus;
+        planetMesh.position.x = -3 * result[planetName]["c"] +
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scale * Math.cos(timestamp)) + halfSizeOfPlanet;
         planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scale * Math.sin(timestamp));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
@@ -292,17 +271,21 @@ Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetN
     });
 }
 
-Planet.prototype.positionPlanetToOriginalPosition = function(planetMesh, planetName, planetNameOnScene, timestamp) {
+Planet.prototype.positionPlanetToOrbit = function(planetMesh, planetName, planetNameOnScene, scaleValue, isZoomIn, timestamp) {
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
+    var halfSizeOfUranus = 0;
 
-    // "dataOfCurrentPlanetJSON" is equal to Promise, we need data from the Promise
     dataOfCurrentPlanetJSON.then(function(result) {
-        planetMesh.position.x = result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * Math.cos(timestamp));
-        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * Math.sin(timestamp));
+        if (planetName == "Uranus" && isZoomIn == true) {
+            halfSizeOfUranus = result[planetName]["planetSize"] * scaleValue;
+        } else { halfSizeOfUranus = 0; }
+
+        planetMesh.position.x = -3 * result[planetName]["c"] +
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(timestamp)) - halfSizeOfUranus;
+        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scaleValue * Math.sin(timestamp));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
-            planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] + 1;
+            planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scaleValue + 1;
             planetNameOnScene.position.z = planetMesh.position.z;
         }
     });
