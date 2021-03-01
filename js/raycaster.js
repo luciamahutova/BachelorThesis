@@ -15,7 +15,7 @@ class RayCaster {
         raycaster.setFromCamera(mouse, this.camera);
 
         var intersects = raycaster.intersectObjects(scene.children);
-        if (intersects.length > 0 && intersects[0].object.name != "Sun") {
+        if (intersects.length > 0 && intersects[0].object.name != "Sun" && intersects[0].object.visible == true) {
             // Show only the 1 table with physical info for planet/moon
             document.getElementById("sidebarPlanetInfo").style.left = "-300px";
             document.getElementById("sidebarMoonInfo").style.left = "-300px";
