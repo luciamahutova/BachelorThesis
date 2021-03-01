@@ -203,33 +203,35 @@ Planet.prototype.scaleMeshesToOriginalSize = function(objects) {
 
 // Moving planets on their orbits (ellipses)
 // -------------------------------------------------------------------------
-Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue, time) {
-    var rotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
+Planet.prototype.calculateRotationSpeed = function(planetOrder, speedValue, time, planetRotationSpeedAroundSun) {
     //window.setTimeout(this.timeOutForSpeedCalculation(speedValue), 10000);
 
     if (speedValue == 0) {
-        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * time);
+        this.timestamp = (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time);
     } else if (speedValue > 0) {
-        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * time) * speedValue;
+        this.timestamp = (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time) * speedValue;
     } else if (speedValue < 0) {
-        this.timestamp = (rotationSpeedAroundSun[planetOrder] * 0.0001 * time) / Math.abs(speedValue);
+        this.timestamp = (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time) / Math.abs(speedValue);
     }
     return this.timestamp;
 }
 
 Planet.prototype.rotatePlanetOnOrbit = function(planetMesh, planetOrder, planetName, planetNameOnScene, scaleValue, speedValue, time) {
-    var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue, time);
-    // + rotationSpeed: because of division by zero
-    this.betha = Math.cos(planetMesh.position.x / (planetMesh.position.z + rotationSpeed));
+    var planetRotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
+    var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue, time, planetRotationSpeedAroundSun);
     var scale = scaleValue * 200;
+
+    if (planetMesh.position.z != 0 || planetMesh.position.z != NaN) {
+        this.betha = Math.cos(planetMesh.position.x / planetMesh.position.z);
+    }
 
     // scaleValue is used because of zooming in/out by rangeslider
     if (scale > 100) {
-        this.positionPlanetToOrbit(planetMesh, planetName, planetNameOnScene, scaleValue * 2, true, rotationSpeed);
+        this.positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue * 2, true, rotationSpeed);
     } else if (scale < 100) {
         this.positionPlanetRandesliderZoomOut(planetMesh, planetName, planetNameOnScene, scaleValue, this.betha, rotationSpeed);
     } else {
-        this.positionPlanetToOrbit(planetMesh, planetName, planetNameOnScene, 1, false, rotationSpeed);
+        this.positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, 1, false, rotationSpeed);
     }
 }
 
@@ -271,7 +273,7 @@ Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetN
     });
 }
 
-Planet.prototype.positionPlanetToOrbit = function(planetMesh, planetName, planetNameOnScene, scaleValue, isZoomIn, timestamp) {
+Planet.prototype.positionPlanetOnOrbit = function(planetMesh, planetName, planetNameOnScene, scaleValue, isZoomIn, timestamp) {
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
     var halfSizeOfUranus = 0;
 

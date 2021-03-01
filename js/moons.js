@@ -78,16 +78,22 @@ Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, s
 
 // Positions for the Moon - according to zoom
 // -------------------------------------------------------------------------
-Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, planetsMeshes, planetOrder, planetName, scaleValue) {
+Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, orbits, orbitOrder, planetName, scaleValue, speedValue, time) {
+    var moonRotationSpeedAroundPlanet = [1.000, 0.802, 0.434, 0.323, 0.228, 0.128, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128,
+        1.000, 0.802, 0.434
+    ];
+    var rotationSpeed = this.calculateRotationSpeed(orbitOrder, speedValue, time, moonRotationSpeedAroundPlanet);
     var scale = scaleValue * 200;
+
+
     // scaleValue is used because of zooming in/out by rangeslider
     if (scale > 100) {
-        this.positionMoonRangesliderZoomIn(moonMesh, moonName, planetOrder, planetName, scaleValue);
+        this.positionMoonToOrbit(moonMesh, moonName, orbitOrder, planetName, scaleValue, rotationSpeed, 2);
     } else
     if (scale < 100) {
         this.positionMoonRangesliderZoomOut();
     } else {
-        this.positionMoonToOriginalPosition(moonMesh, moonName, planetsMeshes, planetOrder, planetName, scaleValue);
+        this.positionMoonToOrbit(moonMesh, moonName, orbitOrder, planetName, 1, rotationSpeed, 1);
     }
 }
 
@@ -99,48 +105,31 @@ Moon.prototype.rotateAllMoons = function(scaleValue, speedValue, time) {
 
     for (var i = 0; i < this.moonsMeshes.length; i++) {
         moonMesh = this.moonsMeshes[i];
-        this.rotateMoonAroundPlanet(moonMesh, moonNames[i], this.orbits, i, this.moonsNamesOnScene[i], scaleValue);
+        this.rotateMoonAroundPlanet(moonMesh, moonNames[i], this.orbits, i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
     }
 }
 
-Moon.prototype.positionMoonRangesliderZoomIn = function(moonMesh, moonName, planetOrder, moonNameOnScene, scaleValue) {
+Moon.prototype.positionMoonToOrbit = function(moonMesh, moonName, orbitOrder, moonNameOnScene, scaleValue, rotationSpeed, multiply) {
     this.traverseSceneToFindMoons(true, "");
     this.traverseSceneToFindMoons(true, "name");
 
     var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
     dataOfCurrentPlanetJSON.then(function(result) {
-        moonMesh.position.x = orbits[planetOrder + 8].position.x + result[moonName]["a"] * result[moonName]["scaleFactor"] * scaleValue *
-            Math.cos(1) * 2 + result[moonName]["c"];
-        moonMesh.position.z = orbits[planetOrder + 8].position.z + result[moonName]["b"] * result[moonName]["scaleFactor"] * scaleValue *
-            2 * Math.sin(1);
+        moonMesh.position.x = orbits[orbitOrder + 8].position.x + result[moonName]["c"] + multiply *
+            result[moonName]["a"] * result[moonName]["scaleFactor"] * scaleValue * Math.cos(rotationSpeed);
+        moonMesh.position.z = orbits[orbitOrder + 8].position.z - multiply *
+            result[moonName]["b"] * result[moonName]["scaleFactor"] * scaleValue * Math.sin(rotationSpeed);
 
         if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
             moonNameOnScene.position.x = moonMesh.position.x + 1;
             moonNameOnScene.position.z = moonMesh.position.z;
         }
     });
-
 }
 
 Moon.prototype.positionMoonRangesliderZoomOut = function() {
     this.traverseSceneToFindMoons(false, "");
     this.traverseSceneToFindMoons(false, "name");
-}
-
-Moon.prototype.positionMoonToOriginalPosition = function(moonMesh, moonName, orbits, planetOrder, moonNameOnScene, scaleValue) {
-    this.traverseSceneToFindMoons(true, "");
-    this.traverseSceneToFindMoons(true, "name");
-
-    var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
-    dataOfCurrentPlanetJSON.then(function(result) {
-        moonMesh.position.x = orbits[planetOrder + 8].position.x + result[moonName]["a"] + result[moonName]["c"];
-        moonMesh.position.z = orbits[planetOrder + 8].position.z + result[moonName]["b"] * 1.7;
-
-        if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
-            moonNameOnScene.position.x = moonMesh.position.x + 1;
-            moonNameOnScene.position.z = moonMesh.position.z;
-        }
-    });
 }
 
 Moon.prototype.traverseSceneToFindMoons = function(showObjectsBoolean, name) {
