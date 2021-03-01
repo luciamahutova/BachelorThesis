@@ -34,6 +34,7 @@ let arrLang = {
         'rotationPeriod': 'Oběžná doba kolem své osy (hod): ',
         'orbitalPeriod': 'Oběžná doba kolem Slunce (dny): ',
         'distanceFromSun': 'Vzdálenost od Slunce:',
+        'negativeRotationPeriodMeaning': 'Čas 1 rotace planety vzhledem ke fixnnímu pozadí hvězd, ne ke Slunci. Záporní hodnota představuje spátoční rotaci (opačný směr ve srovnání se Zemí).',
         // Sidebar - planet physical info
         'moonMass': 'Hmotnost měsíce:',
         'orbitalPeriodMoon': 'Oběžná doba kolem planety (dny):',
@@ -113,6 +114,7 @@ let arrLang = {
         'rotationPeriod': 'Rotation period around its axis (h): ',
         'orbitalPeriod': 'Orbital period around the Sun (days): ',
         'distanceFromSun': 'Distance from Sun:',
+        'negativeRotationPeriodMeaning': "Time of 1 planet's rotation relative to the fixed background stars, not to the Sun. Negative numbers indicate retrograde rotation (backwards relative to the Earth).",
         // Sidebar - planet physical info
         'moonMass': 'Weight of moon:',
         'orbitalPeriodMoon': 'Orbital period around planet (days):',
@@ -191,6 +193,7 @@ let arrLang = {
         'rotationPeriod': 'Čas obehu okolo svojej osi (hod): ',
         'orbitalPeriod': 'Čas obehu okolo Slnka (dni): ',
         'distanceFromSun': 'Vzdialenosť od Slnka:',
+        'negativeRotationPeriodMeaning': 'Čas 1 rotácie planéty vzhľadom ku fixnému pozadiu hviezd, nie ku Slnku. Záporná hodnota predstavuje spiatočnú rotáciu (opačný smer v porovnaní so Zemou).',
         // Sidebar - planet physical info
         'moonMass': 'Hmotnosť mesiaca:',
         'orbitalPeriodMoon': 'Čas obehu okolo planéty (dni):',

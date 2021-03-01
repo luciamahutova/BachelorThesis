@@ -114,7 +114,7 @@ Planet.prototype.createTextGeometry = function(planetsMeshes, planetsNamesOnScen
 
     loader.load('node_modules/three/examples/fonts/helvetiker_regular.typeface.json', function(font) {
         var material = new THREE.MeshNormalMaterial();
-        material.transparent = true;
+        material.transparent = false;
 
         for (i = 0; i < planetsMeshes.length; i++) {
             geometry = new THREE.TextGeometry(objectNames[i], {

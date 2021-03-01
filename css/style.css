@@ -243,6 +243,11 @@ header img {
     height: 18px;
 }
 
+#sidebarPlanetInfo .infoBubble {
+    float: left;
+    margin: 3px 0 0 15px;
+}
+
 
 /* Inputs in Sidebar *********************/
 
@@ -413,6 +418,11 @@ input[type="checkbox"] {
 
 .tooltip:hover span {
     visibility: visible;
+}
+
+.infoBubble span {
+    width: 300px;
+    height: fit-content;
 }
 
 
