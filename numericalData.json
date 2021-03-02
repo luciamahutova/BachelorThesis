@@ -16,7 +16,8 @@
             "rotationSpeed": 47.4,
             "rotationPeriod": "1 407.6",
             "orbitalPeriod": 88,
-            "distanceFromSun": "57.9 × 10^6 km"
+            "perihelion": "46 x 10^6 km",
+            "aphelion": "69.8 x 10^6 km"
         },
         "Venus": {
             "a": 0.7219,
@@ -34,7 +35,8 @@
             "rotationSpeed": 35.0,
             "rotationPeriod": "-5 832.5",
             "orbitalPeriod": 224.7,
-            "distanceFromSun": "108.2 × 10^6 km"
+            "perihelion": "107.5 x 10^6 km",
+            "aphelion": "108.9 x 10^6 km"
         },
         "Earth": {
             "a": 1.0027,
@@ -52,7 +54,8 @@
             "rotationSpeed": 29.8,
             "rotationPeriod": 23.9,
             "orbitalPeriod": 365.2,
-            "distanceFromSun": "149.6 × 10^6 km"
+            "perihelion": "147.1 x 10^6 km",
+            "aphelion": "152.1 x 10^6 km"
         },
         "Mars": {
             "a": 1.5241,
@@ -70,7 +73,8 @@
             "rotationSpeed": 24.1,
             "rotationPeriod": 24.6,
             "orbitalPeriod": 687,
-            "distanceFromSun": "227.9 × 10^6 km"
+            "perihelion": "206.6 x 10^6 km",
+            "aphelion": "249.2 x 10^6 km"
         },
         "Jupiter": {
             "a": 5.2073,
@@ -88,7 +92,8 @@
             "rotationSpeed": 13.1,
             "rotationPeriod": 9.9,
             "orbitalPeriod": 4331,
-            "distanceFromSun": "778.6 × 10^6 km"
+            "perihelion": "740.5 x 10^6 km",
+            "aphelion": "816.6 x 10^6 km"
         },
         "Saturn": {
             "a": 9.5590,
@@ -106,7 +111,8 @@
             "rotationSpeed": 9.7,
             "rotationPeriod": 10.7,
             "orbitalPeriod": "10 747",
-            "distanceFromSun": "1 433.5 × 10^6 km"
+            "perihelion": "1 352.6 x 10^6 km",
+            "aphelion": "1 514.5 x 10^6 km"
         },
         "Uranus": {
             "a": 19.1848,
@@ -124,7 +130,8 @@
             "rotationSpeed": 6.8,
             "rotationPeriod": -17.2,
             "orbitalPeriod": "30 589",
-            "distanceFromSun": "2 872.5 × 10^6 km"
+            "perihelion": "2 741.3 x 10^6 km",
+            "aphelion": "3 003.6 x 10^6 km"
         },
         "Neptune": {
             "a": 30.0806,
@@ -142,7 +149,8 @@
             "rotationSpeed": 5.4,
             "rotationPeriod": 16.1,
             "orbitalPeriod": "59 800",
-            "distanceFromSun": "4 495.1 × 10^6 km"
+            "perihelion": "4 444.5 x 10^6 km",
+            "aphelion": "4 545.7 x 10^6 km"
         }
     },
     "moonData": {

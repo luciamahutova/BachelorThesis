@@ -395,6 +395,10 @@ input[type="checkbox"] {
 
 /* Tooltips **********************************/
 
+.sidebars .tooltip {
+    box-shadow: none;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;

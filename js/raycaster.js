@@ -62,7 +62,8 @@ class RayCaster {
                     document.getElementById("rotationSpeedInput").value = result[intersects[0].object.name]["rotationSpeed"];
                     document.getElementById("rotationPeriodInput").value = result[intersects[0].object.name]["rotationPeriod"];
                     document.getElementById("orbitalPeriodInput").value = result[intersects[0].object.name]["orbitalPeriod"];
-                    document.getElementById("distanceFromSunInput").value = result[intersects[0].object.name]["distanceFromSun"];
+                    document.getElementById("distanceFromSunPerihelionInput").value = result[intersects[0].object.name]["perihelion"];
+                    document.getElementById("distanceFromSunAphelionInput").value = result[intersects[0].object.name]["aphelion"];
                 });
             } else if (!showPlanetTable) {
                 var dataOfCurrentPlanetJSON = allMoonDataJSON[0];
