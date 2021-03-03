@@ -46,10 +46,12 @@ let arrLang = {
         'distanceFromPlanet': 'Vzdálenost od planety (km):',
         'minTemperature': 'Minimální teplota:',
         'maxTemperature': 'Maximální teplota:',
-        // Rangesliders
+        // Rangesliders and buttons
         'rotation': 'Rotace: ',
         'zoom': 'Přiblížení: ',
         'centerModel': 'Vycentrovat',
+        'cosmicObject': 'Kosmický objekt',
+        'cameraToPlanet': 'Kamera na planetu',
         // Planets
         'backToPlanets': 'Zpátky na planety',
 
@@ -110,10 +112,12 @@ let arrLang = {
         'distanceFromPlanet': 'Distance from planet (km):',
         'minTemperature': 'Minimum temperature:',
         'maxTemperature': 'Maximum temperature:',
-        // Rangesliders
+        // Rangesliders and buttons
         'rotation': 'Rotation: ',
         'zoom': 'Zoom: ',
         'centerModel': 'Center model',
+        'cosmicObject': 'Cosmic object',
+        'cameraToPlanet': 'Camera to planet',
         // Planets
         'backToPlanets': 'Back to planets',
 
@@ -174,10 +178,12 @@ let arrLang = {
         'distanceFromPlanet': 'Vzdialenosť od planéty (km):',
         'minTemperature': 'Minimálna teplota:',
         'maxTemperature': 'Maximálna teplota:',
-        // Rangesliders
+        // Rangesliders and buttons
         'rotation': 'Rotácia: ',
         'zoom': 'Priblíženie: ',
         'centerModel': 'Vycentrovať',
+        'cosmicObject': 'Kozmický objekt',
+        'cameraToPlanet': 'Kamera na planétu',
         // Planets
         'backToPlanets': 'Späť na planéty',
 

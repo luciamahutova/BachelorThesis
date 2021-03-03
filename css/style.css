@@ -330,15 +330,20 @@ input[type="checkbox"] {
     position: relative;
     float: left;
     margin-right: 20px;
-    background-image: url(/icons/solarSystem2D.png);
+    background-image: url(/icons/rocket.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
 }
 
 .models div:nth-of-type(2) button {
-    background-image: url(/icons/solarSystem3D.png);
+    background-image: url(/icons/camera.png);
+    background-size: 30px;
 }
 
-.models div:last-of-type button {
+.models div:nth-of-type(3) button {
     background-image: url(/icons/centerScene.png);
+    background-size: 50px;
 }
 
 
