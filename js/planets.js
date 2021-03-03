@@ -275,16 +275,18 @@ Planet.prototype.positionPlanetRandesliderZoomOut = function(planetMesh, planetN
 
 Planet.prototype.positionPlanetOnOrbit = function(planetMesh, planetName, planetNameOnScene, scaleValue, isZoomIn, timestamp) {
     var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
-    var halfSizeOfUranus = 0;
+    var halfSizeOfUranus = orbitalSpeed = 0;
 
     dataOfCurrentPlanetJSON.then(function(result) {
         if (planetName == "Uranus" && isZoomIn == true) {
             halfSizeOfUranus = result[planetName]["planetSize"] * scaleValue;
         } else { halfSizeOfUranus = 0; }
 
+        orbitalSpeed = result[planetName]["rotationSpeed"] / 15; // orbital speed was too high
         planetMesh.position.x = -3 * result[planetName]["c"] +
-            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(timestamp)) - halfSizeOfUranus;
-        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scaleValue * Math.sin(timestamp));
+            (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(timestamp * orbitalSpeed)) - halfSizeOfUranus;
+        planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scaleValue *
+            Math.sin(timestamp * orbitalSpeed));
 
         if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
             planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scaleValue + 1;

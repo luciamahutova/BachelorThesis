@@ -112,13 +112,15 @@ Moon.prototype.rotateAllMoons = function(scaleValue, speedValue, time) {
 Moon.prototype.positionMoonToOrbit = function(moonMesh, moonName, orbitOrder, moonNameOnScene, scaleValue, rotationSpeed, multiply) {
     this.traverseSceneToFindMoons(true, "");
     this.traverseSceneToFindMoons(true, "name");
+    var orbitalSpeed = 0;
 
     var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
     dataOfCurrentPlanetJSON.then(function(result) {
+        orbitalSpeed = result[moonName]["orbitalSpeed"] / 15; // same in planets.js, too high speed 
         moonMesh.position.x = orbits[orbitOrder + 8].position.x + result[moonName]["c"] + multiply *
-            result[moonName]["a"] * result[moonName]["scaleFactor"] * scaleValue * Math.cos(rotationSpeed);
+            result[moonName]["a"] * result[moonName]["scaleFactor"] * scaleValue * Math.cos(rotationSpeed * orbitalSpeed);
         moonMesh.position.z = orbits[orbitOrder + 8].position.z - multiply *
-            result[moonName]["b"] * result[moonName]["scaleFactor"] * scaleValue * Math.sin(rotationSpeed);
+            result[moonName]["b"] * result[moonName]["scaleFactor"] * scaleValue * Math.sin(rotationSpeed * orbitalSpeed);
 
         if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
             moonNameOnScene.position.x = moonMesh.position.x + 1;
