@@ -13,7 +13,7 @@
 </head>
 
 <body style="overflow: hidden;">
-    <header>
+    <header class="overlay">
         <img src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
         <nav id="menu">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -36,7 +36,7 @@
         </nav>
     </header>
 
-    <section class="sidebars" id="sidebarPlanetInfo" onclick="sidebarManager.hideSidebarToLeft()">
+    <section class="sidebars overlay" id="sidebarPlanetInfo" onclick="sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
                 <h3 class="lang" id="physicalValuesPlanet"></h3>
@@ -86,7 +86,7 @@
         </div>
     </section>
 
-    <section class="sidebars" id="sidebarMoonInfo" onclick="sidebarManager.hideSidebarToLeft()">
+    <section class="sidebars overlay" id="sidebarMoonInfo" onclick="sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
                 <h3 class="lang" id="physicalValuesMoon"></h3>
@@ -114,7 +114,7 @@
     </section>
 
     <img src="/icons/molecules.png" class="sidebarIcon" alt="" width="30" height="30" onclick="sidebarManager.showHideSidebarToRight()">
-    <section class="sidebars" id="sidebarRight">
+    <section class="sidebars overlay" id="sidebarRight">
         <div>
             <section>
                 <h3 class="lang" id="names"></h3>
@@ -224,7 +224,7 @@
         </div>
     </section>
 
-    <section class="models">
+    <section class="models overlay">
         <div class="tooltip">
             <button type="button"></button>
             <span class="lang" id="cosmicObject"></span>
@@ -240,12 +240,12 @@
     </section>
 
     <!-- 1st rangeslider = planets' rotation speed -->
-    <div class="slidecontainer">
+    <div class="slidecontainer overlay">
         <input type="range" min="-3" max="6" value="0" class="slider" id="rangesliderSpeedInput">
         <span class="lang" id="rotation"></span><span id="rangesliderSpeedValue"></span><span>x</span>
     </div>
     <!-- 2nd rangeslider = zoom for scene and all its objects -->
-    <div class="slidecontainer">
+    <div class="slidecontainer overlay">
         <!-- <input type="range" min="-3" max="6" value="0" class="slider" id="rangesliderZoomInput"> -->
         <input type="range" min="50" max="200" value="100" step="5" class="slider" id="rangesliderZoomInput">
         <span class="lang" id="zoom"></span><span id="rangesliderZoomValue"></span><span>%</span>

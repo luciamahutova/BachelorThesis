@@ -45,6 +45,14 @@ class RayCaster {
         }
     }
 
+    disableRaycasterThroughOverlayObjects = function() {
+        document.querySelectorAll('.overlay').forEach(item => {
+            item.addEventListener('click', event => {
+                event.stopPropagation();
+            })
+        })
+    }
+
     getPhysicalValuesOfClickedObjectFromJSON = function(allPlanetDataJSON, allMoonDataJSON) {
         var intersects = window.myParam;
         var showPlanetTable;
