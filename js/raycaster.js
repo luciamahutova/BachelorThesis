@@ -87,24 +87,4 @@ class RayCaster {
             }
         }
     }
-
-    // NEPOUZITE
-    setCurrentSpeedOfClickedPlanet = function() {
-        var speedSlider = document.getElementById("rangesliderSpeedInput");
-        var speedSliderValue = document.getElementById("rangesliderSpeedValue");
-        var currentSpeedOfPlanet = document.getElementById("currentRotationInput").value;
-
-        speedSliderValue.innerHTML = speedSlider.value;
-        var speedValue = speedSliderValue.innerHTML;
-        //console.log(speedValue);
-
-        if (speedValue > 0) {
-            currentSpeedOfPlanet = currentSpeedOfPlanet * speedValue;
-        } else if (speedValue < 0) {
-            currentSpeedOfPlanet = currentSpeedOfPlanet / Math.abs(speedValue);
-        }
-        //console.log(currentSpeedOfPlanet);
-        // HODNOTA DOBRÁ, ALE NEVYPÍŠE SA DO TABUĽKY, PREČO?
-        document.getElementById("currentRotationInput").value = currentSpeedOfPlanet;
-    }
 }
