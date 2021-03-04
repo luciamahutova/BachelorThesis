@@ -68,8 +68,8 @@ Planet.prototype.addAllMoonDataJSON = function() {
 // -------------------------------------------------------------------------
 // DOCASNE, OPRAVIT ABY NEBOLI HODNOTY NASTAVOVANE PRIAMO
 Planet.prototype.createPlanets = function() {
-    // 27x smaller scale for Sun; 5x smaller scale for Jupiter, Saturn, Uranus, Neptune
-    var planetSizes = [0.3829, 0.9499, 1, 0.5320, 10.97 / 5, 9.140 / 5, 3.981 / 5, 3.865 / 5];
+    // 27x smaller scale for Sun; 5-6x smaller scale for Jupiter, Saturn, Uranus, Neptune
+    var planetSizes = [0.3829, 0.9499, 1, 0.5320, 10.97 / 6, 9.140 / 6, 3.981 / 5, 3.865 / 5];
     for (var i = 0; i < planetSizes.length; i++) {
         this.planetsObjects.push(this.createPlanetObject(planetSizes[i]));
     }

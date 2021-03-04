@@ -25,11 +25,8 @@ Moon.prototype.createMoons = function() {
         "Europa": [0.2450, "Jupiter"],
         "Ganymede": [0.4135, "Jupiter"],
         "Callisto": [0.3783, "Jupiter"],
-        "Tethys": [0.0834, "Saturn"],
-        "Dione": [0.0881, "Saturn"],
         "Rhea": [0.1199, "Saturn"],
         "Titan": [0.4037, "Saturn"],
-        "Iapetus": [0.1153, "Saturn"],
         "Ariel": [0.0909, "Uranus"],
         "Umbriel": [0.0918, "Uranus"],
         "Titania": [0.1237, "Uranus"],
@@ -58,7 +55,7 @@ Moon.prototype.createMoons = function() {
 
 Moon.prototype.addParentToMoon = function(moonSizeAndParent, planetsMeshes, moonsMeshes) {
     var moonParent, moonName;
-    for (i = 0, j = 0; i < 14;) {
+    for (i = 0, j = 0; i < 11;) {
         moonParent = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][1];
         moonName = Object.keys(moonSizeAndParent)[i];
         if (planetsMeshes[j].name == moonParent) {
@@ -69,8 +66,8 @@ Moon.prototype.addParentToMoon = function(moonSizeAndParent, planetsMeshes, moon
 }
 
 Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, scene) {
-    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
-        "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
+        "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
     this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames, 0.9);
 }
@@ -79,7 +76,7 @@ Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, s
 // Positions for the Moon - according to zoom
 // -------------------------------------------------------------------------
 Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, orbits, orbitOrder, planetName, scaleValue, speedValue, time) {
-    var moonRotationSpeedAroundPlanet = [1.000, 0.802, 0.434, 0.323, 0.228, 0.128, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128,
+    var moonRotationSpeedAroundPlanet = [1.000, 0.802, 0.434, 0.323, 0.228, 0.128, 1.000, 0.802, 0.434, 0.228, 0.128,
         1.000, 0.802, 0.434
     ];
     var rotationSpeed = this.calculateRotationSpeed(orbitOrder, speedValue, time, moonRotationSpeedAroundPlanet);
@@ -99,8 +96,8 @@ Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, orbits, orb
 
 Moon.prototype.rotateAllMoons = function(scaleValue, speedValue, time) {
     var moonMesh;
-    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
-        "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
+        "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
 
     for (var i = 0; i < this.moonsMeshes.length; i++) {
@@ -139,9 +136,8 @@ Moon.prototype.traverseSceneToFindMoons = function(showObjectsBoolean, name) {
     // Arg.: empty name for moons and orbits, "name" for TextGeometry
     this.scene.traverse(function(children) {
         if (children.name == name + "Moon" || children.name == name + "Io" || children.name == name + "Europa" ||
-            children.name == name + "Ganymede" || children.name == name + "Callisto" || children.name == name + "Tethys" ||
-            children.name == name + "Dione" || children.name == name + "Rhea" || children.name == name + "Titan" ||
-            children.name == name + "Iapetus" || children.name == name + "Ariel" || children.name == name + "Umbriel" ||
+            children.name == name + "Ganymede" || children.name == name + "Callisto" || children.name == name + "Rhea" ||
+            children.name == name + "Titan" || children.name == name + "Ariel" || children.name == name + "Umbriel" ||
             children.name == name + "Titania" || children.name == name + "Oberon" || children.name == name + "Triton") {
             children.visible = showObjectsBoolean;
         }

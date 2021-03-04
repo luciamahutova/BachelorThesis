@@ -16,8 +16,8 @@ class Orbits {
 // -------------------------------------------------------------------------
 Orbits.prototype.createOrbitShape = function() {
     var planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-    var moons = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
-        "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+    var moons = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
+        "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
     for (i = 0; i < planets.length; i++) {
         this.createCurveForOrbit(planets[i], this.orbits, this.scene, this.allPlanetDataJSON[0], -3);
@@ -58,9 +58,9 @@ Orbits.prototype.positionSingleMoonOrbit = function(moonOrbit, planetsMeshes, pl
 }
 
 Orbits.prototype.positionAllMoonOrbits = function() {
-    var planetOrder = [2, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7];
-    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Tethys", "Dione", "Rhea", "Titan",
-        "Iapetus", "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+    var planetOrder = [2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7];
+    var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
+        "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
 
     for (var i = 8, j = 0; i < this.orbits.length; i++, j++) {
