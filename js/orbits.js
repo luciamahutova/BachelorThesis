@@ -11,7 +11,6 @@ class Orbits {
     getAllOrbits = function() { return this.orbits; }
 }
 
-
 // Creating orbits for planets
 // -------------------------------------------------------------------------
 Orbits.prototype.createOrbitShape = function() {
@@ -71,32 +70,8 @@ Orbits.prototype.positionAllMoonOrbits = function() {
 
 // Scaling orbits according to zoom value from rangeslider
 // -------------------------------------------------------------------------
-Orbits.prototype.setScaleForOrbits = function(scaleValue) {
-    var scale = scaleValue * 200;
-    if (scale > 100) {
-        this.scaleOrbitsRangesliderZoomIn(scaleValue);
-    } else if (scale < 100) {
-        scaleValue *= -1;
-        this.scaleOrbitsRangesliderZoomOut(scaleValue);
-    } else {
-        this.scaleOrbitsToOriginalSize();
-    }
-}
-
-Orbits.prototype.scaleOrbitsRangesliderZoomIn = function(scaleValue) {
+Orbits.prototype.scaleOrbitsByRangeslider = function(scaleValue) {
     for (var i = 0; i < this.orbits.length; i++) {
         this.orbits[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
-    }
-}
-
-Orbits.prototype.scaleOrbitsRangesliderZoomOut = function(scaleValue) {
-    for (var i = 0; i < this.orbits.length; i++) {
-        this.orbits[i].scale.set(-2 * scaleValue, -2 * scaleValue, -2 * scaleValue);
-    }
-}
-
-Orbits.prototype.scaleOrbitsToOriginalSize = function() {
-    for (var i = 0; i < this.orbits.length; i++) {
-        this.orbits[i].scale.set(1, 1, 1);
     }
 }

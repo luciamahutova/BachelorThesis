@@ -48,21 +48,7 @@ Moon.prototype.createMoons = function() {
         this.moonsMeshes.push(moonMesh);
         moonMesh.position.x = 10 + i * 3;
     }
-    // RODIČ NENASTAVENÝ, RODIČOM OSTÁVA Scene
-    //this.addParentToMoon(moonSizeAndParent, this.planetsMeshes, this.moonsMeshes);
     this.addMeshToScene(this.scene, this.moonsMeshes);
-}
-
-Moon.prototype.addParentToMoon = function(moonSizeAndParent, planetsMeshes, moonsMeshes) {
-    var moonParent, moonName;
-    for (i = 0, j = 0; i < 11;) {
-        moonParent = moonSizeAndParent[Object.keys(moonSizeAndParent)[i]][1];
-        moonName = Object.keys(moonSizeAndParent)[i];
-        if (planetsMeshes[j].name == moonParent) {
-            planetsMeshes[j].add(moonsMeshes[i]);
-            i++;
-        } else { j++; }
-    }
 }
 
 Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, scene) {
@@ -71,7 +57,6 @@ Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, s
     ];
     this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames, 0.9);
 }
-
 
 // Positions for the Moon - according to zoom
 // -------------------------------------------------------------------------
@@ -82,15 +67,10 @@ Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, orbits, orb
     var rotationSpeed = this.calculateRotationSpeed(orbitOrder, speedValue, time, moonRotationSpeedAroundPlanet);
     var scale = scaleValue * 200;
 
-
-    // scaleValue is used because of zooming in/out by rangeslider
-    if (scale > 100) {
-        this.positionMoonToOrbit(moonMesh, moonName, orbitOrder, planetName, scaleValue, rotationSpeed, 2);
-    } else
-    if (scale < 100) {
+    if (scale < 70) {
         this.positionMoonRangesliderZoomOut();
     } else {
-        this.positionMoonToOrbit(moonMesh, moonName, orbitOrder, planetName, 1, rotationSpeed, 1);
+        this.positionMoonToOrbit(moonMesh, moonName, orbitOrder, planetName, scaleValue, rotationSpeed, 2);
     }
 }
 
@@ -132,7 +112,7 @@ Moon.prototype.positionMoonRangesliderZoomOut = function() {
 }
 
 Moon.prototype.traverseSceneToFindMoons = function(showObjectsBoolean, name) {
-    // Hide all moons, orbits and name (cannot remove from scene in scene.traverse)
+    // Hide all moons, orbits and name (cannot remove from scene in f. scene.traverse)
     // Arg.: empty name for moons and orbits, "name" for TextGeometry
     this.scene.traverse(function(children) {
         if (children.name == name + "Moon" || children.name == name + "Io" || children.name == name + "Europa" ||
@@ -142,15 +122,4 @@ Moon.prototype.traverseSceneToFindMoons = function(showObjectsBoolean, name) {
             children.visible = showObjectsBoolean;
         }
     });
-}
-
-// Scaling the Moon - according to zoom (functions inherited from class Planet)
-// -------------------------------------------------------------------------
-Moon.prototype.setScaleForMoons = function(scaleValue) {
-    var scale = scaleValue * 200;
-    if (scale > 100) {
-        this.scaleMeshesRangesliderZoomIn(scaleValue, this.moonsMeshes);
-    } else if (scale == 100) {
-        this.scaleMeshesToOriginalSize(this.moonsMeshes);
-    }
 }
