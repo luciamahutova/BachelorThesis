@@ -60,7 +60,7 @@ Moon.prototype.addNamesToMoonObject = function(moonsMeshes, moonsNamesOnScene, s
 
 // Positions for the Moon - according to zoom
 // -------------------------------------------------------------------------
-Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, orbits, orbitOrder, planetName, scaleValue, speedValue, time) {
+Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, orbitOrder, planetName, scaleValue, speedValue, time) {
     var moonRotationSpeedAroundPlanet = [1.000, 0.802, 0.434, 0.323, 0.228, 0.128, 1.000, 0.802, 0.434, 0.228, 0.128,
         1.000, 0.802, 0.434
     ];
@@ -70,7 +70,7 @@ Moon.prototype.rotateMoonAroundPlanet = function(moonMesh, moonName, orbits, orb
     if (scale < 70) {
         this.positionMoonRangesliderZoomOut();
     } else {
-        this.positionMoonToOrbit(moonMesh, moonName, orbitOrder, planetName, scaleValue, rotationSpeed, 2);
+        this.positionMoonToOrbit(moonMesh, moonName, orbitOrder, planetName, scaleValue, rotationSpeed);
     }
 }
 
@@ -82,11 +82,11 @@ Moon.prototype.rotateAllMoons = function(scaleValue, speedValue, time) {
 
     for (var i = 0; i < this.moonsMeshes.length; i++) {
         moonMesh = this.moonsMeshes[i];
-        this.rotateMoonAroundPlanet(moonMesh, moonNames[i], this.orbits, i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
+        this.rotateMoonAroundPlanet(moonMesh, moonNames[i], i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
     }
 }
 
-Moon.prototype.positionMoonToOrbit = function(moonMesh, moonName, orbitOrder, moonNameOnScene, scaleValue, rotationSpeed, multiply) {
+Moon.prototype.positionMoonToOrbit = function(moonMesh, moonName, orbitOrder, moonNameOnScene, scaleValue, rotationSpeed) {
     this.traverseSceneToFindMoons(true, "");
     this.traverseSceneToFindMoons(true, "name");
     var orbitalSpeed = 0;
@@ -94,10 +94,10 @@ Moon.prototype.positionMoonToOrbit = function(moonMesh, moonName, orbitOrder, mo
     var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
     dataOfCurrentPlanetJSON.then(function(result) {
         orbitalSpeed = result[moonName]["orbitalSpeed"] / 15; // same in planets.js, too high speed 
-        moonMesh.position.x = orbits[orbitOrder + 8].position.x + result[moonName]["c"] + multiply *
-            result[moonName]["a"] * result[moonName]["scaleFactor"] * scaleValue * Math.cos(rotationSpeed * orbitalSpeed);
-        moonMesh.position.z = orbits[orbitOrder + 8].position.z - multiply *
-            result[moonName]["b"] * result[moonName]["scaleFactor"] * scaleValue * Math.sin(rotationSpeed * orbitalSpeed);
+        moonMesh.position.x = orbits[orbitOrder + 8].position.x + 2 * result[moonName]["a"] *
+            result[moonName]["scaleFactor"] * scaleValue * Math.cos(rotationSpeed * orbitalSpeed);
+        moonMesh.position.z = orbits[orbitOrder + 8].position.z - 2 * result[moonName]["b"] *
+            result[moonName]["scaleFactor"] * scaleValue * Math.sin(rotationSpeed * orbitalSpeed);
 
         if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
             moonNameOnScene.position.x = moonMesh.position.x + 1;

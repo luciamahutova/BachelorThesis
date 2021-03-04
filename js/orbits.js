@@ -19,20 +19,20 @@ Orbits.prototype.createOrbitShape = function() {
         "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
     ];
     for (i = 0; i < planets.length; i++) {
-        this.createCurveForOrbit(planets[i], this.orbits, this.scene, this.allPlanetDataJSON[0], -3);
+        this.createCurveForOrbit(planets[i], this.orbits, this.scene, this.allPlanetDataJSON[0]);
     }
     for (i = 0; i < moons.length; i++) {
-        this.createCurveForOrbit(moons[i], this.orbits, this.scene, this.allMoonDataJSON[0], 1);
+        this.createCurveForOrbit(moons[i], this.orbits, this.scene, this.allMoonDataJSON[0]);
     }
 }
 
-Orbits.prototype.createCurveForOrbit = function(objectName, orbits, scene, dataJSON, moveOrbitByNum) {
+Orbits.prototype.createCurveForOrbit = function(objectName, orbits, scene, dataJSON) {
     var curve, geometry, material, ellipse;
     var dataOfCurrentOrbitJSON = dataJSON;
 
     dataOfCurrentOrbitJSON.then(function(result) {
         curve = new THREE.EllipseCurve( // values for ellipse curve
-            moveOrbitByNum * result[objectName]["c"], 0, // aX, aY (X/Y center of the ellipse)
+            result[objectName]["c"], 0, // aX, aY (X/Y center of the ellipse)
             result[objectName]["a"] * result[objectName]["scaleFactor"], //xRadius 
             result[objectName]["b"] * result[objectName]["scaleFactor"], //yRadius 
             0, 2 * Math.PI, // aStartAngle, aEndAngle (angle of the curve in radians starting from the positive X axis)
