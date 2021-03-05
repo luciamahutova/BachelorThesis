@@ -23,7 +23,13 @@ class MainScene {
         this.mousePositionX = this.mousePositionY = 0; // Used for drag events
     }
 
-    initRenderer = function() {
+    getScene() { return this.scene }
+    getRenderer() { return this.renderer }
+    getCamera() { return this.camera }
+
+    // Initialize renderer, camera, lights
+    // -------------------------------------------------------------------------
+    initRenderer() {
         this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: false });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -34,14 +40,20 @@ class MainScene {
         return this.renderer;
     }
 
-    initCamera = function() {
+    initCamera() {
         this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
         this.camera.position.set(0, 40, 0);
         this.camera.lookAt(new THREE.Vector3(0, 1, 0));
         return this.camera;
     }
 
-    setLights = function() {
+    createBgCamera() {
+        this.bgCamera = new THREE.Camera();
+        this.bgScene.add(this.bgCamera);
+        return this.bgCamera;
+    }
+
+    setLights() {
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x061327, 1.3);
         hemiLight.position.set(0, 0, 0);
         this.scene.add(hemiLight);
@@ -54,7 +66,9 @@ class MainScene {
         this.scene.add(pointLight);
     }
 
-    setStaticBackground = function() {
+    // Background of Scene
+    // -------------------------------------------------------------------------
+    setStaticBackground() {
         const bgTexture = new THREE.TextureLoader().load('/images/2k-starsMilkyWay.jpg');
         const bgGeometry = new THREE.PlaneGeometry(2, 2, 0);
         const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
@@ -62,23 +76,13 @@ class MainScene {
         return this.bgMesh;
     }
 
-    createBgScene = function() {
+    createBgScene() {
         this.bgScene = new THREE.Scene();
         this.bgScene.add(this.bgMesh);
         return this.bgScene;
     }
 
-    createBgCamera = function() {
-        this.bgCamera = new THREE.Camera();
-        this.bgScene.add(this.bgCamera);
-        return this.bgCamera;
-    }
-
-    getScene = function() { return this.scene }
-    getRenderer = function() { return this.renderer }
-    getCamera = function() { return this.camera }
-
-    resizeBackground = function(renderer, camera) {
+    resizeBackground(renderer, camera) {
         window.addEventListener('resize', function() {
             renderer.setSize(window.innerWidth, window.innerHeight);
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -86,8 +90,10 @@ class MainScene {
         });
     }
 
-    // Movement of the scene by keyboard (4 arrows and Esc) + center the scene back
-    moveSceneOnPressedArrow = function(e) {
+    // Move Scene functions
+    // -------------------------------------------------------------------------
+    moveSceneOnPressedArrow(e) {
+        // Movement of the scene by keyboard (4 arrows and Esc) + center the scene back
         // Movement in opposite direction - seems more natural
         var moveSceneByValue = 10;
         if (e.keyCode == '37') { // Left arrow key
@@ -103,36 +109,37 @@ class MainScene {
         }
     }
 
-    moveSceneToOriginalPosition = function(scene) {
+    moveSceneToOriginalPosition(scene) {
         scene.position.set(0, 0, 0);
     }
 
-    // Drag function for scene: https://uxdesign.cc/implementing-a-custom-drag-event-function-in-javascript-and-three-js-dc79ee545d85
-    mouseMoveEvent = function(event) {
+    // Drag function for scene: 
+    // https://uxdesign.cc/implementing-a-custom-drag-event-function-in-javascript-and-three-js-dc79ee545d85
+    mouseMoveEvent(event) {
         if (this.mouseDown) {
             var moveToX = event.clientX - this.mousePositionX;
             var moveToY = event.clientY - this.mousePositionY;
             this.mousePositionX = event.clientX;
             this.mousePositionY = event.clientY;
 
-            // Move the scene
             this.scene.position.x += moveToX / 10;
             this.scene.position.z += moveToY / 10;
         }
     }
 
-    mouseDownEvent = function(event) {
+    mouseDownEvent(event) {
         this.mouseDown = true;
         this.mousePositionX = event.clientX;
         this.mousePositionY = event.clientY;
     }
 
-    mouseUpEvent = function() {
+    mouseUpEvent() {
         this.mouseDown = false;
     }
 
     // Event listener functions
-    addEventListenerFunctions = function() {
+    // -------------------------------------------------------------------------
+    addEventListenerFunctions() {
         window.addEventListener('keydown', this.moveSceneOnPressedArrow, false);
         window.addEventListener('click', this.raycaster.onMouseMove, false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
@@ -140,8 +147,35 @@ class MainScene {
         window.addEventListener('mouseup', this.mouseUpEvent, false);
     }
 
+    // Zooming in/out (for planets and orbits) + movement of the scene
+    // -------------------------------------------------------------------------
+    zoomAndSpeedRangesliders(time) {
+        var zoomSlider = document.getElementById("rangesliderZoomInput");
+        var zoomSliderValue = document.getElementById("rangesliderZoomValue");
+        var speedSlider = document.getElementById("rangesliderSpeedInput");
+        var speedSliderValue = document.getElementById("rangesliderSpeedValue");
+
+        var updateRangesliderValues = () => {
+            zoomSliderValue.innerHTML = zoomSlider.value;
+            this.scaleValueScene = zoomSliderValue.innerHTML / 200;
+
+            speedSliderValue.innerHTML = speedSlider.value;
+            this.speedValuePlanets = speedSliderValue.innerHTML;
+
+            this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
+            this.moonObject.scaleObjectMeshesByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
+            this.sunObject.setScaleForSun(this.scaleValueScene);
+
+            this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
+            this.moonObject.rotateAllMoons(this.scaleValueScene, this.speedValuePlanets, time);
+        }
+        zoomSlider.addEventListener('input', updateRangesliderValues);
+        updateRangesliderValues();
+    }
+
     // Animate function: called in app.js 
-    animate = function(time) {
+    // -------------------------------------------------------------------------
+    animate(time) {
         this.addEventListenerFunctions();
         this.raycaster.disableRaycasterThroughOverlayObjects();
         this.raycaster.getPhysicalValuesOfClickedObjectFromJSON(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
@@ -152,30 +186,4 @@ class MainScene {
         this.renderer.render(this.bgScene, this.bgCamera);
         this.renderer.render(this.scene, this.camera);
     };
-}
-
-// Zooming in/out (for planets and orbits) + movement of the scene
-// -------------------------------------------------------------------------
-MainScene.prototype.zoomAndSpeedRangesliders = function(time) {
-    var zoomSlider = document.getElementById("rangesliderZoomInput");
-    var zoomSliderValue = document.getElementById("rangesliderZoomValue");
-    var speedSlider = document.getElementById("rangesliderSpeedInput");
-    var speedSliderValue = document.getElementById("rangesliderSpeedValue");
-
-    var updateRangesliderValues = () => {
-        zoomSliderValue.innerHTML = zoomSlider.value;
-        this.scaleValueScene = zoomSliderValue.innerHTML / 200;
-
-        speedSliderValue.innerHTML = speedSlider.value;
-        this.speedValuePlanets = speedSliderValue.innerHTML;
-
-        this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
-        this.moonObject.scaleObjectMeshesByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
-        this.sunObject.setScaleForSun(this.scaleValueScene);
-
-        this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
-        this.moonObject.rotateAllMoons(this.scaleValueScene, this.speedValuePlanets, time);
-    }
-    zoomSlider.addEventListener('input', updateRangesliderValues);
-    updateRangesliderValues();
 }
