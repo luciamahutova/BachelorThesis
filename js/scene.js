@@ -42,7 +42,7 @@ class MainScene {
 
     initCamera() {
         this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
-        this.camera.position.set(0, 40, 0);
+        this.camera.position.set(0, 45, 0);
         this.camera.lookAt(new THREE.Vector3(0, 1, 0));
         return this.camera;
     }

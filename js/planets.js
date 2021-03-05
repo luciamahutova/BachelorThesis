@@ -183,7 +183,7 @@ class Planet {
         if (planetMesh.position.z != 0 || planetMesh.position.z != NaN) {
             this.betha = Math.cos(planetMesh.position.x / planetMesh.position.z);
         }
-        this.positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue * 2, true, rotationSpeed);
+        this.positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue * 2, rotationSpeed);
     }
 
     // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
@@ -199,7 +199,7 @@ class Planet {
 
     // Positions for 1 planet - according to scale from rangeslider
     // -------------------------------------------------------------------------
-    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, isZoomIn, timestamp) {
+    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, timestamp) {
         var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
         var orbitalSpeed = 0;
 
