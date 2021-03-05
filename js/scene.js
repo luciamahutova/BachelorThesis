@@ -7,6 +7,7 @@ class MainScene {
         this.bgScene = this.createBgScene(this.bgMesh);
         this.bgCamera = this.createBgCamera();
         this.setLights();
+        this.makeCameraFollowObject = true;
 
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
@@ -172,6 +173,47 @@ class MainScene {
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();
     }
+
+    // POKUS
+    // setUpPositionOfCamera() {
+    //     var planet = this.planetObject.getPlanetMeshes();
+    //     var clickedPlanet, index;
+    //     if (window.myParam != undefined) {
+    //         clickedPlanet = window.myParam[0].object.name;
+
+    //         if (clickedPlanet == "Mercury") {
+    //             index = 0;
+    //         } else if (clickedPlanet == "Venus") {
+    //             index = 1;
+    //         } else if (clickedPlanet == "Earth") {
+    //             index = 2;
+    //         } else if (clickedPlanet == "Mars") {
+    //             index = 3;
+    //         } else if (clickedPlanet == "Jupiter") {
+    //             index = 4;
+    //         } else if (clickedPlanet == "Saturn") {
+    //             index = 5;
+    //         } else if (clickedPlanet == "Uranus") {
+    //             index = 6;
+    //         } else if (clickedPlanet == "Neptune") {
+    //             index = 7;
+    //         }
+
+    //         if (this.makeCameraFollowObject) {
+    //             planet[index].add(this.camera);
+    //             this.camera.position.set(0, 15, 0);
+    //             this.makeCameraFollowObject = false;
+    //             $('.slider').prop('disabled', true);
+    //         } else {
+    //             planet[index].remove(this.camera);
+    //             this.camera.position.set(0, 45, 0);
+    //             this.makeCameraFollowObject = true;
+    //             $('.slider').prop('disabled', false);
+    //         }
+    //     }
+    // }
+
+
 
     // Animate function: called in app.js 
     // -------------------------------------------------------------------------
