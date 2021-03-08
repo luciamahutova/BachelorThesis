@@ -176,25 +176,17 @@ class Planet {
         return this.timestamp;
     }
 
-    rotatePlanetOnOrbit(planetMesh, planetOrder, planetName, planetNameOnScene, scaleValue, speedValue, time) {
-        var planetRotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128];
-        var rotationSpeed = this.calculateRotationSpeed(planetOrder, speedValue, time, planetRotationSpeedAroundSun);
-
-        if (planetMesh.position.z != 0 || planetMesh.position.z != NaN) {
-            this.betha = Math.cos(planetMesh.position.x / planetMesh.position.z);
-        }
-        this.positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue * 2, rotationSpeed);
-    }
-
     // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
     rotateAllPlanets(scaleValue, speedValue, time) {
-        var planetMesh;
+        var planetRotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128]
         var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+        var rotationSpeed;
 
         for (var i = 0; i < this.planetsMeshes.length; i++) {
-            planetMesh = this.planetsMeshes[i];
-            this.rotatePlanetOnOrbit(planetMesh, i, planetNames[i], this.planetsNamesOnScene[i], scaleValue, speedValue, time);
+            rotationSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
+            this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnScene[i], scaleValue * 2, rotationSpeed);
         }
+
     }
 
     // Positions for 1 planet - according to scale from rangeslider
@@ -206,9 +198,9 @@ class Planet {
         dataOfCurrentPlanetJSON.then(function(result) {
             orbitalSpeed = result[planetName]["rotationSpeed"] / 15; // orbital speed was too high
             planetMesh.position.x = result[planetName]["c"] * scaleValue +
-                (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(timestamp * orbitalSpeed));
+                (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(timestamp + orbitalSpeed));
             planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scaleValue *
-                Math.sin(timestamp * orbitalSpeed));
+                Math.sin(timestamp + orbitalSpeed));
 
             if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
                 planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scaleValue + 1;

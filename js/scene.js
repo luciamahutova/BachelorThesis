@@ -174,7 +174,7 @@ class MainScene {
         updateRangesliderValues();
     }
 
-    // POKUS
+    // POKUS - zameranie na konkrétnu planétu
     // setUpPositionOfCamera() {
     //     var planet = this.planetObject.getPlanetMeshes();
     //     var clickedPlanet, index;
@@ -217,11 +217,10 @@ class MainScene {
 
     // Animate function: called in app.js 
     // -------------------------------------------------------------------------
-    animate(time) {
+    animate() {
         this.addEventListenerFunctions();
         this.raycaster.disableRaycasterThroughOverlayObjects();
         this.raycaster.getPhysicalValuesOfClickedObjectFromJSON(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
-        this.zoomAndSpeedRangesliders(time);
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;

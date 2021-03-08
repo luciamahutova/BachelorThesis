@@ -16,8 +16,11 @@ var sidebarManager = new SidebarManager(planetsNamesOnScene, moonsNamesOnScene, 
 var i = 0;
 
 function animate() {
-    mainScene.animate(sidebarManager.getPlayTime() - sidebarManager.getPlayPauseTimeDifference() + i);
-    i += 50;
+    mainScene.animate();
+    if (document.getElementById("pauseButton").disabled == false) {
+        mainScene.zoomAndSpeedRangesliders(sidebarManager.getPlayTime() - sidebarManager.getPlayPauseTimeDifference() + i);
+        i += 50;
+    }
     animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();
