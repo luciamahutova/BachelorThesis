@@ -24,4 +24,3 @@ function animate() {
     animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();
-mainScene.moveSceneToOriginalPosition(scene);

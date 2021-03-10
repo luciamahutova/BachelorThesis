@@ -6,6 +6,7 @@ class MainScene {
         this.bgMesh = this.setStaticBackground();
         this.bgScene = this.createBgScene(this.bgMesh);
         this.bgCamera = this.createBgCamera();
+        this.spotLight;
         this.setLights();
         this.makeCameraFollowObject = true;
 
@@ -14,7 +15,7 @@ class MainScene {
         this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes(),
             this.planetObject.getPlanetData(), this.planetObject.orbitClass.getAllOrbits());
         this.moonObject.initializeMoons();
-        this.sunObject = new Sun(this.scene);
+        this.sunObject = new Sun(this.scene, this.spotLight);
         this.sunObject.initializeSun();
         this.raycaster = new RayCaster(this.camera);
 
@@ -55,16 +56,27 @@ class MainScene {
     }
 
     setLights() {
-        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x061327, 1.3);
-        hemiLight.position.set(0, 0, 0);
-        this.scene.add(hemiLight);
-
-        const pointLight = new THREE.PointLight(0xffffff, 0.8, window.innerHeight, 1.5);
-        pointLight.position.set(0, 10, 0);
+        const pointLight = new THREE.PointLight(0xffffff, 1.6, window.innerWidth / 2, 2);
+        pointLight.position.set(0, 0, 0);
         pointLight.castShadow = true;
         pointLight.shadow.camera.near = 0;
         pointLight.shadow.camera.far = window.innerWidth;
         this.scene.add(pointLight);
+
+        this.spotLight = new THREE.SpotLight(0xffffff);
+        this.spotLight.position.set(0, 10, 0);
+        this.spotLight.castShadow = true;
+        this.spotLight.shadow.mapSize.width = 30;
+        this.spotLight.shadow.mapSize.height = 30;
+        this.spotLight.shadow.camera.near = 10;
+        this.spotLight.shadow.camera.far = 30;
+        //spotLight.shadow.camera.fov = 20;
+        this.scene.add(this.spotLight);
+
+        this.scene.traverse(function(children) {
+            children.castShadow = true;
+            children.receiveShadow = true;
+        });
     }
 
     // Background of Scene
@@ -94,24 +106,23 @@ class MainScene {
     // Move Scene functions
     // -------------------------------------------------------------------------
     moveSceneOnPressedArrow(e) {
-        // Movement of the scene by keyboard (4 arrows and Esc) + center the scene back
         // Movement in opposite direction - seems more natural
-        var moveSceneByValue = 10;
+        var moveCameraeByValue = 10;
         if (e.keyCode == '37') { // Left arrow key
-            this.scene.position.x += moveSceneByValue;
+            this.camera.position.x -= moveCameraeByValue;
         } else if (e.keyCode == '38') { // Top arrow key
-            this.scene.position.z += moveSceneByValue;
+            this.camera.position.z -= moveCameraeByValue;
         } else if (e.keyCode == '39') { // Right arrow key
-            this.scene.position.x -= moveSceneByValue;
+            this.camera.position.x += moveCameraeByValue;
         } else if (e.keyCode == '40') { // Bottom arrow kes
-            this.scene.position.z -= moveSceneByValue;
+            this.camera.position.z += moveCameraeByValue;
         } else if (e.keyCode == "27") { // Escape key
-            this.scene.position.set(0, 0, 0);
+            this.camera.position.set(0, 45, 0);
         }
     }
 
-    moveSceneToOriginalPosition(scene) {
-        scene.position.set(0, 0, 0);
+    moveCameraToOriginalPosition(camera) {
+        camera.position.set(0, 45, 0);
     }
 
     // Drag function for scene: 
@@ -123,8 +134,8 @@ class MainScene {
             this.mousePositionX = event.clientX;
             this.mousePositionY = event.clientY;
 
-            this.scene.position.x += moveToX / 10;
-            this.scene.position.z += moveToY / 10;
+            this.camera.position.x -= moveToX / 10;
+            this.camera.position.z -= moveToY / 10;
         }
     }
 
@@ -148,7 +159,7 @@ class MainScene {
         window.addEventListener('mouseup', this.mouseUpEvent, false);
     }
 
-    // Zooming in/out (for planets and orbits) + movement of the scene
+    // Zooming in/out (for planets and orbits) - called in app.js
     // -------------------------------------------------------------------------
     zoomAndSpeedRangesliders(time) {
         var zoomSlider = document.getElementById("rangesliderZoomInput");

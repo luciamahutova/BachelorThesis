@@ -231,7 +231,7 @@
             <span class="lang" id="cameraToPlanet"></span>
         </div>
         <div class="tooltip">
-            <button type="button" onclick="mainScene.moveSceneToOriginalPosition(scene)"></button>
+            <button type="button" onclick="mainScene.moveCameraToOriginalPosition(camera)"></button>
             <span class="lang" id="centerModel"></span>
         </div>
     </section>
@@ -243,8 +243,7 @@
     </div>
     <!-- 2nd rangeslider = zoom for scene and all its objects -->
     <div class="slidecontainer overlay">
-        <!-- <input type="range" min="-3" max="6" value="0" class="slider" id="rangesliderZoomInput"> -->
-        <input type="range" min="50" max="200" value="100" step="5" class="slider" id="rangesliderZoomInput">
+        <input type="range" min="50" max="160" value="100" step="5" class="slider" id="rangesliderZoomInput">
         <span class="lang" id="zoom"></span><span id="rangesliderZoomValue"></span><span>%</span>
     </div>
 
