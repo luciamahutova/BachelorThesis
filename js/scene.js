@@ -105,7 +105,7 @@ class MainScene {
 
     // Move Scene functions
     // -------------------------------------------------------------------------
-    moveSceneOnPressedArrow(e) {
+    moveCameraOnPressedArrow(e) {
         // Movement in opposite direction - seems more natural
         var moveCameraeByValue = 10;
         if (e.keyCode == '37') { // Left arrow key
@@ -152,7 +152,7 @@ class MainScene {
     // Event listener functions
     // -------------------------------------------------------------------------
     addEventListenerFunctions() {
-        window.addEventListener('keydown', this.moveSceneOnPressedArrow, false);
+        window.addEventListener('keydown', this.moveCameraOnPressedArrow, false);
         window.addEventListener('click', this.raycaster.onMouseMove, false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
         window.addEventListener('mousemove', this.mouseMoveEvent, false);
