@@ -129,7 +129,7 @@ class SidebarManager {
         setTimeout(function() {
             $('.confirmChangesButton').prop('disabled', false);
             document.getElementById("confirm").style.backgroundColor = "#BABABA";
-        }, 4000);
+        }, 3000);
         $('.confirmChangesButton').prop('disabled', true);
         document.getElementById("confirm").style.backgroundColor = "#F0F0F0";
     }

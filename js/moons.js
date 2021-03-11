@@ -1,12 +1,14 @@
 class Moon extends Planet {
-    constructor(scene, planetsMeshes, allPlanetDataJSON, orbits) {
+    constructor(scene, orbits) {
         super();
         this.scene = scene;
-        this.planetsMeshes = planetsMeshes;
-        this.moonsMeshes = [];
         this.orbits = orbits;
+        this.moonsMeshes = [];
         this.moonsNamesOnScene = [];
-        this.allPlanetDataJSON = allPlanetDataJSON;
+        this.planetsMeshes = super.getPlanetMeshes();
+        this.allPlanetDataJSON = super.getPlanetData();
+
+        this.initializeMoons();
     }
 
     getMoonsNamesOnScene() { return this.moonsNamesOnScene; }

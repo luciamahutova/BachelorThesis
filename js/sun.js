@@ -3,6 +3,7 @@ class Sun extends Planet {
         super();
         this.scene = scene;
         this.spotLight = spotLight;
+        this.initializeSun();
     }
 
     createSun() {

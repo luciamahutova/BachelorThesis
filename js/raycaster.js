@@ -36,11 +36,15 @@ class RayCaster {
             }
 
             // Colour clicked object (planet and orbit)
+            // if (document.getElementById("cosmicObjectButton").style.backgroundColor != "lightblue") {
             scene.traverse(function(children) {
                 if (children.name == intersects[0].object.name) {
                     children.material.color.set(0x792128);
                 }
             });
+            // } else {
+            //     document.getElementById(physicalTable).style.left = "-300px";
+            // }
             window.myParam = intersects;
         }
     }

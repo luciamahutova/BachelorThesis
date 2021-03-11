@@ -12,12 +12,10 @@ class MainScene {
 
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
-        this.moonObject = new Moon(this.scene, this.planetObject.getPlanetMeshes(),
-            this.planetObject.getPlanetData(), this.planetObject.orbitClass.getAllOrbits());
-        this.moonObject.initializeMoons();
+        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
         this.sunObject = new Sun(this.scene, this.spotLight);
-        this.sunObject.initializeSun();
         this.raycaster = new RayCaster(this.camera);
+        this.cosmicObject = new CosmicObject(this.scene, this.planetObject.getPlanetMeshes());
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
@@ -232,6 +230,7 @@ class MainScene {
         this.addEventListenerFunctions();
         this.raycaster.disableRaycasterThroughOverlayObjects();
         this.raycaster.getPhysicalValuesOfClickedObjectFromJSON(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
+        this.cosmicObject.findClickedPlanet();
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
