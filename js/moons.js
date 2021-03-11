@@ -57,9 +57,8 @@ class Moon extends Planet {
     // Positions for moons - according to zoom
     // -------------------------------------------------------------------------
     rotateMoonAroundPlanet(moonMesh, moonName, orbitOrder, planetName, scaleValue, speedValue, time) {
-        var moonRotationSpeedAroundPlanet = [1.000, 0.802, 0.434, 0.323, 0.228, 0.128, 1.000, 0.802, 0.434, 0.228, 0.128,
-            1.000, 0.802, 0.434
-        ];
+        //var moonRotationSpeedAroundPlanet = [1.000, 0.802, 0.434, 0.323, 0.228, 0.128, 1.000, 0.802, 0.434, 0.228, 0.128, 1.000];
+        var moonRotationSpeedAroundPlanet = [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5];
         var rotationSpeed = this.calculateRotationSpeed(orbitOrder, speedValue, time, moonRotationSpeedAroundPlanet);
         var scale = scaleValue * 200;
 

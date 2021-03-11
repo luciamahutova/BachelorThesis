@@ -28,6 +28,5 @@ class Sun extends Planet {
     // -------------------------------------------------------------------------
     initializeSun() {
         this.createSun();
-        this.setScaleForSun();
     }
 }

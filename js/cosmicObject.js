@@ -1,13 +1,16 @@
-class CosmicObject {
+class CosmicObject extends Planet {
     constructor(scene, planetMeshes) {
+        super();
         this.scene = scene;
+        this.allPlanetDataJSON = super.getPlanetData();
         this.planetMeshes = planetMeshes;
-
         this.cosmicObject;
         this.addCosmicObject = true;
         this.createCosmicObject();
     }
 
+    // Cosmic object
+    // -------------------------------------------------------------------------
     createCosmicObject() {
         var geometry = new THREE.ConeGeometry(0.3, 0.4, 5, 1, false, 1, 6.3);
         var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
@@ -32,11 +35,11 @@ class CosmicObject {
     }
 
     // Called in scene.js - animate
-    findClickedPlanet() {
+    findClickedPlanet(scaleValue) {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object;
-            this.cosmicObject.position.set(10, 10, 0);
+            this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, scaleValue);
             this.scene.add(this.cosmicObject);
             this.moonsVisibilityOfSelectedPlanet(selectedPlanet, false);
         }
@@ -76,6 +79,30 @@ class CosmicObject {
                 if (children.name == "Triton" || children.name == "nameTriton") {
                     children.visible = showObjectsBoolean;
                 }
+            });
+        }
+    }
+
+    setScaleForCosmicObject(scaleValue) {
+        this.cosmicObject.scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
+    }
+
+    // Position cosmic object to selected planet
+    // -------------------------------------------------------------------------
+    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, scaleValue) {
+        if (window.myParam != undefined && buttonColor == "lightblue") {
+            var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
+            var orbitalSpeed = 0;
+            var selectedPlanet = window.myParam[0].object;
+
+            // OPRAVIŤ PORADIE MESH-U A RÝCHLOSŤ TOČENIA
+            dataOfCurrentPlanetJSON.then(function(result) {
+                orbitalSpeed = result[selectedPlanet.name]["cosmicObjectSpeed"];
+
+                cosmicObject.position.x = planetMeshes[4].position.x + 2 * result[selectedPlanet.name]["cosmicObjectDistanceX"] *
+                    result[selectedPlanet.name]["scaleFactor"] * scaleValue * Math.cos(orbitalSpeed);
+                cosmicObject.position.z = planetMeshes[4].position.z - 2 * result[selectedPlanet.name]["cosmicObjectDistanceZ"] *
+                    result[selectedPlanet.name]["scaleFactor"] * scaleValue * Math.sin(orbitalSpeed);
             });
         }
     }

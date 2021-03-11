@@ -175,9 +175,11 @@ class MainScene {
             this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
             this.moonObject.scaleObjectMeshesByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
             this.sunObject.setScaleForSun(this.scaleValueScene);
+            this.cosmicObject.setScaleForCosmicObject(this.scaleValueScene);
 
             this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
             this.moonObject.rotateAllMoons(this.scaleValueScene, this.speedValuePlanets, time);
+            this.cosmicObject.findClickedPlanet(this.scaleValueScene);
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();
@@ -230,7 +232,6 @@ class MainScene {
         this.addEventListenerFunctions();
         this.raycaster.disableRaycasterThroughOverlayObjects();
         this.raycaster.getPhysicalValuesOfClickedObjectFromJSON(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
-        this.cosmicObject.findClickedPlanet();
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
