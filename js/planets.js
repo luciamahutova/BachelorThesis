@@ -197,19 +197,22 @@ class Planet {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameEn");
                 rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneEN[i], scaleValue * 2, rangesliderSpeed);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneEN[i], scaleValue * 2,
+                    rangesliderSpeed);
             }
         } else if (document.getElementById("cz").style.fontWeight == "bold") {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameCz");
                 rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneCZ[i], scaleValue * 2, rangesliderSpeed);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneCZ[i], scaleValue * 2,
+                    rangesliderSpeed);
             }
         } else if (document.getElementById("sk").style.fontWeight == "bold") {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameSk");
                 rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneSK[i], scaleValue * 2, rangesliderSpeed);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneSK[i], scaleValue * 2,
+                    rangesliderSpeed);
             }
         }
     }
