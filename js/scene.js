@@ -179,7 +179,7 @@ class MainScene {
 
             this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
             this.moonObject.rotateAllMoons(this.scaleValueScene, this.speedValuePlanets, time);
-            this.cosmicObject.findClickedPlanet(this.scaleValueScene);
+            this.cosmicObject.findClickedPlanet(this.scaleValueScene, this.speedValuePlanets, time);
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();

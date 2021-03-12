@@ -35,11 +35,13 @@ class CosmicObject extends Planet {
     }
 
     // Called in scene.js - animate
-    findClickedPlanet(scaleValue) {
+    findClickedPlanet(scaleValue, speedValue, time) {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object;
-            this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, scaleValue);
+            var meshOrder = this.orderOfSelectedPlanetMesh(selectedPlanet);
+
+            this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, speedValue, time);
             this.scene.add(this.cosmicObject);
             this.moonsVisibilityOfSelectedPlanet(selectedPlanet, false);
         }
@@ -89,21 +91,54 @@ class CosmicObject extends Planet {
 
     // Position cosmic object to selected planet
     // -------------------------------------------------------------------------
-    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, scaleValue) {
+    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, speedValue, time) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
             var orbitalSpeed = 0;
+            var rangesliderSpeed = this.calculateRotationSpeed(speedValue, time);
             var selectedPlanet = window.myParam[0].object;
 
-            // OPRAVIŤ PORADIE MESH-U A RÝCHLOSŤ TOČENIA
+            // OPRAVIŤ RÝCHLOSŤ TOČENIA
             dataOfCurrentPlanetJSON.then(function(result) {
                 orbitalSpeed = result[selectedPlanet.name]["cosmicObjectSpeed"];
 
-                cosmicObject.position.x = planetMeshes[4].position.x + 2 * result[selectedPlanet.name]["cosmicObjectDistanceX"] *
-                    result[selectedPlanet.name]["scaleFactor"] * scaleValue * Math.cos(orbitalSpeed);
-                cosmicObject.position.z = planetMeshes[4].position.z - 2 * result[selectedPlanet.name]["cosmicObjectDistanceZ"] *
-                    result[selectedPlanet.name]["scaleFactor"] * scaleValue * Math.sin(orbitalSpeed);
+                cosmicObject.position.x = planetMeshes[planetOrder].position.x + 2 *
+                    result[selectedPlanet.name]["cosmicObjectDistanceX"] * result[selectedPlanet.name]["cosmicObjectScaleFactor"] * scaleValue * Math.cos(orbitalSpeed * rangesliderSpeed);
+                cosmicObject.position.z = planetMeshes[planetOrder].position.z - 2 *
+                    result[selectedPlanet.name]["cosmicObjectDistanceZ"] * result[selectedPlanet.name]["cosmicObjectScaleFactor"] * scaleValue * Math.sin(orbitalSpeed * rangesliderSpeed);
             });
+        }
+    }
+
+    orderOfSelectedPlanetMesh(selectedPlanet) {
+        // Need position of planet mesh, position of selectedPlanet is not updated (= 0)
+        // In For-cycle it's too slow
+        if (selectedPlanet.name == "Mercury") {
+            return 0;
+        } else if (selectedPlanet.name == "Venus") {
+            return 1;
+        } else if (selectedPlanet.name == "Earth") {
+            return 2;
+        } else if (selectedPlanet.name == "Mars") {
+            return 3;
+        } else if (selectedPlanet.name == "Jupiter") {
+            return 4;
+        } else if (selectedPlanet.name == "Saturn") {
+            return 5;
+        } else if (selectedPlanet.name == "Uranus") {
+            return 6;
+        } else if (selectedPlanet.name == "Neptune") {
+            return 7;
+        }
+    }
+
+    calculateRotationSpeed(speedValue, time) {
+        if (speedValue == 0) {
+            return 0.0001 * time;
+        } else if (speedValue > 0) {
+            return 0.0001 * time * speedValue;
+        } else if (speedValue < 0) {
+            return (0.0001 * time) / Math.abs(speedValue);
         }
     }
 }
