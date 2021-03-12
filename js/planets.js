@@ -3,7 +3,9 @@ class Planet {
         this.scene = scene;
         this.planetsObjects = [];
         this.planetsMeshes = [];
-        this.planetsNamesOnScene = [];
+        this.planetsNamesOnSceneEN = new Array();
+        this.planetsNamesOnSceneCZ = new Array();
+        this.planetsNamesOnSceneSK = new Array();
         this.allPlanetDataJSON = [];
         this.allMoonDataJSON = [];
         this.planetSizes = [];
@@ -21,7 +23,9 @@ class Planet {
     getScaleValue() { return this.scaleValueScene; }
     getPlanetData() { return this.allPlanetDataJSON; }
     getMoonData() { return this.allMoonDataJSON; }
-    getPlanetsNamesOnScene() { return this.planetsNamesOnScene; }
+    getPlanetNamesEN() { return this.planetsNamesOnSceneEN; }
+    getPlanetNamesCZ() { return this.planetsNamesOnSceneCZ; }
+    getPlanetNamesSK() { return this.planetsNamesOnSceneSK; }
     getTimestamp() { return this.timestamp; }
 
     // Creating planet objects, meshes and adding them to Scene
@@ -83,7 +87,7 @@ class Planet {
 
     // Names for planets on Scene: TextGeometry
     // -------------------------------------------------------------------------
-    createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, objectNames, fontSize) {
+    createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, objectNames, fontSize, startsWith) {
         var geometry, textMesh;
         const loader = new THREE.FontLoader();
 
@@ -106,16 +110,19 @@ class Planet {
 
                 planetsNamesOnScene.push(textMesh);
                 planetsMeshes[i].add(textMesh);
-                textMesh.name = "name" + objectNames[i];
+                textMesh.name = startsWith + objectNames[i];
                 scene.add(textMesh);
             }
         });
     }
 
-    addNamesToPlanetObject(planetsMeshes, planetsNamesOnScene, scene) {
-        var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-        this.createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, planetNames, 1.2);
-
+    addNamesToPlanetObject(planetsMeshes, scene) {
+        var planetNamesEN = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+        var planetNamesCZ = ["Merkur", "Venuse", "Zeme", "Mars", "Jupitr", "Saturn", "Uran", "Neptun"];
+        var planetNamesSK = ["Merkur", "Venusa", "Zem", "Mars", "Jupiter", "Saturn", "Uran", "Neptun"];
+        this.createTextGeometry(planetsMeshes, this.planetsNamesOnSceneEN, scene, planetNamesEN, 1.2, "nameEn");
+        this.createTextGeometry(planetsMeshes, this.planetsNamesOnSceneCZ, scene, planetNamesCZ, 1.2, "nameCz");
+        this.createTextGeometry(planetsMeshes, this.planetsNamesOnSceneSK, scene, planetNamesSK, 1.2, "nameSk");
     }
 
     // Setting rotation angle for planets on Z-axis 
@@ -180,13 +187,39 @@ class Planet {
     rotateAllPlanets(scaleValue, speedValue, time) {
         var planetRotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128]
         var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-        var rotationSpeed;
+        var rangesliderSpeed;
 
-        for (var i = 0; i < this.planetsMeshes.length; i++) {
-            rotationSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
-            this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnScene[i], scaleValue * 2, rotationSpeed);
+        this.traverseSceneToFindPlanetNames(false, "nameEn");
+        this.traverseSceneToFindPlanetNames(false, "nameCz");
+        this.traverseSceneToFindPlanetNames(false, "nameSk");
+
+        if (document.getElementById("en").style.fontWeight == "bold") {
+            for (var i = 0; i < this.planetsMeshes.length; i++) {
+                this.traverseSceneToFindPlanetNames(true, "nameEn");
+                rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneEN[i], scaleValue * 2, rangesliderSpeed);
+            }
+        } else if (document.getElementById("cz").style.fontWeight == "bold") {
+            for (var i = 0; i < this.planetsMeshes.length; i++) {
+                this.traverseSceneToFindPlanetNames(true, "nameCz");
+                rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneCZ[i], scaleValue * 2, rangesliderSpeed);
+            }
+        } else if (document.getElementById("sk").style.fontWeight == "bold") {
+            for (var i = 0; i < this.planetsMeshes.length; i++) {
+                this.traverseSceneToFindPlanetNames(true, "nameSk");
+                rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneSK[i], scaleValue * 2, rangesliderSpeed);
+            }
         }
+    }
 
+    traverseSceneToFindPlanetNames(showBoolean, stringName) {
+        this.scene.traverse(function(children) {
+            if (children.name.startsWith(stringName)) {
+                children.visible = showBoolean;
+            }
+        });
     }
 
     // Positions for 1 planet - according to scale from rangeslider
@@ -214,7 +247,7 @@ class Planet {
     initializePlanets() {
         this.createPlanetsMesh(this.scene, this.planetsObjects);
         this.orbitClass.createOrbitShape();
-        this.addNamesToPlanetObject(this.planetsMeshes, this.planetsNamesOnScene, this.scene);
+        this.addNamesToPlanetObject(this.planetsMeshes, this.scene);
         this.setRotationAngleForAllPlanets();
     }
 }

@@ -1,9 +1,11 @@
 class SidebarManager {
-    constructor(planetsNamesOnScene, moonsNamesOnScene, moonMeshes, scene, orbits) {
+    constructor(planetNamesEN, planetNamesCZ, planetNamesSK, moonsNamesOnScene, moonMeshes, scene, orbits) {
         this.isSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;
-        this.planetsNamesOnScene = planetsNamesOnScene;
+        this.planetNamesEN = planetNamesEN;
+        this.planetNamesCZ = planetNamesCZ;
+        this.planetNamesSK = planetNamesSK;
         this.moonsNamesOnScene = moonsNamesOnScene;
         this.moonMeshes = moonMeshes;
         this.scene = scene;
@@ -138,12 +140,13 @@ class SidebarManager {
     // -------------------------------------------------------------------------
     showHideAllNamesOfPlanetsOnScene() {
         if (document.getElementById("allPlanetNamesChecked").checked == true) {
-            this.scene.add(this.planetsNamesOnScene[0], this.planetsNamesOnScene[1],
-                this.planetsNamesOnScene[2], this.planetsNamesOnScene[3],
-                this.planetsNamesOnScene[4], this.planetsNamesOnScene[5],
-                this.planetsNamesOnScene[6], this.planetsNamesOnScene[7]);
+            this.addAllPlanetNamesScene(this.planetNamesEN, "nameEn");
+            this.addAllPlanetNamesScene(this.planetNamesCZ, "nameCz");
+            this.addAllPlanetNamesScene(this.planetNamesSK, "nameSk");
         } else if (document.getElementById("allPlanetNamesChecked").checked == false) {
-            this.removeAllPlanetNamesScene(this.planetsNamesOnScene);
+            this.removeAllPlanetNamesScene(this.planetNamesEN);
+            this.removeAllPlanetNamesScene(this.planetNamesCZ);
+            this.removeAllPlanetNamesScene(this.planetNamesSK);
         }
     }
 
@@ -152,13 +155,29 @@ class SidebarManager {
         var allPlanetNamesSelected = document.getElementById("allPlanetNamesChecked").checked;
         // -1 is for option with no planet name
         if (selectedElem.value != -1 && allPlanetNamesSelected == false) {
-            this.removeAllPlanetNamesScene(this.planetsNamesOnScene);
-            this.scene.add(this.planetsNamesOnScene[selectedElem.value]);
+            this.removeAllPlanetNamesScene(this.planetNamesEN);
+            this.removeAllPlanetNamesScene(this.planetNamesCZ);
+            this.removeAllPlanetNamesScene(this.planetNamesSK);
+            this.scene.add(this.planetNamesEN[selectedElem.value], this.planetNamesCZ[selectedElem.value],
+                this.planetNamesSK[selectedElem.value]);
         }
     }
 
+    traverseSceneToFindPlanetNames(showBoolean, stringName) {
+        this.scene.traverse(function(children) {
+            if (children.name.startsWith(stringName)) {
+                children.visible = showBoolean;
+            }
+        });
+    }
+
+    addAllPlanetNamesScene(objects, stringName) {
+        this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
+        // names are set to 'true' in planets.js -> rotateAllPlanets(...) - according to current language
+        this.traverseSceneToFindPlanetNames(false, stringName);
+    }
+
     removeAllPlanetNamesScene(objects) {
-        // Help function for removing all planet names
         this.scene.remove(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
     }
 
