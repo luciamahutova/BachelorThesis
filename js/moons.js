@@ -51,7 +51,7 @@ class Moon extends Planet {
         var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
             "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
         ];
-        this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames, 0.9);
+        this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames, 0.9, "name");
     }
 
     // Positions for moons - according to zoom

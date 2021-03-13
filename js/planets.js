@@ -157,7 +157,7 @@ class Planet {
 
     // Setting planets' and orbits' positions - according to rangeslider scale value
     // -------------------------------------------------------------------------
-    setScaleForObjectsAndOrbits(scaleValue, planetsMeshes) {
+    setScaleForObjectsAndOrbits(scaleValue) {
         this.scaleObjectsByRangeslider(scaleValue, this.planetsMeshes);
         this.orbitClass.scaleOrbitsByRangeslider(scaleValue);
         this.orbitClass.positionAllMoonOrbits();
@@ -253,6 +253,6 @@ class Planet {
         this.setRotationAngleForAllPlanets();
 
         this.orbitClass = new Orbits(this.scene, this.allPlanetDataJSON, this.allMoonDataJSON, this.planetsMeshes);
-        this.cosmicObject = new CosmicObject(this.scene);
+        this.cosmicObject = new CosmicObject(this.scene, this.getPlanetMeshes());
     }
 }

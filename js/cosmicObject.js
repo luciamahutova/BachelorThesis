@@ -1,9 +1,9 @@
 class CosmicObject extends Planet {
-    constructor(scene) {
+    constructor(scene, planetMeshes) {
         super();
         this.scene = scene;
         this.allPlanetDataJSON = super.getPlanetData();
-        this.planetMeshes = super.getPlanetMeshes();
+        this.planetMeshes = planetMeshes;
         this.cosmicObject;
         this.addCosmicObject = true;
         this.createCosmicObject();
@@ -16,19 +16,21 @@ class CosmicObject extends Planet {
         var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
         this.cosmicObject = new THREE.Mesh(geometry, material);
         this.cosmicObject.rotation.x = THREE.Math.degToRad(90);
-        //this.cosmicObject.rotation.y = THREE.Math.degToRad(50);
         this.cosmicObject.name = "cosmicObject";
     }
 
     addCosmicObjectToScene() {
+        console.log(this.scene.children)
         if (this.addCosmicObject) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
             document.getElementById("allMoonObjectsChecked").checked = false;
+            //document.getElementById("allMoonNamesChecked").checked = false;
             this.addCosmicObject = false;
         } else {
             this.scene.remove(this.cosmicObject);
             this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
             document.getElementById("allMoonObjectsChecked").checked = true;
+            //document.getElementById("allMoonNamesChecked").checked = true;
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
             this.addCosmicObject = true;
         }

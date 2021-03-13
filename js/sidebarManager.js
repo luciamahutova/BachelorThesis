@@ -76,7 +76,6 @@ class SidebarManager extends MainScene {
             this.setIsAppRunning(false);
             this.setPauseTime(Date.now());
             $(".pauseButton").on("click", function() {
-                //window.cancelAnimationFrame(animationFrameOutput);
                 $('.pauseButton').prop('disabled', true);
                 $('.playButton').prop('disabled', false);
             });
@@ -84,7 +83,6 @@ class SidebarManager extends MainScene {
     }
 
     pauseApplicationOnInactiveWindow() {
-        //cancelAnimationFrame(animationFrameOutput);
         this.setIsAppRunning(false);
     }
 
@@ -94,7 +92,6 @@ class SidebarManager extends MainScene {
             this.setIsAppRunning(true);
             this.setPlayTime(Date.now());
             $(".playButton").on("click", function() {
-                //animationFrameOutput = window.requestAnimationFrame(animate);
                 $('.pauseButton').prop('disabled', false);
                 $('.playButton').prop('disabled', true);
             });
@@ -102,7 +99,6 @@ class SidebarManager extends MainScene {
     }
 
     playApplicationOnActiveWindow() {
-        //animationFrameOutput = requestAnimationFrame(animate);
         this.setIsAppRunning(true);
         $('.pauseButton').prop('disabled', false);
         $('.playButton').prop('disabled', true);

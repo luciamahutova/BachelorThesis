@@ -173,7 +173,7 @@ class MainScene {
             this.speedValuePlanets = speedSliderValue.innerHTML;
 
             this.planetObject.setScaleForObjectsAndOrbits(this.scaleValueScene);
-            this.moonObject.scaleObjectsByRangeslider(this.scaleValueScene, this.moonMeshes);
+            this.moonObject.scaleObjectsByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
             this.sunObject.setScaleForSun(this.scaleValueScene);
             this.planetObject.cosmicObject.setScaleForCosmicObject(this.scaleValueScene);
 
