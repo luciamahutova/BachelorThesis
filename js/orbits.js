@@ -6,6 +6,8 @@ class Orbits {
         this.allMoonDataJSON = allMoonDataJSON;
         this.planetsMeshes = planetsMeshes;
         this.allCurves = [];
+
+        this.createOrbitShape();
     }
 
     getAllOrbits() { return this.orbits; }

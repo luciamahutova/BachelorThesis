@@ -1,9 +1,9 @@
 class CosmicObject extends Planet {
-    constructor(scene, planetMeshes) {
+    constructor(scene) {
         super();
         this.scene = scene;
         this.allPlanetDataJSON = super.getPlanetData();
-        this.planetMeshes = planetMeshes;
+        this.planetMeshes = super.getPlanetMeshes();
         this.cosmicObject;
         this.addCosmicObject = true;
         this.createCosmicObject();
@@ -98,7 +98,6 @@ class CosmicObject extends Planet {
             var rangesliderSpeed = this.calculateRotationSpeed(speedValue, time);
             var selectedPlanet = window.myParam[0].object;
 
-            // OPRAVIŤ RÝCHLOSŤ TOČENIA
             dataOfCurrentPlanetJSON.then(function(result) {
                 orbitalSpeed = result[selectedPlanet.name]["cosmicObjectSpeed"];
 

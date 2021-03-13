@@ -1,24 +1,22 @@
 class MainScene {
     constructor() {
-        this.scene = new THREE.Scene();
-        this.initRenderer();
-        this.camera = this.initCamera();
-        this.bgMesh = this.setStaticBackground();
-        this.bgScene = this.createBgScene(this.bgMesh);
-        this.bgCamera = this.createBgCamera();
+        this.scene;
+        this.camera;
+        this.bgMesh;
+        this.bgScene;
+        this.bgCamera;
         this.spotLight;
-        this.setLights();
         this.makeCameraFollowObject = true;
 
         this.planetObject;
         this.moonObject;
+        this.moonMeshes;
         this.sunObject;
         this.raycaster;
         this.cosmicObject;
         this.sidebarManager;
 
-        this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
-        this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
+        this.scaleValueScene = this.speedValuePlanets = 0;
         this.mouseDown = false; // Used for drag events
         this.mousePositionX = this.mousePositionY = 0; // Used for drag events
     }
@@ -174,14 +172,14 @@ class MainScene {
             speedSliderValue.innerHTML = speedSlider.value;
             this.speedValuePlanets = speedSliderValue.innerHTML;
 
-            this.planetObject.setScaleForPlanetsAndOrbits(this.scaleValueScene, this.planetObject.getPlanetMeshes());
-            this.moonObject.scaleObjectMeshesByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
+            this.planetObject.setScaleForObjectsAndOrbits(this.scaleValueScene);
+            this.moonObject.scaleObjectsByRangeslider(this.scaleValueScene, this.moonMeshes);
             this.sunObject.setScaleForSun(this.scaleValueScene);
-            this.cosmicObject.setScaleForCosmicObject(this.scaleValueScene);
+            this.planetObject.cosmicObject.setScaleForCosmicObject(this.scaleValueScene);
 
             this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
             this.moonObject.rotateAllMoons(this.scaleValueScene, this.speedValuePlanets, time);
-            this.cosmicObject.findClickedPlanet(this.scaleValueScene, this.speedValuePlanets, time);
+            this.planetObject.cosmicObject.findClickedPlanet(this.scaleValueScene, this.speedValuePlanets, time);
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();
@@ -232,8 +230,7 @@ class MainScene {
     // -------------------------------------------------------------------------
     animate() {
         this.addEventListenerFunctions();
-        this.raycaster.disableRaycasterThroughOverlayObjects();
-        this.raycaster.getPhysicalValuesOfClickedObjectFromJSON(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
+        this.raycaster.animate(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
@@ -242,12 +239,20 @@ class MainScene {
     };
 
     initializeSceneObjects() {
+        this.scene = new THREE.Scene();
+        this.initRenderer();
+        this.camera = this.initCamera();
+        this.bgMesh = this.setStaticBackground();
+        this.bgScene = this.createBgScene(this.bgMesh);
+        this.bgCamera = this.createBgCamera();
+        this.setLights();
+
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
         this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
+        this.moonMeshes = this.moonObject.getMoonMeshes();
         this.sunObject = new Sun(this.scene, this.spotLight);
-        this.raycaster = new RayCaster(this.camera, this.scene);
-        this.cosmicObject = new CosmicObject(this.scene, this.planetObject.getPlanetMeshes());
+        this.raycaster = new RayCaster();
         this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
             this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getMoonMeshes(),
             this.scene, this.planetObject.orbitClass.getAllOrbits());

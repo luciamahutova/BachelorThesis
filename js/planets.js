@@ -3,9 +3,9 @@ class Planet {
         this.scene = scene;
         this.planetsObjects = [];
         this.planetsMeshes = [];
-        this.planetsNamesOnSceneEN = new Array();
-        this.planetsNamesOnSceneCZ = new Array();
-        this.planetsNamesOnSceneSK = new Array();
+        this.planetsNamesOnSceneEN = [];
+        this.planetsNamesOnSceneCZ = [];
+        this.planetsNamesOnSceneSK = [];
         this.allPlanetDataJSON = [];
         this.allMoonDataJSON = [];
         this.planetSizes = [];
@@ -15,8 +15,8 @@ class Planet {
         this.jsonManager = new JSONManager();
         this.addAllPlanetDataJSON();
         this.addAllMoonDataJSON();
-
-        this.orbitClass = new Orbits(scene, this.allPlanetDataJSON, this.allMoonDataJSON, this.planetsMeshes);
+        this.orbitClass;
+        this.cosmicObject;
     }
 
     getPlanetMeshes() { return this.planetsMeshes; }
@@ -157,13 +157,13 @@ class Planet {
 
     // Setting planets' and orbits' positions - according to rangeslider scale value
     // -------------------------------------------------------------------------
-    setScaleForPlanetsAndOrbits(scaleValue, planetsMeshes) {
-        this.scaleObjectMeshesByRangeslider(scaleValue, planetsMeshes);
+    setScaleForObjectsAndOrbits(scaleValue, planetsMeshes) {
+        this.scaleObjectsByRangeslider(scaleValue, this.planetsMeshes);
         this.orbitClass.scaleOrbitsByRangeslider(scaleValue);
         this.orbitClass.positionAllMoonOrbits();
     }
 
-    scaleObjectMeshesByRangeslider(scaleValue, objects) {
+    scaleObjectsByRangeslider(scaleValue, objects) {
         for (var i = 0; i < objects.length; i++) {
             objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
         }
@@ -249,8 +249,10 @@ class Planet {
     // -------------------------------------------------------------------------
     initializePlanets() {
         this.createPlanetsMesh(this.scene, this.planetsObjects);
-        this.orbitClass.createOrbitShape();
         this.addNamesToPlanetObject(this.planetsMeshes, this.scene);
         this.setRotationAngleForAllPlanets();
+
+        this.orbitClass = new Orbits(this.scene, this.allPlanetDataJSON, this.allMoonDataJSON, this.planetsMeshes);
+        this.cosmicObject = new CosmicObject(this.scene);
     }
 }
