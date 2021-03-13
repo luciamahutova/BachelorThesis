@@ -1,51 +1,53 @@
 // This class is for detecting clicked objects in scene
 // Basic code is used from: https://threejs.org/docs/index.html#api/en/core/Raycaster
-
 class RayCaster {
-    constructor(camera) {
+    constructor(camera, scene) {
         this.camera = camera;
+        this.scene = scene;
     }
 
-    onMouseMove = function(event) {
-        var mouse = new THREE.Vector2(0, 0);
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    onMouseMove = function(camera, scene) {
+        return function(event) {
+            var mouse = new THREE.Vector2(0, 0);
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-        var raycaster = new THREE.Raycaster();
-        raycaster.setFromCamera(mouse, this.camera);
+            var raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
 
-        var intersects = raycaster.intersectObjects(scene.children);
-        if (intersects.length > 0 && intersects[0].object.name != "Sun" && intersects[0].object.visible == true) {
-            // Show only the 1 table with physical info for planet/moon
-            document.getElementById("sidebarPlanetInfo").style.left = "-300px";
-            document.getElementById("sidebarMoonInfo").style.left = "-300px";
-            var physicalTable;
-            (intersects[0].object.name == "Mercury" || intersects[0].object.name == "Venus" || intersects[0].object.name == "Earth" || intersects[0].object.name == "Mars" || intersects[0].object.name == "Jupiter" || intersects[0].object.name == "Saturn" ||
-                intersects[0].object.name == "Uranus" || intersects[0].object.name == "Neptune") ?
-            physicalTable = "sidebarPlanetInfo": physicalTable = "sidebarMoonInfo";
-            document.getElementById(physicalTable).style.left = "40px";
+            var intersects = raycaster.intersectObjects(scene.children);
+            if (intersects.length > 0 && intersects[0].object.name != "Sun" && intersects[0].object.visible == true) {
+                // Show only the 1 table with physical info for planet/moon
+                document.getElementById("sidebarPlanetInfo").style.left = "-300px";
+                document.getElementById("sidebarMoonInfo").style.left = "-300px";
+                var physicalTable;
+                (intersects[0].object.name == "Mercury" || intersects[0].object.name == "Venus" || intersects[0].object.name == "Earth" || intersects[0].object.name == "Mars" || intersects[0].object.name == "Jupiter" || intersects[0].object.name == "Saturn" ||
+                    intersects[0].object.name == "Uranus" || intersects[0].object.name == "Neptune") ?
+                physicalTable = "sidebarPlanetInfo": physicalTable = "sidebarMoonInfo";
+                document.getElementById(physicalTable).style.left = "40px";
 
-            // Clear the last coloured planet/orbit, using "window.myParam"
-            if (window.myParam != undefined) {
-                var clearObjectColor = window.myParam;
+                // Clear the last coloured planet/orbit, using "window.myParam"
+                if (window.myParam != undefined) {
+                    var clearObjectColor = window.myParam;
+                    scene.traverse(function(children) {
+                        if (children.name == clearObjectColor[0].object.name) {
+                            children.material.color.set(0xffffff);
+                        }
+                    });
+                }
+
+                // Colour clicked object (planet and orbit)
+                // if (document.getElementById("cosmicObjectButton").style.backgroundColor != "lightblue") {
                 scene.traverse(function(children) {
-                    if (children.name == clearObjectColor[0].object.name) {
-                        children.material.color.set(0xffffff);
+                    if (children.name == intersects[0].object.name) {
+                        children.material.color.set(0x792128);
                     }
                 });
+                // } else {
+                //     document.getElementById(physicalTable).style.left = "-300px";
+                // }
+                window.myParam = intersects;
             }
-
-            // Colour clicked object (planet and orbit)
-            // if (document.getElementById("cosmicObjectButton").style.backgroundColor != "lightblue") {
-            scene.traverse(function(children) {
-                if (children.name == intersects[0].object.name) {
-                    children.material.color.set(0x792128);
-                }
-            });
-            // } else {
-            //     document.getElementById(physicalTable).style.left = "-300px";
-            // }
-            window.myParam = intersects;
         }
     }
 

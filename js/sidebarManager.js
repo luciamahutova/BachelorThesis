@@ -1,5 +1,6 @@
-class SidebarManager {
+class SidebarManager extends MainScene {
     constructor(planetNamesEN, planetNamesCZ, planetNamesSK, moonsNamesOnScene, moonMeshes, scene, orbits) {
+        super();
         this.isSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;
@@ -46,7 +47,7 @@ class SidebarManager {
         // "window.myParam" - from raycaster.js, represents the last clicked planet/orbit = for clearing the colour        
         if (window.myParam != undefined) {
             var clearObjectColor = window.myParam;
-            scene.traverse(function(children) {
+            this.scene.traverse(function(children) {
                 if (children.name == clearObjectColor[0].object.name) {
                     children.material.color.set(0xffffff);
                 }

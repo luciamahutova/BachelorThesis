@@ -65,23 +65,21 @@ class Moon extends Planet {
         if (scale < 70) {
             this.positionMoonRangesliderZoomOut();
         } else {
-            this.positionMoonToOrbit(moonMesh, moonNameJSON, orbitOrder, planetName, scaleValue, rangesliderSpeed);
+            this.positionMoonToOrbit(moonMesh, moonNameJSON, this.orbits, orbitOrder, planetName, scaleValue, rangesliderSpeed);
         }
     }
 
     rotateAllMoons(scaleValue, speedValue, time) {
-        var moonMesh;
         var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
             "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
         ];
 
         for (var i = 0; i < this.moonsMeshes.length; i++) {
-            moonMesh = this.moonsMeshes[i];
-            this.rotateMoonAroundPlanet(moonMesh, moonNames[i], i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
+            this.rotateMoonAroundPlanet(this.moonsMeshes[i], moonNames[i], i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
         }
     }
 
-    positionMoonToOrbit(moonMesh, moonNameJSON, orbitOrder, moonNameOnScene, scaleValue, rangesliderSpeed) {
+    positionMoonToOrbit(moonMesh, moonNameJSON, orbits, orbitOrder, moonNameOnScene, scaleValue, rangesliderSpeed) {
         this.traverseSceneToFindMoons(true, "");
         this.traverseSceneToFindMoons(true, "name");
         var orbitalSpeed = 0;

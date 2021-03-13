@@ -2,7 +2,7 @@ class MainScene {
     constructor() {
         this.scene = new THREE.Scene();
         this.initRenderer();
-        this.initCamera();
+        this.camera = this.initCamera();
         this.bgMesh = this.setStaticBackground();
         this.bgScene = this.createBgScene(this.bgMesh);
         this.bgCamera = this.createBgCamera();
@@ -10,12 +10,12 @@ class MainScene {
         this.setLights();
         this.makeCameraFollowObject = true;
 
-        this.planetObject = new Planet(this.scene);
-        this.planetObject.initializePlanets();
-        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
-        this.sunObject = new Sun(this.scene, this.spotLight);
-        this.raycaster = new RayCaster(this.camera);
-        this.cosmicObject = new CosmicObject(this.scene, this.planetObject.getPlanetMeshes());
+        this.planetObject;
+        this.moonObject;
+        this.sunObject;
+        this.raycaster;
+        this.cosmicObject;
+        this.sidebarManager;
 
         this.scaleValueScene = 0; // Used in f.: zoomRangeslider()
         this.speedValuePlanets = 0; // Used in f.: speedRangeslider()
@@ -125,15 +125,17 @@ class MainScene {
 
     // Drag function for scene: 
     // https://uxdesign.cc/implementing-a-custom-drag-event-function-in-javascript-and-three-js-dc79ee545d85
-    mouseMoveEvent(event) {
-        if (this.mouseDown) {
-            var moveToX = event.clientX - this.mousePositionX;
-            var moveToY = event.clientY - this.mousePositionY;
-            this.mousePositionX = event.clientX;
-            this.mousePositionY = event.clientY;
+    mouseMoveEvent(camera) {
+        return function(event) {
+            if (this.mouseDown) {
+                var moveToX = event.clientX - this.mousePositionX;
+                var moveToY = event.clientY - this.mousePositionY;
+                this.mousePositionX = event.clientX;
+                this.mousePositionY = event.clientY;
 
-            this.camera.position.x -= moveToX / 10;
-            this.camera.position.z -= moveToY / 10;
+                camera.position.x -= moveToX / 10;
+                camera.position.z -= moveToY / 10;
+            }
         }
     }
 
@@ -151,9 +153,9 @@ class MainScene {
     // -------------------------------------------------------------------------
     addEventListenerFunctions() {
         window.addEventListener('keydown', this.moveCameraOnPressedArrow, false);
-        window.addEventListener('click', this.raycaster.onMouseMove, false);
+        window.addEventListener('click', this.raycaster.onMouseMove(this.camera, this.scene), false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
-        window.addEventListener('mousemove', this.mouseMoveEvent, false);
+        window.addEventListener('mousemove', this.mouseMoveEvent(this.camera), false);
         window.addEventListener('mouseup', this.mouseUpEvent, false);
     }
 
@@ -226,7 +228,7 @@ class MainScene {
 
 
 
-    // Animate function: called in app.js 
+    // Animate function and initializing classes: called in app.js 
     // -------------------------------------------------------------------------
     animate() {
         this.addEventListenerFunctions();
@@ -238,4 +240,16 @@ class MainScene {
         this.renderer.render(this.bgScene, this.bgCamera);
         this.renderer.render(this.scene, this.camera);
     };
+
+    initializeSceneObjects() {
+        this.planetObject = new Planet(this.scene);
+        this.planetObject.initializePlanets();
+        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
+        this.sunObject = new Sun(this.scene, this.spotLight);
+        this.raycaster = new RayCaster(this.camera, this.scene);
+        this.cosmicObject = new CosmicObject(this.scene, this.planetObject.getPlanetMeshes());
+        this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
+            this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getMoonMeshes(),
+            this.scene, this.planetObject.orbitClass.getAllOrbits());
+    }
 }

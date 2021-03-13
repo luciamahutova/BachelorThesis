@@ -36,7 +36,7 @@
         </nav>
     </header>
 
-    <section class="sidebars overlay" id="sidebarPlanetInfo" onclick="sidebarManager.hideSidebarToLeft()">
+    <section class="sidebars overlay" id="sidebarPlanetInfo" onclick="mainScene.sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
                 <h3 class="lang" id="physicalValuesPlanet"></h3>
@@ -86,7 +86,7 @@
         </div>
     </section>
 
-    <section class="sidebars overlay" id="sidebarMoonInfo" onclick="sidebarManager.hideSidebarToLeft()">
+    <section class="sidebars overlay" id="sidebarMoonInfo" onclick="mainScene.sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
                 <h3 class="lang" id="physicalValuesMoon"></h3>
@@ -215,7 +215,7 @@
                 </select>
             </section>
 
-            <button class="confirmChangesButton lang" type="submit" id="confirm" onclick="sidebarManager.confirmButtonBehavior()"></button>
+            <button class="confirmChangesButton lang" type="submit" id="confirm" onclick="mainScene.sidebarManager.confirmButtonBehavior()"></button>
             <button class="pauseButton" id="pauseButton" type="button"></button>
             <button class="playButton" id="playButton" type="button"></button>
         </div>
@@ -267,12 +267,12 @@
         var count = playInterval = 0;
         window.addEventListener('focus', function() {
             playInterval = window.setInterval(count++, 1000);
-            sidebarManager.playApplicationOnActiveWindow();
+            mainScene.sidebarManager.playApplicationOnActiveWindow();
             closeNav();
         });
         window.addEventListener('blur', function() {
             window.clearInterval(playInterval);
-            sidebarManager.pauseApplicationOnInactiveWindow();
+            mainScene.sidebarManager.pauseApplicationOnInactiveWindow();
         });
 
 
