@@ -20,13 +20,18 @@ body {
     height: 100%;
 }
 
-h1 {
+h1,
+h2 {
     font-size: 120px;
     font-weight: bold;
     position: fixed;
     top: 70px;
     left: 40px;
     background-color: transparent;
+}
+
+h2 {
+    font-size: 90px;
 }
 
 span {
