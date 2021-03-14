@@ -1,4 +1,4 @@
-class SidebarManager extends MainScene {
+class SidebarManager extends Planet {
     constructor(planetNamesEN, planetNamesCZ, planetNamesSK, moonsNamesOnScene, moonMeshes, scene, orbits) {
         super();
         this.isSidebarOpen = true;
@@ -137,13 +137,13 @@ class SidebarManager extends MainScene {
     // -------------------------------------------------------------------------
     showHideAllNamesOfPlanetsOnScene() {
         if (document.getElementById("allPlanetNamesChecked").checked == true) {
-            this.addAllPlanetNamesScene(this.planetNamesEN, "nameEn");
-            this.addAllPlanetNamesScene(this.planetNamesCZ, "nameCz");
-            this.addAllPlanetNamesScene(this.planetNamesSK, "nameSk");
+            this.addPlanetNamesToScene(this.planetNamesEN, "nameEn");
+            this.addPlanetNamesToScene(this.planetNamesCZ, "nameCz");
+            this.addPlanetNamesToScene(this.planetNamesSK, "nameSk");
         } else if (document.getElementById("allPlanetNamesChecked").checked == false) {
-            this.removeAllPlanetNamesScene(this.planetNamesEN);
-            this.removeAllPlanetNamesScene(this.planetNamesCZ);
-            this.removeAllPlanetNamesScene(this.planetNamesSK);
+            this.removeObjectsForPlanetsFromScene(this.planetNamesEN);
+            this.removeObjectsForPlanetsFromScene(this.planetNamesCZ);
+            this.removeObjectsForPlanetsFromScene(this.planetNamesSK);
         }
     }
 
@@ -152,30 +152,25 @@ class SidebarManager extends MainScene {
         var allPlanetNamesSelected = document.getElementById("allPlanetNamesChecked").checked;
         // -1 is for option with no planet name
         if (selectedElem.value != -1 && allPlanetNamesSelected == false) {
-            this.removeAllPlanetNamesScene(this.planetNamesEN);
-            this.removeAllPlanetNamesScene(this.planetNamesCZ);
-            this.removeAllPlanetNamesScene(this.planetNamesSK);
+            this.removeObjectsForPlanetsFromScene(this.planetNamesEN);
+            this.removeObjectsForPlanetsFromScene(this.planetNamesCZ);
+            this.removeObjectsForPlanetsFromScene(this.planetNamesSK);
             this.scene.add(this.planetNamesEN[selectedElem.value], this.planetNamesCZ[selectedElem.value],
                 this.planetNamesSK[selectedElem.value]);
         }
     }
 
-    traverseSceneToFindPlanetNames(showBoolean, stringName) {
-        // scene.traverse - cannot use add/remove of objects
-        this.scene.traverse(function(children) {
-            if (children.name.startsWith(stringName)) {
-                children.visible = showBoolean;
-            }
-        });
-    }
-
-    addAllPlanetNamesScene(objects, stringName) {
+    addPlanetNamesToScene(objects, stringName) {
         this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
         // names are set to 'true' in planets.js -> rotateAllPlanets(...) - according to current language
         this.traverseSceneToFindPlanetNames(false, stringName);
     }
 
-    removeAllPlanetNamesScene(objects) {
+    addObjectsForPlanetsToScene(objects) {
+        this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
+    }
+
+    removeObjectsForPlanetsFromScene(objects) {
         this.scene.remove(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
     }
 
@@ -241,7 +236,7 @@ class SidebarManager extends MainScene {
         }
     }
 
-    // Help functions for moon objects or moon names (textures)
+    // Helpful functions for moon objects or moon names (textures)
     addAllToScene(objects) {
         this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7],
             objects[8], objects[9], objects[10], objects[11]);
@@ -256,21 +251,18 @@ class SidebarManager extends MainScene {
     // -------------------------------------------------------------------------
     showHideAllPlanetOrbitsOnScene() {
         if (document.getElementById("allPlanetOrbitsChecked").checked == true) {
-            this.scene.add(this.orbits[0], this.orbits[1], this.orbits[2], this.orbits[3],
-                this.orbits[4], this.orbits[5], this.orbits[6], this.orbits[7]);
+            this.addObjectsForPlanetsToScene(this.orbits);
         } else if (document.getElementById("allPlanetOrbitsChecked").checked == false) {
-            this.scene.remove(this.orbits[0], this.orbits[1], this.orbits[2], this.orbits[3],
-                this.orbits[4], this.orbits[5], this.orbits[6], this.orbits[7]);
+            this.removeObjectsForPlanetsFromScene(this.orbits);
         }
     }
 
     showHideSinglePlanetOrbitOnScene() {
         var selectedElem = document.getElementById("singlePlanetOrbitSelected");
         var allPlanetOrbitsSelected = document.getElementById("allPlanetOrbitsChecked").checked;
-        // -1 is for option with no planet name
+
         if (selectedElem.value != -1 && allPlanetOrbitsSelected == false) {
-            this.scene.remove(this.orbits[0], this.orbits[1], this.orbits[2], this.orbits[3],
-                this.orbits[4], this.orbits[5], this.orbits[6], this.orbits[7]);
+            this.removeObjectsForPlanetsFromScene(this.orbits);
             this.scene.add(this.orbits[selectedElem.value]);
         }
     }
@@ -287,7 +279,7 @@ class SidebarManager extends MainScene {
         var selectedElem = document.getElementById("singleMoonOrbitNameSelected");
         var allMoonOrbitsSelected = document.getElementById("allMoonOrbitsChecked").checked;
         var indexOfOrbit;
-        // -1 is for option with no planet name
+
         if (selectedElem.value != -1 && allMoonOrbitsSelected == false) {
             this.removeAllMoonOrbitsFromScene(this.orbits);
             indexOfOrbit = parseInt(selectedElem.value) + 8;

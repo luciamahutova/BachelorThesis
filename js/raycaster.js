@@ -7,7 +7,6 @@ class RayCaster {
     }
 
     onMouseMove = function(camera, scene) {
-        //this.hideTablesForObjects();
         return function(event) {
             var mouse = new THREE.Vector2(0, 0);
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;

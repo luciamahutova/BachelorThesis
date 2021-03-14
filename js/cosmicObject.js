@@ -108,8 +108,8 @@ class CosmicObject extends Planet {
     }
 
     orderOfSelectedPlanetMesh(selectedPlanet) {
-        // Need position of planet mesh, position of selectedPlanet is not updated (= 0)
-        // In For-cycle it's too slow
+        // Need position of planet mesh, position of selectedPlanet (from window.myParam) is not updated (still 0)
+        // In For-cycle it's too slow, planets will jump a little
         if (selectedPlanet.name == "Mercury") {
             return 0;
         } else if (selectedPlanet.name == "Venus") {
