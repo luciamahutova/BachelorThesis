@@ -456,7 +456,7 @@ input[type="checkbox"] {
 
 h1+section {
     position: absolute;
-    bottom: 180px;
+    bottom: 400px;
     left: 40px;
     width: 2000px;
     max-height: 230px;
