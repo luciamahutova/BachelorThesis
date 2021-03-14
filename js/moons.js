@@ -3,11 +3,13 @@ class Moon extends Planet {
         super();
         this.scene = scene;
         this.orbits = orbits;
-        this.moonsMeshes = [];
-        this.moonsNamesOnScene = [];
         this.planetsMeshes = super.getPlanetMeshes();
         this.allPlanetDataJSON = super.getPlanetData();
-
+        this.moonsMeshes = [];
+        this.moonsNamesOnScene = [];
+        this.moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
+            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+        ];
         this.initializeMoons();
     }
 
@@ -47,17 +49,9 @@ class Moon extends Planet {
         this.addMeshToScene(this.scene, this.moonsMeshes);
     }
 
-    addNamesToMoonObject(moonsMeshes, moonsNamesOnScene, scene) {
-        var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
-            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
-        ];
-        this.createTextGeometry(moonsMeshes, moonsNamesOnScene, scene, moonNames, 0.9, "name");
-    }
-
     // Positions for moons - according to zoom
     // -------------------------------------------------------------------------
     rotateMoonAroundPlanet(moonMesh, moonNameJSON, orbitOrder, planetName, scaleValue, speedValue, time) {
-        //var moonRotationSpeedAroundPlanet = [1.000, 0.802, 0.434, 0.323, 0.228, 0.128, 1.000, 0.802, 0.434, 0.228, 0.128, 1.000];
         var moonRotationSpeedAroundPlanet = [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5];
         var rangesliderSpeed = this.calculateRotationSpeed(orbitOrder, speedValue, time, moonRotationSpeedAroundPlanet);
         var scale = scaleValue * 200;
@@ -70,12 +64,8 @@ class Moon extends Planet {
     }
 
     rotateAllMoons(scaleValue, speedValue, time) {
-        var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
-            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
-        ];
-
         for (var i = 0; i < this.moonsMeshes.length; i++) {
-            this.rotateMoonAroundPlanet(this.moonsMeshes[i], moonNames[i], i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
+            this.rotateMoonAroundPlanet(this.moonsMeshes[i], this.moonNames[i], i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
         }
     }
 
@@ -121,6 +111,6 @@ class Moon extends Planet {
     // -------------------------------------------------------------------------
     initializeMoons() {
         this.createMoons();
-        this.addNamesToMoonObject(this.moonsMeshes, this.moonsNamesOnScene, this.scene);
+        this.createTextGeometry(this.moonsMeshes, this.moonsNamesOnScene, this.scene, this.moonNames, 0.9, "name");
     }
 }

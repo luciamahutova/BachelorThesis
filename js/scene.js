@@ -66,7 +66,6 @@ class MainScene {
         this.spotLight.shadow.mapSize.height = 30;
         this.spotLight.shadow.camera.near = 10;
         this.spotLight.shadow.camera.far = 30;
-        //spotLight.shadow.camera.fov = 20;
         this.scene.add(this.spotLight);
 
         this.scene.traverse(function(children) {
@@ -175,7 +174,6 @@ class MainScene {
             this.planetObject.setScaleForObjectsAndOrbits(this.scaleValueScene);
             this.moonObject.scaleObjectsByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
             this.sunObject.setScaleForSun(this.scaleValueScene);
-            this.planetObject.cosmicObject.setScaleForCosmicObject(this.scaleValueScene);
 
             this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
             this.moonObject.rotateAllMoons(this.scaleValueScene, this.speedValuePlanets, time);
@@ -230,7 +228,7 @@ class MainScene {
     // -------------------------------------------------------------------------
     animate() {
         this.addEventListenerFunctions();
-        this.raycaster.animate(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
+        this.raycaster.animate();
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
@@ -252,7 +250,7 @@ class MainScene {
         this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
         this.moonMeshes = this.moonObject.getMoonMeshes();
         this.sunObject = new Sun(this.scene, this.spotLight);
-        this.raycaster = new RayCaster();
+        this.raycaster = new RayCaster(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
         this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
             this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getMoonMeshes(),
             this.scene, this.planetObject.orbitClass.getAllOrbits());

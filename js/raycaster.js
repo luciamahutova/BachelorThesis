@@ -1,13 +1,13 @@
 // This class is for detecting clicked objects in scene
 // Basic code is used from: https://threejs.org/docs/index.html#api/en/core/Raycaster
-class RayCaster extends MainScene {
-    constructor() {
-        super();
-        this.camera = super.getCamera();
-        this.scene = super.getScene();
+class RayCaster {
+    constructor(allPlanetDataJSON, allMoonDataJSON) {
+        this.allPlanetDataJSON = allPlanetDataJSON;
+        this.allMoonDataJSON = allMoonDataJSON;
     }
 
     onMouseMove = function(camera, scene) {
+        //this.hideTablesForObjects();
         return function(event) {
             var mouse = new THREE.Vector2(0, 0);
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -21,9 +21,12 @@ class RayCaster extends MainScene {
                 // Show only the 1 table with physical info for planet/moon
                 document.getElementById("sidebarPlanetInfo").style.left = "-300px";
                 document.getElementById("sidebarMoonInfo").style.left = "-300px";
+
                 var physicalTable;
-                (intersects[0].object.name == "Mercury" || intersects[0].object.name == "Venus" || intersects[0].object.name == "Earth" || intersects[0].object.name == "Mars" || intersects[0].object.name == "Jupiter" || intersects[0].object.name == "Saturn" ||
-                    intersects[0].object.name == "Uranus" || intersects[0].object.name == "Neptune") ?
+                var selectedObjectName = intersects[0].object.name;
+                (selectedObjectName == "Mercury" || selectedObjectName == "Venus" || selectedObjectName == "Earth" ||
+                    selectedObjectName == "Mars" || selectedObjectName == "Jupiter" || selectedObjectName == "Saturn" ||
+                    selectedObjectName == "Uranus" || selectedObjectName == "Neptune") ?
                 physicalTable = "sidebarPlanetInfo": physicalTable = "sidebarMoonInfo";
                 document.getElementById(physicalTable).style.left = "40px";
 
@@ -37,16 +40,14 @@ class RayCaster extends MainScene {
                     });
                 }
 
-                // Colour clicked object (planet and orbit)
-                // if (document.getElementById("cosmicObjectButton").style.backgroundColor != "lightblue") {
-                scene.traverse(function(children) {
-                    if (children.name == intersects[0].object.name) {
-                        children.material.color.set(0x792128);
-                    }
-                });
-                // } else {
-                //     document.getElementById(physicalTable).style.left = "-300px";
-                // }
+                // Colour clicked object (planet and its orbit) unless the button for cosmic object is activated
+                if (document.getElementById("cosmicObjectButton").style.backgroundColor != "lightblue") {
+                    scene.traverse(function(children) {
+                        if (children.name == intersects[0].object.name) {
+                            children.material.color.set(0x792128);
+                        }
+                    });
+                } else { document.getElementById(physicalTable).style.left = "-300px"; }
                 window.myParam = intersects;
             }
         }
@@ -65,38 +66,39 @@ class RayCaster extends MainScene {
         var showPlanetTable;
 
         if (intersects != undefined) {
-            (intersects[0].object.name == "Mercury" || intersects[0].object.name == "Venus" || intersects[0].object.name == "Earth" || intersects[0].object.name == "Mars" || intersects[0].object.name == "Jupiter" || intersects[0].object.name == "Saturn" ||
-                intersects[0].object.name == "Uranus" || intersects[0].object.name == "Neptune") ? showPlanetTable = true: showPlanetTable = false;
+            var selectedObjectName = intersects[0].object.name;
+            (selectedObjectName == "Mercury" || selectedObjectName == "Venus" || selectedObjectName == "Earth" || selectedObjectName == "Mars" || selectedObjectName == "Jupiter" || selectedObjectName == "Saturn" || selectedObjectName == "Uranus" || selectedObjectName == "Neptune") ? showPlanetTable = true: showPlanetTable = false;
 
+            var dataOfCurrentObjectJSON;
             if (showPlanetTable) {
-                var dataOfCurrentPlanetJSON = allPlanetDataJSON[0];
-                dataOfCurrentPlanetJSON.then(function(result) {
-                    document.getElementById("planetMassInput").value = result[intersects[0].object.name]["mass"];
-                    document.getElementById("diameterInput").value = result[intersects[0].object.name]["diameter"];
-                    document.getElementById("perimeterInput").value = result[intersects[0].object.name]["perimeter"];
-                    document.getElementById("rotationSpeedInput").value = result[intersects[0].object.name]["rotationSpeed"];
-                    document.getElementById("rotationPeriodInput").value = result[intersects[0].object.name]["rotationPeriod"];
-                    document.getElementById("orbitalPeriodInput").value = result[intersects[0].object.name]["orbitalPeriod"];
-                    document.getElementById("distanceFromSunPerihelionInput").value = result[intersects[0].object.name]["perihelion"];
-                    document.getElementById("distanceFromSunAphelionInput").value = result[intersects[0].object.name]["aphelion"];
+                dataOfCurrentObjectJSON = allPlanetDataJSON[0];
+                dataOfCurrentObjectJSON.then(function(result) {
+                    document.getElementById("planetMassInput").value = result[selectedObjectName]["mass"];
+                    document.getElementById("diameterInput").value = result[selectedObjectName]["diameter"];
+                    document.getElementById("perimeterInput").value = result[selectedObjectName]["perimeter"];
+                    document.getElementById("rotationSpeedInput").value = result[selectedObjectName]["rotationSpeed"];
+                    document.getElementById("rotationPeriodInput").value = result[selectedObjectName]["rotationPeriod"];
+                    document.getElementById("orbitalPeriodInput").value = result[selectedObjectName]["orbitalPeriod"];
+                    document.getElementById("distanceFromSunPerihelionInput").value = result[selectedObjectName]["perihelion"];
+                    document.getElementById("distanceFromSunAphelionInput").value = result[selectedObjectName]["aphelion"];
                 });
             } else if (!showPlanetTable) {
-                var dataOfCurrentPlanetJSON = allMoonDataJSON[0];
-                dataOfCurrentPlanetJSON.then(function(result) {
-                    document.getElementById("moonMassInput").value = result[intersects[0].object.name]["mass"];
-                    document.getElementById("diameterInputMoon").value = result[intersects[0].object.name]["diameter"];
-                    document.getElementById("orbitalSpeedInputMoon").value = result[intersects[0].object.name]["orbitalSpeed"];
-                    document.getElementById("orbitalPeriodInputMoon").value = result[intersects[0].object.name]["orbitalPeriod"];
-                    document.getElementById("distanceFromPlanetInput").value = result[intersects[0].object.name]["distanceFromPlanet"];
-                    document.getElementById("minTemperatureInput").value = result[intersects[0].object.name]["minTemperature"];
-                    document.getElementById("maxTemperatureInput").value = result[intersects[0].object.name]["maxTemperature"];
+                dataOfCurrentObjectJSON = allMoonDataJSON[0];
+                dataOfCurrentObjectJSON.then(function(result) {
+                    document.getElementById("moonMassInput").value = result[selectedObjectName]["mass"];
+                    document.getElementById("diameterInputMoon").value = result[selectedObjectName]["diameter"];
+                    document.getElementById("orbitalSpeedInputMoon").value = result[selectedObjectName]["orbitalSpeed"];
+                    document.getElementById("orbitalPeriodInputMoon").value = result[selectedObjectName]["orbitalPeriod"];
+                    document.getElementById("distanceFromPlanetInput").value = result[selectedObjectName]["distanceFromPlanet"];
+                    document.getElementById("minTemperatureInput").value = result[selectedObjectName]["minTemperature"];
+                    document.getElementById("maxTemperatureInput").value = result[selectedObjectName]["maxTemperature"];
                 });
             }
         }
     }
 
-    animate(allPlanetDataJSON, allMoonDataJSON) {
+    animate() {
         this.disableRaycasterThroughOverlayObjects();
-        this.getPhysicalValuesOfClickedObjectFromJSON(allPlanetDataJSON, allMoonDataJSON);
+        this.getPhysicalValuesOfClickedObjectFromJSON(this.allPlanetDataJSON, this.allMoonDataJSON);
     }
 }

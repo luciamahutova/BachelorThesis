@@ -159,6 +159,7 @@ class Planet {
     // -------------------------------------------------------------------------
     setScaleForObjectsAndOrbits(scaleValue) {
         this.scaleObjectsByRangeslider(scaleValue, this.planetsMeshes);
+        this.scaleObjectsByRangeslider(scaleValue, this.cosmicObject.getCosmicObject());
         this.orbitClass.scaleOrbitsByRangeslider(scaleValue);
         this.orbitClass.positionAllMoonOrbits();
     }

@@ -3,7 +3,7 @@ class Sun extends Planet {
         super();
         this.scene = scene;
         this.spotLight = spotLight;
-        this.initializeSun();
+        this.createSun();
     }
 
     createSun() {
@@ -13,7 +13,7 @@ class Sun extends Planet {
         this.scene.add(this.sunMesh);
     }
 
-    // Scaling the Sun - according to zoom
+    // Scaling the Sun (and light in the middle of the scene) - according to zoom
     // -------------------------------------------------------------------------
     setScaleForSun(scaleValue) {
         this.scaleSunRangeslider(scaleValue, this.sunMesh, this.spotLight);
@@ -22,11 +22,5 @@ class Sun extends Planet {
     scaleSunRangeslider(scaleValue, object, spotLight) {
         object.scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
         spotLight.position.set(0, 10 + scaleValue * 2.3, 0);
-    }
-
-    // Initialize the Sun 
-    // -------------------------------------------------------------------------
-    initializeSun() {
-        this.createSun();
     }
 }

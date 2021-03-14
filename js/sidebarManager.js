@@ -161,6 +161,7 @@ class SidebarManager extends MainScene {
     }
 
     traverseSceneToFindPlanetNames(showBoolean, stringName) {
+        // scene.traverse - cannot use add/remove of objects
         this.scene.traverse(function(children) {
             if (children.name.startsWith(stringName)) {
                 children.visible = showBoolean;

@@ -9,6 +9,8 @@ class CosmicObject extends Planet {
         this.createCosmicObject();
     }
 
+    getCosmicObject() { return [this.cosmicObject]; } // Used in class Planet - for scale
+
     // Cosmic object
     // -------------------------------------------------------------------------
     createCosmicObject() {
@@ -20,17 +22,14 @@ class CosmicObject extends Planet {
     }
 
     addCosmicObjectToScene() {
-        console.log(this.scene.children)
         if (this.addCosmicObject) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
             document.getElementById("allMoonObjectsChecked").checked = false;
-            //document.getElementById("allMoonNamesChecked").checked = false;
             this.addCosmicObject = false;
         } else {
             this.scene.remove(this.cosmicObject);
             this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
             document.getElementById("allMoonObjectsChecked").checked = true;
-            //document.getElementById("allMoonNamesChecked").checked = true;
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
             this.addCosmicObject = true;
         }
@@ -49,6 +48,7 @@ class CosmicObject extends Planet {
         }
     }
 
+    // Hides moons of seletected planet when cosmic object is added to scene
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
         if (selectedPlanet.name == "Earth") {
             this.scene.traverse(function(children) {
@@ -85,10 +85,6 @@ class CosmicObject extends Planet {
                 }
             });
         }
-    }
-
-    setScaleForCosmicObject(scaleValue) {
-        this.cosmicObject.scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 
     // Position cosmic object to selected planet

@@ -6,7 +6,10 @@ class Orbits {
         this.allMoonDataJSON = allMoonDataJSON;
         this.planetsMeshes = planetsMeshes;
         this.allCurves = [];
-
+        this.planetOrder = [2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7];
+        this.moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
+            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+        ];
         this.createOrbitShape();
     }
 
@@ -16,14 +19,12 @@ class Orbits {
     // -------------------------------------------------------------------------
     createOrbitShape() {
         var planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-        var moons = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
-            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
-        ];
+
         for (i = 0; i < planets.length; i++) {
             this.createCurveForOrbit(planets[i], this.orbits, this.scene, this.allPlanetDataJSON[0]);
         }
-        for (i = 0; i < moons.length; i++) {
-            this.createCurveForOrbit(moons[i], this.orbits, this.scene, this.allMoonDataJSON[0]);
+        for (i = 0; i < this.moonNames.length; i++) {
+            this.createCurveForOrbit(this.moonNames[i], this.orbits, this.scene, this.allMoonDataJSON[0]);
         }
     }
 
@@ -60,13 +61,8 @@ class Orbits {
     }
 
     positionAllMoonOrbits() {
-        var planetOrder = [2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7];
-        var moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
-            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
-        ];
-
         for (var i = 8, j = 0; i < this.orbits.length; i++, j++) {
-            this.positionSingleMoonOrbit(this.orbits[i], this.planetsMeshes, planetOrder[j], moonNames[j]);
+            this.positionSingleMoonOrbit(this.orbits[i], this.planetsMeshes, this.planetOrder[j], this.moonNames[j]);
         }
     }
 
