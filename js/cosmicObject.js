@@ -26,9 +26,11 @@ class CosmicObject extends Planet {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
             document.getElementById("allMoonObjectsChecked").checked = false;
             this.addCosmicObject = false;
-        } else {
+        } else if (!this.addCosmicObject) {
             this.scene.remove(this.cosmicObject);
-            this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
+            if (window.myParam != undefined) {
+                this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
+            }
             document.getElementById("allMoonObjectsChecked").checked = true;
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
             this.addCosmicObject = true;

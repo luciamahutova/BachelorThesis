@@ -1,16 +1,25 @@
 // Initialize program
-var mainScene = new MainScene();
+let mainScene = new MainScene();
 mainScene.initializeSceneObjects();
-mainScene.resizeBackground(mainScene.getRenderer(), mainScene.getCamera());
+let renderer = mainScene.getRenderer();
+let scene = mainScene.getScene();
+let camera = mainScene.getCamera();
+mainScene.resizeBackground(renderer, camera);
 
 var i = 0;
 
 function animate() {
     mainScene.animate();
     if (document.getElementById("pauseButton").disabled == false) {
-        mainScene.zoomAndSpeedRangesliders(mainScene.sidebarManager.getPlayTime() - mainScene.sidebarManager.getPlayPauseTimeDifference() + i);
+        mainScene.startRenderer(renderer, scene, camera);
+
+        mainScene.zoomAndSpeedRangesliders(mainScene.sidebarManager.getPlayTime() -
+            mainScene.sidebarManager.getPlayPauseTimeDifference() + i);
         i += 50;
+    } else {
+        mainScene.startRendererOnMouseEvents(renderer, scene, camera);
     }
+
     animationFrameOutput = requestAnimationFrame(animate);
 }
 animate();

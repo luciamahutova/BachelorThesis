@@ -224,6 +224,8 @@ class MainScene {
 
 
 
+
+
     // Animate function and initializing classes: called in app.js 
     // -------------------------------------------------------------------------
     animate() {
@@ -233,8 +235,20 @@ class MainScene {
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;
         this.renderer.render(this.bgScene, this.bgCamera);
-        this.renderer.render(this.scene, this.camera);
     };
+
+    startRenderer(renderer, scene, camera) {
+        renderer.render(scene, camera);
+    }
+
+    startRendererOnMouseEvents() {
+        // Used when animation is paused - less burden for renderer when objects are not rotating
+        window.addEventListener('keydown', this.startRenderer(this.renderer, this.scene, this.camera), false);
+        window.addEventListener('click', this.startRenderer(this.renderer, this.scene, this.camera), false);
+        window.addEventListener('mousedown', this.startRenderer(this.renderer, this.scene, this.camera), false);
+        window.addEventListener('mousemove', this.startRenderer(this.renderer, this.scene, this.camera), false);
+        window.addEventListener('mouseup', this.startRenderer(this.renderer, this.scene, this.camera), false);
+    }
 
     initializeSceneObjects() {
         this.scene = new THREE.Scene();

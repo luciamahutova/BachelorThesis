@@ -55,13 +55,26 @@ class SidebarManager extends Planet {
         }
     }
 
-    // Open in new tab
+    // Menu options - used in simulationPage.html
     // -------------------------------------------------------------------------
-    openNewTabForPlanets = function() {
+    startNewSimulation() {
+        var confirmMessage;
+        if (document.getElementById("sk").style.fontWeight == "bold") {
+            confirmMessage = "Všetky prevedené zmeny budú stratené. Prajete si začať novú simuláciu?"
+        } else if (document.getElementById("cz").style.fontWeight == "bold") {
+            confirmMessage = "Všechny provedené změny budou ztraceny. Přejete si zahájit novou simulaci?"
+        } else { confirmMessage = "All changes will be lost. Do you want to start a new simulation?" }
+
+        if (confirm(confirmMessage)) {
+            window.open("simulationPage.html", "_self")
+        }
+    }
+
+    openNewTabForPlanets() {
         window.open("planetsPage.html", '_blank');
     }
 
-    openNewTabForInfo = function() {
+    openNewTabForInfo() {
         window.open("infoPage.html", '_blank');
     }
 
