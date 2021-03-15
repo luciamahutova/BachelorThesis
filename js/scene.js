@@ -7,6 +7,7 @@ class MainScene {
         this.bgCamera;
         this.spotLight;
         this.makeCameraFollowObject = true;
+        this.lastIndex = 0;
 
         this.planetObject;
         this.moonObject;
@@ -184,46 +185,100 @@ class MainScene {
     }
 
     // POKUS - zameranie na konkrétnu planétu
-    // setUpPositionOfCamera() {
-    //     var planet = this.planetObject.getPlanetMeshes();
-    //     var clickedPlanet, index;
-    //     if (window.myParam != undefined) {
-    //         clickedPlanet = window.myParam[0].object.name;
+    setUpPositionOfCamera() {
+        var planet = this.planetObject.getPlanetMeshes();
+        var clickedPlanet, index = 0;
+        if (window.myParam != undefined) {
+            clickedPlanet = window.myParam[0].object.name;
 
-    //         if (clickedPlanet == "Mercury") {
-    //             index = 0;
-    //         } else if (clickedPlanet == "Venus") {
-    //             index = 1;
-    //         } else if (clickedPlanet == "Earth") {
-    //             index = 2;
-    //         } else if (clickedPlanet == "Mars") {
-    //             index = 3;
-    //         } else if (clickedPlanet == "Jupiter") {
-    //             index = 4;
-    //         } else if (clickedPlanet == "Saturn") {
-    //             index = 5;
-    //         } else if (clickedPlanet == "Uranus") {
-    //             index = 6;
-    //         } else if (clickedPlanet == "Neptune") {
-    //             index = 7;
-    //         }
+            if (clickedPlanet == "Mercury") {
+                index = 0;
+            } else if (clickedPlanet == "Venus") {
+                index = 1;
+            } else if (clickedPlanet == "Earth") {
+                index = 2;
+            } else if (clickedPlanet == "Mars") {
+                index = 3;
+            } else if (clickedPlanet == "Jupiter") {
+                index = 4;
+            } else if (clickedPlanet == "Saturn") {
+                index = 5;
+            } else if (clickedPlanet == "Uranus") {
+                index = 6;
+            } else if (clickedPlanet == "Neptune") {
+                index = 7;
+            }
+        }
 
-    //         if (this.makeCameraFollowObject) {
-    //             planet[index].add(this.camera);
-    //             this.camera.position.set(0, 15, 0);
-    //             this.makeCameraFollowObject = false;
-    //             $('.slider').prop('disabled', true);
-    //         } else {
-    //             planet[index].remove(this.camera);
-    //             this.camera.position.set(0, 45, 0);
-    //             this.makeCameraFollowObject = true;
-    //             $('.slider').prop('disabled', false);
-    //         }
-    //     }
-    // }
+        if (this.makeCameraFollowObject) {
+            // temporarily disable z-rotation for planet object = camera will be placed above the planet
+            planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
+            planet[index].add(this.camera);
+            this.camera.position.set(0, 15, 0);
+            this.makeCameraFollowObject = false;
+            $('.slider').prop('disabled', true);
+            $('#cosmicObjectButton').prop('disabled', true);
+            document.getElementById("cameraToObjectButton").style.backgroundColor = "lightblue";
+        } else if (!this.makeCameraFollowObject) {
+            planet[index].remove(this.camera);
+            this.camera.position.set(0, 45, 0);
+            this.makeCameraFollowObject = true;
+            $('.slider').prop('disabled', false);
+            $('#cosmicObjectButton').prop('disabled', false);
+            document.getElementById("cameraToObjectButton").style.backgroundColor = "#061327";
+        }
+    }
 
+    activateCameraToObjectButton() {
+        if (this.makeCameraFollowObject) {
+            this.makeCameraFollowObject = false;
+            $('.slider').prop('disabled', true);
+            $('#cosmicObjectButton').prop('disabled', true);
+            document.getElementById("cameraToObjectButton").style.backgroundColor = "lightblue";
+        } else if (!this.makeCameraFollowObject) {
+            this.makeCameraFollowObject = true;
+            $('.slider').prop('disabled', false);
+            $('#cosmicObjectButton').prop('disabled', false);
+            document.getElementById("cameraToObjectButton").style.backgroundColor = "#061327";
+        }
+    }
 
+    findClickedPlanetForCamera() {
+        if (window.myParam != undefined) {
+            var selectedPlanet = window.myParam[0].object;
+            var planet = this.planetObject.getPlanetMeshes();
+            var index;
 
+            if (selectedPlanet.name == "Mercury") {
+                index = 0;
+            } else if (selectedPlanet.name == "Venus") {
+                index = 1;
+            } else if (selectedPlanet.name == "Earth") {
+                index = 2;
+            } else if (selectedPlanet.name == "Mars") {
+                index = 3;
+            } else if (selectedPlanet.name == "Jupiter") {
+                index = 4;
+            } else if (selectedPlanet.name == "Saturn") {
+                index = 5;
+            } else if (selectedPlanet.name == "Uranus") {
+                index = 6;
+            } else if (selectedPlanet.name == "Neptune") {
+                index = 7;
+            }
+
+            if (!this.makeCameraFollowObject && index != undefined) {
+                // temporarily disable z-rotation for planet object = camera will be placed above the planet
+                planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
+                planet[index].add(this.camera);
+                this.camera.position.set(0, 15, 0);
+                this.lastIndex = index;
+            } else if (this.makeCameraFollowObject) {
+                planet[this.lastIndex].remove(this.camera);
+                this.camera.position.set(0, 45, 0);
+            }
+        }
+    }
 
 
     // Animate function and initializing classes: called in app.js 
@@ -231,6 +286,7 @@ class MainScene {
     animate() {
         this.addEventListenerFunctions();
         this.raycaster.animate();
+        this.findClickedPlanetForCamera();
 
         this.bgMesh.material.depthTest = false;
         this.renderer.autoClear = false;

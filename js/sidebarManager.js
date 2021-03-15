@@ -91,6 +91,8 @@ class SidebarManager extends Planet {
             $(".pauseButton").on("click", function() {
                 $('.pauseButton').prop('disabled', true);
                 $('.playButton').prop('disabled', false);
+                $('#cosmicObjectButton').prop('disabled', true);
+                $('#cameraToObjectButton').prop('disabled', true);
             });
         }
     }
@@ -107,6 +109,8 @@ class SidebarManager extends Planet {
             $(".playButton").on("click", function() {
                 $('.pauseButton').prop('disabled', false);
                 $('.playButton').prop('disabled', true);
+                $('#cosmicObjectButton').prop('disabled', false);
+                $('#cameraToObjectButton').prop('disabled', false);
             });
         }
     }
