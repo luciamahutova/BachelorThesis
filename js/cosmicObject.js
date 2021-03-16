@@ -24,7 +24,7 @@ class CosmicObject extends Planet {
     activeCosmicObjectButton() {
         if (this.addCosmicObject) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
-            document.getElementById("allMoonObjectsChecked").checked = false;
+            $('#allMoonObjectsChecked').prop('checked', false);
             $('#cameraToObjectButton').prop('disabled', true);
             this.addCosmicObject = false;
         } else if (!this.addCosmicObject) {
@@ -33,7 +33,7 @@ class CosmicObject extends Planet {
                 this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
             }
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
-            document.getElementById("allMoonObjectsChecked").checked = true;
+            $('#allMoonObjectsChecked').prop('checked', true);
             $('#cameraToObjectButton').prop('disabled', false);
             this.addCosmicObject = true;
         }

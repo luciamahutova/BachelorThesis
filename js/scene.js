@@ -5,7 +5,8 @@ class MainScene {
         this.bgMesh;
         this.bgScene;
         this.bgCamera;
-        this.spotLight;
+        this.pointLight;
+        this.pointLight2;
         this.makeCameraFollowObject = true;
         this.lastIndex = 0;
 
@@ -53,21 +54,13 @@ class MainScene {
     }
 
     setLights() {
-        const pointLight = new THREE.PointLight(0xffffff, 1.6, window.innerWidth / 2, 2);
-        pointLight.position.set(0, 0, 0);
-        pointLight.castShadow = true;
-        pointLight.shadow.camera.near = 0;
-        pointLight.shadow.camera.far = window.innerWidth;
-        this.scene.add(pointLight);
+        // Positions of lights are set in class Sun + according the movement of scene
+        this.pointLight = new THREE.PointLight(0xffffff, 1.6, window.innerWidth, 2);
+        this.pointLight.castShadow = true;
+        this.pointLight.shadow.camera.near = 0;
+        this.pointLight.shadow.camera.far = window.innerWidth;
 
-        this.spotLight = new THREE.SpotLight(0xffffff);
-        this.spotLight.position.set(0, 10, 0);
-        this.spotLight.castShadow = true;
-        this.spotLight.shadow.mapSize.width = 30;
-        this.spotLight.shadow.mapSize.height = 30;
-        this.spotLight.shadow.camera.near = 10;
-        this.spotLight.shadow.camera.far = 30;
-        this.scene.add(this.spotLight);
+        this.pointLight2 = new THREE.PointLight(0xffffff, 2, 30, 2);
 
         this.scene.traverse(function(children) {
             children.castShadow = true;
@@ -123,7 +116,8 @@ class MainScene {
 
     // Drag function for scene: 
     // https://uxdesign.cc/implementing-a-custom-drag-event-function-in-javascript-and-three-js-dc79ee545d85
-    mouseMoveEvent(camera) {
+    mouseMoveEvent(scene) {
+        this.sunObject.setLightsToSunPosition();
         return function(event) {
             if (this.mouseDown) {
                 var moveToX = event.clientX - this.mousePositionX;
@@ -131,8 +125,8 @@ class MainScene {
                 this.mousePositionX = event.clientX;
                 this.mousePositionY = event.clientY;
 
-                camera.position.x -= moveToX / 10;
-                camera.position.z -= moveToY / 10;
+                scene.position.x += moveToX / 10;
+                scene.position.z += moveToY / 10;
             }
         }
     }
@@ -153,7 +147,7 @@ class MainScene {
         window.addEventListener('keydown', this.moveCameraOnPressedArrow, false);
         window.addEventListener('click', this.raycaster.onMouseMove(this.camera, this.scene), false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
-        window.addEventListener('mousemove', this.mouseMoveEvent(this.camera), false);
+        window.addEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
         window.addEventListener('mouseup', this.mouseUpEvent, false);
     }
 
@@ -184,61 +178,20 @@ class MainScene {
         updateRangesliderValues();
     }
 
-    // POKUS - zameranie na konkrétnu planétu
-    setUpPositionOfCamera() {
-        var planet = this.planetObject.getPlanetMeshes();
-        var clickedPlanet, index = 0;
-        if (window.myParam != undefined) {
-            clickedPlanet = window.myParam[0].object.name;
-
-            if (clickedPlanet == "Mercury") {
-                index = 0;
-            } else if (clickedPlanet == "Venus") {
-                index = 1;
-            } else if (clickedPlanet == "Earth") {
-                index = 2;
-            } else if (clickedPlanet == "Mars") {
-                index = 3;
-            } else if (clickedPlanet == "Jupiter") {
-                index = 4;
-            } else if (clickedPlanet == "Saturn") {
-                index = 5;
-            } else if (clickedPlanet == "Uranus") {
-                index = 6;
-            } else if (clickedPlanet == "Neptune") {
-                index = 7;
-            }
-        }
-
-        if (this.makeCameraFollowObject) {
-            // temporarily disable z-rotation for planet object = camera will be placed above the planet
-            planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
-            planet[index].add(this.camera);
-            this.camera.position.set(0, 15, 0);
-            this.makeCameraFollowObject = false;
-            $('.slider').prop('disabled', true);
-            $('#cosmicObjectButton').prop('disabled', true);
-            document.getElementById("cameraToObjectButton").style.backgroundColor = "lightblue";
-        } else if (!this.makeCameraFollowObject) {
-            planet[index].remove(this.camera);
-            this.camera.position.set(0, 45, 0);
-            this.makeCameraFollowObject = true;
-            $('.slider').prop('disabled', false);
-            $('#cosmicObjectButton').prop('disabled', false);
-            document.getElementById("cameraToObjectButton").style.backgroundColor = "#061327";
-        }
-    }
-
+    // Button for 
+    // -------------------------------------------------------------------------
     activateCameraToObjectButton() {
         if (this.makeCameraFollowObject) {
             this.makeCameraFollowObject = false;
             $('.slider').prop('disabled', true);
             $('#cosmicObjectButton').prop('disabled', true);
+            window.removeEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "lightblue";
         } else if (!this.makeCameraFollowObject) {
             this.makeCameraFollowObject = true;
             $('.slider').prop('disabled', false);
             $('#cosmicObjectButton').prop('disabled', false);
+            window.addEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "#061327";
         }
     }
@@ -319,7 +272,7 @@ class MainScene {
         this.planetObject.initializePlanets();
         this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
         this.moonMeshes = this.moonObject.getMoonMeshes();
-        this.sunObject = new Sun(this.scene, this.spotLight);
+        this.sunObject = new Sun(this.scene, this.pointLight, this.pointLight2);
         this.raycaster = new RayCaster(this.planetObject.getPlanetData(), this.planetObject.getMoonData());
         this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
             this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getMoonMeshes(),

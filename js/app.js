@@ -11,11 +11,10 @@ var i = 0;
 function animate() {
     mainScene.animate();
     if (document.getElementById("pauseButton").disabled == false) {
-        mainScene.startRenderer(renderer, scene, camera);
-
         mainScene.zoomAndSpeedRangesliders(mainScene.sidebarManager.getPlayTime() -
             mainScene.sidebarManager.getPlayPauseTimeDifference() + i);
         i += 50;
+        mainScene.startRenderer(renderer, scene, camera);
     } else {
         mainScene.startRendererOnMouseEvents(renderer, scene, camera);
     }
