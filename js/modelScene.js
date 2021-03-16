@@ -2,7 +2,7 @@ class ModelScene extends InitScene {
     constructor() {
         super();
         this.scene = new THREE.Scene();
-        this.renderer = this.initRenderer(window.innerWidth, window.innerHeight);
+        this.renderer = this.initRenderer(window.innerWidth, window.innerHeight, false);
         this.camera = this.initCamera(window.innerWidth, window.innerHeight);
         this.bgMesh = this.setStaticBackground();
         this.bgScene = this.createBgScene(this.bgMesh);

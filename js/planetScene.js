@@ -3,7 +3,7 @@ class PlanetScene extends InitScene {
         super()
         this.scene = new THREE.Scene();
         this.camera = this.initCamera(this.getWidthOfScene(), this.getHeightOfScene());
-        this.renderer = this.initRenderer(this.getWidthOfScene(), this.getHeightOfScene());
+        this.renderer = this.initRenderer(this.getWidthOfScene(), this.getHeightOfScene(), true);
         this.pointLight = this.setPointLightOnScene();
 
         this.createScene();
@@ -17,7 +17,10 @@ class PlanetScene extends InitScene {
         const sphere = new THREE.Mesh(geometry, material);
         this.scene.add(sphere);
         sphere.position.set(0, 0, 0);
+
         interactiveScene.appendChild(this.renderer.domElement);
+        this.renderer.setClearColor(0xffffff, 10);
+        this.renderer.setClearColor(0x000000, 0);
     }
 
     getWidthOfScene() { return document.querySelector('#interativeModelScene').offsetWidth; }

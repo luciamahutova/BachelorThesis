@@ -1,8 +1,8 @@
 class InitScene {
     constructor() {}
 
-    initRenderer(width, height) {
-        var renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: false });
+    initRenderer(width, height, alphaBoolean) {
+        var renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: false, alpha: alphaBoolean });
         renderer.setSize(width, height);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.autoClearColor = false;

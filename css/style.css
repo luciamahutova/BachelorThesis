@@ -569,10 +569,10 @@ article h3 {
 /* POKUS */
 
 #interativeModelScene {
-    position: fixed;
+    position: absolute;
     top: 100px;
-    right: 80px;
-    width: 900px;
+    right: 5%;
+    width: 500px;
     height: 600px;
-    /* background-color: #BABABA; */
+    background-color: transparent;
 }
