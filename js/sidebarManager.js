@@ -1,6 +1,5 @@
-class SidebarManager extends Planet {
+class SidebarManager {
     constructor(planetNamesEN, planetNamesCZ, planetNamesSK, moonsNamesOnScene, moonMeshes, scene, orbits) {
-        super();
         this.isSidebarOpen = true;
         this.isAppRunning = true;
         this.animationFrameOutput = 0;

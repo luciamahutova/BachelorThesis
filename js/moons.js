@@ -1,10 +1,10 @@
-class Moon extends Planet {
-    constructor(scene, orbits) {
+class Moon extends InitPlanets {
+    constructor(scene, orbits, planetsMeshes) {
         super();
         this.scene = scene;
         this.orbits = orbits;
-        this.planetsMeshes = super.getPlanetMeshes();
-        this.allPlanetDataJSON = super.getPlanetData();
+        this.planetsMeshes = planetsMeshes;
+        this.allPlanetDataJSON = this.getPlanetData();
         this.moonsMeshes = [];
         this.moonsNamesOnScene = [];
         this.moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",

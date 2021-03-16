@@ -1,8 +1,8 @@
-class CosmicObject extends Planet {
+class CosmicObject extends InitPlanets {
     constructor(scene, planetMeshes) {
         super();
         this.scene = scene;
-        this.allPlanetDataJSON = super.getPlanetData();
+        this.allPlanetDataJSON = this.getPlanetData();
         this.planetMeshes = planetMeshes;
         this.cosmicObject;
         this.addCosmicObject = true;

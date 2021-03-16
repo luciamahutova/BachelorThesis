@@ -233,7 +233,8 @@ class ModelScene extends InitScene {
     initializeSceneObjects() {
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
-        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
+        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits(),
+            this.planetObject.getPlanetMeshes());
         this.moonMeshes = this.moonObject.getMoonMeshes();
         this.sunObject = new Sun(this.scene, this.pointLight, this.pointLight2);
         this.raycaster = new RayCaster(this.planetObject.getPlanetData(), this.planetObject.getMoonData());

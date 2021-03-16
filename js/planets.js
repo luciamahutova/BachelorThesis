@@ -1,58 +1,33 @@
-class Planet {
+class Planet extends InitPlanets {
     constructor(scene) {
+        super();
         this.scene = scene;
         this.planetsObjects = [];
         this.planetsMeshes = [];
         this.planetsNamesOnSceneEN = [];
         this.planetsNamesOnSceneCZ = [];
         this.planetsNamesOnSceneSK = [];
-        this.allPlanetDataJSON = [];
-        this.allMoonDataJSON = [];
         this.planetSizes = [];
-        this.betha = 0;
-        this.timestamp = 0;
         this.planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
 
-        this.jsonManager = new JSONManager();
-        this.addAllPlanetDataJSON();
-        this.addAllMoonDataJSON();
         this.orbitClass;
         this.cosmicObject;
     }
 
     getPlanetMeshes() { return this.planetsMeshes; }
     getScaleValue() { return this.scaleValueScene; }
-    getPlanetData() { return this.allPlanetDataJSON; }
-    getMoonData() { return this.allMoonDataJSON; }
     getPlanetNamesEN() { return this.planetsNamesOnSceneEN; }
     getPlanetNamesCZ() { return this.planetsNamesOnSceneCZ; }
     getPlanetNamesSK() { return this.planetsNamesOnSceneSK; }
-    getTimestamp() { return this.timestamp; }
 
     // Creating planet objects, meshes and adding them to Scene
     // -------------------------------------------------------------------------
-    createPlanetObject(diameter) {
-        return new THREE.SphereBufferGeometry(diameter, 50, 50);
-    }
-
     createPlanets() {
         // 27x smaller scale for Sun; 5-6x smaller scale for Jupiter, Saturn, Uranus, Neptune
         var planetSizes = [0.3829, 0.9499, 1, 0.5320, 10.97 / 6, 9.140 / 6, 3.981 / 5, 3.865 / 5];
         for (var i = 0; i < planetSizes.length; i++) {
             this.planetsObjects.push(this.createPlanetObject(planetSizes[i]));
         }
-    }
-
-    setNewMesh(imageSrc) {
-        let texture = new THREE.TextureLoader().load(imageSrc);
-        this.meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
-        this.meshMaterial.receiveShadow = true;
-        this.meshMaterial.castShadow = true;
-        return this.meshMaterial;
-    }
-
-    createMesh(planetObject, imageSrc) {
-        return new THREE.Mesh(planetObject, this.setNewMesh(imageSrc));
     }
 
     createPlanetsMesh(scene, planetsObjects) {
@@ -78,43 +53,8 @@ class Planet {
         }
     }
 
-    addMeshToScene(scene, planetsMeshes) {
-        for (var i = 0; i < planetsMeshes.length; i++) {
-            scene.add(planetsMeshes[i]);
-        }
-    }
-
     // Names for planets on Scene: TextGeometry
     // -------------------------------------------------------------------------
-    createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, objectNames, fontSize, startsWith) {
-        var geometry, textMesh;
-        const loader = new THREE.FontLoader();
-
-        loader.load('node_modules/three/examples/fonts/helvetiker_regular.typeface.json', function(font) {
-            var material = new THREE.MeshNormalMaterial();
-            material.transparent = false;
-
-            for (i = 0; i < planetsMeshes.length; i++) {
-                geometry = new THREE.TextGeometry(objectNames[i], {
-                    font: font,
-                    size: fontSize,
-                    height: 0,
-                    bevelEnabled: false
-                });
-                textMesh = new THREE.Mesh(geometry, material);
-                textMesh.setRotationFromAxisAngle(
-                    new THREE.Vector3(1, 0, 0),
-                    (Math.PI / 2 * 3)
-                );
-
-                planetsNamesOnScene.push(textMesh);
-                planetsMeshes[i].add(textMesh);
-                textMesh.name = startsWith + objectNames[i];
-                scene.add(textMesh);
-            }
-        });
-    }
-
     addNamesToPlanetObject(planetsMeshes, scene) {
         var planetNamesEN = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
         var planetNamesCZ = ["Merkur", "Venuse", "Zeme", "Mars", "Jupitr", "Saturn", "Uran", "Neptun"];
@@ -143,16 +83,6 @@ class Planet {
         }
     }
 
-    // Read data from JSON and save them
-    // -------------------------------------------------------------------------
-    addAllPlanetDataJSON = function() {
-        this.allPlanetDataJSON.push(this.jsonManager.readPlanetsData());
-    }
-
-    addAllMoonDataJSON = function() {
-        this.allMoonDataJSON.push(this.jsonManager.readMoonsData());
-    }
-
     // Setting planets' and orbits' positions - according to rangeslider scale value
     // -------------------------------------------------------------------------
     setScaleForObjectsAndOrbits(scaleValue) {
@@ -162,28 +92,10 @@ class Planet {
         this.orbitClass.positionAllMoonOrbits();
     }
 
-    scaleObjectsByRangeslider(scaleValue, objects) {
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
-        }
-    }
-
     // Moving planets on their orbits (ellipses)
     // -------------------------------------------------------------------------
-    calculateRotationSpeed(planetOrder, speedValue, time, planetRotationSpeedAroundSun) {
-        //window.setTimeout(this.timeOutForSpeedCalculation(speedValue), 10000);
-        if (speedValue == 0) {
-            this.timestamp = (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time);
-        } else if (speedValue > 0) {
-            this.timestamp = (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time) * speedValue;
-        } else if (speedValue < 0) {
-            this.timestamp = (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time) / Math.abs(speedValue);
-        }
-        return this.timestamp;
-    }
-
-    // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
     rotateAllPlanets(scaleValue, speedValue, time) {
+        // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
         var planetRotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128]
         var rangesliderSpeed;
 
