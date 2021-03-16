@@ -18,7 +18,6 @@ class Sun extends Planet {
 
         this.sunMesh.add(this.pointLight);
         this.sunMesh.add(this.pointLight2);
-        this.sunMesh.add(this.pointLight3);
     }
 
     setLightsToSunPosition() {

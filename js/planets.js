@@ -11,6 +11,7 @@ class Planet {
         this.planetSizes = [];
         this.betha = 0;
         this.timestamp = 0;
+        this.planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
 
         this.jsonManager = new JSONManager();
         this.addAllPlanetDataJSON();
@@ -72,10 +73,8 @@ class Planet {
     }
 
     addNamesToPlanetMeshes() {
-        var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-
-        for (i = 0; i < planetNames.length; i++) {
-            (this.planetsMeshes[i]).name = planetNames[i];
+        for (i = 0; i < this.planetNames.length; i++) {
+            (this.planetsMeshes[i]).name = this.planetNames[i];
         }
     }
 
@@ -139,9 +138,8 @@ class Planet {
     }
 
     setRotationAngleForAllPlanets() {
-        var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
         for (var i = 0; i < this.planetsMeshes.length; i++) {
-            this.setRotationAngleForSinglePlanet(this.planetsMeshes[i], planetNames[i]);
+            this.setRotationAngleForSinglePlanet(this.planetsMeshes[i], this.planetNames[i]);
         }
     }
 
@@ -187,7 +185,6 @@ class Planet {
     // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
     rotateAllPlanets(scaleValue, speedValue, time) {
         var planetRotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128]
-        var planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
         var rangesliderSpeed;
 
         this.traverseSceneToFindPlanetNames(false, "nameEn");
@@ -198,21 +195,21 @@ class Planet {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameEn");
                 rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneEN[i], scaleValue * 2,
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneEN[i], scaleValue * 2,
                     rangesliderSpeed);
             }
         } else if (document.getElementById("cz").style.fontWeight == "bold") {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameCz");
                 rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneCZ[i], scaleValue * 2,
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneCZ[i], scaleValue * 2,
                     rangesliderSpeed);
             }
         } else if (document.getElementById("sk").style.fontWeight == "bold") {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameSk");
                 rangesliderSpeed = this.calculateRotationSpeed(i, speedValue, time, planetRotationSpeedAroundSun);
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], planetNames[i], this.planetsNamesOnSceneSK[i], scaleValue * 2,
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneSK[i], scaleValue * 2,
                     rangesliderSpeed);
             }
         }
@@ -228,16 +225,16 @@ class Planet {
 
     // Positions for 1 planet - according to scale from rangeslider
     // -------------------------------------------------------------------------
-    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, timestamp) {
+    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, rangesliderSpeed) {
         var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
         var orbitalSpeed = 0;
 
         dataOfCurrentPlanetJSON.then(function(result) {
             orbitalSpeed = result[planetName]["rotationSpeed"] / 15; // orbital speed was too high
             planetMesh.position.x = result[planetName]["c"] * scaleValue +
-                (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(timestamp + orbitalSpeed));
+                (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(rangesliderSpeed + orbitalSpeed));
             planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scaleValue *
-                Math.sin(timestamp + orbitalSpeed));
+                Math.sin(rangesliderSpeed + orbitalSpeed));
 
             if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
                 planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scaleValue + 1;
