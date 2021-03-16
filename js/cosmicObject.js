@@ -6,10 +6,13 @@ class CosmicObject extends Planet {
         this.planetMeshes = planetMeshes;
         this.cosmicObject;
         this.addCosmicObject = true;
+        this.isPlanetClicked = false;
         this.createCosmicObject();
     }
 
     getCosmicObject() { return [this.cosmicObject]; } // Used in class Planet - for scale
+    getIsPlanetClicked() { return this.isPlanetClicked; }
+    setIsPlanetClicked(boolean) { this.isPlanetClicked = boolean; }
 
     // Cosmic object
     // -------------------------------------------------------------------------
@@ -44,11 +47,16 @@ class CosmicObject extends Planet {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object;
-            var meshOrder = this.orderOfSelectedPlanetMesh(selectedPlanet);
-
-            this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, speedValue, time);
-            this.scene.add(this.cosmicObject);
             this.moonsVisibilityOfSelectedPlanet(selectedPlanet, false);
+
+            if (this.getIsPlanetClicked()) {
+                var meshOrder = this.orderOfSelectedPlanetMesh(selectedPlanet);
+                this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder,
+                    scaleValue, speedValue, time);
+                this.scene.add(this.cosmicObject);
+            } else if (!this.getIsPlanetClicked()) {
+                this.scene.remove(this.cosmicObject);
+            }
         }
     }
 
@@ -60,6 +68,7 @@ class CosmicObject extends Planet {
                     children.visible = showObjectsBoolean;
                 }
             });
+            this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Jupiter") {
             this.scene.traverse(function(children) {
                 if (children.name == "Io" || children.name == "Europa" || children.name == "Ganymede" || children.name == "Callisto" ||
@@ -68,12 +77,14 @@ class CosmicObject extends Planet {
                     children.visible = showObjectsBoolean;
                 }
             });
+            this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Saturn") {
             this.scene.traverse(function(children) {
                 if (children.name == "Rhea" || children.name == "Titan" || children.name == "nameRhea" || children.name == "nameTitan") {
                     children.visible = showObjectsBoolean;
                 }
             });
+            this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Uranus") {
             this.scene.traverse(function(children) {
                 if (children.name == "Ariel" || children.name == "Umbriel" || children.name == "Titania" || children.name == "Oberon" ||
@@ -82,13 +93,18 @@ class CosmicObject extends Planet {
                     children.visible = showObjectsBoolean;
                 }
             });
+            this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Neptune") {
             this.scene.traverse(function(children) {
                 if (children.name == "Triton" || children.name == "nameTriton") {
                     children.visible = showObjectsBoolean;
                 }
             });
-        }
+            this.setIsPlanetClicked(true);
+        } else if (selectedPlanet.name == "Mercury" || selectedPlanet.name == "Venus" || selectedPlanet.name == "Mars") {
+            this.setIsPlanetClicked(true);
+        } else { this.setIsPlanetClicked(false); }
+
     }
 
     // Position cosmic object to selected planet
