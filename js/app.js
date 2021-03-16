@@ -1,22 +1,22 @@
 // Initialize program
-let mainScene = new MainScene();
-mainScene.initializeSceneObjects();
-let renderer = mainScene.getRenderer();
-let scene = mainScene.getScene();
-let camera = mainScene.getCamera();
-mainScene.resizeBackground(renderer, camera);
+let modelScene = new ModelScene();
+modelScene.initializeSceneObjects();
+let renderer = modelScene.getRenderer();
+let scene = modelScene.getScene();
+let camera = modelScene.getCamera();
+modelScene.resizeBackground(renderer, camera);
 
 var i = 0;
 
 function animate() {
-    mainScene.animate();
+    modelScene.animate();
     if (document.getElementById("pauseButton").disabled == false) {
-        mainScene.zoomAndSpeedRangesliders(mainScene.sidebarManager.getPlayTime() -
-            mainScene.sidebarManager.getPlayPauseTimeDifference() + i);
+        modelScene.zoomAndSpeedRangesliders(modelScene.sidebarManager.getPlayTime() -
+            modelScene.sidebarManager.getPlayPauseTimeDifference() + i);
         i += 50;
-        mainScene.startRenderer(renderer, scene, camera);
+        modelScene.startRenderer(renderer, scene, camera);
     } else {
-        mainScene.startRendererOnMouseEvents(renderer, scene, camera);
+        modelScene.startRendererOnMouseEvents(renderer, scene, camera);
     }
 
     animationFrameOutput = requestAnimationFrame(animate);

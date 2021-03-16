@@ -1,12 +1,16 @@
-class MainScene {
+class ModelScene extends InitScene {
     constructor() {
-        this.scene;
-        this.camera;
-        this.bgMesh;
-        this.bgScene;
-        this.bgCamera;
-        this.pointLight;
-        this.pointLight2;
+        super();
+        this.scene = new THREE.Scene();
+        this.renderer = this.initRenderer(window.innerWidth, window.innerHeight);
+        this.camera = this.initCamera(window.innerWidth, window.innerHeight);
+        this.bgMesh = this.setStaticBackground();
+        this.bgScene = this.createBgScene(this.bgMesh);
+        this.bgCamera = this.createBgCamera();
+        this.pointLight = this.setPointLightOnScene();
+        this.pointLight2 = this.setPointLightOnSun();
+        this.traverseSceneToCastShadows(this.scene);
+
         this.makeCameraFollowObject = true;
         this.lastIndex = 0;
 
@@ -27,48 +31,7 @@ class MainScene {
     getRenderer() { return this.renderer }
     getCamera() { return this.camera }
 
-    // Initialize renderer, camera, lights
-    // -------------------------------------------------------------------------
-    initRenderer() {
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: false });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.autoClearColor = false;
-        this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.BasicShadowMap;
-        document.body.appendChild(this.renderer.domElement);
-        return this.renderer;
-    }
-
-    initCamera() {
-        this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1500);
-        this.camera.position.set(0, 45, 0);
-        this.camera.lookAt(new THREE.Vector3(0, 1, 0));
-        return this.camera;
-    }
-
-    createBgCamera() {
-        this.bgCamera = new THREE.Camera();
-        this.bgScene.add(this.bgCamera);
-        return this.bgCamera;
-    }
-
-    setLights() {
-        // Positions of lights are set in class Sun + according the movement of scene
-        this.pointLight = new THREE.PointLight(0xffffff, 1.6, window.innerWidth, 2);
-        this.pointLight.castShadow = true;
-        this.pointLight.shadow.camera.near = 0;
-        this.pointLight.shadow.camera.far = window.innerWidth;
-
-        this.pointLight2 = new THREE.PointLight(0xffffff, 2, 30, 2);
-
-        this.scene.traverse(function(children) {
-            children.castShadow = true;
-            children.receiveShadow = true;
-        });
-    }
-
-    // Background of Scene
+    // Background of scene
     // -------------------------------------------------------------------------
     setStaticBackground() {
         const bgTexture = new THREE.TextureLoader().load('/images/2k-starsMilkyWay.jpg');
@@ -84,6 +47,12 @@ class MainScene {
         return this.bgScene;
     }
 
+    createBgCamera() {
+        this.bgCamera = new THREE.Camera();
+        this.bgScene.add(this.bgCamera);
+        return this.bgCamera;
+    }
+
     resizeBackground(renderer, camera) {
         window.addEventListener('resize', function() {
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -94,24 +63,26 @@ class MainScene {
 
     // Move Scene functions
     // -------------------------------------------------------------------------
-    moveCameraOnPressedArrow(e) {
-        // Movement in opposite direction - seems more natural
-        var moveCameraeByValue = 10;
-        if (e.keyCode == '37') { // Left arrow key
-            this.camera.position.x -= moveCameraeByValue;
-        } else if (e.keyCode == '38') { // Top arrow key
-            this.camera.position.z -= moveCameraeByValue;
-        } else if (e.keyCode == '39') { // Right arrow key
-            this.camera.position.x += moveCameraeByValue;
-        } else if (e.keyCode == '40') { // Bottom arrow kes
-            this.camera.position.z += moveCameraeByValue;
-        } else if (e.keyCode == "27") { // Escape key
-            this.camera.position.set(0, 45, 0);
+    moveSceneOnPressedArrow(scene) {
+        return function(e) {
+            // Movement in opposite direction - seems more natural
+            var moveSceneByValue = 10;
+            if (e.keyCode == '37') { // Left arrow key
+                scene.position.x -= moveSceneByValue;
+            } else if (e.keyCode == '38') { // Top arrow key
+                scene.position.z -= moveSceneByValue;
+            } else if (e.keyCode == '39') { // Right arrow key
+                scene.position.x += moveSceneByValue;
+            } else if (e.keyCode == '40') { // Bottom arrow kes
+                scene.position.z += moveSceneByValue;
+            } else if (e.keyCode == "27") { // Escape key
+                scene.position.set(0, 0, 0);
+            }
         }
     }
 
-    moveCameraToOriginalPosition(camera) {
-        camera.position.set(0, 45, 0);
+    moveCameraToOriginalPosition() {
+        this.scene.position.set(0, 0, 0);
     }
 
     // Drag function for scene: 
@@ -144,7 +115,7 @@ class MainScene {
     // Event listener functions
     // -------------------------------------------------------------------------
     addEventListenerFunctions() {
-        window.addEventListener('keydown', this.moveCameraOnPressedArrow, false);
+        window.addEventListener('keydown', this.moveSceneOnPressedArrow(this.scene), false);
         window.addEventListener('click', this.raycaster.onMouseMove(this.camera, this.scene), false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
         window.addEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
@@ -260,14 +231,6 @@ class MainScene {
     }
 
     initializeSceneObjects() {
-        this.scene = new THREE.Scene();
-        this.initRenderer();
-        this.camera = this.initCamera();
-        this.bgMesh = this.setStaticBackground();
-        this.bgScene = this.createBgScene(this.bgMesh);
-        this.bgCamera = this.createBgCamera();
-        this.setLights();
-
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
         this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());

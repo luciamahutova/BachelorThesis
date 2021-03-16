@@ -19,13 +19,13 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
-                    <a href="#" class="lang" id="ssm" onclick="mainScene.sidebarManager.startNewSimulation()"></a>
+                    <a href="#" class="lang" id="ssm" onclick="modelScene.sidebarManager.startNewSimulation()"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" id="planets" onclick="mainScene.sidebarManager.openNewTabForPlanets()"></a>
+                    <a href="#" class="lang" id="planets" onclick="modelScene.sidebarManager.openNewTabForPlanets()"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" id="about" onclick="mainScene.sidebarManager.openNewTabForInfo()"></a>
+                    <a href="#" class="lang" id="about" onclick="modelScene.sidebarManager.openNewTabForInfo()"></a>
                 </li>
             </ul>
             <div id="languages">
@@ -36,7 +36,7 @@
         </nav>
     </header>
 
-    <section class="sidebars overlay" id="sidebarPlanetInfo" onclick="mainScene.sidebarManager.hideSidebarToLeft()">
+    <section class="sidebars overlay" id="sidebarPlanetInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
                 <h3 class="lang" id="physicalValuesPlanet"></h3>
@@ -86,7 +86,7 @@
         </div>
     </section>
 
-    <section class="sidebars overlay" id="sidebarMoonInfo" onclick="mainScene.sidebarManager.hideSidebarToLeft()">
+    <section class="sidebars overlay" id="sidebarMoonInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
                 <h3 class="lang" id="physicalValuesMoon"></h3>
@@ -113,7 +113,7 @@
         </div>
     </section>
 
-    <img src="/icons/molecules.png" class="sidebarIcon" alt="" width="30" height="30" onclick="mainScene.sidebarManager.showHideSidebarToRight()">
+    <img src="/icons/molecules.png" class="sidebarIcon" alt="" width="30" height="30" onclick="modelScene.sidebarManager.showHideSidebarToRight()">
     <section class="sidebars overlay" id="sidebarRight">
         <div>
             <section>
@@ -215,7 +215,7 @@
                 </select>
             </section>
 
-            <button class="confirmChangesButton lang" type="submit" id="confirm" onclick="mainScene.sidebarManager.confirmButtonBehavior()"></button>
+            <button class="confirmChangesButton lang" type="submit" id="confirm" onclick="modelScene.sidebarManager.confirmButtonBehavior()"></button>
             <button class="pauseButton" id="pauseButton" type="button"></button>
             <button class="playButton" id="playButton" type="button"></button>
         </div>
@@ -223,15 +223,15 @@
 
     <section class="models overlay">
         <div class="tooltip">
-            <button type="button" id="cosmicObjectButton" onclick="mainScene.planetObject.cosmicObject.activeCosmicObjectButton()"></button>
+            <button type="button" id="cosmicObjectButton" onclick="modelScene.planetObject.cosmicObject.activeCosmicObjectButton()"></button>
             <span class="lang" id="cosmicObject"></span>
         </div>
         <div class="tooltip">
-            <button type="button" id="cameraToObjectButton" onclick="mainScene.activateCameraToObjectButton()"></button>
+            <button type="button" id="cameraToObjectButton" onclick="modelScene.activateCameraToObjectButton()"></button>
             <span class="lang" id="cameraToPlanet"></span>
         </div>
         <div class="tooltip">
-            <button type="button" onclick="mainScene.moveCameraToOriginalPosition(camera)"></button>
+            <button type="button" onclick="modelScene.moveCameraToOriginalPosition()"></button>
             <span class="lang" id="centerModel"></span>
         </div>
     </section>
@@ -250,7 +250,8 @@
     <div id="anime-container"></div>
 
     <!-- Scripts -->
-    <script src="/js/scene.js"></script>
+    <script src="/js/initScene.js"></script>
+    <script src="/js/modelScene.js"></script>
     <script src="/js/orbits.js"></script>
     <script src="/js/planets.js"></script>
     <script src="/js/sun.js"></script>
@@ -267,12 +268,12 @@
         var count = playInterval = 0;
         window.addEventListener('focus', function() {
             playInterval = window.setInterval(count++, 1000);
-            mainScene.sidebarManager.playApplicationOnActiveWindow();
+            modelScene.sidebarManager.playApplicationOnActiveWindow();
             closeNav();
         });
         window.addEventListener('blur', function() {
             window.clearInterval(playInterval);
-            mainScene.sidebarManager.pauseApplicationOnInactiveWindow();
+            modelScene.sidebarManager.pauseApplicationOnInactiveWindow();
         });
 
 
