@@ -52,14 +52,10 @@ class Moon extends InitPlanets {
     // Positions for moons - according to zoom
     // -------------------------------------------------------------------------
     rotateMoonAroundPlanet(moonMesh, moonNameJSON, orbitOrder, planetName, scaleValue, time) {
-        var moonRotationSpeedAroundPlanet = [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5];
-        var rangesliderSpeed;
-
         if ((scaleValue * 200) < 70) {
             this.positionMoonRangesliderZoomOut();
-        } else {
-            rangesliderSpeed = moonRotationSpeedAroundPlanet[orbitOrder] * 0.0001 * time;
-            this.positionMoonToOrbit(moonMesh, moonNameJSON, this.orbits, orbitOrder, planetName, scaleValue, rangesliderSpeed);
+        } else {;
+            this.positionMoonToOrbit(moonMesh, moonNameJSON, this.orbits, orbitOrder, planetName, scaleValue, time);
         }
     }
 
@@ -69,18 +65,18 @@ class Moon extends InitPlanets {
         }
     }
 
-    positionMoonToOrbit(moonMesh, moonNameJSON, orbits, orbitOrder, moonNameOnScene, scaleValue, rangesliderSpeed) {
+    positionMoonToOrbit(moonMesh, moonNameJSON, orbits, orbitOrder, moonNameOnScene, scaleValue, time) {
         this.traverseSceneToFindMoons(true, "");
         this.traverseSceneToFindMoons(true, "name");
         var orbitalSpeed = 0;
 
         var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
         dataOfCurrentPlanetJSON.then(function(result) {
-            orbitalSpeed = result[moonNameJSON]["orbitalSpeed"] / 15; // same in planets.js, too high speed 
+            orbitalSpeed = result[moonNameJSON]["orbitalSpeed"] / 5; // speed is too high
             moonMesh.position.x = orbits[orbitOrder + 8].position.x + 2 * result[moonNameJSON]["a"] *
-                result[moonNameJSON]["scaleFactor"] * scaleValue * Math.cos(rangesliderSpeed * orbitalSpeed);
+                result[moonNameJSON]["scaleFactor"] * scaleValue * Math.cos(orbitalSpeed * 0.0001 * time);
             moonMesh.position.z = orbits[orbitOrder + 8].position.z - 2 * result[moonNameJSON]["b"] *
-                result[moonNameJSON]["scaleFactor"] * scaleValue * Math.sin(rangesliderSpeed * orbitalSpeed);
+                result[moonNameJSON]["scaleFactor"] * scaleValue * Math.sin(orbitalSpeed * 0.0001 * time);
 
             if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
                 moonNameOnScene.position.x = moonMesh.position.x + 1;

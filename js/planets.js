@@ -98,9 +98,6 @@ class Planet extends InitPlanets {
     // -------------------------------------------------------------------------
     rotateAllPlanets(scaleValue, time) {
         // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
-        var planetRotationSpeedAroundSun = [1.607, 1.174, 1.000, 0.802, 0.434, 0.323, 0.228, 0.128]
-        var rangesliderSpeed;
-
         this.traverseSceneToFindPlanetNames(false, "nameEn");
         this.traverseSceneToFindPlanetNames(false, "nameCz");
         this.traverseSceneToFindPlanetNames(false, "nameSk");
@@ -108,20 +105,20 @@ class Planet extends InitPlanets {
         if (document.getElementById("en").style.fontWeight == "bold") {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameEn");
-                rangesliderSpeed = planetRotationSpeedAroundSun[i] * 0.0001 * time;
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneEN[i], scaleValue * 2, rangesliderSpeed);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneEN[i],
+                    scaleValue * 2, time);
             }
         } else if (document.getElementById("cz").style.fontWeight == "bold") {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameCz");
-                rangesliderSpeed = planetRotationSpeedAroundSun[i] * 0.0001 * time;
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneCZ[i], scaleValue * 2, rangesliderSpeed);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneCZ[i],
+                    scaleValue * 2, time);
             }
         } else if (document.getElementById("sk").style.fontWeight == "bold") {
             for (var i = 0; i < this.planetsMeshes.length; i++) {
                 this.traverseSceneToFindPlanetNames(true, "nameSk");
-                rangesliderSpeed = planetRotationSpeedAroundSun[i] * 0.0001 * time;
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneSK[i], scaleValue * 2, rangesliderSpeed);
+                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetsNamesOnSceneSK[i],
+                    scaleValue * 2, time);
             }
         }
     }
@@ -136,16 +133,16 @@ class Planet extends InitPlanets {
 
     // Positions for 1 planet - according to scale from rangeslider
     // -------------------------------------------------------------------------
-    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, rangesliderSpeed) {
+    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, time) {
         var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
         var orbitalSpeed = 0;
 
         dataOfCurrentPlanetJSON.then(function(result) {
-            orbitalSpeed = result[planetName]["rotationSpeed"] / 15; // orbital speed was too high
+            orbitalSpeed = result[planetName]["orbitalSpeed"] / 3;
             planetMesh.position.x = result[planetName]["c"] * scaleValue +
-                (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(rangesliderSpeed + orbitalSpeed));
+                (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(orbitalSpeed * 0.0001 * time));
             planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scaleValue *
-                Math.sin(rangesliderSpeed + orbitalSpeed));
+                Math.sin(orbitalSpeed * 0.0001 * time));
 
             if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
                 planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scaleValue + 1;
