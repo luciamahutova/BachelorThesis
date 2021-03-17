@@ -68,16 +68,4 @@ class InitPlanets extends JSONManager {
             }
         });
     }
-
-    // Change of rotation speed
-    // -------------------------------------------------------------------------
-    calculateRotationSpeed(planetOrder, speedValue, time, planetRotationSpeedAroundSun) {
-        if (speedValue == 0) {
-            return (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time);
-        } else if (speedValue > 0) {
-            return (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time) * speedValue;
-        } else if (speedValue < 0) {
-            return (planetRotationSpeedAroundSun[planetOrder] * 0.0001 * time) / Math.abs(speedValue);
-        }
-    }
 }

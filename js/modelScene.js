@@ -66,15 +66,15 @@ class ModelScene extends InitScene {
     moveSceneOnPressedArrow(scene) {
         return function(e) {
             // Movement in opposite direction - seems more natural
-            var moveSceneByValue = 10;
+            var moveSceneByValue = 0.01;
             if (e.keyCode == '37') { // Left arrow key
-                scene.position.x -= moveSceneByValue;
-            } else if (e.keyCode == '38') { // Top arrow key
-                scene.position.z -= moveSceneByValue;
-            } else if (e.keyCode == '39') { // Right arrow key
                 scene.position.x += moveSceneByValue;
-            } else if (e.keyCode == '40') { // Bottom arrow kes
+            } else if (e.keyCode == '38') { // Top arrow key
                 scene.position.z += moveSceneByValue;
+            } else if (e.keyCode == '39') { // Right arrow key
+                scene.position.x -= moveSceneByValue;
+            } else if (e.keyCode == '40') { // Bottom arrow kes
+                scene.position.z -= moveSceneByValue;
             } else if (e.keyCode == "27") { // Escape key
                 scene.position.set(0, 0, 0);
             }
@@ -124,26 +124,25 @@ class ModelScene extends InitScene {
 
     // Zooming in/out (for planets and orbits) - called in app.js
     // -------------------------------------------------------------------------
-    zoomAndSpeedRangesliders(time) {
+    rotationAndScaleOfObjects(time) {
         var zoomSlider = document.getElementById("rangesliderZoomInput");
         var zoomSliderValue = document.getElementById("rangesliderZoomValue");
-        var speedSlider = document.getElementById("rangesliderSpeedInput");
-        var speedSliderValue = document.getElementById("rangesliderSpeedValue");
+        // var speedSlider = document.getElementById("rangesliderSpeedInput");
+        // var speedSliderValue = document.getElementById("rangesliderSpeedValue");
 
         var updateRangesliderValues = () => {
             zoomSliderValue.innerHTML = zoomSlider.value;
             this.scaleValueScene = zoomSliderValue.innerHTML / 200;
-
-            speedSliderValue.innerHTML = speedSlider.value;
-            this.speedValuePlanets = speedSliderValue.innerHTML;
+            // speedSliderValue.innerHTML = speedSlider.value;
+            // this.speedValuePlanets = speedSliderValue.innerHTML;
 
             this.planetObject.setScaleForObjectsAndOrbits(this.scaleValueScene);
             this.moonObject.scaleObjectsByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
             this.sunObject.setScaleForSun(this.scaleValueScene);
 
-            this.planetObject.rotateAllPlanets(this.scaleValueScene, this.speedValuePlanets, time);
-            this.moonObject.rotateAllMoons(this.scaleValueScene, this.speedValuePlanets, time);
-            this.planetObject.cosmicObject.findClickedPlanet(this.scaleValueScene, this.speedValuePlanets, time);
+            this.planetObject.rotateAllPlanets(this.scaleValueScene, time);
+            this.moonObject.rotateAllMoons(this.scaleValueScene, time);
+            this.planetObject.cosmicObject.findClickedPlanet(this.scaleValueScene, time);
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();

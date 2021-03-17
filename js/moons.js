@@ -51,21 +51,21 @@ class Moon extends InitPlanets {
 
     // Positions for moons - according to zoom
     // -------------------------------------------------------------------------
-    rotateMoonAroundPlanet(moonMesh, moonNameJSON, orbitOrder, planetName, scaleValue, speedValue, time) {
+    rotateMoonAroundPlanet(moonMesh, moonNameJSON, orbitOrder, planetName, scaleValue, time) {
         var moonRotationSpeedAroundPlanet = [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5];
-        var rangesliderSpeed = this.calculateRotationSpeed(orbitOrder, speedValue, time, moonRotationSpeedAroundPlanet);
-        var scale = scaleValue * 200;
+        var rangesliderSpeed;
 
-        if (scale < 70) {
+        if ((scaleValue * 200) < 70) {
             this.positionMoonRangesliderZoomOut();
         } else {
+            rangesliderSpeed = moonRotationSpeedAroundPlanet[orbitOrder] * 0.0001 * time;
             this.positionMoonToOrbit(moonMesh, moonNameJSON, this.orbits, orbitOrder, planetName, scaleValue, rangesliderSpeed);
         }
     }
 
-    rotateAllMoons(scaleValue, speedValue, time) {
+    rotateAllMoons(scaleValue, time) {
         for (var i = 0; i < this.moonsMeshes.length; i++) {
-            this.rotateMoonAroundPlanet(this.moonsMeshes[i], this.moonNames[i], i, this.moonsNamesOnScene[i], scaleValue, speedValue, time);
+            this.rotateMoonAroundPlanet(this.moonsMeshes[i], this.moonNames[i], i, this.moonsNamesOnScene[i], scaleValue, time);
         }
     }
 
