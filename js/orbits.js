@@ -1,9 +1,10 @@
-class Orbits {
-    constructor(scene, allPlanetDataJSON, allMoonDataJSON, planetsMeshes) {
+class Orbits extends JSONManager {
+    constructor(scene, planetsMeshes, allPlanetDataJSON, allMoonDataJSON) {
+        super();
         this.scene = scene;
         this.orbits = [];
-        this.allPlanetDataJSON = allPlanetDataJSON;
-        this.allMoonDataJSON = allMoonDataJSON;
+        this.allPlanetDataJSON = super.getPlanetData();
+        this.allMoonDataJSON = super.getMoonData();
         this.planetsMeshes = planetsMeshes;
         this.allCurves = [];
         this.planetOrder = [2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7];

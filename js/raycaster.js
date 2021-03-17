@@ -1,9 +1,10 @@
 // This class is for detecting clicked objects in scene
 // Basic code is used from: https://threejs.org/docs/index.html#api/en/core/Raycaster
-class RayCaster {
-    constructor(allPlanetDataJSON, allMoonDataJSON) {
-        this.allPlanetDataJSON = allPlanetDataJSON;
-        this.allMoonDataJSON = allMoonDataJSON;
+class RayCaster extends JSONManager {
+    constructor() {
+        super();
+        this.allPlanetDataJSON = super.getPlanetData();
+        this.allMoonDataJSON = super.getMoonData();
     }
 
     onMouseMove = function(camera, scene) {

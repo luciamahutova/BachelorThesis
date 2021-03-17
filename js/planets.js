@@ -9,6 +9,8 @@ class Planet extends InitPlanets {
         this.planetsNamesOnSceneSK = [];
         this.planetSizes = [];
         this.planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+        this.allPlanetDataJSON = super.getPlanetDataJSON();
+        this.allMoonDataJSON = super.getMoonDataJSON();
 
         this.orbitClass;
         this.cosmicObject;
@@ -162,7 +164,7 @@ class Planet extends InitPlanets {
         this.addNamesToPlanetObject(this.planetsMeshes, this.scene);
         this.setRotationAngleForAllPlanets();
 
-        this.orbitClass = new Orbits(this.scene, this.allPlanetDataJSON, this.allMoonDataJSON, this.planetsMeshes);
+        this.orbitClass = new Orbits(this.scene, this.planetsMeshes, this.allPlanetDataJSON, this.allMoonDataJSON);
         this.cosmicObject = new CosmicObject(this.scene, this.getPlanetMeshes());
     }
 }

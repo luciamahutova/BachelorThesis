@@ -176,20 +176,6 @@ class SidebarManager {
         }
     }
 
-    addPlanetNamesToScene(objects, stringName) {
-        this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
-        // names are set to 'true' in planets.js -> rotateAllPlanets(...) - according to current language
-        this.traverseSceneToFindPlanetNames(false, stringName);
-    }
-
-    addObjectsForPlanetsToScene(objects) {
-        this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
-    }
-
-    removeObjectsForPlanetsFromScene(objects) {
-        this.scene.remove(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
-    }
-
     showHideAllNamesOfMoonsOnScene() {
         if (document.getElementById("allMoonNamesChecked").checked == true) {
             this.addAllToScene(this.moonsNamesOnScene);
@@ -206,6 +192,29 @@ class SidebarManager {
             this.removeAllFromScene(this.moonsNamesOnScene);
             this.scene.add(this.moonsNamesOnScene[selectedElem.value]);
         }
+    }
+
+    // Help functions
+    traverseSceneToFindPlanetNames(showBoolean, stringName) {
+        this.scene.traverse(function(children) {
+            if (children.name.startsWith(stringName)) {
+                children.visible = showBoolean;
+            }
+        });
+    }
+
+    addPlanetNamesToScene(objects, stringName) {
+        this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
+        // names are set to 'true' in planets.js -> rotateAllPlanets(...) - according to current language
+        this.traverseSceneToFindPlanetNames(false, stringName);
+    }
+
+    addObjectsForPlanetsToScene(objects) {
+        this.scene.add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
+    }
+
+    removeObjectsForPlanetsFromScene(objects) {
+        this.scene.remove(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
     }
 
     // Sidebar - functions for moon objects

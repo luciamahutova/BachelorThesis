@@ -1,15 +1,12 @@
-class InitPlanets {
+class InitPlanets extends JSONManager {
     constructor() {
-        this.allPlanetDataJSON = [];
-        this.allMoonDataJSON = [];
-
-        this.jsonManager = new JSONManager();
-        this.addAllPlanetDataJSON();
-        this.addAllMoonDataJSON();
+        super();
+        this.allPlanetDataJSON = super.getPlanetData();
+        this.allMoonDataJSON = super.getMoonData();
     }
 
-    getPlanetData() { return this.allPlanetDataJSON; }
-    getMoonData() { return this.allMoonDataJSON; }
+    getPlanetDataJSON() { return this.allPlanetDataJSON; }
+    getMoonDataJSON() { return this.allMoonDataJSON; }
 
     // Functions fo creating space objects
     // -------------------------------------------------------------------------
@@ -70,16 +67,6 @@ class InitPlanets {
                 scene.add(textMesh);
             }
         });
-    }
-
-    // Read data from JSON and save them
-    // -------------------------------------------------------------------------
-    addAllPlanetDataJSON = function() {
-        this.allPlanetDataJSON.push(this.jsonManager.readPlanetsData());
-    }
-
-    addAllMoonDataJSON = function() {
-        this.allMoonDataJSON.push(this.jsonManager.readMoonsData());
     }
 
     // Change of rotation speed
