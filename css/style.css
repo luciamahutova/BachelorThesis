@@ -162,11 +162,17 @@ header img {
 /* Sidebars ************************************************************************************************
 ***********************************************************************************************************/
 
-.sidebarIcon {
+.sidebarIcon,
+.scaleFactorTooltip {
     position: fixed;
     top: 110px;
     right: 40px;
     z-index: 1;
+    background-color: transparent;
+}
+
+.scaleFactorTooltip {
+    right: 90px;
 }
 
 .sidebars {
@@ -399,11 +405,8 @@ input[type="checkbox"] {
 
 /* Tooltips **********************************/
 
-.sidebars .tooltip {
-    box-shadow: none;
-}
-
 .tooltip {
+    box-shadow: none;
     position: relative;
     display: inline-block;
     border-bottom: 1px transparent;
@@ -424,6 +427,14 @@ input[type="checkbox"] {
     left: -40%;
 }
 
+.scaleFactorTooltip span {
+    width: 400px;
+    height: fit-content;
+    position: absolute;
+    left: -420px;
+    bottom: -50%;
+}
+
 .tooltip:hover span {
     visibility: visible;
 }
@@ -441,13 +452,22 @@ input[type="checkbox"] {
     position: absolute;
     border-width: 5px;
     border-style: solid;
-}
-
-.tooltip span::after {
     /* At the bottom of the tooltip */
     top: 100%;
     left: 45%;
     border-color: #BABABA transparent transparent transparent;
+}
+
+.scaleFactorTooltip span::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #BABABA;
 }
 
 
@@ -543,7 +563,7 @@ article+.bgLayer {
     position: fixed;
     top: 0px;
     width: 100%;
-    height: 180px;
+    height: 200px;
     background-color: #061327;
 }
 
