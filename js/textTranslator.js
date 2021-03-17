@@ -1,6 +1,7 @@
 let arrLang = {
     cz: {
         'planetsH1': 'Planety',
+        'infoScaleFactorScene': 'Model má upravenou velikost pro přehlednější zobrazení. Zmenšené objekty: Slunce 27x, Jupiter a Saturn 6x, Uran a Neptun 5x. Rozměry orbit jsou také zmenšeny vzhledem k modelu.',
         // Menu
         'ssm': 'Model sluneční soustavy',
         'planets': 'Planety',
@@ -40,7 +41,7 @@ let arrLang = {
         'distanceFromSunMeaning': 'Průměrná vzdálenot od planety ke Slunci v milionech kilometrů, známá také jako "semi-major" os.',
         'perihelionMeaning': 'Nejbližší bod na orbitě planety kolem Slunce, hodnota je v milionech kilometrů.',
         'aphelionMeaning': 'Nejvzdálenější bod na orbitě planety kolem Slunce, hodnota je v milionech kilometrů.',
-        // Sidebar - planet physical info
+        // Sidebar - moon physical info
         'moonMass': 'Hmotnost měsíce:',
         'orbitalPeriodMoon': 'Oběžná doba kolem planety (dny):',
         'distanceFromPlanet': 'Vzdálenost od planety (km):',
@@ -54,7 +55,6 @@ let arrLang = {
         'cameraToPlanet': 'Kamera na planetu',
         // Planets
         'backToPlanets': 'Zpátky na planety',
-
         // Translation for long text (pages for planets)
         'mercuryText': 'Merkur je planeta nejbližší ke Slunci. Na každé dvě oběžné dráhy Slunce absolvuje Merkur tři rotace kolem své osy. Třináctkrát za století lze pozorovat Merkur ze Země procházející kolem Slunce. Tato událost se nazývá tranzit.',
         'venusText': 'Venuše je druhou planetou od Slunce a je druhou největší suchozemskou planetou. Venuše se pro svou podobnou velikost a hmotnost někdy označuje jako sesterská planeta Země. Venuše je pojmenovaná po římské bohyni lásky a krásy.',
@@ -67,6 +67,8 @@ let arrLang = {
         // Page About - headings
         'howToUseApplication': 'Jak používat aplikaci',
         'menuFunctionality': 'Funkcionalita menu',
+        'menuSolarSystemModelHeading': 'Model sluneční soustavy',
+        'menuPlanetsHeading': 'Planety',
         'rightSidebar': 'Pravý boční panel',
         '3buttons': '3 tlačítka (v levém dolním rohu)',
         'zoomRangeslider': 'Posuvník na přiblížení modelu',
@@ -82,9 +84,10 @@ let arrLang = {
         'cameraToPlanetButtonHeading': 'Tlačítko pro kameru:',
         'centerModelButtonHeading': 'Tlačítko pro vycentrování modelu:',
         // Page About - text
-        'menuFunctionalityInfo': 'Kliknutím na položku "Planety" se otevře nová záložka s nabídkou planet. Po výběru a kliknutí na jednu planetu se zobrazí stránka se stručným popisem a interaktivním modelem planety, který je možné ovládat kurzorem.',
-        'cosmicObjectButtonInfo': 'Kliknutím na tlačítko je možné přidat 1 umělý kosmický objekt na orbitu poslední vybrané planety. Pokud uživatel zatím nekliknul na žádnou planetu, po aktivaci tlačítka je třeba vybranou planetu označit kliknutím na ni nebo její orbitu. Přidání objektu dočasně skryje zobrazeny měsíce zvolené planety kvůli přehlednějšímu zobrazení. Deaktivaci tlačítka lze provést pomocí jeho opětovného stlačení, projeví se změnou barvy.',
-        'cameraToPlanetButtonInfo': 'Kliknutím na tlačítko je možné přiblížit kameru na poslední vybranou planetu. Výběr planety funguje stejně jako u tlačítka pro kosmický objekt. Přiblížení kamery nabízí bližší pohled na vesmírné těleso a jeho měsíce. Narozdíl od přiblížení celého modelu kamera následuje zvolený objekt při rotací po orbitě. Deaktivaci tlačítka lze provést pomocí jeho opětovného stlačení, projeví se změnou barvy.',
+        'menuSolarSystemModelInfo': 'V případě, že je model zobrazený v aktuálním okně, výběrem položky "Model sluneční soustavy" se zobrazí upozornění o ztrátě všech nastavených vlastností pro model. Po akceptování změn bude model znovu načten do původního stavu. Po zamítnutí změn zůstane otevřený aktuální model. Otevření modelů ve více oknech webového prohlížeče bude zamítnuto pro menší zatížení prohlížeče.',
+        'menuPlanetsInfo': 'Výběrem položky "Planety" se otevře nová záložka s nabídkou planet. Po výběru a kliknutí na jednu planetu se zobrazí stránka se stručným popisem a interaktivním modelem planety, který je možné ovládat kurzorem.',
+        'cosmicObjectButtonInfo': 'Kliknutím na tlačítko je možné přidat 1 umělý kosmický objekt na orbitu poslední vybrané planety. Pokud uživatel zatím nekliknul na žádnou planetu, po aktivaci tlačítka je třeba vybranou planetu označit kliknutím na ni nebo její orbitu. Přidání objektu dočasně skryje zobrazeny měsíce zvolené planety kvůli přehlednějšímu zobrazení. Během aktivního stavu tlačítka jsou dočasně nefunkční funkce klikání na objekty a zobrazení jejich fyzikálních vlastností. Deaktivaci tlačítka lze provést pomocí jeho opětovného stlačení, projeví se změnou barvy.',
+        'cameraToPlanetButtonInfo': 'Kliknutím na tlačítko je možné přiblížit kameru na poslední vybranou planetu. Výběr planety funguje stejně jako u tlačítka pro kosmický objekt. Přiblížení kamery nabízí bližší pohled na vesmírné těleso a jeho měsíce. Narozdíl od přiblížení celého modelu kamera následuje zvolený objekt při rotací po orbitě. Během aktivního stavu tlačítka jsou přístupné funkce klikání na objekty a zobrazení jejich fyzikálních vlastností. Deaktivaci tlačítka lze provést pomocí jeho opětovného stlačení, projeví se změnou barvy.',
         'centerModelButtonInfo': 'Kliknutím na tlačítko se posune model do středu obrazovky. V případě, že modelem nebylo pohybováno pomocí kurzoru nebo šipek na klávesnici, model zůstane na stejném místě.',
         'zoomRangesliderInfo': 'Přiblížení či zmenšení modelu lze provést pomocí posuvníku umístěného uprostřed obrazovky dole. Pokud bude zvolena velikost modelu menší než 70%, měsíce planet budou dočasně skryté z důvodu malé velikosti modelu.',
         'moveModelFunctionsInfo': 'Pohybování modelu lze provést pomocí kliknutí na libovolné místo obrazovky (kromě objektů modelu) a potažením pomocí kurzoru. Další možností je využití šipek na klávesnici. Vrácení modelu na původní pozici je možné pomocí tlačítka na vycentrování modelu nebo klávesou Escape.',
@@ -98,6 +101,7 @@ let arrLang = {
     },
     en: {
         'planetsH1': 'Planets',
+        'infoScaleFactorScene': 'The model is scaled for a clearer view. Scale objects: Sun 27x, Jupiter and Saturn 6x, Uranus and Neptune 5x. The dimensions of the orbits are also reduced with respect to the model.',
         // Menu
         'ssm': 'Solar system model',
         'planets': 'Planets',
@@ -136,7 +140,7 @@ let arrLang = {
         'orbitalPeriodMeaning': 'Time in Earth days for a planet to orbit the Sun from one vernal equinox to the next.',
         'perihelionMeaning': "The closest point on planet's orbit around Sun, value is in millions of kilometers.",
         'aphelionMeaning': "The furthest point on planet's orbit around Sun, value is in millions of kilometers.",
-        // Sidebar - planet physical info
+        // Sidebar - moon physical info
         'moonMass': 'Weight of moon:',
         'orbitalPeriodMoon': 'Orbital period around planet (days):',
         'distanceFromPlanet': 'Distance from planet (km):',
@@ -150,7 +154,6 @@ let arrLang = {
         'cameraToPlanet': 'Camera to planet',
         // Planets
         'backToPlanets': 'Back to planets',
-
         // Translation for long text (pages for planets)
         'mercuryText': 'Mercury is the closest planet to the Sun. For every two orbits of the Sun, Mercury completes three      rotations about its axis. Thirteen times a century Mercury can be observed from the Earth passing across the face of the Sun in an event called a transit.',
         'venusText': 'Venus is the second planet from the Sun and is the second largest terrestrial planet. Venus is sometimes referred to as the Earth’s sister planet due to their similar size and mass. Venus is named after the Roman goddess of love and beauty.',
@@ -163,6 +166,8 @@ let arrLang = {
         // Page About - headings
         'howToUseApplication': 'How to use application',
         'menuFunctionality': 'Functionality of menu',
+        'menuSolarSystemModelHeading': 'Solar system model',
+        'menuPlanetsHeading': 'Planets',
         'rightSidebar': 'Right side panel',
         '3buttons': '3 buttons (at the bottom left corner)',
         'zoomRangeslider': 'Slider for zooming model',
@@ -178,9 +183,10 @@ let arrLang = {
         'cameraToPlanetButtonHeading': 'Camera button:',
         'centerModelButtonHeading': 'Model centering button:',
         // Page About - text
-        'menuFunctionalityInfo': 'Clicking on "Planets" will open a new tab with a menu of planets. After selecting and clicking on one planet, a page will appear with a brief description and an interactive model of the planet, which can be controlled by the cursor.',
-        'cosmicObjectButtonInfo': 'By clicking on the button it is possible to add single artificial cosmic object to the orbit of the last selected planet. If the user has not yet clicked on any planet, after activating the button, the selected planet must be marked by clicking on it or its orbit. Adding an object temporarily hides the displayed moons of the selected planet for a clearer view. Deactivation of the button can be done by pressing it again, it will show a change in color.',
-        'cameraToPlanetButtonInfo': 'By clicking on the button it is possible to zoom the camera to the last selected planet. Selecting a planet works the same as with the cosmic object button. Zooming in on the camera offers a closer look at the planet and its moons. Unlike zooming in on the entire model, the camera follows the selected object during rotation on its orbit. Deactivation of the button can be done by pressing it again, it will be reflected in a color change.',
+        'menuSolarSystemModelInfo': 'If the model is displayed in the current window, selecting the "Solar system model" item will display a notification about the loss of all set properties for the model. After accepting the changes, the model will be reloaded to its original state. After rejecting the changes, the current model will remain open. Opening models in multiple web browser windows will be denied to reduce browser load.',
+        'menuPlanetsInfo': 'Selecting item "Planets" will open a new tab with a menu of planets. After selecting and clicking on one planet, a page will appear with a brief description and an interactive model of the planet, which can be controlled by the cursor.',
+        'cosmicObjectButtonInfo': 'By clicking on the button it is possible to add single artificial cosmic object to the orbit of the last selected planet. If the user has not yet clicked on any planet, after activating the button, the selected planet must be marked by clicking on it or its orbit. Adding an object temporarily hides the displayed moons of the selected planet for a clearer view. During the active state of the button, the functions for clicking on objects and displaying their physical properties are temporarily inactive. Deactivation of the button can be done by pressing it again, it will show a change in color.',
+        'cameraToPlanetButtonInfo': 'By clicking on the button it is possible to zoom the camera to the last selected planet. Selecting a planet works the same as with the cosmic object button. Zooming in on the camera offers a closer look at the planet and its moons. Unlike zooming in on the entire model, the camera follows the selected object during rotation on its orbit. During the active state of the button, the functions for clicking on objects and displaying their physical properties are accessible. Deactivation of the button can be done by pressing it again, it will be reflected in a color change.',
         'centerModelButtonInfo': 'By clicking on the button the model willl move to the center of the screen. If the model has not been moved with the cursor or arrows on the keyboard, the model will remain in the same place.',
         'zoomRangesliderInfo': "Zoom in or out on the model can be done using the slider located in the bottom middle of the screen. If the selected model size is less than 70%, the planet's moons will be temporarily hidden due to the small model size.",
         'moveModelFunctionsInfo': 'Moving the model is possible by clicking anywhere on the screen (except model objects) and dragging with the cursor. Another option is to use the arrows on the keyboard. Returning the model to its original position is possible by using the model centering button or the Escape key.',
@@ -194,6 +200,7 @@ let arrLang = {
     },
     sk: {
         'planetsH1': 'Planéty',
+        'infoScaleFactorScene': 'Model má upravenú mierku pre prehľadnejšie zobrazenie. Zmenšené objekty: Slnko 27x, Jupiter a Saturn 6x, Urán a Neptún 5x. Rozmery orbít sú tiež zmenšené vzhľadom k modelu.',
         // Menu
         'ssm': 'Model slnečnej sústavy',
         'planets': 'Planéty',
@@ -232,7 +239,7 @@ let arrLang = {
         'orbitalPeriodMeaning': 'Čas v dňoch Zem, za ktorý planéta obehne okolo Slnka a prejde z jednej jarnej rovnodennosti na druhú.',
         'perihelionMeaning': 'Najbližší bod na orbite planéty okolo Slnka, hodnota je v miliónoch kilometrov.',
         'aphelionMeaning': 'Najvzdialenejší bod na orbite planéty okolo Slnka, hodnota je v miliónoch kilometrov.',
-        // Sidebar - planet physical info
+        // Sidebar - moon physical info
         'moonMass': 'Hmotnosť mesiaca:',
         'orbitalPeriodMoon': 'Čas obehu okolo planéty (dni):',
         'satelliteOfPlanet': 'Satelit planéty:',
@@ -247,7 +254,6 @@ let arrLang = {
         'cameraToPlanet': 'Kamera na planétu',
         // Planets
         'backToPlanets': 'Späť na planéty',
-
         // Translation for long text (pages for planets)
         'mercuryText': 'Merkúr je planéta najbližšia k Slnku. Na každé dve obežné dráhy Slnka absolvuje Merkúr tri rotácie okolo svojej osi. Trinásťkrát za storočie je možné pozorovať Merkúr zo Zeme prechádzajúcej okolo Slnka. Táto udalosť sa nazýva tranzit.',
         'venusText': 'Venuša je druhou planétou od Slnka a je druhou najväčšou suchozemskou planétou. Venuša sa pre svoju podobnú veľkosť a hmotnosť niekedy označuje ako sesterská planéta Zeme. Venuša je pomenovaná po rímskej bohyni lásky a krásy.',
@@ -260,6 +266,8 @@ let arrLang = {
         // Page About - headings
         'howToUseApplication': 'Ako používať aplikáciu',
         'menuFunctionality': 'Funkcionalita menu',
+        'menuSolarSystemModelHeading': 'Model slnečnej sústavy',
+        'menuPlanetsHeading': 'Planéty',
         'rightSidebar': 'Pravý bočný panel',
         '3buttons': '3 tlačidlá (v ľavom dolnom rohu)',
         'zoomRangeslider': 'Posúvač na priblíženie modelu',
@@ -275,9 +283,10 @@ let arrLang = {
         'cameraToPlanetButtonHeading': 'Tlačidlo pre kameru:',
         'centerModelButtonHeading': 'Tlačidlo pre vycentrovanie modelu:',
         // Page About - text
-        'menuFunctionalityInfo': 'Kliknutím na položku "Planéty" sa otvorí nová záložka s ponukou planét. Po výbere a kliknutí na jednu planétu sa zobrazí stránka so stručným popisom a interaktívnym modelom planéty, ktorý je možné ovládať kurzorom.',
-        'cosmicObjectButtonInfo': 'Kliknutím na tlačidlo je možné pridať 1 umelý kozmický objekt na orbitu poslednej vybranej planéty. Ak užívateľ zatiaľ neklikol na žiadnu planétu, po aktivácií tlačidla je potrebné vybranú planétu označiť kliknutím na ňu alebo jej orbitu. Pridanie objektu dočasne skryje zobrazené mesiace zvolenej planéty kvôli prehľadnejšiemu zobrazeniu. Deaktiváciu tlačidla je možné previesť pomocou jeho opätovného stlačenia, prejaví sa zmenou farby.',
-        'cameraToPlanetButtonInfo': 'Kliknutím na tlačidlo je možné priblížiť kameru na poslednú vybranú planétu. Výber planéty funguje rovnako ako pri tlačidle pre kozmický objekt. Priblíženie kamery ponúka bližší pohľad na vesmírne teleso a jeho mesiace. Narozdiel od priblíženia celého modelu kamera nasleduje zvolený objekt pri rotácii po orbite. Deaktiváciu tlačidla je možné previesť pomocou jeho opätovného stlačenia, prejaví sa zmenou farby.',
+        'menuSolarSystemModelInfo': 'V prípade, že je model zobrazený v aktuálnom okne, výberom položky "Model slnečnej sústavy" sa zobrazí upozornenie o strate všetkých nastavených vlastností pre model. Po akceptovaní zmien bude model znovu načítaný do pôvodného stavu. Po zamietnutí zmien ostane otvorený aktuálny model. Otvorenie modelov vo viacerých oknách webového prehliadača bude zamietnuté pre menšie zaťaženie prehliadača.',
+        'menuPlanetsInfo': 'Výberom položky "Planéty" sa otvorí nová záložka s ponukou planét. Po výbere a kliknutí na jednu planétu sa zobrazí stránka so stručným popisom a interaktívnym modelom planéty, ktorý je možné ovládať kurzorom.',
+        'cosmicObjectButtonInfo': 'Kliknutím na tlačidlo je možné pridať 1 umelý kozmický objekt na orbitu poslednej vybranej planéty. Ak užívateľ zatiaľ neklikol na žiadnu planétu, po aktivácií tlačidla je potrebné vybranú planétu označiť kliknutím na ňu alebo jej orbitu. Pridanie objektu dočasne skryje zobrazené mesiace zvolenej planéty kvôli prehľadnejšiemu zobrazeniu. Počas aktívneho stavu tlačidla sú dočasne nefunkčné funkcie klikania na objekty a zobrazenia ich fyzikálnych vlastností. Deaktiváciu tlačidla je možné previesť pomocou jeho opätovného stlačenia, prejaví sa zmenou farby.',
+        'cameraToPlanetButtonInfo': 'Kliknutím na tlačidlo je možné priblížiť kameru na poslednú vybranú planétu. Výber planéty funguje rovnako ako pri tlačidle pre kozmický objekt. Priblíženie kamery ponúka bližší pohľad na vesmírne teleso a jeho mesiace. Narozdiel od priblíženia celého modelu kamera nasleduje zvolený objekt pri rotácii po orbite. Počas aktívneho stavu tlačidla sú prístupné funkcie klikania na objekty a zobrazenia ich fyzikálnych vlastností. Deaktiváciu tlačidla je možné previesť pomocou jeho opätovného stlačenia, prejaví sa zmenou farby.',
         'centerModelButtonInfo': 'Kliknutím na tlačidlo sa posunie model do stredu obrazovky. V prípade ak modelom nebolo pohybované pomocou kurzoru alebo šípok na klávesnici, model ostane na rovnakom mieste. ',
         'zoomRangesliderInfo': 'Priblíženie či zmenšenie modelu je možné previesť pomocou posúvača umiestneného v strede obrazovky dole. Ak bude zvolená veľkosť modelu menšia ako 70%, mesiace planét budú dočasne skryté z dôvodu malej veľkosti modelu.',
         'moveModelFunctionsInfo': 'Pohybovanie modelu je možné spraviť pomocou kliknutia na ľubovoľné miesto obrazovky (okrem objektov modelu) a potiahnutím pomocou kurzoru. Ďalšou možnosťou je využitie šípok na klávesnici. Vrátenie modelu na pôvodnú pozíciu je možné pomocou tlačidla na vycentrovanie modelu alebo klávesou Escape.',
