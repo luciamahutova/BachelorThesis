@@ -22,7 +22,7 @@ class ModelScene extends InitScene {
         this.cosmicObject;
         this.sidebarManager;
 
-        this.scaleValueScene = this.speedValuePlanets = 0;
+        this.scaleValueScene = this.forceValue = 0;
         this.mouseDown = false; // Used for drag events
         this.mousePositionX = this.mousePositionY = 0; // Used for drag events
     }
@@ -127,14 +127,14 @@ class ModelScene extends InitScene {
     rotationAndScaleOfObjects(time) {
         var zoomSlider = document.getElementById("rangesliderZoomInput");
         var zoomSliderValue = document.getElementById("rangesliderZoomValue");
-        // var speedSlider = document.getElementById("rangesliderSpeedInput");
-        // var speedSliderValue = document.getElementById("rangesliderSpeedValue");
+        var forceSlider = document.getElementById("rangesliderSpeedInput");
+        var forceSliderValue = document.getElementById("rangesliderSpeedValue");
 
         var updateRangesliderValues = () => {
             zoomSliderValue.innerHTML = zoomSlider.value;
             this.scaleValueScene = zoomSliderValue.innerHTML / 200;
-            // speedSliderValue.innerHTML = speedSlider.value;
-            // this.speedValuePlanets = speedSliderValue.innerHTML;
+            forceSliderValue.innerHTML = forceSlider.value;
+            this.forceValue = forceSliderValue.innerHTML;
 
             this.planetObject.setScaleForObjectsAndOrbits(this.scaleValueScene);
             this.moonObject.scaleObjectsByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
@@ -142,7 +142,7 @@ class ModelScene extends InitScene {
 
             this.planetObject.rotateAllPlanets(this.scaleValueScene, time);
             this.moonObject.rotateAllMoons(this.scaleValueScene, time);
-            this.planetObject.cosmicObject.findClickedPlanet(this.scaleValueScene, time);
+            this.planetObject.cosmicObject.findClickedPlanet(this.scaleValueScene, this.forceValue, time);
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();

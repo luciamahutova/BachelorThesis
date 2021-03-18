@@ -43,7 +43,7 @@ class CosmicObject extends JSONManager {
     }
 
     // Called in scene.js - animate
-    findClickedPlanet(scaleValue, time) {
+    findClickedPlanet(scaleValue, force, time) {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object;
@@ -51,7 +51,7 @@ class CosmicObject extends JSONManager {
 
             if (this.getIsPlanetClicked()) {
                 var meshOrder = this.orderOfSelectedPlanetMesh(selectedPlanet);
-                this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, time);
+                this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, force, time);
                 this.scene.add(this.cosmicObject);
             } else if (!this.getIsPlanetClicked()) {
                 this.scene.remove(this.cosmicObject);
@@ -108,18 +108,19 @@ class CosmicObject extends JSONManager {
 
     // Position cosmic object to selected planet
     // -------------------------------------------------------------------------
-    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, time) {
+    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, time) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
-            var orbitalSpeed = 0;
+            var orbitalSpeed, newForce = 0;
             var selectedPlanet = window.myParam[0].object;
 
             dataOfCurrentPlanetJSON.then(function(result) {
                 orbitalSpeed = result[selectedPlanet.name]["cosmicObjectSpeed"];
+                newForce = (force * result[selectedPlanet.name]["gravitationalPull"]) / 10;
 
-                cosmicObject.position.x = planetMeshes[planetOrder].position.x + 2 *
+                cosmicObject.position.x = planetMeshes[planetOrder].position.x + newForce / 3 *
                     result[selectedPlanet.name]["cosmicObjectDistanceX"] * result[selectedPlanet.name]["cosmicObjectScaleFactor"] * scaleValue * Math.cos(orbitalSpeed * 0.0001 * time);
-                cosmicObject.position.z = planetMeshes[planetOrder].position.z - 2 *
+                cosmicObject.position.z = planetMeshes[planetOrder].position.z - newForce / 2 *
                     result[selectedPlanet.name]["cosmicObjectDistanceZ"] * result[selectedPlanet.name]["cosmicObjectScaleFactor"] * scaleValue * Math.sin(orbitalSpeed * 0.0001 * time);
             });
         }
