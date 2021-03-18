@@ -196,7 +196,7 @@ header img {
     right: 40px;
 }
 
-.sidebars div {
+.sidebars div:first-child {
     /* for while frame */
     border: none;
     border-radius: 5px 0;
@@ -246,11 +246,6 @@ header img {
     margin: 3px 15px 0 0;
     border-color: #BABABA;
     height: 18px;
-}
-
-#sidebarPlanetInfo .infoBubble {
-    float: left;
-    margin: 3px 0 0 15px;
 }
 
 
@@ -405,17 +400,34 @@ input[type="checkbox"] {
 
 /* Tooltips **********************************/
 
-.tooltip {
+.scaleFactor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.tooltip,
+.physicalValuesTooltip,
+.scaleFactorTooltip {
     box-shadow: none;
     position: relative;
     display: inline-block;
-    border-bottom: 1px transparent;
     background-color: transparent;
 }
 
-.tooltip span {
+.physicalValuesTooltip {
+    float: left;
+    margin: 3px 0 0 15px;
+}
+
+.tooltip span,
+.physicalValuesTooltip span,
+.scaleFactorTooltip span {
     visibility: hidden;
     width: 100px;
+    height: fit-content;
     background-color: #BABABA;
     color: #fff;
     text-align: center;
@@ -427,27 +439,33 @@ input[type="checkbox"] {
     left: -40%;
 }
 
+.tooltip:hover span,
+.physicalValuesTooltip:hover span,
+.scaleFactorTooltip:hover span {
+    visibility: visible;
+}
+
+.physicalValuesTooltip span {
+    width: 300px;
+    left: -40px;
+}
+
 .scaleFactorTooltip span {
     width: 400px;
-    height: fit-content;
-    position: absolute;
     left: -420px;
     bottom: -50%;
 }
 
-.tooltip:hover span {
-    visibility: visible;
-}
-
-.infoBubble span {
-    width: 300px;
-    height: fit-content;
+.scaleFactorTooltip img {
+    background-color: transparent;
 }
 
 
 /* Tooltips arrow *************************/
 
-.tooltip span::after {
+.tooltip span::after,
+.physicalValuesTooltip span::after,
+.scaleFactorTooltip span::after {
     content: " ";
     position: absolute;
     border-width: 5px;
@@ -458,15 +476,15 @@ input[type="checkbox"] {
     border-color: #BABABA transparent transparent transparent;
 }
 
+.physicalValuesTooltip span::after {
+    left: 10%;
+}
+
 .scaleFactorTooltip span::after {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    left: 100%;
     /* To the right of the tooltip */
     margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
+    top: 50%;
+    left: 100%;
     border-color: transparent transparent transparent #BABABA;
 }
 
