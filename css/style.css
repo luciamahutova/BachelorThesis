@@ -24,10 +24,12 @@ h1 {
     position: fixed;
     top: 70px;
     left: 40px;
-    background-color: transparent;
     z-index: 10;
 }
 
+img,
+h1,
+h3,
 span {
     background-color: transparent;
 }
@@ -168,7 +170,6 @@ header img {
     top: 110px;
     right: 40px;
     z-index: 1;
-    background-color: transparent;
 }
 
 .scaleFactorTooltip {
@@ -366,7 +367,6 @@ input[type="checkbox"] {
 }
 
 .slidecontainer span {
-    background-color: transparent;
     position: relative;
     left: 40%;
 }
@@ -456,10 +456,6 @@ input[type="checkbox"] {
     bottom: -50%;
 }
 
-.scaleFactorTooltip img {
-    background-color: transparent;
-}
-
 
 /* Tooltips arrow *************************/
 
@@ -518,7 +514,6 @@ h1+section article:hover {
 
 h1+section h3 {
     position: absolute;
-    background-color: transparent;
 }
 
 header+a {
@@ -604,7 +599,7 @@ article h3 {
 }
 
 
-/* POKUS */
+/* Scene for interactive models of planets */
 
 #interativeModelScene {
     position: absolute;
