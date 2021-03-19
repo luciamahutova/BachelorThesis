@@ -68,4 +68,12 @@ class InitPlanets extends JSONManager {
             }
         });
     }
+
+    traverseSceneToFindPlanetNames(showBoolean, stringName) {
+        this.scene.traverse(function(children) {
+            if (children.name.startsWith(stringName)) {
+                children.visible = showBoolean;
+            }
+        });
+    }
 }

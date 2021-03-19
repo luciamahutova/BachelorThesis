@@ -98,38 +98,30 @@ class Planet extends InitPlanets {
     // Moving planets on their orbits (ellipses)
     // -------------------------------------------------------------------------
     rotateAllPlanets(scaleValue, time) {
-        // Called in f. animate() (scene.js) - movement needs to by redrawn by renderer
+        // Called in f. animate() in modelScene.js - movement needs to by redrawn by renderer
         this.traverseSceneToFindPlanetNames(false, "nameEn");
         this.traverseSceneToFindPlanetNames(false, "nameCz");
         this.traverseSceneToFindPlanetNames(false, "nameSk");
 
         if (document.getElementById("en").style.fontWeight == "bold") {
+            this.traverseSceneToFindPlanetNames(true, "nameEn");
             for (var i = 0; i < this.planetsMeshes.length; i++) {
-                this.traverseSceneToFindPlanetNames(true, "nameEn");
                 this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetNamesOnSceneEN[i],
                     scaleValue * 2, time);
             }
         } else if (document.getElementById("cz").style.fontWeight == "bold") {
+            this.traverseSceneToFindPlanetNames(true, "nameCz");
             for (var i = 0; i < this.planetsMeshes.length; i++) {
-                this.traverseSceneToFindPlanetNames(true, "nameCz");
                 this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetNamesOnSceneCZ[i],
                     scaleValue * 2, time);
             }
         } else if (document.getElementById("sk").style.fontWeight == "bold") {
+            this.traverseSceneToFindPlanetNames(true, "nameSk");
             for (var i = 0; i < this.planetsMeshes.length; i++) {
-                this.traverseSceneToFindPlanetNames(true, "nameSk");
                 this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetNamesOnSceneSK[i],
                     scaleValue * 2, time);
             }
         }
-    }
-
-    traverseSceneToFindPlanetNames(showBoolean, stringName) {
-        this.scene.traverse(function(children) {
-            if (children.name.startsWith(stringName)) {
-                children.visible = showBoolean;
-            }
-        });
     }
 
     // Positions for 1 planet - according to scale from rangeslider
