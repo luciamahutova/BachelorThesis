@@ -7,20 +7,10 @@ class ModelScene extends InitScene {
         this.bgMesh = this.setStaticBackground();
         this.bgScene = this.createBgScene(this.bgMesh);
         this.bgCamera = this.createBgCamera();
-        this.pointLight = this.setPointLightOnScene();
-        this.pointLight2 = this.setPointLightOnSun();
         this.traverseSceneToCastShadows(this.scene);
 
         this.makeCameraFollowObject = true;
-        this.lastIndex = 0;
-
-        this.planetObject;
-        this.moonObject;
-        this.moonMeshes;
-        this.sunObject;
-        this.raycaster;
-        this.cosmicObject;
-        this.sidebarManager;
+        this.lastIndexOfFollowedObject = 0;
 
         this.scaleValueScene = this.forceValue = 0;
         this.mouseDown = false; // Used for drag events
@@ -53,14 +43,6 @@ class ModelScene extends InitScene {
         return this.bgCamera;
     }
 
-    resizeBackground(renderer, camera) {
-        window.addEventListener('resize', function() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
-    }
-
     // Move Scene functions
     // -------------------------------------------------------------------------
     moveSceneOnPressedArrow(scene) {
@@ -81,7 +63,7 @@ class ModelScene extends InitScene {
         }
     }
 
-    moveCameraToOriginalPosition() {
+    moveSceneToOriginalPosition() {
         this.scene.position.set(0, 0, 0);
     }
 
@@ -195,14 +177,13 @@ class ModelScene extends InitScene {
                 planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
                 planet[index].add(this.camera);
                 this.camera.position.set(0, 15, 0);
-                this.lastIndex = index;
+                this.lastIndexOfFollowedObject = index;
             } else if (this.makeCameraFollowObject) {
-                planet[this.lastIndex].remove(this.camera);
+                planet[this.lastIndexOfFollowedObject].remove(this.camera);
                 this.camera.position.set(0, 45, 0);
             }
         }
     }
-
 
     // Animate function and initializing classes: called in app.js 
     // -------------------------------------------------------------------------
@@ -234,13 +215,17 @@ class ModelScene extends InitScene {
         this.initPlanets = new InitPlanets();
         this.planetObject = new Planet(this.scene);
         this.planetObject.initializePlanets();
-        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits(),
-            this.planetObject.getPlanetMeshes());
+        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
         this.moonMeshes = this.moonObject.getMoonMeshes();
-        this.sunObject = new Sun(this.scene, this.pointLight, this.pointLight2);
+
+        var pointLightScene = this.setPointLightOnScene();
+        var pointLightSun = this.setPointLightOnSun();
+        this.sunObject = new Sun(this.scene, pointLightScene, pointLightSun);
         this.raycaster = new RayCaster();
         this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
             this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getMoonMeshes(),
             this.scene, this.planetObject.orbitClass.getAllOrbits());
+
+        this.resizeBackground(this.renderer, this.camera);
     }
 }

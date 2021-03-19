@@ -22,10 +22,10 @@
                     <a href="#" class="lang" id="ssm" onclick="modelScene.sidebarManager.startNewSimulation()"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" id="planets" onclick="modelScene.sidebarManager.openNewTabForPlanets()"></a>
+                    <a href="#" class="lang" id="planets" onclick="modelScene.sidebarManager.openInNewTab(this.id)"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" id="about" onclick="modelScene.sidebarManager.openNewTabForInfo()"></a>
+                    <a href="#" class="lang" id="about" onclick="modelScene.sidebarManager.openInNewTab(this.id)"></a>
                 </li>
             </ul>
             <div id="languages">
@@ -230,7 +230,7 @@
 
     <section class="models overlay">
         <div class="tooltip">
-            <button type="button" id="cosmicObjectButton" onclick="modelScene.planetObject.cosmicObject.activeCosmicObjectButton()"></button>
+            <button type="button" id="cosmicObjectButton" onclick="modelScene.planetObject.cosmicObject.activateCosmicObjectButton()"></button>
             <span class="lang" id="cosmicObject"></span>
         </div>
         <div class="tooltip">
@@ -238,7 +238,7 @@
             <span class="lang" id="cameraToPlanet"></span>
         </div>
         <div class="tooltip">
-            <button type="button" onclick="modelScene.moveCameraToOriginalPosition()"></button>
+            <button type="button" onclick="modelScene.moveSceneToOriginalPosition()"></button>
             <span class="lang" id="centerModel"></span>
         </div>
     </section>

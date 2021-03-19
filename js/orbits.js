@@ -1,11 +1,11 @@
 class Orbits extends JSONManager {
-    constructor(scene, planetsMeshes, allPlanetDataJSON, allMoonDataJSON) {
+    constructor(scene, planetMeshes) {
         super();
         this.scene = scene;
         this.orbits = [];
         this.allPlanetDataJSON = super.getPlanetData();
         this.allMoonDataJSON = super.getMoonData();
-        this.planetsMeshes = planetsMeshes;
+        this.planetMeshes = planetMeshes;
         this.allCurves = [];
         this.planetOrder = [2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7];
         this.moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
@@ -63,7 +63,7 @@ class Orbits extends JSONManager {
 
     positionAllMoonOrbits() {
         for (var i = 8, j = 0; i < this.orbits.length; i++, j++) {
-            this.positionSingleMoonOrbit(this.orbits[i], this.planetsMeshes, this.planetOrder[j], this.moonNames[j]);
+            this.positionSingleMoonOrbit(this.orbits[i], this.planetMeshes, this.planetOrder[j], this.moonNames[j]);
         }
     }
 

@@ -1,6 +1,5 @@
 class JSONManager {
     constructor() {
-        this.allDataJSON = {};
         this.allPlanetDataJSON = [];
         this.allMoonDataJSON = [];
 
@@ -11,34 +10,13 @@ class JSONManager {
     getPlanetData() { return this.allPlanetDataJSON; }
     getMoonData() { return this.allMoonDataJSON; }
 
-    // Planets
+    // Data about Planets and Moons
     // ----------------------------------------------------------------
-    // 1.possibile solution
-    readPlanetsData = async function() {
+    readDataJSON = async function(string) {
         this.currentValue = await fetch("/numericalData.json")
             .then(response => response.json())
             .then(data => {
-                return data["planetData"]
-            })
-            .catch((error) => { console.warn(error); });
-        return this.currentValue;
-    }
-
-    // 2.possible solution
-    getPlanetData = async function(planet) {
-        // returns Promise
-        const response = await fetch("/numericalData.json");
-        this.allDataJSON = await response.json();
-        return this.allDataJSON["planetData"][planet];
-    }
-
-    // Moons
-    // ----------------------------------------------------------------
-    readMoonsData = async function() {
-        this.currentValue = await fetch("/numericalData.json")
-            .then(response => response.json())
-            .then(data => {
-                return data["moonData"]
+                return data[string]
             })
             .catch((error) => { console.warn(error); });
         return this.currentValue;
@@ -50,13 +28,13 @@ class JSONManager {
         // Only for empty array, class is inherited by 4 classes,
         // precaution so there are only 2 threads initialized
         if (this.allPlanetDataJSON.length == 0) {
-            this.allPlanetDataJSON.push(this.readPlanetsData());
+            this.allPlanetDataJSON.push(this.readDataJSON("planetData"));
         }
     }
 
     addAllMoonDataJSON = function() {
         if (this.allMoonDataJSON.length == 0) {
-            this.allMoonDataJSON.push(this.readMoonsData());
+            this.allMoonDataJSON.push(this.readDataJSON("moonData"));
         }
     }
 }

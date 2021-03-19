@@ -4,10 +4,9 @@ class CosmicObject extends JSONManager {
         this.scene = scene;
         this.allPlanetDataJSON = super.getPlanetData();
         this.planetMeshes = planetMeshes;
-        this.cosmicObject;
         this.addCosmicObject = true;
         this.isPlanetClicked = false;
-        this.createCosmicObject();
+        this.cosmicObject = this.createCosmicObject();
     }
 
     getCosmicObject() { return [this.cosmicObject]; } // Used in class Planet - for scale
@@ -19,12 +18,13 @@ class CosmicObject extends JSONManager {
     createCosmicObject() {
         var geometry = new THREE.ConeGeometry(0.3, 0.4, 5, 1, false, 1, 6.3);
         var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        this.cosmicObject = new THREE.Mesh(geometry, material);
-        this.cosmicObject.rotation.x = THREE.Math.degToRad(90);
-        this.cosmicObject.name = "cosmicObject";
+        var cosmicObject = new THREE.Mesh(geometry, material);
+        cosmicObject.rotation.x = THREE.Math.degToRad(90);
+        cosmicObject.name = "cosmicObject";
+        return cosmicObject;
     }
 
-    activeCosmicObjectButton() {
+    activateCosmicObjectButton() {
         if (this.addCosmicObject) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
             $('#allMoonObjectsChecked').prop('checked', false);

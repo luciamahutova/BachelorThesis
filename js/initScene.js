@@ -19,6 +19,14 @@ class InitScene {
         return camera;
     }
 
+    resizeBackground(renderer, camera) {
+        window.addEventListener('resize', function() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    }
+
     setPointLightOnScene() {
         // Positions of lights are set in class Sun + according the movement of scene
         var pointLight = new THREE.PointLight(0xffffff, 1.6, window.innerWidth, 2);

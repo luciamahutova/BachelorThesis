@@ -4,7 +4,6 @@ modelScene.initializeSceneObjects();
 let renderer = modelScene.getRenderer();
 let scene = modelScene.getScene();
 let camera = modelScene.getCamera();
-modelScene.resizeBackground(renderer, camera);
 
 var i = 0;
 
