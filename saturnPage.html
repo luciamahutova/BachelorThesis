@@ -6,6 +6,7 @@
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- JavaScript libraries -->
+    <script src="/node_modules/three/build/three.js "></script>
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
@@ -39,15 +40,16 @@
     <span class="fadeLine"></span>
 
     <!-- Saturn -->
-    <section class="containerPlanetInfo">
+    <div id="interativeModelScene"></div>
+    <section>
         <h1>Saturn</h1>
-        <div class="container3">
-            <p class="lang" id="saturnText"></p>
-            <img src="/images/planets/saturnTransparent.png" alt="" width="450" height="450">
-        </div>
+        <p class="lang" id="saturnText"></p>
     </section>
 
+
     <!-- Scripts -->
+    <script src="/js/initScene.js"></script>
+    <script type="module" src="/js/planetScene.js"></script>
     <script src="/js/sidebarManager.js "></script>
     <script src="/js/textTranslator.js"></script>
 

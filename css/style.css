@@ -536,29 +536,12 @@ header+a {
     left: 160px;
 }
 
-
-/* Responsivity */
-
-.containerPlanetInfo {
-    display: grid;
-    grid-template-columns: 40px auto auto auto 40px;
-    grid-template-rows: 250px auto auto;
-}
-
-.containerPlanetInfo div p {
-    margin: 5px 0 15px 15px;
-}
-
-.container3 {
-    grid-area: 2 / 2 / span 1 / span 3;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.container3 p:first-child {
-    max-width: 365px;
+h1+p {
+    width: 400px;
+    position: absolute;
+    top: 200px;
+    left: 60px;
+    background-color: transparent;
 }
 
 
@@ -604,8 +587,8 @@ article h3 {
 #interativeModelScene {
     position: absolute;
     top: 100px;
-    right: 5%;
-    width: 500px;
+    right: 10%;
+    width: 600px;
     height: 600px;
-    background-color: transparent;
+    z-index: -1;
 }

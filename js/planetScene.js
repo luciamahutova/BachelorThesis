@@ -1,43 +1,37 @@
+import { OrbitControls } from "https://threejs.org/examples/jsm/controls/OrbitControls.js";
 class PlanetScene extends InitScene {
     constructor() {
         super()
         this.scene = new THREE.Scene();
         this.camera = this.initCamera(this.getWidthOfScene(), this.getHeightOfScene());
         this.renderer = this.initRenderer(this.getWidthOfScene(), this.getHeightOfScene(), true);
-        this.pointLight = this.setPointLightOnScene();
+        this.controls = this.setOrbitConstrols();
 
-        this.createScene();
+        this.ambientLight = new THREE.AmbientLight(0x404040, 5);
+        this.planetMeshes = [];
+        this.planetNames = ["mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
+        this.pageName = this.getHtmlPageName();
+
+        this.initInteractivePlanetScene();
+        this.showInteractivePlanet(this.pageName)
+    }
+
+    getWidthOfScene() { return document.querySelector('#interativeModelScene').offsetWidth; }
+    getHeightOfScene() { return document.querySelector('#interativeModelScene').offsetHeight; }
+    getHtmlPageName() { return window.location.pathname.split("/").pop(); }
+
+    // Settings for scene and planets
+    // -------------------------------------------------------------------------
+    initInteractivePlanetScene() {
+        var interactiveScene = document.querySelector('#interativeModelScene');
+        interactiveScene.appendChild(this.renderer.domElement);
+        this.renderer.setClearColor(0x000000, 0);
+
+        this.camera.position.set(0, 5, 0);
+        this.scene.add(this.ambientLight);
+
         this.createAllPlanets();
         this.setOrbitConstrols();
-    }
-
-    createScene() {
-        var interactiveScene = document.querySelector('#interativeModelScene');
-        this.pointLight.position.set(0, 10, 0);
-        this.scene.add(this.pointLight);
-        this.camera.position.set(0, 5, 0);
-
-        interactiveScene.appendChild(this.renderer.domElement);
-        this.renderer.setClearColor(0xffffff, 10);
-        this.renderer.setClearColor(0x000000, 0);
-    }
-
-    setOrbitConstrols() {
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.target.set(0, 0, 0);
-        this.controls.update();
-        this.controls.addEventListener('change', render);
-    }
-
-    createPlanetMesh(imageSrc) {
-        var object = new THREE.SphereBufferGeometry(3, 50, 50);
-        var texture = new THREE.TextureLoader().load(imageSrc);
-        var meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
-        this.planetMesh = new THREE.Mesh(object, meshMaterial);
-
-        this.planetMesh.position.set(0, 0, 0);
-        this.planetMesh.rotation.x = THREE.Math.degToRad(-45);
-        this.scene.add(this.planetMesh);
     }
 
     createAllPlanets() {
@@ -51,13 +45,43 @@ class PlanetScene extends InitScene {
         this.createPlanetMesh('/images/textures/neptuneTexture2k.jpg');
     }
 
-    getWidthOfScene() { return document.querySelector('#interativeModelScene').offsetWidth; }
-    getHeightOfScene() { return document.querySelector('#interativeModelScene').offsetHeight; }
+    createPlanetMesh(imageSrc) {
+        var object = new THREE.SphereBufferGeometry(3, 50, 50);
+        var texture = new THREE.TextureLoader().load(imageSrc);
+        var meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
+        var planetMesh = new THREE.Mesh(object, meshMaterial);
 
-    render() {
-        this.renderer.render(this.scene, this.camera);
+        planetMesh.position.set(0, 0, 0);
+        planetMesh.rotation.x = THREE.Math.degToRad(-45);
+        this.planetMeshes.push(planetMesh);
+        this.scene.add(planetMesh);
     }
 
+    // Orbits controls
+    // -------------------------------------------------------------------------
+    setOrbitConstrols() {
+        var controls = new OrbitControls(this.camera, this.renderer.domElement);
+        controls.target.set(0, 0, 0);
+        controls.update();
+        controls.enableZoom = false;
+        return controls;
+    }
+
+    showInteractivePlanet(pagename) {
+        for (var i = 0; i < this.planetMeshes.length; i++) {
+            this.scene.remove(this.planetMeshes[i]);
+        }
+
+        for (var i = 0; i < this.planetNames.length; i++) {
+            if (pagename.startsWith(this.planetNames[i])) {
+                this.scene.add(this.planetMeshes[i]);
+                break;
+            }
+        }
+    }
+
+    // Animate - controls and renderer
+    // -------------------------------------------------------------------------
     animate() {
         this.controls.autoRotate = true;
         this.controls.update();
@@ -65,10 +89,11 @@ class PlanetScene extends InitScene {
     }
 }
 
-this.interactiveModel = new PlanetScene();
+// Initialize interactive planet 
+var planetScene = new PlanetScene();
 
-function animate() {
-    this.interactiveModel.animate();
-    animationFrameOutput = requestAnimationFrame(animate);
+function animatePlanet() {
+    planetScene.animate();
+    requestAnimationFrame(animatePlanet);
 }
-animate();
+animatePlanet();

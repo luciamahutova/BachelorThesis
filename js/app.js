@@ -5,6 +5,8 @@ let renderer = modelScene.getRenderer();
 let scene = modelScene.getScene();
 let camera = modelScene.getCamera();
 
+// Solar system model 
+// -------------------------------------------------------------------------
 var i = 0;
 
 function animate() {

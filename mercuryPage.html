@@ -6,10 +6,8 @@
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- JavaScript libraries -->
-    <script src="/numericalData.json"></script>
     <script src="/node_modules/three/build/three.js "></script>
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="/node_modules/three/examples/js/controls/OrbitControls.js"></script>
 </head>
 
 <body>
@@ -41,26 +39,19 @@
     </a>
     <span class="fadeLine"></span>
 
-    <div id="interativeModelScene"></div>
     <!-- Mercury -->
-    <section class="containerPlanetInfo">
+    <div id="interativeModelScene"></div>
+    <section>
         <h1 class="lang" id="mercury"></h1>
-        <div class="container3">
-            <p class="lang" id="mercuryText"></p>
-            <img src="/images/planets/mercuryTransparent.png" alt="" width="400" height="400">
-        </div>
+        <p class="lang" id="mercuryText"></p>
     </section>
 
 
     <!-- Scripts -->
     <script src="/js/initScene.js"></script>
-    <script src="/js/planetScene.js"></script>
-    <script src="/js/jsonManager.js"></script>
-    <script src="/js/initPlanets.js"></script>
-    <script src="/js/planets.js"></script>
+    <script type="module" src="/js/planetScene.js"></script>
     <script src="/js/sidebarManager.js "></script>
     <script src="/js/textTranslator.js"></script>
-
 </body>
 
 </html>
