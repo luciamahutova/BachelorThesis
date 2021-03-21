@@ -5,18 +5,21 @@ class RayCaster extends JSONManager {
         super();
         this.allPlanetDataJSON = super.getPlanetData();
         this.allMoonDataJSON = super.getMoonData();
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2(0, 0);
     }
 
-    onMouseMove = function(camera, scene) {
+    getRaycaster() { return this.raycaster; }
+    getMouse() { return this.mouse; }
+
+    onMouseMove(camera, scene, raycaster, mouse) {
+        var planetNames = this.getPlanetNames();
         return function(event) {
-            var mouse = new THREE.Vector2(0, 0);
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            var raycaster = new THREE.Raycaster();
             raycaster.setFromCamera(mouse, camera);
-
             var intersects = raycaster.intersectObjects(scene.children);
+
             if (intersects.length > 0 && intersects[0].object.name != "Sun" && intersects[0].object.visible == true) {
                 // Show only the 1 table with physical info for planet/moon
                 document.getElementById("sidebarPlanetInfo").style.left = "-300px";
@@ -24,10 +27,14 @@ class RayCaster extends JSONManager {
 
                 var physicalTable;
                 var selectedObjectName = intersects[0].object.name;
-                (selectedObjectName == "Mercury" || selectedObjectName == "Venus" || selectedObjectName == "Earth" ||
-                    selectedObjectName == "Mars" || selectedObjectName == "Jupiter" || selectedObjectName == "Saturn" ||
-                    selectedObjectName == "Uranus" || selectedObjectName == "Neptune") ?
-                physicalTable = "sidebarPlanetInfo": physicalTable = "sidebarMoonInfo";
+                var isPlanetSelected = false;
+                for (var i = 0; i < planetNames.length; i++) {
+                    if (selectedObjectName == planetNames[i]) {
+                        isPlanetSelected = true;
+                        break;
+                    }
+                }
+                (isPlanetSelected) ? physicalTable = "sidebarPlanetInfo": physicalTable = "sidebarMoonInfo";
                 document.getElementById(physicalTable).style.left = "40px";
 
                 // Clear the last coloured planet/orbit, using "window.myParam"
@@ -56,6 +63,9 @@ class RayCaster extends JSONManager {
     disableRaycasterThroughOverlayObjects = function() {
         document.querySelectorAll('.overlay').forEach(item => {
             item.addEventListener('click', event => {
+                event.stopPropagation();
+            });
+            item.addEventListener('mousemove', event => {
                 event.stopPropagation();
             })
         })

@@ -98,7 +98,8 @@ class ModelScene extends InitScene {
     // -------------------------------------------------------------------------
     addEventListenerFunctions() {
         window.addEventListener('keydown', this.moveSceneOnPressedArrow(this.scene), false);
-        window.addEventListener('click', this.raycaster.onMouseMove(this.camera, this.scene), false);
+        window.addEventListener('click', this.raycaster.onMouseMove(this.camera, this.scene,
+            this.raycaster.getRaycaster(), this.raycaster.getMouse()), false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
         window.addEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
         window.addEventListener('mouseup', this.mouseUpEvent, false);
@@ -134,7 +135,7 @@ class ModelScene extends InitScene {
         updateRangesliderValues();
     }
 
-    // Button for 
+    // Button for camera zoom to selected planet
     // -------------------------------------------------------------------------
     activateCameraToObjectButton() {
         if (this.makeCameraFollowObject) {
@@ -174,7 +175,6 @@ class ModelScene extends InitScene {
     // Animate function and initializing classes: called in app.js 
     // -------------------------------------------------------------------------
     animate() {
-        this.addEventListenerFunctions();
         this.raycaster.animate();
         this.findClickedPlanetForCamera();
 
@@ -213,5 +213,6 @@ class ModelScene extends InitScene {
             this.scene, this.planetObject.orbitClass.getAllOrbits());
 
         this.resizeBackground(this.renderer, this.camera);
+        this.addEventListenerFunctions();
     }
 }
