@@ -90,6 +90,7 @@ class SidebarManager {
                 $('.playButton').prop('disabled', false);
                 $('#cosmicObjectButton').prop('disabled', true);
                 $('#cameraToObjectButton').prop('disabled', true);
+                $('#rangesliderSpeedInput').prop('disabled', true);
             });
         }
     }
@@ -108,6 +109,7 @@ class SidebarManager {
                 $('.playButton').prop('disabled', true);
                 $('#cosmicObjectButton').prop('disabled', false);
                 $('#cameraToObjectButton').prop('disabled', false);
+                $('#rangesliderSpeedInput').prop('disabled', false);
             });
         }
     }

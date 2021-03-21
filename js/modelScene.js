@@ -112,6 +112,10 @@ class ModelScene extends InitScene {
         var forceSlider = document.getElementById("rangesliderSpeedInput");
         var forceSliderValue = document.getElementById("rangesliderSpeedValue");
 
+        if (document.getElementById("cosmicObjectButton").style.backgroundColor == "lightblue") {
+            document.getElementById("slidercontainer").style.visibility = "visible";
+        } else { document.getElementById("slidercontainer").style.visibility = "hidden"; }
+
         var updateRangesliderValues = () => {
             zoomSliderValue.innerHTML = zoomSlider.value;
             this.scaleValueScene = zoomSliderValue.innerHTML / 200;
