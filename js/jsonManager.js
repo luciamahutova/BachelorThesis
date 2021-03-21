@@ -3,12 +3,19 @@ class JSONManager {
         this.allPlanetDataJSON = [];
         this.allMoonDataJSON = [];
 
+        this.planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+        this.moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
+            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
+        ];
+
         this.addAllPlanetDataJSON();
         this.addAllMoonDataJSON();
     }
 
     getPlanetData() { return this.allPlanetDataJSON; }
     getMoonData() { return this.allMoonDataJSON; }
+    getPlanetNames() { return this.planetNames; }
+    getMoonNames() { return this.moonNames; }
 
     // Data about Planets and Moons
     // ----------------------------------------------------------------
@@ -35,6 +42,16 @@ class JSONManager {
     addAllMoonDataJSON = function() {
         if (this.allMoonDataJSON.length == 0) {
             this.allMoonDataJSON.push(this.readDataJSON("moonData"));
+        }
+    }
+
+    // Index of clicked planet, used in children classes
+    // -------------------------------------------------------------------------
+    getIndexOfSelectedPlanet(selectedPlanet) {
+        for (var i = 0; i < this.planetNames.length; i++) {
+            if (selectedPlanet.name == this.planetNames[i]) {
+                return i;
+            }
         }
     }
 }

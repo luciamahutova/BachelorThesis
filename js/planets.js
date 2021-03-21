@@ -6,7 +6,7 @@ class Planet extends InitPlanets {
         this.planetNamesOnSceneEN = [];
         this.planetNamesOnSceneCZ = [];
         this.planetNamesOnSceneSK = [];
-        this.planetNames = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
+        this.planetNames = this.getPlanetNames();
         this.allPlanetDataJSON = super.getPlanetDataJSON();
         this.allMoonDataJSON = super.getMoonDataJSON();
 

@@ -8,9 +8,7 @@ class Orbits extends JSONManager {
         this.planetMeshes = planetMeshes;
         this.allCurves = [];
         this.planetOrder = [2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7];
-        this.moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
-            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
-        ];
+        this.moonNames = this.getMoonNames();
         this.createOrbitShape();
     }
 

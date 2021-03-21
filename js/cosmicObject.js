@@ -2,6 +2,7 @@ class CosmicObject extends JSONManager {
     constructor(scene, planetMeshes) {
         super();
         this.scene = scene;
+        this.planetNames = this.getPlanetNames();
         this.allPlanetDataJSON = super.getPlanetData();
         this.planetMeshes = planetMeshes;
         this.addCosmicObject = true;
@@ -50,7 +51,7 @@ class CosmicObject extends JSONManager {
             this.moonsVisibilityOfSelectedPlanet(selectedPlanet, false);
 
             if (this.getIsPlanetClicked()) {
-                var meshOrder = this.orderOfSelectedPlanetMesh(selectedPlanet);
+                var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
                 this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, force, time);
                 this.scene.add(this.cosmicObject);
             } else if (!this.getIsPlanetClicked()) {
@@ -123,28 +124,6 @@ class CosmicObject extends JSONManager {
                 cosmicObject.position.z = planetMeshes[planetOrder].position.z - newForce / 2 *
                     result[selectedPlanet.name]["cosmicObjectDistanceZ"] * result[selectedPlanet.name]["cosmicObjectScaleFactor"] * scaleValue * Math.sin(orbitalSpeed * 0.0001 * time);
             });
-        }
-    }
-
-    orderOfSelectedPlanetMesh(selectedPlanet) {
-        // Need position of planet mesh, position of selectedPlanet (from window.myParam) is not updated (still 0)
-        // In For-cycle it's too slow, planets will jump a little
-        if (selectedPlanet.name == "Mercury") {
-            return 0;
-        } else if (selectedPlanet.name == "Venus") {
-            return 1;
-        } else if (selectedPlanet.name == "Earth") {
-            return 2;
-        } else if (selectedPlanet.name == "Mars") {
-            return 3;
-        } else if (selectedPlanet.name == "Jupiter") {
-            return 4;
-        } else if (selectedPlanet.name == "Saturn") {
-            return 5;
-        } else if (selectedPlanet.name == "Uranus") {
-            return 6;
-        } else if (selectedPlanet.name == "Neptune") {
-            return 7;
         }
     }
 }

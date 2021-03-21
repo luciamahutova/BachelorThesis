@@ -6,9 +6,7 @@ class Moon extends InitPlanets {
         this.allPlanetDataJSON = this.getPlanetData();
         this.moonMeshes = [];
         this.moonNamesOnScene = [];
-        this.moonNames = ["Moon", "Io", "Europa", "Ganymede", "Callisto", "Rhea", "Titan",
-            "Ariel", "Umbriel", "Titania", "Oberon", "Triton"
-        ];
+        this.moonNames = this.getMoonNames();
         this.initializeMoons();
     }
 

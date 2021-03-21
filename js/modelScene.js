@@ -152,25 +152,7 @@ class ModelScene extends InitScene {
         if (window.myParam != undefined) {
             var selectedPlanet = window.myParam[0].object;
             var planet = this.planetObject.getPlanetMeshes();
-            var index;
-
-            if (selectedPlanet.name == "Mercury") {
-                index = 0;
-            } else if (selectedPlanet.name == "Venus") {
-                index = 1;
-            } else if (selectedPlanet.name == "Earth") {
-                index = 2;
-            } else if (selectedPlanet.name == "Mars") {
-                index = 3;
-            } else if (selectedPlanet.name == "Jupiter") {
-                index = 4;
-            } else if (selectedPlanet.name == "Saturn") {
-                index = 5;
-            } else if (selectedPlanet.name == "Uranus") {
-                index = 6;
-            } else if (selectedPlanet.name == "Neptune") {
-                index = 7;
-            }
+            var index = this.jsonManager.getIndexOfSelectedPlanet(selectedPlanet);
 
             if (!this.makeCameraFollowObject && index != undefined) {
                 // temporarily disable z-rotation for planet object = camera will be placed above the planet
