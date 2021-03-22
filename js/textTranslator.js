@@ -302,11 +302,12 @@ let arrLang = {
 
 $(function() {
     // First set current language to CZ
-    var currentLang = (localStorage.getItem('lang') === '' || localStorage.getItem('lang') === null) ? 'sk' : localStorage.getItem('lang');
+    var currentLang = (localStorage.getItem('lang') === '' || localStorage.getItem('lang') === null) ?
+        $('html').attr('lang') : localStorage.getItem('lang');
     highlightChosenLanguage(currentLang);
 
     $('.lang').each(function() {
-        $(this).text(arrLang[currentLang][$(this).attr('id')]);
+        $(this).text(arrLang[currentLang][$(this).attr('data-lang')]);
     });
 
     // Translate to chosen language
@@ -315,7 +316,7 @@ $(function() {
         localStorage.setItem('lang', currentLang);
 
         $('.lang').each(function() {
-            $(this).text(arrLang[currentLang][$(this).attr('id')]);
+            $(this).text(arrLang[currentLang][$(this).attr('data-lang')]);
         });
     });
 })

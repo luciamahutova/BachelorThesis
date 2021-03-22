@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cz">
 
 <head>
     <meta charset="UTF-8">
@@ -19,13 +19,13 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
-                    <a href="#" class="lang" id="ssm" onclick="modelScene.sidebarManager.startNewSimulation()"></a>
+                    <a href="#" class="lang" data-lang="ssm" onclick="modelScene.sidebarManager.startNewSimulation()"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" id="planets" onclick="modelScene.sidebarManager.openInNewTab(this.id)"></a>
+                    <a href="#" class="lang" data-lang="planets" onclick="modelScene.sidebarManager.openInNewTab(this.id)"></a>
                 </li>
                 <li>
-                    <a href="#" class="lang" id="about" onclick="modelScene.sidebarManager.openInNewTab(this.id)"></a>
+                    <a href="#" class="lang" data-lang="about" onclick="modelScene.sidebarManager.openInNewTab(this.id)"></a>
                 </li>
             </ul>
             <div id="languages">
@@ -39,47 +39,47 @@
     <section class="sidebars overlay" id="sidebarPlanetInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
-                <h3 class="lang" id="physicalValuesPlanet"></h3>
-                <span class="lang" id="planetMass"></span><input id="planetMassInput" type="text" value="" readonly>
+                <h3 class="lang" data-lang="physicalValuesPlanet"></h3>
+                <span class="lang" data-lang="planetMass"></span><input id="planetMassInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="diameter"></span><input id="diameterInput" type="text" value="" readonly>
+                <span class="lang" data-lang="diameter"></span><input id="diameterInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="perimeter"></span><input id="perimeterInput" type="text" value="" readonly>
+                <span class="lang" data-lang="perimeter"></span><input id="perimeterInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="rotationSpeed"></span><input id="rotationSpeedInput" type="text" value="" readonly>
+                <span class="lang" data-lang="rotationSpeed"></span><input id="rotationSpeedInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="rotationPeriod"></span>
+                <span class="lang" data-lang="rotationPeriod"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" id="negativeRotationPeriodMeaning"></span>
+                    <span class="lang" data-lang="negativeRotationPeriodMeaning"></span>
                 </div>
                 <input id="rotationPeriodInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="orbitalPeriod"></span>
+                <span class="lang" data-lang="orbitalPeriod"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" id="orbitalPeriodMeaning"></span>
+                    <span class="lang" data-lang="orbitalPeriodMeaning"></span>
                 </div>
                 <input id="orbitalPeriodInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="distanceFromSunPerihelion"></span>
+                <span class="lang" data-lang="distanceFromSunPerihelion"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" id="perihelionMeaning"></span>
+                    <span class="lang" data-lang="perihelionMeaning"></span>
                 </div>
                 <input id="distanceFromSunPerihelionInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="distanceFromSunAphelion"></span>
+                <span class="lang" data-lang="distanceFromSunAphelion"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" id="aphelionMeaning"></span>
+                    <span class="lang" data-lang="aphelionMeaning"></span>
                 </div>
                 <input id="distanceFromSunAphelionInput" type="text" value="" readonly>
             </section>
@@ -89,26 +89,26 @@
     <section class="sidebars overlay" id="sidebarMoonInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
-                <h3 class="lang" id="physicalValuesMoon"></h3>
-                <span class="lang" id="moonMass"></span><input id="moonMassInput" type="text" value="" readonly>
+                <h3 class="lang" data-lang="physicalValuesMoon"></h3>
+                <span class="lang" data-lang="moonMass"></span><input id="moonMassInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="diameter"></span><input id="diameterInputMoon" type="text" value="" readonly>
+                <span class="lang" data-lang="diameter"></span><input id="diameterInputMoon" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="rotationSpeed"></span><input id="orbitalSpeedInputMoon" type="text" value="" readonly>
+                <span class="lang" data-lang="rotationSpeed"></span><input id="orbitalSpeedInputMoon" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="orbitalPeriodMoon"></span><input id="orbitalPeriodInputMoon" type="text" value="" readonly>
+                <span class="lang" data-lang="orbitalPeriodMoon"></span><input id="orbitalPeriodInputMoon" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="distanceFromPlanet"></span><input id="distanceFromPlanetInput" type="text" value="" readonly>
+                <span class="lang" data-lang="distanceFromPlanet"></span><input id="distanceFromPlanetInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="minTemperature"></span><input id="minTemperatureInput" type="text" value="" readonly>
+                <span class="lang" data-lang="minTemperature"></span><input id="minTemperatureInput" type="text" value="" readonly>
             </section>
             <section>
-                <span class="lang" id="maxTemperature"></span><input id="maxTemperatureInput" type="text" value="" readonly>
+                <span class="lang" data-lang="maxTemperature"></span><input id="maxTemperatureInput" type="text" value="" readonly>
             </section>
         </div>
     </section>
@@ -116,7 +116,7 @@
     <section class="scaleFactor">
         <div class="scaleFactorTooltip">
             <img src="/icons/infoBubble.png" class="infoScaleFactor" alt="infoScene" width="30" height="30">
-            <span class="lang" id="infoScaleFactorScene"></span>
+            <span class="lang" data-lang="infoScaleFactorScene"></span>
         </div>
     </section>
     <img src="/icons/molecules.png" class="sidebarIcon" alt="sidebarIcon" width="30" height="30" onclick="modelScene.sidebarManager.showHideSidebarToRight()">
@@ -124,32 +124,32 @@
     <section class="sidebars overlay" id="sidebarRight">
         <div>
             <section>
-                <h3 class="lang" id="names"></h3>
+                <h3 class="lang" data-lang="names"></h3>
                 <!-- Planets' names -->
                 <label>
-                    <span class="checkmark lang" id="allPlanets"></span><input type="checkbox" checked id="allPlanetNamesChecked">
+                    <span class="checkmark lang" data-lang="allPlanets"></span><input type="checkbox" checked id="allPlanetNamesChecked">
                 </label>
-                <span class="lang" id="singlePlanet"></span>
+                <span class="lang" data-lang="singlePlanet"></span>
                 <select id="singlePlanetNameSelected">     
                     <option value="-1">-</option>      
-                    <option class="lang" id="mercury" value="0">Mercury</option>
-                    <option class="lang" id="venus" value="1">Venus</option>
-                    <option class="lang" id="earth" value="2">Earth</option>
+                    <option class="lang" data-lang="mercury" value="0">Mercury</option>
+                    <option class="lang" data-lang="venus" value="1">Venus</option>
+                    <option class="lang" data-lang="earth" value="2">Earth</option>
                     <option value="3">Mars</option>
                     <option value="4">Jupiter</option>
                     <option value="5">Saturn</option>
-                    <option class="lang" id="uranus" value="6">Uranus</option>
-                    <option class="lang" id="neptune" value="7">Neptune</option>
+                    <option class="lang" data-lang="uranus" value="6">Uranus</option>
+                    <option class="lang" data-lang="neptune" value="7">Neptune</option>
                 </select>
 
                 <!-- Moons' names -->
                 <label>
-                    <span class="checkmark lang" id="allMoons"></span><input type="checkbox" checked id="allMoonNamesChecked">
+                    <span class="checkmark lang" data-lang="allMoons"></span><input type="checkbox" checked id="allMoonNamesChecked">
                 </label>
-                <span class="lang" id="singleMoon"></span>
+                <span class="lang" data-lang="singleMoon"></span>
                 <select id="singleMoonNameSelected">     
                     <option value="-1">-</option>      
-                    <option class="lang" id="earthMoon" value="0"></option>
+                    <option class="lang" data-lang="earthMoon" value="0"></option>
                     <option id="jupiterIo" value="1">Io</option>
                     <option id="jupiterEuropa" value="2">Europa</option>
                     <option id="jupiterGanymede" value="3">Ganymede</option>
@@ -165,46 +165,46 @@
             </section>
 
             <section>
-                <h3 class="lang" id="moonsTable"></h3>
+                <h3 class="lang" data-lang="moonsTable"></h3>
                 <label>
-                    <span class="checkmark lang" id="allMoonsObjects"></span><input type="checkbox" checked id="allMoonObjectsChecked">
+                    <span class="checkmark lang" data-lang="allMoonsObjects"></span><input type="checkbox" checked id="allMoonObjectsChecked">
                 </label>
-                <span class="lang" id="allMoonsObjectsOfSinglePlanet"></span>
+                <span class="lang" data-lang="allMoonsObjectsOfSinglePlanet"></span>
                 <select id="singlePlanetSelectedForMoons">     
                     <option value="-1">-</option>      
-                    <option class="lang" id="earth" value="2">Earth</option>
+                    <option class="lang" data-lang="earth" value="2">Earth</option>
                     <option value="4">Jupiter</option>
                     <option value="5">Saturn</option>
-                    <option class="lang" id="uranus" value="6">Uranus</option>
-                    <option class="lang" id="neptune" value="7">Neptune</option>
+                    <option class="lang" data-lang="uranus" value="6">Uranus</option>
+                    <option class="lang" data-lang="neptune" value="7">Neptune</option>
                 </select>
             </section>
 
             <section>
-                <h3 class="lang" id="orbit"></h3>
+                <h3 class="lang" data-lang="orbit"></h3>
                 <label>
-                    <span class="checkmark lang" id="allPlanets"></span><input type="checkbox" checked id="allPlanetOrbitsChecked">
+                    <span class="checkmark lang" data-lang="allPlanets"></span><input type="checkbox" checked id="allPlanetOrbitsChecked">
                 </label>
-                <span class="lang" id="singlePlanet"></span>
+                <span class="lang" data-lang="singlePlanet"></span>
                 <select id="singlePlanetOrbitSelected">
                     <option value="-1">-</option>      
-                    <option class="lang" id="mercury" value="0">Mercury</option>
-                    <option class="lang" id="venus" value="1">Venus</option>
-                    <option class="lang" id="earth" value="2">Earth</option>
+                    <option class="lang" data-lang="mercury" value="0">Mercury</option>
+                    <option class="lang" data-lang="venus" value="1">Venus</option>
+                    <option class="lang" data-lang="earth" value="2">Earth</option>
                     <option value="3">Mars</option>
                     <option value="4">Jupiter</option>
                     <option value="5">Saturn</option>
-                    <option class="lang" id="uranus" value="6">Uranus</option>
-                    <option class="lang" id="neptune" value="7">Neptune</option>
+                    <option class="lang" data-lang="uranus" value="6">Uranus</option>
+                    <option class="lang" data-lang="neptune" value="7">Neptune</option>
                 </select>
 
                 <label>
-                    <span class="checkmark lang" id="allMoons"></span><input type="checkbox" checked id="allMoonOrbitsChecked">
+                    <span class="checkmark lang" data-lang="allMoons"></span><input type="checkbox" checked id="allMoonOrbitsChecked">
                 </label>
-                <span class="lang" id="singleMoon"></span>
+                <span class="lang" data-lang="singleMoon"></span>
                 <select id="singleMoonOrbitNameSelected">     
                     <option value="-1">-</option>      
-                    <option class="lang" id="earthMoon" value="0"></option>
+                    <option class="lang" data-lang="earthMoon" value="0"></option>
                     <option id="jupiterIo" value="1">Io</option>
                     <option id="jupiterEuropa" value="2">Europa</option>
                     <option id="jupiterGanymede" value="3">Ganymede</option>
@@ -222,7 +222,7 @@
                 </select>
             </section>
 
-            <button class="confirmChangesButton lang" type="submit" id="confirm" onclick="modelScene.sidebarManager.confirmButtonBehavior()"></button>
+            <button class="confirmChangesButton lang" type="submit" data-lang="confirm" id="confirm" onclick="modelScene.sidebarManager.confirmButtonBehavior()"></button>
             <button class="pauseButton" id="pauseButton" type="button"></button>
             <button class="playButton" id="playButton" type="button"></button>
         </div>
@@ -231,27 +231,27 @@
     <section class="models overlay">
         <div class="tooltip">
             <button type="button" id="cosmicObjectButton" onclick="modelScene.planetObject.cosmicObject.activateCosmicObjectButton()"></button>
-            <span class="lang" id="cosmicObject"></span>
+            <span class="lang" data-lang="cosmicObject"></span>
         </div>
         <div class="tooltip">
             <button type="button" id="cameraToObjectButton" onclick="modelScene.activateCameraToObjectButton()"></button>
-            <span class="lang" id="cameraToPlanet"></span>
+            <span class="lang" data-lang="cameraToPlanet"></span>
         </div>
         <div class="tooltip">
             <button type="button" onclick="modelScene.moveSceneToOriginalPosition()"></button>
-            <span class="lang" id="centerModel"></span>
+            <span class="lang" data-lang="centerModel"></span>
         </div>
     </section>
 
     <!-- 1st rangeslider = change orbit shape of cosmic object  -->
     <div class="overlay" id="slidercontainer">
         <input type="range" min="1" max="6" value="1" step="0.2" class="slider" id="rangesliderForceInput">
-        <span class="lang" id="changeOrbit"></span><span id="rangesliderForceValue"></span><span>x</span>
+        <span class="lang" data-lang="changeOrbit"></span><span id="rangesliderForceValue"></span><span>x</span>
     </div>
     <!-- 2nd rangeslider = zoom for scene and all its objects -->
     <div class="overlay" id="slidercontainer">
         <input type="range" min="50" max="160" value="100" step="5" class="slider" id="rangesliderZoomInput">
-        <span class="lang" id="zoom"></span><span id="rangesliderZoomValue"></span><span>%</span>
+        <span class="lang" data-lang="zoom"></span><span id="rangesliderZoomValue"></span><span>%</span>
     </div>
 
     <div id="anime-container"></div>
