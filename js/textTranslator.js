@@ -2,6 +2,18 @@ let arrLang = {
     cz: {
         'planetsH1': 'Planety',
         'infoScaleFactorScene': 'Model má upravenou velikost pro přehlednější zobrazení. Zmenšené objekty: Slunce 27x, Jupiter a Saturn 6x, Uran a Neptun 5x. Rozměry orbit jsou také zmenšeny vzhledem k modelu.',
+        // <title>
+        'simulator': 'Simulátor sluneční soustavy',
+        'infoPage': 'Informace',
+        'planets': 'Planety',
+        'planetMercury': 'Planeta Merkur',
+        'planetVenus': 'Planeta Venuše',
+        'planetEarth': 'Planeta Země',
+        'planetMars': 'Planeta Mars',
+        'planetJupiter': 'Planeta Jupiter',
+        'planetSaturn': 'Planeta Saturn',
+        'planetUranus': 'Planeta Uran',
+        'planetNeptune': 'Planeta Neptun',
         // Menu
         'ssm': 'Model sluneční soustavy',
         'planets': 'Planety',
@@ -102,6 +114,18 @@ let arrLang = {
     en: {
         'planetsH1': 'Planets',
         'infoScaleFactorScene': 'The model is scaled for a clearer view. Scale objects: Sun 27x, Jupiter and Saturn 6x, Uranus and Neptune 5x. The dimensions of the orbits are also reduced with respect to the model.',
+        // <title>
+        'simulator': 'Solar system simulator',
+        'infoPage': 'Information',
+        'planets': 'Planets',
+        'planetMercury': 'Planet Mercury',
+        'planetVenus': 'Planet Venus',
+        'planetEarth': 'Planet Earth',
+        'planetMars': 'Planet Mars',
+        'planetJupiter': 'Planet Jupiter',
+        'planetSaturn': 'Planet Saturn',
+        'planetUranus': 'Planet Uranus',
+        'planetNeptune': 'Planet Neptune',
         // Menu
         'ssm': 'Solar system model',
         'planets': 'Planets',
@@ -201,6 +225,18 @@ let arrLang = {
     sk: {
         'planetsH1': 'Planéty',
         'infoScaleFactorScene': 'Model má upravenú mierku pre prehľadnejšie zobrazenie. Zmenšené objekty: Slnko 27x, Jupiter a Saturn 6x, Urán a Neptún 5x. Rozmery orbít sú tiež zmenšené vzhľadom k modelu.',
+        // <title>
+        'simulator': 'Simulátor slnečnej sústavy',
+        'infoPage': 'Informácie',
+        'planets': 'Planéty',
+        'planetMercury': 'Planéta Merkúr',
+        'planetVenus': 'Planéta Venuša',
+        'planetEarth': 'Planéta Zem',
+        'planetMars': 'Planéta Mars',
+        'planetJupiter': 'Planéta Jupiter',
+        'planetSaturn': 'Planéta Saturn',
+        'planetUranus': 'Planéta Urán',
+        'planetNeptune': 'Planéta Neptún',
         // Menu
         'ssm': 'Model slnečnej sústavy',
         'planets': 'Planéty',
