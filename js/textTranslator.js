@@ -302,7 +302,7 @@ let arrLang = {
 
 $(function() {
     // First set current language to CZ
-    var currentLang = (localStorage.getItem('lang') === '' || localStorage.getItem('lang') === null) ? 'cz' : localStorage.getItem('lang');
+    var currentLang = (localStorage.getItem('lang') === '' || localStorage.getItem('lang') === null) ? 'sk' : localStorage.getItem('lang');
     highlightChosenLanguage(currentLang);
 
     $('.lang').each(function() {
