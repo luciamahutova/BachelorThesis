@@ -3,15 +3,15 @@ class Moon extends InitPlanets {
         super();
         this.scene = scene;
         this.orbits = orbits;
-        this.allPlanetDataJSON = this.getPlanetData();
         this.moonMeshes = [];
         this.moonNamesOnScene = [];
-        this.moonNames = this.getMoonNames();
         this.initializeMoons();
     }
 
-    getMoonsNamesOnScene() { return this.moonNamesOnScene; }
-    getMoonMeshes() { return this.moonMeshes; }
+    // Get()
+    getMoonsNamesOnScene() { return this.moonNamesOnScene }
+    getMoonMeshes() { return this.moonMeshes }
+    getScene() { return this.scene }
 
     createMoons() {
         var moonSizeAndParent = {
@@ -40,10 +40,10 @@ class Moon extends InitPlanets {
             moonMesh = new THREE.Mesh(moon, material);
             moonMesh.name = property;
 
-            this.moonMeshes.push(moonMesh);
+            (this.getMoonMeshes()).push(moonMesh);
             moonMesh.position.x = 10 + i * 3;
         }
-        this.addMeshToScene(this.scene, this.moonMeshes);
+        this.addMeshToScene(this.getScene(), this.getMoonMeshes());
     }
 
     // Positions for moons - according to zoom
@@ -57,8 +57,9 @@ class Moon extends InitPlanets {
     }
 
     rotateAllMoons(scaleValue, time) {
-        for (var i = 0; i < this.moonMeshes.length; i++) {
-            this.rotateMoonAroundPlanet(this.moonMeshes[i], this.moonNames[i], i, this.moonNamesOnScene[i], scaleValue, time);
+        for (var i = 0; i < (this.getMoonMeshes()).length; i++) {
+            this.rotateMoonAroundPlanet((this.getMoonMeshes())[i], (this.getMoonNames())[i], i,
+                (this.getMoonsNamesOnScene())[i], scaleValue, time);
         }
     }
 
@@ -67,8 +68,8 @@ class Moon extends InitPlanets {
         this.traverseSceneToFindMoons(true, "name");
         var orbitalSpeed = 0;
 
-        var dataOfCurrentPlanetJSON = this.allMoonDataJSON[0];
-        dataOfCurrentPlanetJSON.then(function(result) {
+        var dataOfCurrentMoonJSON = (this.getMoonDataJSON())[0];
+        dataOfCurrentMoonJSON.then(function(result) {
             orbitalSpeed = result[moonNameJSON]["orbitalSpeed"] / 5; // speed is too high
             moonMesh.position.x = orbits[orbitOrder + 8].position.x + 2 * result[moonNameJSON]["a"] *
                 result[moonNameJSON]["scaleFactor"] * scaleValue * Math.cos(orbitalSpeed * 0.0001 * time);
@@ -90,7 +91,7 @@ class Moon extends InitPlanets {
     traverseSceneToFindMoons(showObjectsBoolean, name) {
         // Hide all moons, orbits and name (cannot remove from scene in f. scene.traverse)
         // Arg.: empty name for moons and orbits, "name" for TextGeometry
-        this.scene.traverse(function(children) {
+        (this.getScene()).traverse(function(children) {
             if (children.name == name + "Moon" || children.name == name + "Io" || children.name == name + "Europa" ||
                 children.name == name + "Ganymede" || children.name == name + "Callisto" || children.name == name + "Rhea" ||
                 children.name == name + "Titan" || children.name == name + "Ariel" || children.name == name + "Umbriel" ||
@@ -104,6 +105,6 @@ class Moon extends InitPlanets {
     // -------------------------------------------------------------------------
     initializeMoons() {
         this.createMoons();
-        this.createTextGeometry(this.moonMeshes, this.moonNamesOnScene, this.scene, this.moonNames, 0.9, "name");
+        this.createTextGeometry(this.getMoonMeshes(), this.getMoonsNamesOnScene(), this.getScene(), this.getMoonNames(), 0.9, "name");
     }
 }

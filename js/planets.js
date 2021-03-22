@@ -6,19 +6,18 @@ class Planet extends InitPlanets {
         this.planetNamesOnSceneEN = [];
         this.planetNamesOnSceneCZ = [];
         this.planetNamesOnSceneSK = [];
-        this.planetNames = this.getPlanetNames();
-        this.allPlanetDataJSON = super.getPlanetDataJSON();
-        this.allMoonDataJSON = super.getMoonDataJSON();
 
         this.orbitClass;
         this.cosmicObject;
     }
 
-    getPlanetMeshes() { return this.planetsMeshes; }
-    getScaleValue() { return this.scaleValueScene; }
-    getPlanetNamesEN() { return this.planetNamesOnSceneEN; }
-    getPlanetNamesCZ() { return this.planetNamesOnSceneCZ; }
-    getPlanetNamesSK() { return this.planetNamesOnSceneSK; }
+    // Get()
+    getPlanetMeshes() { return this.planetsMeshes }
+    getScaleValue() { return this.scaleValueScene }
+    getPlanetNamesEN() { return this.planetNamesOnSceneEN }
+    getPlanetNamesCZ() { return this.planetNamesOnSceneCZ }
+    getPlanetNamesSK() { return this.planetNamesOnSceneSK }
+    getScene() { return this.scene }
 
     // Creating planet objects, meshes and adding them to Scene
     // -------------------------------------------------------------------------
@@ -35,24 +34,23 @@ class Planet extends InitPlanets {
 
     createPlanetsMesh(scene) {
         var planetObjects = this.createPlanets();
-        this.mercuryMesh = this.createMesh(planetObjects[0], '/images/textures/mercuryTexture2k.jpg');
-        this.venusMesh = this.createMesh(planetObjects[1], '/images/textures/venusTexture2k.jpg');
-        this.earthMesh = this.createMesh(planetObjects[2], '/images/textures/earthTexture2k.jpg');
-        this.marsMesh = this.createMesh(planetObjects[3], '/images/textures/marsTexture2k.jpg');
-        this.jupiterMesh = this.createMesh(planetObjects[4], '/images/textures/jupiterTexture2k.jpg');
-        this.saturnMesh = this.createMesh(planetObjects[5], '/images/textures/saturnTexture2k.jpg');
-        this.uranusMesh = this.createMesh(planetObjects[6], '/images/textures/uranusTexture2k.jpg');
-        this.neptuneMesh = this.createMesh(planetObjects[7], '/images/textures/neptuneTexture2k.jpg');
+        var mercuryMesh = this.createMesh(planetObjects[0], '/images/textures/mercuryTexture2k.jpg');
+        var venusMesh = this.createMesh(planetObjects[1], '/images/textures/venusTexture2k.jpg');
+        var earthMesh = this.createMesh(planetObjects[2], '/images/textures/earthTexture2k.jpg');
+        var marsMesh = this.createMesh(planetObjects[3], '/images/textures/marsTexture2k.jpg');
+        var jupiterMesh = this.createMesh(planetObjects[4], '/images/textures/jupiterTexture2k.jpg');
+        var saturnMesh = this.createMesh(planetObjects[5], '/images/textures/saturnTexture2k.jpg');
+        var uranusMesh = this.createMesh(planetObjects[6], '/images/textures/uranusTexture2k.jpg');
+        var neptuneMesh = this.createMesh(planetObjects[7], '/images/textures/neptuneTexture2k.jpg');
 
-        this.planetsMeshes.push(this.mercuryMesh, this.venusMesh, this.earthMesh, this.marsMesh,
-            this.jupiterMesh, this.saturnMesh, this.uranusMesh, this.neptuneMesh);
+        this.planetsMeshes.push(mercuryMesh, venusMesh, earthMesh, marsMesh, jupiterMesh, saturnMesh, uranusMesh, neptuneMesh);
         this.addNamesToPlanetMesh();
-        this.addMeshToScene(scene, this.planetsMeshes);
+        this.addMeshToScene(scene, this.getPlanetMeshes());
     }
 
     addNamesToPlanetMesh() {
-        for (i = 0; i < this.planetNames.length; i++) {
-            (this.planetsMeshes[i]).name = this.planetNames[i];
+        for (i = 0; i < (this.getPlanetNames()).length; i++) {
+            ((this.getPlanetMeshes())[i]).name = (this.getPlanetNames())[i];
         }
     }
 
@@ -62,15 +60,15 @@ class Planet extends InitPlanets {
         var planetNamesEN = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
         var planetNamesCZ = ["Merkur", "Venuse", "Zeme", "Mars", "Jupitr", "Saturn", "Uran", "Neptun"];
         var planetNamesSK = ["Merkur", "Venusa", "Zem", "Mars", "Jupiter", "Saturn", "Uran", "Neptun"];
-        this.createTextGeometry(planetsMeshes, this.planetNamesOnSceneEN, scene, planetNamesEN, 1.2, "nameEn");
-        this.createTextGeometry(planetsMeshes, this.planetNamesOnSceneCZ, scene, planetNamesCZ, 1.2, "nameCz");
-        this.createTextGeometry(planetsMeshes, this.planetNamesOnSceneSK, scene, planetNamesSK, 1.2, "nameSk");
+        this.createTextGeometry(planetsMeshes, this.getPlanetNamesEN(), scene, planetNamesEN, 1.2, "nameEn");
+        this.createTextGeometry(planetsMeshes, this.getPlanetNamesCZ(), scene, planetNamesCZ, 1.2, "nameCz");
+        this.createTextGeometry(planetsMeshes, this.getPlanetNamesSK(), scene, planetNamesSK, 1.2, "nameSk");
     }
 
     // Setting rotation angle for planets on Z-axis 
     // -------------------------------------------------------------------------
     setRotationAngleForSinglePlanet(planetMesh, planetName) {
-        var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
+        var dataOfCurrentPlanetJSON = (this.getPlanetDataJSON())[0];
 
         dataOfCurrentPlanetJSON.then(function(result) {
             planetMesh.setRotationFromAxisAngle(
@@ -81,16 +79,16 @@ class Planet extends InitPlanets {
     }
 
     setRotationAngleForAllPlanets() {
-        for (var i = 0; i < this.planetsMeshes.length; i++) {
-            this.setRotationAngleForSinglePlanet(this.planetsMeshes[i], this.planetNames[i]);
+        for (var i = 0; i < (this.getPlanetMeshes()).length; i++) {
+            this.setRotationAngleForSinglePlanet((this.getPlanetMeshes())[i], (this.getPlanetNames())[i]);
         }
     }
 
     // Setting planets' and orbits' positions - according to rangeslider scale value
     // -------------------------------------------------------------------------
     setScaleForObjectsAndOrbits(scaleValue) {
-        this.scaleObjectsByRangeslider(scaleValue, this.planetsMeshes);
-        this.scaleObjectsByRangeslider(scaleValue, this.cosmicObject.getCosmicObject());
+        this.scaleObjectsByRangeslider(scaleValue, this.getPlanetMeshes());
+        this.scaleObjectsByRangeslider(scaleValue, [this.cosmicObject.getCosmicObject()]);
         this.orbitClass.scaleOrbitsByRangeslider(scaleValue);
         this.orbitClass.positionAllMoonOrbits();
     }
@@ -99,26 +97,27 @@ class Planet extends InitPlanets {
     // -------------------------------------------------------------------------
     rotateAllPlanets(scaleValue, time) {
         // Called in f. animate() in modelScene.js - movement needs to by redrawn by renderer
-        this.traverseSceneToFindPlanetNames(false, "nameEn");
-        this.traverseSceneToFindPlanetNames(false, "nameCz");
-        this.traverseSceneToFindPlanetNames(false, "nameSk");
+        this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
+        this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
+        this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
+        var planetMeshes = this.getPlanetMeshes();
 
         if (document.getElementById("en").style.fontWeight == "bold") {
-            this.traverseSceneToFindPlanetNames(true, "nameEn");
-            for (var i = 0; i < this.planetsMeshes.length; i++) {
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetNamesOnSceneEN[i],
+            this.traverseSceneToFindPlanetNames(true, "nameEn", this.getScene());
+            for (var i = 0; i < planetMeshes.length; i++) {
+                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesEN())[i],
                     scaleValue * 2, time);
             }
         } else if (document.getElementById("cz").style.fontWeight == "bold") {
-            this.traverseSceneToFindPlanetNames(true, "nameCz");
-            for (var i = 0; i < this.planetsMeshes.length; i++) {
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetNamesOnSceneCZ[i],
+            this.traverseSceneToFindPlanetNames(true, "nameCz", this.getScene());
+            for (var i = 0; i < planetMeshes.length; i++) {
+                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesCZ())[i],
                     scaleValue * 2, time);
             }
         } else if (document.getElementById("sk").style.fontWeight == "bold") {
-            this.traverseSceneToFindPlanetNames(true, "nameSk");
-            for (var i = 0; i < this.planetsMeshes.length; i++) {
-                this.positionPlanetOnOrbit(this.planetsMeshes[i], this.planetNames[i], this.planetNamesOnSceneSK[i],
+            this.traverseSceneToFindPlanetNames(true, "nameSk", this.getScene());
+            for (var i = 0; i < planetMeshes.length; i++) {
+                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesSK())[i],
                     scaleValue * 2, time);
             }
         }
@@ -127,7 +126,7 @@ class Planet extends InitPlanets {
     // Positions for 1 planet - according to scale from rangeslider
     // -------------------------------------------------------------------------
     positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, time) {
-        var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
+        var dataOfCurrentPlanetJSON = (this.getPlanetDataJSON())[0];
         var orbitalSpeed = 0;
 
         dataOfCurrentPlanetJSON.then(function(result) {
@@ -147,11 +146,11 @@ class Planet extends InitPlanets {
     // Called in scene.js - class MainScene
     // -------------------------------------------------------------------------
     initializePlanets() {
-        this.createPlanetsMesh(this.scene);
-        this.addNamesToPlanetObject(this.planetsMeshes, this.scene);
+        this.createPlanetsMesh(this.getScene());
+        this.addNamesToPlanetObject(this.getPlanetMeshes(), this.getScene());
         this.setRotationAngleForAllPlanets();
 
-        this.orbitClass = new Orbits(this.scene, this.planetsMeshes);
-        this.cosmicObject = new CosmicObject(this.scene, this.getPlanetMeshes());
+        this.orbitClass = new Orbits(this.getScene(), this.getPlanetMeshes());
+        this.cosmicObject = new CosmicObject(this.getScene(), this.getPlanetMeshes());
     }
 }

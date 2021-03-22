@@ -3,27 +3,26 @@ class Orbits extends JSONManager {
         super();
         this.scene = scene;
         this.orbits = [];
-        this.allPlanetDataJSON = super.getPlanetData();
-        this.allMoonDataJSON = super.getMoonData();
         this.planetMeshes = planetMeshes;
         this.allCurves = [];
         this.planetOrder = [2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7];
-        this.moonNames = this.getMoonNames();
         this.createOrbitShape();
     }
 
-    getAllOrbits() { return this.orbits; }
+    // Get()
+    getAllOrbits() { return this.orbits }
+    getScene() { return this.scene }
+    getPlanetMeshes() { return this.planetMeshes }
+    getPlanerOrder() { return this.planetOrder }
 
     // Creating orbits for planets and moons
     // -------------------------------------------------------------------------
     createOrbitShape() {
-        var planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-
-        for (i = 0; i < planets.length; i++) {
-            this.createCurveForOrbit(planets[i], this.orbits, this.scene, this.allPlanetDataJSON[0]);
+        for (i = 0; i < (this.getPlanetNames()).length; i++) {
+            this.createCurveForOrbit((this.getPlanetNames())[i], this.getAllOrbits(), this.getScene(), this.getPlanetData()[0]);
         }
-        for (i = 0; i < this.moonNames.length; i++) {
-            this.createCurveForOrbit(this.moonNames[i], this.orbits, this.scene, this.allMoonDataJSON[0]);
+        for (i = 0; i < (this.getMoonNames()).length; i++) {
+            this.createCurveForOrbit((this.getMoonNames())[i], this.getAllOrbits(), this.getScene(), (this.getMoonData())[0]);
         }
     }
 
@@ -52,7 +51,7 @@ class Orbits extends JSONManager {
     // Position moon orbits
     // -------------------------------------------------------------------------
     positionSingleMoonOrbit(moonOrbit, planetsMeshes, planetOrder, moonName) {
-        var dataOfCurrentOrbitJSON = this.allMoonDataJSON[0];
+        var dataOfCurrentOrbitJSON = (this.getMoonData())[0];
         dataOfCurrentOrbitJSON.then(function(result) {
             moonOrbit.position.x = planetsMeshes[planetOrder].position.x + result[moonName]["c"];
             moonOrbit.position.z = planetsMeshes[planetOrder].position.z
@@ -60,16 +59,17 @@ class Orbits extends JSONManager {
     }
 
     positionAllMoonOrbits() {
-        for (var i = 8, j = 0; i < this.orbits.length; i++, j++) {
-            this.positionSingleMoonOrbit(this.orbits[i], this.planetMeshes, this.planetOrder[j], this.moonNames[j]);
+        for (var i = 8, j = 0; i < (this.getAllOrbits()).length; i++, j++) {
+            this.positionSingleMoonOrbit((this.getAllOrbits())[i], this.getPlanetMeshes(),
+                (this.getPlanerOrder())[j], (this.getMoonNames())[j]);
         }
     }
 
     // Scaling orbits according to zoom value from rangeslider
     // -------------------------------------------------------------------------
     scaleOrbitsByRangeslider(scaleValue) {
-        for (var i = 0; i < this.orbits.length; i++) {
-            this.orbits[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
+        for (var i = 0; i < (this.getAllOrbits()).length; i++) {
+            (this.getAllOrbits())[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
         }
     }
 }

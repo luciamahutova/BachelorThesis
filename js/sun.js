@@ -7,28 +7,34 @@ class Sun extends InitPlanets {
         this.sunMesh = this.createSun();
     }
 
+    // Get()
     getSunMesh() { return this.sunMesh }
+    getScene() { return this.scene }
+    getPointLightScene() { return this.pointLightScene }
+    getPointLightSun() { return this.pointLightSun }
 
+    //Create mesh and set lights
+    // -------------------------------------------------------------------------
     createSun() {
         var sun = this.createPlanetObject(3.5); // size
         var sunMesh = this.createMesh(sun, '/images/textures/sunTexture2k.jpg');
         sunMesh.name = "Sun";
-        this.scene.add(sunMesh);
+        (this.getScene()).add(sunMesh);
 
-        sunMesh.add(this.pointLightScene);
-        sunMesh.add(this.pointLightSun);
+        sunMesh.add(this.getPointLightScene());
+        sunMesh.add(this.getPointLightSun());
 
         return sunMesh;
     }
 
     setLightsToSunPosition() {
-        this.pointLightScene.position.set(this.sunMesh.position.x, 0, this.sunMesh.position.z);
-        this.pointLightSun.position.set(this.sunMesh.position.x, 10, this.sunMesh.position.z);
+        (this.getPointLightScene()).position.set((this.getSunMesh()).position.x, 0, (this.getSunMesh()).position.z);
+        (this.getPointLightSun()).position.set((this.getSunMesh()).position.x, 10, (this.getSunMesh()).position.z);
     }
 
     // Scaling the Sun (and light in the middle of the scene) - according to zoom
     // -------------------------------------------------------------------------
     setScaleForSun(scaleValue) {
-        this.sunMesh.scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
+        (this.getSunMesh()).scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
     }
 }

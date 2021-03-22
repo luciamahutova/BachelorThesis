@@ -5,6 +5,7 @@ class InitPlanets extends JSONManager {
         this.allMoonDataJSON = super.getMoonData();
     }
 
+    // Get() - called by children
     getPlanetDataJSON() { return this.allPlanetDataJSON; }
     getMoonDataJSON() { return this.allMoonDataJSON; }
 
@@ -69,8 +70,8 @@ class InitPlanets extends JSONManager {
         });
     }
 
-    traverseSceneToFindPlanetNames(showBoolean, stringName) {
-        this.scene.traverse(function(children) {
+    traverseSceneToFindPlanetNames(showBoolean, stringName, scene) {
+        scene.traverse(function(children) {
             if (children.name.startsWith(stringName)) {
                 children.visible = showBoolean;
             }

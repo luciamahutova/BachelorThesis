@@ -2,15 +2,17 @@ class CosmicObject extends JSONManager {
     constructor(scene, planetMeshes) {
         super();
         this.scene = scene;
-        this.planetNames = this.getPlanetNames();
-        this.allPlanetDataJSON = super.getPlanetData();
         this.planetMeshes = planetMeshes;
         this.addCosmicObject = true;
         this.isPlanetClicked = false;
         this.cosmicObject = this.createCosmicObject();
     }
 
-    getCosmicObject() { return [this.cosmicObject]; } // Used in class Planet - for scale
+    // Get()
+    getCosmicObject() { return this.cosmicObject; }
+    getScene() { return this.scene; }
+    getAddCosmicObject() { return this.addCosmicObject; }
+    setAddCosmicObject(boolean) { this.addCosmicObject = boolean; }
     getIsPlanetClicked() { return this.isPlanetClicked; }
     setIsPlanetClicked(boolean) { this.isPlanetClicked = boolean; }
 
@@ -26,20 +28,20 @@ class CosmicObject extends JSONManager {
     }
 
     activateCosmicObjectButton() {
-        if (this.addCosmicObject) {
+        if (this.getAddCosmicObject()) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
             $('#allMoonObjectsChecked').prop('checked', false);
             $('#cameraToObjectButton').prop('disabled', true);
-            this.addCosmicObject = false;
-        } else if (!this.addCosmicObject) {
-            this.scene.remove(this.cosmicObject);
+            this.setAddCosmicObject(false);
+        } else if (!(this.getAddCosmicObject())) {
+            (this.getScene()).remove(this.getCosmicObject());
             if (window.myParam != undefined) {
                 this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
             }
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
             $('#allMoonObjectsChecked').prop('checked', true);
             $('#cameraToObjectButton').prop('disabled', false);
-            this.addCosmicObject = true;
+            this.setAddCosmicObject(true);
         }
     }
 
@@ -53,9 +55,9 @@ class CosmicObject extends JSONManager {
             if (this.getIsPlanetClicked()) {
                 var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
                 this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, force, time);
-                this.scene.add(this.cosmicObject);
+                (this.getScene()).add(this.getCosmicObject());
             } else if (!this.getIsPlanetClicked()) {
-                this.scene.remove(this.cosmicObject);
+                (this.getScene()).remove(this.getCosmicObject());
             }
         }
     }
@@ -63,14 +65,14 @@ class CosmicObject extends JSONManager {
     // Hides moons of seletected planet when cosmic object is added to scene
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
         if (selectedPlanet.name == "Earth") {
-            this.scene.traverse(function(children) {
+            (this.getScene()).traverse(function(children) {
                 if (children.name == "Moon" || children.name == "nameMoon") {
                     children.visible = showObjectsBoolean;
                 }
             });
             this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Jupiter") {
-            this.scene.traverse(function(children) {
+            (this.getScene()).traverse(function(children) {
                 if (children.name == "Io" || children.name == "Europa" || children.name == "Ganymede" || children.name == "Callisto" ||
                     children.name == "nameIo" || children.name == "nameEuropa" || children.name == "nameGanymede" ||
                     children.name == "nameCallisto") {
@@ -79,14 +81,14 @@ class CosmicObject extends JSONManager {
             });
             this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Saturn") {
-            this.scene.traverse(function(children) {
+            (this.getScene()).traverse(function(children) {
                 if (children.name == "Rhea" || children.name == "Titan" || children.name == "nameRhea" || children.name == "nameTitan") {
                     children.visible = showObjectsBoolean;
                 }
             });
             this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Uranus") {
-            this.scene.traverse(function(children) {
+            (this.getScene()).traverse(function(children) {
                 if (children.name == "Ariel" || children.name == "Umbriel" || children.name == "Titania" || children.name == "Oberon" ||
                     children.name == "nameAriel" || children.name == "nameUmbriel" || children.name == "nameTitania" ||
                     children.name == "nameOberon") {
@@ -95,7 +97,7 @@ class CosmicObject extends JSONManager {
             });
             this.setIsPlanetClicked(true);
         } else if (selectedPlanet.name == "Neptune") {
-            this.scene.traverse(function(children) {
+            (this.getScene()).traverse(function(children) {
                 if (children.name == "Triton" || children.name == "nameTriton") {
                     children.visible = showObjectsBoolean;
                 }
@@ -111,7 +113,7 @@ class CosmicObject extends JSONManager {
     // -------------------------------------------------------------------------
     positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, time) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
-            var dataOfCurrentPlanetJSON = this.allPlanetDataJSON[0];
+            var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
             var orbitalSpeed, newForce = 0;
             var selectedPlanet = window.myParam[0].object;
 

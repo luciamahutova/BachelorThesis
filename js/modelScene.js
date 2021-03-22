@@ -9,7 +9,7 @@ class ModelScene extends InitScene {
         this.bgCamera = this.createBgCamera();
         this.traverseSceneToCastShadows(this.scene);
 
-        this.makeCameraFollowObject = true;
+        this.isCameraFollowingObject = true;
         this.lastIndexOfFollowedObject = 0;
 
         this.scaleValueScene = this.forceValue = 0;
@@ -17,30 +17,45 @@ class ModelScene extends InitScene {
         this.mousePositionX = this.mousePositionY = 0; // Used for drag events
     }
 
+    // Get()
     getScene() { return this.scene }
     getRenderer() { return this.renderer }
     getCamera() { return this.camera }
+    getBgMesh() { return this.bgMesh }
+    getBgScene() { return this.bgScene }
+    getBgCamera() { return this.bgCamera }
+    getScaleValue() { return this.scaleValueScene }
+    getForceValue() { return this.forceValue }
+    getIsCameraFollowingObject() { return this.isCameraFollowingObject }
+    getLastIndexOfFollowedObject() { return this.lastIndexOfFollowedObject }
+
+    // Set()
+    setScaleValue(value) { this.scaleValueScene = value }
+    setForceValue(value) { this.forceValue = value }
+    setIsCameraFollowingObject(boolean) { this.isCameraFollowingObject = boolean }
+    setLastIndexOfFollowedObject(value) { this.lastIndexOfFollowedObject = value }
 
     // Background of scene
     // -------------------------------------------------------------------------
     setStaticBackground() {
-        const bgTexture = new THREE.TextureLoader().load('/images/2k-starsMilkyWay.jpg');
-        const bgGeometry = new THREE.PlaneGeometry(2, 2, 0);
-        const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
-        this.bgMesh = new THREE.Mesh(bgGeometry, bgMaterial);
-        return this.bgMesh;
+        var bgTexture = new THREE.TextureLoader().load('/images/2k-starsMilkyWay.jpg');
+        var bgGeometry = new THREE.PlaneGeometry(2, 2, 0);
+        var bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
+        var bgMesh = new THREE.Mesh(bgGeometry, bgMaterial);
+        bgMesh.material.depthTest = false;
+        return bgMesh;
     }
 
     createBgScene() {
-        this.bgScene = new THREE.Scene();
-        this.bgScene.add(this.bgMesh);
-        return this.bgScene;
+        var bgScene = new THREE.Scene();
+        bgScene.add(this.getBgMesh());
+        return bgScene;
     }
 
     createBgCamera() {
-        this.bgCamera = new THREE.Camera();
-        this.bgScene.add(this.bgCamera);
-        return this.bgCamera;
+        var bgCamera = new THREE.Camera();
+        (this.getBgScene()).add(bgCamera);
+        return bgCamera;
     }
 
     // Move Scene functions
@@ -64,7 +79,7 @@ class ModelScene extends InitScene {
     }
 
     moveSceneToOriginalPosition() {
-        this.scene.position.set(0, 0, 0);
+        (this.getScene()).position.set(0, 0, 0);
     }
 
     // Drag function for scene: 
@@ -91,17 +106,17 @@ class ModelScene extends InitScene {
     }
 
     mouseUpEvent() {
-        this.mouseDown = false;
+        this.mouseDown = false
     }
 
     // Event listener functions
     // -------------------------------------------------------------------------
     addEventListenerFunctions() {
-        window.addEventListener('keydown', this.moveSceneOnPressedArrow(this.scene), false);
-        window.addEventListener('click', this.raycaster.onMouseMove(this.camera, this.scene,
+        window.addEventListener('keydown', this.moveSceneOnPressedArrow(this.getScene()), false);
+        window.addEventListener('click', this.raycaster.onMouseMove(this.getCamera(), this.getScene(),
             this.raycaster.getRaycaster(), this.raycaster.getMouse()), false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
-        window.addEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
+        window.addEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
         window.addEventListener('mouseup', this.mouseUpEvent, false);
     }
 
@@ -119,17 +134,17 @@ class ModelScene extends InitScene {
 
         var updateRangesliderValues = () => {
             zoomSliderValue.innerHTML = zoomSlider.value;
-            this.scaleValueScene = zoomSliderValue.innerHTML / 200;
+            this.setScaleValue(zoomSliderValue.innerHTML / 200);
             forceSliderValue.innerHTML = forceSlider.value;
-            this.forceValue = forceSliderValue.innerHTML;
+            this.setForceValue(forceSliderValue.innerHTML);
 
-            this.planetObject.setScaleForObjectsAndOrbits(this.scaleValueScene);
-            this.moonObject.scaleObjectsByRangeslider(this.scaleValueScene, this.moonObject.getMoonMeshes());
-            this.sunObject.setScaleForSun(this.scaleValueScene);
+            this.planetObject.setScaleForObjectsAndOrbits(this.getScaleValue());
+            this.moonObject.scaleObjectsByRangeslider(this.getScaleValue(), this.moonObject.getMoonMeshes());
+            this.sunObject.setScaleForSun(this.getScaleValue());
 
-            this.planetObject.rotateAllPlanets(this.scaleValueScene, time);
-            this.moonObject.rotateAllMoons(this.scaleValueScene, time);
-            this.planetObject.cosmicObject.findClickedPlanet(this.scaleValueScene, this.forceValue, time);
+            this.planetObject.rotateAllPlanets(this.getScaleValue(), time);
+            this.moonObject.rotateAllMoons(this.getScaleValue(), time);
+            this.planetObject.cosmicObject.findClickedPlanet(this.getScaleValue(), this.getForceValue(), time);
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();
@@ -138,17 +153,17 @@ class ModelScene extends InitScene {
     // Button for camera zoom to selected planet
     // -------------------------------------------------------------------------
     activateCameraToObjectButton() {
-        if (this.makeCameraFollowObject) {
-            this.makeCameraFollowObject = false;
+        if (this.getIsCameraFollowingObject()) {
+            this.setIsCameraFollowingObject(false);
             $('.slider').prop('disabled', true);
             $('#cosmicObjectButton').prop('disabled', true);
-            window.removeEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
+            window.removeEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "lightblue";
-        } else if (!this.makeCameraFollowObject) {
-            this.makeCameraFollowObject = true;
+        } else if (!(this.getIsCameraFollowingObject())) {
+            this.setIsCameraFollowingObject(true);
             $('.slider').prop('disabled', false);
             $('#cosmicObjectButton').prop('disabled', false);
-            window.addEventListener('mousemove', this.mouseMoveEvent(this.scene), false);
+            window.addEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "#061327";
         }
     }
@@ -159,15 +174,15 @@ class ModelScene extends InitScene {
             var planet = this.planetObject.getPlanetMeshes();
             var index = this.jsonManager.getIndexOfSelectedPlanet(selectedPlanet);
 
-            if (!this.makeCameraFollowObject && index != undefined) {
+            if (!(this.getIsCameraFollowingObject()) && index != undefined) {
                 // temporarily disable z-rotation for planet object = camera will be placed above the planet
                 planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
-                planet[index].add(this.camera);
+                planet[index].add(this.getCamera());
                 this.camera.position.set(0, 15, 0);
-                this.lastIndexOfFollowedObject = index;
-            } else if (this.makeCameraFollowObject) {
-                planet[this.lastIndexOfFollowedObject].remove(this.camera);
-                this.camera.position.set(0, 45, 0);
+                this.setLastIndexOfFollowedObject(index);
+            } else if (this.getIsCameraFollowingObject()) {
+                planet[this.getLastIndexOfFollowedObject()].remove(this.getCamera());
+                (this.getCamera()).position.set(0, 45, 0);
             }
         }
     }
@@ -177,10 +192,7 @@ class ModelScene extends InitScene {
     animate() {
         this.raycaster.animate();
         this.findClickedPlanetForCamera();
-
-        this.bgMesh.material.depthTest = false;
-        this.renderer.autoClear = false;
-        this.renderer.render(this.bgScene, this.bgCamera);
+        this.renderer.render(this.getBgScene(), this.getBgCamera());
     };
 
     startRenderer(renderer, scene, camera) {
@@ -189,30 +201,30 @@ class ModelScene extends InitScene {
 
     startRendererOnMouseEvents() {
         // Used when animation is paused - less burden for renderer when objects are not rotating
-        window.addEventListener('keydown', this.startRenderer(this.renderer, this.scene, this.camera), false);
-        window.addEventListener('click', this.startRenderer(this.renderer, this.scene, this.camera), false);
-        window.addEventListener('mousedown', this.startRenderer(this.renderer, this.scene, this.camera), false);
-        window.addEventListener('mousemove', this.startRenderer(this.renderer, this.scene, this.camera), false);
-        window.addEventListener('mouseup', this.startRenderer(this.renderer, this.scene, this.camera), false);
+        window.addEventListener('keydown', this.startRenderer(this.getRenderer(), this.getScene(), this.getCamera()), false);
+        window.addEventListener('click', this.startRenderer(this.getRenderer(), this.getScene(), this.getCamera()), false);
+        window.addEventListener('mousedown', this.startRenderer(this.getRenderer(), this.getScene(), this.getCamera()), false);
+        window.addEventListener('mousemove', this.startRenderer(this.getRenderer(), this.getScene(), this.getCamera()), false);
+        window.addEventListener('mouseup', this.startRenderer(this.getRenderer(), this.getScene(), this.getCamera()), false);
     }
 
     initializeSceneObjects() {
         this.jsonManager = new JSONManager();
         this.initPlanets = new InitPlanets();
-        this.planetObject = new Planet(this.scene);
+        this.planetObject = new Planet(this.getScene());
         this.planetObject.initializePlanets();
-        this.moonObject = new Moon(this.scene, this.planetObject.orbitClass.getAllOrbits());
+        this.moonObject = new Moon(this.getScene(), this.planetObject.orbitClass.getAllOrbits());
         this.moonMeshes = this.moonObject.getMoonMeshes();
 
         var pointLightScene = this.setPointLightOnScene();
         var pointLightSun = this.setPointLightOnSun();
-        this.sunObject = new Sun(this.scene, pointLightScene, pointLightSun);
+        this.sunObject = new Sun(this.getScene(), pointLightScene, pointLightSun);
         this.raycaster = new RayCaster();
         this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
             this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getMoonMeshes(),
-            this.scene, this.planetObject.orbitClass.getAllOrbits());
+            this.getScene(), this.planetObject.orbitClass.getAllOrbits());
 
-        this.resizeBackground(this.renderer, this.camera);
+        this.resizeBackground(this.getRenderer(), this.getCamera());
         this.addEventListenerFunctions();
     }
 }

@@ -5,33 +5,39 @@ class PlanetScene extends InitScene {
         this.scene = new THREE.Scene();
         this.camera = this.initCamera(this.getWidthOfScene(), this.getHeightOfScene());
         this.renderer = this.initRenderer(this.getWidthOfScene(), this.getHeightOfScene(), true);
-        this.controls = this.setOrbitConstrols();
+        this.controls = this.setOrbitConstrols(this.camera, this.renderer);
 
         this.ambientLight = new THREE.AmbientLight(0x404040, 5);
         this.planetMeshes = [];
         this.planetNames = ["mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
         this.pageName = this.getHtmlPageName();
 
-        this.initInteractivePlanetScene();
+        this.initInteractivePlanetScene(this.scene, this.renderer, this.camera, this.ambientLight);
         this.showInteractivePlanet(this.pageName)
     }
 
-    getWidthOfScene() { return document.querySelector('#interativeModelScene').offsetWidth; }
-    getHeightOfScene() { return document.querySelector('#interativeModelScene').offsetHeight; }
-    getHtmlPageName() { return window.location.pathname.split("/").pop(); }
+    // Get()
+    getWidthOfScene() { return document.querySelector('#interativeModelScene').offsetWidth }
+    getHeightOfScene() { return document.querySelector('#interativeModelScene').offsetHeight }
+    getHtmlPageName() { return window.location.pathname.split("/").pop() }
+    getPlanetMeshes() { return this.planetMeshes }
+    getScene() { return this.scene }
+    getCamera() { return this.camera }
+    getRenderer() { return this.renderer }
+    getPlanetNames() { return this.planetNames }
+    getControls() { return this.controls }
 
     // Settings for scene and planets
     // -------------------------------------------------------------------------
-    initInteractivePlanetScene() {
+    initInteractivePlanetScene(scene, renderer, camera, ambientLight) {
         var interactiveScene = document.querySelector('#interativeModelScene');
         interactiveScene.appendChild(this.renderer.domElement);
-        this.renderer.setClearColor(0x000000, 0);
+        renderer.setClearColor(0x000000, 0);
 
-        this.camera.position.set(0, 5, 0);
-        this.scene.add(this.ambientLight);
+        camera.position.set(0, 5, 0);
+        scene.add(ambientLight);
 
         this.createAllPlanets();
-        this.setOrbitConstrols();
     }
 
     createAllPlanets() {
@@ -53,14 +59,14 @@ class PlanetScene extends InitScene {
 
         planetMesh.position.set(0, 0, 0);
         planetMesh.rotation.x = THREE.Math.degToRad(-45);
-        this.planetMeshes.push(planetMesh);
-        this.scene.add(planetMesh);
+        (this.getPlanetMeshes()).push(planetMesh);
+        (this.getScene()).add(planetMesh);
     }
 
     // Orbits controls
     // -------------------------------------------------------------------------
-    setOrbitConstrols() {
-        var controls = new OrbitControls(this.camera, this.renderer.domElement);
+    setOrbitConstrols(camera, renderer) {
+        var controls = new OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 0, 0);
         controls.update();
         controls.enableZoom = false;
@@ -68,13 +74,13 @@ class PlanetScene extends InitScene {
     }
 
     showInteractivePlanet(pagename) {
-        for (var i = 0; i < this.planetMeshes.length; i++) {
-            this.scene.remove(this.planetMeshes[i]);
+        for (var i = 0; i < (this.getPlanetMeshes()).length; i++) {
+            (this.getScene()).remove((this.getPlanetMeshes())[i]);
         }
 
-        for (var i = 0; i < this.planetNames.length; i++) {
-            if (pagename.startsWith(this.planetNames[i])) {
-                this.scene.add(this.planetMeshes[i]);
+        for (var i = 0; i < (this.getPlanetNames()).length; i++) {
+            if (pagename.startsWith((this.getPlanetNames())[i])) {
+                (this.getScene()).add((this.getPlanetMeshes())[i]);
                 break;
             }
         }
@@ -83,9 +89,9 @@ class PlanetScene extends InitScene {
     // Animate - controls and renderer
     // -------------------------------------------------------------------------
     animate() {
-        this.controls.autoRotate = true;
-        this.controls.update();
-        this.renderer.render(this.scene, this.camera);
+        (this.getControls()).autoRotate = true;
+        (this.getControls()).update();
+        (this.getRenderer()).render(this.getScene(), this.getCamera());
     }
 }
 
