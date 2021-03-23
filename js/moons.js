@@ -5,6 +5,7 @@ class Moon extends InitPlanets {
         this.orbits = orbits;
         this.moonMeshes = [];
         this.moonNamesOnScene = [];
+        this.translatedMoonName = [];
         this.initializeMoons();
     }
 
@@ -12,6 +13,8 @@ class Moon extends InitPlanets {
     getMoonsNamesOnScene() { return this.moonNamesOnScene }
     getMoonMeshes() { return this.moonMeshes }
     getScene() { return this.scene }
+    getOrbits() { return this.orbits }
+    getTranslatedMoonName() { return this.translatedMoonName }
 
     createMoons() {
         var moonSizeAndParent = {
@@ -48,22 +51,25 @@ class Moon extends InitPlanets {
 
     // Positions for moons - according to zoom
     // -------------------------------------------------------------------------
-    rotateMoonAroundPlanet(moonMesh, moonNameJSON, orbitOrder, planetName, scaleValue, time) {
+    rotateMoonAroundPlanet(moonMesh, moonNameJSON, orbitOrder, moonName, scaleValue, time) {
         if ((scaleValue * 200) < 70) {
             this.positionMoonZoomOut();
         } else {;
-            this.positionMoonToOrbit(moonMesh, moonNameJSON, this.orbits, orbitOrder, planetName, scaleValue, time);
+            this.positionMoonToOrbit(moonMesh, moonNameJSON, this.getOrbits(), orbitOrder, moonName,
+                this.getTranslatedMoonName(), scaleValue, time);
         }
     }
 
     rotateAllMoons(scaleValue, time) {
+        this.setVisibilityOfTranslatedMoonName();
+
         for (var i = 0; i < (this.getMoonMeshes()).length; i++) {
             this.rotateMoonAroundPlanet((this.getMoonMeshes())[i], (this.getMoonNames())[i], i,
                 (this.getMoonsNamesOnScene())[i], scaleValue, time);
         }
     }
 
-    positionMoonToOrbit(moonMesh, moonNameJSON, orbits, orbitOrder, moonNameOnScene, scaleValue, time) {
+    positionMoonToOrbit(moonMesh, moonNameJSON, orbits, orbitOrder, moonNameOnScene, translatedMoonNames, scaleValue, time) {
         this.traverseSceneToFindMoons(true, "");
         this.traverseSceneToFindMoons(true, "name");
         var orbitalSpeed = 0;
@@ -76,9 +82,16 @@ class Moon extends InitPlanets {
             moonMesh.position.z = orbits[orbitOrder + 8].position.z - 2 * result[moonNameJSON]["b"] *
                 result[moonNameJSON]["scaleFactor"] * scaleValue * Math.sin(orbitalSpeed * 0.0001 * time);
 
-            if (moonNameOnScene != undefined && moonNameOnScene.visible == true) {
+            if (moonNameOnScene != undefined) {
                 moonNameOnScene.position.x = moonMesh.position.x + 1;
                 moonNameOnScene.position.z = moonMesh.position.z;
+
+                if (moonNameJSON == "Moon") {
+                    translatedMoonNames[0].position.x = moonMesh.position.x + 1;
+                    translatedMoonNames[1].position.x = moonMesh.position.x + 1;
+                    translatedMoonNames[0].position.z = moonMesh.position.z;
+                    translatedMoonNames[1].position.z = moonMesh.position.z;
+                }
             }
         });
     }
@@ -86,13 +99,18 @@ class Moon extends InitPlanets {
     positionMoonZoomOut() {
         this.traverseSceneToFindMoons(false, "");
         this.traverseSceneToFindMoons(false, "name");
+        this.traverseSceneToFindPlanetNames(false, "nameMoon", this.getScene());
+        this.traverseSceneToFindPlanetNames(false, "nameMesic", this.getScene());
+        this.traverseSceneToFindPlanetNames(false, "nameMesiac", this.getScene());
     }
 
+    // Traverse scene + set visibility of one translated name for Moon
+    // -------------------------------------------------------------------------
     traverseSceneToFindMoons(showObjectsBoolean, name) {
         // Hide all moons, orbits and name (cannot remove from scene in f. scene.traverse)
         // Arg.: empty name for moons and orbits, "name" for TextGeometry
         (this.getScene()).traverse(function(children) {
-            if (children.name == name + "Moon" || children.name == name + "Io" || children.name == name + "Europa" ||
+            if (children.name == name + "Io" || children.name == name + "Europa" ||
                 children.name == name + "Ganymede" || children.name == name + "Callisto" || children.name == name + "Rhea" ||
                 children.name == name + "Titan" || children.name == name + "Ariel" || children.name == name + "Umbriel" ||
                 children.name == name + "Titania" || children.name == name + "Oberon" || children.name == name + "Triton") {
@@ -101,10 +119,26 @@ class Moon extends InitPlanets {
         });
     }
 
+    setVisibilityOfTranslatedMoonName() {
+        this.traverseSceneToFindPlanetNames(false, "nameMoon", this.getScene());
+        this.traverseSceneToFindPlanetNames(false, "nameMesic", this.getScene());
+        this.traverseSceneToFindPlanetNames(false, "nameMesiac", this.getScene());
+
+        if (document.getElementById("en").style.fontWeight == "bold") {
+            this.traverseSceneToFindPlanetNames(true, "nameMoon", this.getScene());
+        } else if (document.getElementById("cz").style.fontWeight == "bold") {
+            this.traverseSceneToFindPlanetNames(true, "nameMesic", this.getScene());
+        } else if (document.getElementById("sk").style.fontWeight == "bold") {
+            this.traverseSceneToFindPlanetNames(true, "nameMesiac", this.getScene());
+        }
+    }
+
     // Initialize 
     // -------------------------------------------------------------------------
     initializeMoons() {
         this.createMoons();
         this.createTextGeometry(this.getMoonMeshes(), this.getMoonsNamesOnScene(), this.getScene(), this.getMoonNames(), 0.9, "name");
+        this.createTextGeometry([this.moonMeshes[0], this.moonMeshes[0]], this.getTranslatedMoonName(),
+            this.getScene(), ["Mesic", "Mesiac"], 0.9, "name");
     }
 }

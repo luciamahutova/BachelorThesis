@@ -221,8 +221,7 @@ class ModelScene extends InitScene {
         this.sunObject = new Sun(this.getScene(), pointLightScene, pointLightSun);
         this.raycaster = new RayCaster();
         this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
-            this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getMoonMeshes(),
-            this.getScene(), this.planetObject.orbitClass.getAllOrbits());
+            this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getTranslatedMoonName(), this.moonObject.getMoonMeshes(), this.getScene(), this.planetObject.orbitClass.getAllOrbits());
 
         this.resizeBackground(this.getRenderer(), this.getCamera());
         this.addEventListenerFunctions();
