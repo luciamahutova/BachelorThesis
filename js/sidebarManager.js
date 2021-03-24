@@ -143,15 +143,15 @@ class SidebarManager {
         this.showHideAllMoonNamesOnScene(this.getTranslatedMoonNames());
         this.showHideSingleMoonNameOnScene(this.getMoonNamesOnScene(), this.getTranslatedMoonNames());
 
-        this.showHideAllMoonsOnScene(this.getTranslatedMoonNames());
-
         this.showHideAllPlanetOrbitsOnScene();
         this.showHideSinglePlanetOrbitOnScene(this.getOrbits());
         this.showHideAllMoonOrbitsOnScene();
         this.showHideSingleMoonOrbitOnScene(this.getOrbits());
 
+        this.showHideAllMoonsOnScene(this.getTranslatedMoonNames());
         this.showHideMoonsOfSinglePlanet(this.getMoonMeshes(), this.getMoonNamesOnScene(),
             this.getTranslatedMoonNames(), this.getOrbits());
+
         this.disableConfirmButtonForMoment();
     }
 
@@ -252,30 +252,43 @@ class SidebarManager {
     showHideMoonsOfSinglePlanet(moonMeshes, moonNamesOnScene, translatedMoonNames, orbits) {
         var selectedElem = document.getElementById("singlePlanetSelectedForMoons");
         var allMoonObjectsChecked = document.getElementById("allMoonObjectsChecked").checked;
+        var allMoonOrbitsChecked = document.getElementById("allMoonOrbitsChecked").checked;
 
         if (selectedElem.value != -1 && allMoonObjectsChecked == false) {
             this.removeAllFromScene(moonMeshes);
             this.removeAllFromScene(moonNamesOnScene);
             this.removeAllMoonOrbitsFromScene(orbits);
 
-            document.getElementById("allMoonOrbitsChecked").checked = true;
             if (selectedElem.value == 2) { // Earth
-                (this.getScene()).add(moonMeshes[0], moonNamesOnScene[0], translatedMoonNames[0], translatedMoonNames[1], orbits[8]);
+                (this.getScene()).add(moonMeshes[0], moonNamesOnScene[0], translatedMoonNames[0], translatedMoonNames[1]);
+                if (allMoonOrbitsChecked) {
+                    (this.getScene()).add(orbits[8]);
+                }
             } else if (selectedElem.value == 4) { // Jupiter
                 (this.getScene()).add(moonMeshes[1], moonMeshes[2], moonMeshes[3], moonMeshes[4]);
                 (this.getScene()).add(moonNamesOnScene[1], moonNamesOnScene[2], moonNamesOnScene[3], moonNamesOnScene[4]);
-                (this.getScene()).add(orbits[9], orbits[10], orbits[11], orbits[12]);
+                if (allMoonOrbitsChecked) {
+                    (this.getScene()).add(orbits[9], orbits[10], orbits[11], orbits[12]);
+                }
             } else if (selectedElem.value == 5) { // Saturn
                 (this.getScene()).add(moonMeshes[5], moonMeshes[6]);
                 (this.getScene()).add(moonNamesOnScene[5], moonNamesOnScene[6]);
-                (this.getScene()).add(orbits[13], orbits[14]);
+                if (allMoonOrbitsChecked) {
+                    (this.getScene()).add(orbits[13], orbits[14]);
+                }
             } else if (selectedElem.value == 6) { // Uranus
                 (this.getScene()).add(moonMeshes[7], moonMeshes[8], moonMeshes[9], moonMeshes[10]);
                 (this.getScene()).add(moonNamesOnScene[7], moonNamesOnScene[8], moonNamesOnScene[9], moonNamesOnScene[10]);
-                (this.getScene()).add(orbits[15], orbits[16], orbits[17], orbits[18]);
+                if (allMoonOrbitsChecked) {
+                    (this.getScene()).add(orbits[15], orbits[16], orbits[17], orbits[18]);
+                }
             } else if (selectedElem.value == 7) { // Neptune
-                (this.getScene()).add(moonMeshes[11], moonNamesOnScene[11], orbits[19]);
+                (this.getScene()).add(moonMeshes[11], moonNamesOnScene[11]);
+                if (allMoonOrbitsChecked) {
+                    (this.getScene()).add(orbits[19]);
+                }
             }
+            this.showHideSingleMoonNameOnScene(this.getMoonNamesOnScene(), this.getTranslatedMoonNames());
         }
     }
 
@@ -332,12 +345,13 @@ class SidebarManager {
 
     // Functions for moons' orbits
     addAllMoonOrbitsToScene(objects) {
-        (this.getScene()).add(objects[8], objects[9], objects[10], objects[11], objects[12], objects[13], objects[14], objects[15],
-            objects[16], objects[17], objects[18], objects[19]);
+        if (document.getElementById("allMoonOrbitsChecked").checked == true) {
+            (this.getScene()).add(objects[8], objects[9], objects[10], objects[11], objects[12], objects[13], objects[14], objects[15],
+                objects[16], objects[17], objects[18], objects[19]);
+        }
     }
 
     removeAllMoonOrbitsFromScene(objects) {
-        document.getElementById("allMoonOrbitsChecked").checked = false; // because of f. showHideAllMoonsOnScene() - also hide orbits 
         (this.getScene()).remove(objects[8], objects[9], objects[10], objects[11], objects[12], objects[13], objects[14], objects[15],
             objects[16], objects[17], objects[18], objects[19]);
     }
