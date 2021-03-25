@@ -155,7 +155,7 @@ header img {
 }
 
 #menu .closebtn {
-    position: fixed;
+    position: absolute;
     top: 30px;
     font-size: 40px;
 }
