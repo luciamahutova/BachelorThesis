@@ -5,12 +5,10 @@ class CosmicObject extends JSONManager {
         this.planetMeshes = planetMeshes;
         this.addCosmicObject = true;
         this.isPlanetClicked = false;
-        this.lastForce = 1;
-        this.isForceEqual = false;
         this.cosmicObject = this.createCosmicObject();
         // LEN POMOCNA ORBITA
-        this.ellipse = this.createHelpOrbit();
-        this.t = 0;
+        this.objectOrbit = this.cosmicObjectOrbit();
+        this.objectMovingTime = 0;
     }
 
     // Get()
@@ -18,10 +16,13 @@ class CosmicObject extends JSONManager {
     getScene() { return this.scene }
     getAddCosmicObject() { return this.addCosmicObject }
     getIsPlanetClicked() { return this.isPlanetClicked }
+    getObjectOrbit() { return this.objectOrbit }
+    getObjectMovingTime() { return this.objectMovingTime }
 
     // Set()
     setAddCosmicObject(boolean) { this.addCosmicObject = boolean }
     setIsPlanetClicked(boolean) { this.isPlanetClicked = boolean }
+    setObjectMovingTime(value) { this.objectMovingTime -= value }
 
     // Cosmic object
     // -------------------------------------------------------------------------
@@ -61,7 +62,8 @@ class CosmicObject extends JSONManager {
 
             if (this.getIsPlanetClicked()) {
                 var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
-                this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, force, time);
+                this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, force,
+                    this.getObjectOrbit());
                 (this.getScene()).add(this.getCosmicObject());
             } else if (!this.getIsPlanetClicked()) {
                 (this.getScene()).remove(this.getCosmicObject());
@@ -73,7 +75,7 @@ class CosmicObject extends JSONManager {
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
         if (selectedPlanet.name == "Earth") {
             (this.getScene()).traverse(function(children) {
-                if (children.name == "Moon" || children.name == "nameMoon") {
+                if (children.name == "Moon" || children.name == "nameMoon" || children.name == "nameMesic" || children.name == "nameMesiac") {
                     children.visible = showObjectsBoolean;
                 }
             });
@@ -137,68 +139,44 @@ class CosmicObject extends JSONManager {
     //     }
     // }
 
-    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, time) {
+    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
-            var orbitalSpeed, newForceX, newForceZ = 0;
-            var selectedPlanet = window.myParam[0].object;
-            var positionOnAxisX = -1;
-            var positionOnAxisZ = -1;
+            var selectedPlanet = window.myParam[0].object.name;
+            orbit.position.x = planetMeshes[planetOrder].position.x;
+            orbit.position.z = planetMeshes[planetOrder].position.z;
+            var changeX, changeY, orbitPoint = 0;
+            var time = this.getObjectMovingTime();
 
             dataOfCurrentPlanetJSON.then(function(result) {
-                orbitalSpeed = result[selectedPlanet.name]["cosmicObjectSpeed"];
-                positionOnAxisX = result[selectedPlanet.name]["cosmicObjectDistanceX"] * scaleValue *
-                    result[selectedPlanet.name]["cosmicObjectScaleFactor"] * Math.cos(orbitalSpeed * 0.0001 * time);
-                positionOnAxisZ = result[selectedPlanet.name]["cosmicObjectDistanceZ"] * scaleValue *
-                    result[selectedPlanet.name]["cosmicObjectScaleFactor"] * Math.sin(orbitalSpeed * 0.0001 * time);
+                changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * force *
+                    result[selectedPlanet]["cosmicObjectScaleFactor"];
+                changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * force *
+                    result[selectedPlanet]["cosmicObjectScaleFactor"];
 
-                newForceX = (force * result[selectedPlanet.name]["gravitationalPull"]) / 30;
-                newForceZ = (force * result[selectedPlanet.name]["gravitationalPull"]) / 30;
-                cosmicObject.position.x = planetMeshes[planetOrder].position.x + newForceX * positionOnAxisX;
-                cosmicObject.position.z = planetMeshes[planetOrder].position.z - 1 * newForceX * positionOnAxisZ;
+                orbit.scale.set(changeX, changeY, 1);
+                orbitPoint = new THREE.Vector3(changeX * Math.cos(2 * Math.PI * time),
+                    0, changeY * Math.sin(2 * Math.PI * time));
+                cosmicObject.position.set(orbit.position.x + orbitPoint.x, orbit.position.y + orbitPoint.y,
+                    orbit.position.z + orbitPoint.z);
             });
-
-            //POKUS S POMOCNOU ORBITOU - funguje
-            this.ellipse.position.x = planetMeshes[planetOrder].position.x;
-            this.ellipse.position.z = planetMeshes[planetOrder].position.z;
-            var pt = this.getPoint(this.t, force);
-            cosmicObject.position.set(pt.x, pt.y, pt.z);
-            cosmicObject.position.set(this.ellipse.position.x + pt.x, this.ellipse.position.y + pt.y, this.ellipse.position.z + pt.z);
-            this.ellipse.add(cosmicObject);
-            this.t += 0.002;
-            if (force > 1) {
-                this.ellipse.scale.set(force / 5, 1, 1);
-            }
+            this.setObjectMovingTime(0.001)
         }
     }
 
-    // POMOCNA FUNKCIA
-    getPoint(t, force) {
-        if (force == 1) {
-            force = 5;
-        }
-        var radians = 2 * Math.PI * t;
-        return new THREE.Vector3(2 * force * Math.cos(radians),
-            0, 10 * Math.sin(radians));
-
+    getNextPointFromOrbit(time, force) {
+        return new THREE.Vector3(force * Math.cos(2 * Math.PI * time),
+            0, Math.sin(2 * Math.PI * time));
     };
 
-    // LEN POMOCNA ORBITA
-    createHelpOrbit() {
-        var curve = new THREE.EllipseCurve( // values for ellipse curve
-            0, 0, // aX, aY (X/Y center of the ellipse)
-            10, //xRadius 
-            10, //yRadius 
-            0, 2 * Math.PI, // aStartAngle, aEndAngle 
-            false, 0 // aClockwise, aRotation
-        );
+    cosmicObjectOrbit() {
+        // Initial xRadius and yRadius = 1
+        var curve = new THREE.EllipseCurve(0, 0, 1, 1, 0, 2 * Math.PI, false, 0);
         var geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(200));
         var material = new THREE.LineBasicMaterial({ color: 0xffff00 });
         var ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
         this.scene.add(ellipse);
-        ellipse.position.x = -70;
-        ellipse.position.z = 20;
         return ellipse;
     }
 }
