@@ -6,9 +6,14 @@ class CosmicObject extends JSONManager {
         this.addCosmicObject = true;
         this.isPlanetClicked = false;
         this.cosmicObject = this.createCosmicObject();
-        // LEN POMOCNA ORBITA
         this.objectOrbit = this.cosmicObjectOrbit();
-        this.objectMovingTime = 0;
+
+        this.lastSpeedFromSlider = 1;
+        this.isSpeedChanged = false;
+        this.currentForceForAxisX = 1;
+        this.currentForceForAxisZ = 1;
+        this.lastForceForAxisX = 1;
+        this.lastForceForAxisZ = 1;
     }
 
     // Get()
@@ -17,12 +22,22 @@ class CosmicObject extends JSONManager {
     getAddCosmicObject() { return this.addCosmicObject }
     getIsPlanetClicked() { return this.isPlanetClicked }
     getObjectOrbit() { return this.objectOrbit }
-    getObjectMovingTime() { return this.objectMovingTime }
+    getLastSpeedFromSlider() { return this.lastSpeedFromSlider }
+    getIsSpeedChanged() { return this.isSpeedChanged }
+    getCurrentForceForAxisX() { return this.currentForceForAxisX }
+    getCurrentForceForAxisZ() { return this.currentForceForAxisZ }
+    getLastForceForAxisX() { return this.lastForceForAxisX }
+    getLastForceForAxisZ() { return this.lastForceForAxisZ }
 
     // Set()
     setAddCosmicObject(boolean) { this.addCosmicObject = boolean }
     setIsPlanetClicked(boolean) { this.isPlanetClicked = boolean }
-    setObjectMovingTime(value) { this.objectMovingTime -= value }
+    setLastSpeedFromSlider(value) { this.lastSpeedFromSlider = value }
+    setIsSpeedChanged(value) { this.isSpeedChanged = value }
+    setCurrentForceForAxisX(value) { this.currentForceForAxisX = value }
+    setCurrentForceForAxisZ(value) { this.currentForceForAxisZ = value }
+    setLastForceForAxisX(value) { this.lastForceForAxisX = value }
+    setLastForceForAxisZ(value) { this.lastForceForAxisZ = value }
 
     // Cosmic object
     // -------------------------------------------------------------------------
@@ -63,7 +78,7 @@ class CosmicObject extends JSONManager {
             if (this.getIsPlanetClicked()) {
                 var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
                 this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, force,
-                    this.getObjectOrbit());
+                    this.getObjectOrbit(), time);
                 (this.getScene()).add(this.getCosmicObject());
             } else if (!this.getIsPlanetClicked()) {
                 (this.getScene()).remove(this.getCosmicObject());
@@ -139,28 +154,59 @@ class CosmicObject extends JSONManager {
     //     }
     // }
 
-    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit) {
+    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit, time) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
             var selectedPlanet = window.myParam[0].object.name;
             orbit.position.x = planetMeshes[planetOrder].position.x;
             orbit.position.z = planetMeshes[planetOrder].position.z;
             var changeX, changeY, orbitPoint = 0;
-            var time = this.getObjectMovingTime();
 
-            dataOfCurrentPlanetJSON.then(function(result) {
-                changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * force *
-                    result[selectedPlanet]["cosmicObjectScaleFactor"];
-                changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * force *
-                    result[selectedPlanet]["cosmicObjectScaleFactor"];
+            if (this.getLastSpeedFromSlider() !== force) {
+                this.setIsSpeedChanged(true);
+            }
+            var isForceChanged = this.getIsSpeedChanged();
+            var orbitPointX, orbitPointZ = 1;
 
-                orbit.scale.set(changeX, changeY, 1);
-                orbitPoint = new THREE.Vector3(changeX * Math.cos(2 * Math.PI * time),
-                    0, changeY * Math.sin(2 * Math.PI * time));
-                cosmicObject.position.set(orbit.position.x + orbitPoint.x, orbit.position.y + orbitPoint.y,
-                    orbit.position.z + orbitPoint.z);
-            });
-            this.setObjectMovingTime(0.001)
+            (async() => {
+                var valueX = this.getCurrentForceForAxisX();
+                var valueZ = this.getCurrentForceForAxisZ();
+
+                var promiseValue = dataOfCurrentPlanetJSON.then(function(result) {
+                    changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * valueX / 2 *
+                        result[selectedPlanet]["cosmicObjectScaleFactor"];
+                    changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * valueZ / 2 *
+                        result[selectedPlanet]["cosmicObjectScaleFactor"];
+
+                    orbit.scale.set(changeX, changeY, 1);
+                    orbitPoint = new THREE.Vector3(changeX * Math.cos(2 * Math.PI * (-0.00004) * time),
+                        0, changeY * Math.sin(2 * Math.PI * (-0.00004) * time));
+                    cosmicObject.position.set(orbit.position.x + orbitPoint.x, orbit.position.y, orbit.position.z + orbitPoint.z);
+
+                    if (isForceChanged) {
+                        orbitPointX = orbitPoint.x;
+                        orbitPointZ = orbitPoint.z;
+                    }
+                });
+
+                if (isForceChanged) {
+                    await promiseValue; // await - to read data from promise.then()
+
+                    this.setLastForceForAxisX(this.getCurrentForceForAxisX());
+                    this.setLastForceForAxisZ(this.getCurrentForceForAxisZ());
+
+                    if (orbitPointX < 1 && orbitPointX > -1) { // EŠTE UPRAVIŤ PODMIENKU - PRESNEJŠIE NASTAVOVANIE
+                        this.setCurrentForceForAxisX(force);
+                        this.setCurrentForceForAxisZ(this.getLastForceForAxisZ());
+                    } else {
+                        this.setCurrentForceForAxisX(this.getLastForceForAxisX());
+                        this.setCurrentForceForAxisZ(force);
+                    }
+                    orbit.scale.set(this.getCurrentForceForAxisX(), this.getCurrentForceForAxisZ(), 1);
+                }
+            })();
+            this.setLastSpeedFromSlider(force);
+            this.setIsSpeedChanged(false);
         }
     }
 
@@ -173,7 +219,7 @@ class CosmicObject extends JSONManager {
         // Initial xRadius and yRadius = 1
         var curve = new THREE.EllipseCurve(0, 0, 1, 1, 0, 2 * Math.PI, false, 0);
         var geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(200));
-        var material = new THREE.LineBasicMaterial({ color: 0xffff00 });
+        var material = new THREE.LineBasicMaterial({ color: 0x7C6CE2 });
         var ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
         this.scene.add(ellipse);

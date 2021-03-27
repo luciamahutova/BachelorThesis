@@ -12,7 +12,7 @@ class ModelScene extends InitScene {
         this.isCameraFollowingObject = true;
         this.lastIndexOfFollowedObject = 0;
 
-        this.scaleValueScene = this.forceValue = 0;
+        this.scaleValueScene = this.speedValue = 0;
         this.mouseDown = false; // Used for drag events
         this.mousePositionX = this.mousePositionY = 0; // Used for drag events
     }
@@ -25,13 +25,13 @@ class ModelScene extends InitScene {
     getBgScene() { return this.bgScene }
     getBgCamera() { return this.bgCamera }
     getScaleValue() { return this.scaleValueScene }
-    getForceValue() { return this.forceValue }
+    getSpeedValue() { return this.speedValue }
     getIsCameraFollowingObject() { return this.isCameraFollowingObject }
     getLastIndexOfFollowedObject() { return this.lastIndexOfFollowedObject }
 
     // Set()
     setScaleValue(value) { this.scaleValueScene = value }
-    setForceValue(value) { this.forceValue = value }
+    setSpeedValue(value) { this.speedValue = value }
     setIsCameraFollowingObject(boolean) { this.isCameraFollowingObject = boolean }
     setLastIndexOfFollowedObject(value) { this.lastIndexOfFollowedObject = value }
 
@@ -136,7 +136,7 @@ class ModelScene extends InitScene {
             zoomSliderValue.innerHTML = zoomSlider.value;
             this.setScaleValue(zoomSliderValue.innerHTML / 200);
             forceSliderValue.innerHTML = forceSlider.value;
-            this.setForceValue(forceSliderValue.innerHTML);
+            this.setSpeedValue(forceSliderValue.innerHTML);
 
             this.planetObject.setScaleForObjectsAndOrbits(this.getScaleValue());
             this.moonObject.scaleObjectsByRangeslider(this.getScaleValue(), this.moonObject.getMoonMeshes());
@@ -144,7 +144,7 @@ class ModelScene extends InitScene {
 
             this.planetObject.rotateAllPlanets(this.getScaleValue(), time);
             this.moonObject.rotateAllMoons(this.getScaleValue(), time);
-            this.planetObject.cosmicObject.findClickedPlanet(this.getScaleValue(), this.getForceValue(), time);
+            this.planetObject.cosmicObject.findClickedPlanet(this.getScaleValue(), this.getSpeedValue(), time);
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();
