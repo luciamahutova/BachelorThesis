@@ -88,7 +88,7 @@ class CosmicObject extends JSONManager {
 
     // Hides moons of seletected planet when cosmic object is added to scene
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
-        if (selectedPlanet.name == "Earth") {
+        if (selectedPlanet.name == "Venus" || selectedPlanet.name == "Earth") {
             (this.getScene()).traverse(function(children) {
                 if (children.name == "Moon" || children.name == "nameMoon" || children.name == "nameMesic" || children.name == "nameMesiac") {
                     children.visible = showObjectsBoolean;
@@ -165,7 +165,7 @@ class CosmicObject extends JSONManager {
             if (this.getLastSpeedFromSlider() !== force) {
                 this.setIsSpeedChanged(true);
             }
-            var isForceChanged = this.getIsSpeedChanged();
+            var isSpeedChanged = this.getIsSpeedChanged();
             var orbitPointX, orbitPointZ = 1;
 
             (async() => {
@@ -173,29 +173,33 @@ class CosmicObject extends JSONManager {
                 var valueZ = this.getCurrentForceForAxisZ();
 
                 var promiseValue = dataOfCurrentPlanetJSON.then(function(result) {
-                    changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * valueX / 2 *
-                        result[selectedPlanet]["cosmicObjectScaleFactor"];
-                    changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * valueZ / 2 *
-                        result[selectedPlanet]["cosmicObjectScaleFactor"];
+                    changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * valueX;
+                    changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * valueZ;
 
                     orbit.scale.set(changeX, changeY, 1);
-                    orbitPoint = new THREE.Vector3(changeX * Math.cos(2 * Math.PI * (-0.00004) * time),
-                        0, changeY * Math.sin(2 * Math.PI * (-0.00004) * time));
+                    orbitPoint = new THREE.Vector3(
+                        changeX * Math.cos(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time), 0,
+                        changeY * Math.sin(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time));
                     cosmicObject.position.set(orbit.position.x + orbitPoint.x, orbit.position.y, orbit.position.z + orbitPoint.z);
 
-                    if (isForceChanged) {
+                    // save and use outside Promise (after await) - to know if the orbit will change on x/z-axis
+                    if (isSpeedChanged) { // change is needed only when value from slider is changed
                         orbitPointX = orbitPoint.x;
                         orbitPointZ = orbitPoint.z;
                     }
                 });
 
-                if (isForceChanged) {
-                    await promiseValue; // await - to read data from promise.then()
-
+                if (isSpeedChanged) {
+                    await promiseValue; // await - to read data from Promise.then()
                     this.setLastForceForAxisX(this.getCurrentForceForAxisX());
                     this.setLastForceForAxisZ(this.getCurrentForceForAxisZ());
 
-                    if (orbitPointX < 1 && orbitPointX > -1) { // EŠTE UPRAVIŤ PODMIENKU - PRESNEJŠIE NASTAVOVANIE
+                    var positionX = 1.4;
+                    if (selectedPlanet == "Mercury") { // orbit for object is too smal, original value did not work right
+                        positionX = 0.6;
+                    }
+
+                    if (orbitPointX < positionX && orbitPointX > -positionX) { // EŠTE UPRAVIŤ PODMIENKU - PRESNEJŠIE NASTAVOVANIE
                         this.setCurrentForceForAxisX(force);
                         this.setCurrentForceForAxisZ(this.getLastForceForAxisZ());
                     } else {
@@ -209,11 +213,6 @@ class CosmicObject extends JSONManager {
             this.setIsSpeedChanged(false);
         }
     }
-
-    getNextPointFromOrbit(time, force) {
-        return new THREE.Vector3(force * Math.cos(2 * Math.PI * time),
-            0, Math.sin(2 * Math.PI * time));
-    };
 
     cosmicObjectOrbit() {
         // Initial xRadius and yRadius = 1
