@@ -207,7 +207,8 @@ class SidebarManager {
 
         if (selectedElem.value != -1 && allMoonNamesSelected == false) {
             this.removeAllFromScene(moonNamesOnScene);
-            (this.getScene()).add(moonNamesOnScene[selectedElem.value], translatedMoonNames[0], translatedMoonNames[1]);
+            (this.getScene().remove(translatedMoonNames[0], translatedMoonNames[1]));
+            (this.getScene()).add(moonNamesOnScene[selectedElem.value]);
         }
     }
 
@@ -240,7 +241,6 @@ class SidebarManager {
         if (document.getElementById("allMoonObjectsChecked").checked == true) {
             this.addAllToScene(this.getMoonMeshes());
             this.addAllMoonOrbitsToScene(this.getOrbits());
-            (this.getScene()).add(translatedMoonNames[0], translatedMoonNames[1]);
         } else if (document.getElementById("allMoonObjectsChecked").checked == false) {
             this.removeAllFromScene(this.getMoonMeshes());
             this.removeAllFromScene(this.getMoonNamesOnScene());
