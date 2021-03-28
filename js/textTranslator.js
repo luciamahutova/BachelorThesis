@@ -60,7 +60,7 @@ let arrLang = {
         'minTemperature': 'Minimální teplota:',
         'maxTemperature': 'Maximální teplota:',
         // Rangesliders and buttons
-        'changeOrbit': 'Změna dráhy působením síly: ',
+        'changeOrbit': 'Změna dráhy působením rychlosti: ',
         'zoom': 'Přiblížení: ',
         'centerModel': 'Vycentrovat',
         'cosmicObject': 'Kosmický objekt',
@@ -171,7 +171,7 @@ let arrLang = {
         'minTemperature': 'Minimum temperature:',
         'maxTemperature': 'Maximum temperature:',
         // Rangesliders and buttons
-        'changeOrbit': 'Change orbit by force: ',
+        'changeOrbit': 'Change orbit by speed: ',
         'zoom': 'Zoom: ',
         'centerModel': 'Center model',
         'cosmicObject': 'Cosmic object',
@@ -283,7 +283,7 @@ let arrLang = {
         'minTemperature': 'Minimálna teplota:',
         'maxTemperature': 'Maximálna teplota:',
         // Rangesliders and buttons
-        'changeOrbit': 'Zmena dráhy pôsobením sily: ',
+        'changeOrbit': 'Zmena dráhy pôsobením rýchlosti: ',
         'zoom': 'Priblíženie: ',
         'centerModel': 'Vycentrovať',
         'cosmicObject': 'Kozmický objekt',

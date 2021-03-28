@@ -53,7 +53,6 @@ class CosmicObject extends JSONManager {
     activateCosmicObjectButton() {
         if (this.getAddCosmicObject()) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
-            $('#allMoonObjectsChecked').prop('checked', false);
             $('#cameraToObjectButton').prop('disabled', true);
             this.setAddCosmicObject(false);
         } else if (!(this.getAddCosmicObject())) {
@@ -62,7 +61,6 @@ class CosmicObject extends JSONManager {
                 this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
             }
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
-            $('#allMoonObjectsChecked').prop('checked', true);
             $('#cameraToObjectButton').prop('disabled', false);
             this.setAddCosmicObject(true);
         }

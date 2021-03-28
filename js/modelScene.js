@@ -125,8 +125,8 @@ class ModelScene extends InitScene {
     rotationAndScaleOfObjects(time) {
         var zoomSlider = document.getElementById("rangesliderZoomInput");
         var zoomSliderValue = document.getElementById("rangesliderZoomValue");
-        var forceSlider = document.getElementById("rangesliderForceInput");
-        var forceSliderValue = document.getElementById("rangesliderForceValue");
+        var forceSlider = document.getElementById("rangesliderSpeedInput");
+        var forceSliderValue = document.getElementById("rangesliderSpeedValue");
 
         if (document.getElementById("cosmicObjectButton").style.backgroundColor == "lightblue") {
             document.getElementById("slidercontainer").style.visibility = "visible";
