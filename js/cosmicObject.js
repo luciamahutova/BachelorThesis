@@ -22,6 +22,7 @@ class CosmicObject extends JSONManager {
     getAddCosmicObject() { return this.addCosmicObject }
     getIsPlanetClicked() { return this.isPlanetClicked }
     getObjectOrbit() { return this.objectOrbit }
+    getPlanetMeshes() { return this.planetMeshes }
     getLastSpeedFromSlider() { return this.lastSpeedFromSlider }
     getIsSpeedChanged() { return this.isSpeedChanged }
     getCurrentForceForAxisX() { return this.currentForceForAxisX }
@@ -77,8 +78,8 @@ class CosmicObject extends JSONManager {
 
             if (this.getIsPlanetClicked()) {
                 var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
-                this.positionCosmicObject(buttonColor, this.cosmicObject, this.planetMeshes, meshOrder, scaleValue, force,
-                    this.getObjectOrbit(), time);
+                this.positionCosmicObject(buttonColor, this.getCosmicObject(), this.getPlanetMeshes(), meshOrder, scaleValue,
+                    force, this.getObjectOrbit(), time);
                 (this.getScene()).add(this.getCosmicObject());
             } else if (!this.getIsPlanetClicked()) {
                 (this.getScene()).remove(this.getCosmicObject());

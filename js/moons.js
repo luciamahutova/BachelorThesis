@@ -42,9 +42,7 @@ class Moon extends InitPlanets {
 
             moonMesh = new THREE.Mesh(moon, material);
             moonMesh.name = property;
-
             (this.getMoonMeshes()).push(moonMesh);
-            moonMesh.position.x = 10 + i * 3;
         }
         this.addMeshToScene(this.getScene(), this.getMoonMeshes());
     }

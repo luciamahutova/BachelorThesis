@@ -61,18 +61,20 @@ class RayCaster extends JSONManager {
         }
     }
 
-    disableRaycasterThroughOverlayObjects = function() {
+    disableRaycasterThroughOverlayObjects() {
         document.querySelectorAll('.overlay').forEach(item => {
+            // disable raycaster through tables, buttons, menu
             item.addEventListener('click', event => {
                 event.stopPropagation();
             });
+            // disable raycaster through sliders
             item.addEventListener('mousemove', event => {
                 event.stopPropagation();
             })
         })
     }
 
-    getPhysicalValuesOfClickedObjectFromJSON = function() {
+    getPhysicalValuesOfClickedObjectFromJSON() {
         var intersects = window.myParam;
         var showPlanetTable = false;
 

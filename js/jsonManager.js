@@ -34,7 +34,7 @@ class JSONManager {
     // -------------------------------------------------------------------------
     addAllPlanetDataJSON = function() {
         // Only for empty array, class is inherited by 4 classes,
-        // precaution so there are only 2 threads initialized
+        // precaution so there are only 2 threads initialized: planet+moon data
         if ((this.getPlanetData()).length == 0) {
             (this.getPlanetData()).push(this.readDataJSON("planetData"));
         }

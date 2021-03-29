@@ -36,7 +36,6 @@ class PlanetScene extends InitScene {
 
         camera.position.set(0, 5, 0);
         scene.add(ambientLight);
-
         this.createAllPlanets();
     }
 
