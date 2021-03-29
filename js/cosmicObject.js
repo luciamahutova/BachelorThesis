@@ -54,6 +54,7 @@ class CosmicObject extends JSONManager {
         if (this.getAddCosmicObject()) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
             $('#cameraToObjectButton').prop('disabled', true);
+            (this.getScene()).add(this.getObjectOrbit());
             this.setAddCosmicObject(false);
         } else if (!(this.getAddCosmicObject())) {
             (this.getScene()).remove(this.getCosmicObject());
@@ -62,6 +63,7 @@ class CosmicObject extends JSONManager {
             }
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
             $('#cameraToObjectButton').prop('disabled', false);
+            (this.getScene()).remove(this.getObjectOrbit());
             this.setAddCosmicObject(true);
         }
     }
