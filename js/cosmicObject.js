@@ -40,7 +40,7 @@ class CosmicObject extends JSONManager {
     setLastForceForAxisX(value) { this.lastForceForAxisX = value }
     setLastForceForAxisZ(value) { this.lastForceForAxisZ = value }
 
-    // Cosmic object
+    // Cosmic object and orbit
     // -------------------------------------------------------------------------
     createCosmicObject() {
         var geometry = new THREE.ConeGeometry(0.3, 0.4, 5, 1, false, 1, 6.3);
@@ -49,6 +49,17 @@ class CosmicObject extends JSONManager {
         cosmicObject.rotation.x = THREE.Math.degToRad(90);
         cosmicObject.name = "cosmicObject";
         return cosmicObject;
+    }
+
+    cosmicObjectOrbit() {
+        // Initial xRadius and yRadius = 1
+        var curve = new THREE.EllipseCurve(0, 0, 1, 1, 0, 2 * Math.PI, false, 0);
+        var geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(200));
+        var material = new THREE.LineBasicMaterial({ color: 0x7C6CE2 });
+        var ellipse = new THREE.Line(geometry, material);
+        ellipse.rotation.x = THREE.Math.degToRad(90);
+        this.scene.add(ellipse);
+        return ellipse;
     }
 
     activateCosmicObjectButton() {
@@ -69,7 +80,8 @@ class CosmicObject extends JSONManager {
         }
     }
 
-    // Called in scene.js - animate
+    // Find clicked planet to show cosmic object, called if ModelScene - animate()
+    // -------------------------------------------------------------------------
     findClickedPlanet(scaleValue, force, time) {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
@@ -88,6 +100,7 @@ class CosmicObject extends JSONManager {
     }
 
     // Hides moons of seletected planet when cosmic object is added to scene
+    // -------------------------------------------------------------------------
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
         if (selectedPlanet.name == "Venus" || selectedPlanet.name == "Earth") {
             (this.getScene()).traverse(function(children) {
@@ -155,6 +168,8 @@ class CosmicObject extends JSONManager {
     //     }
     // }
 
+    // Position cosmic object on its orbit
+    // -------------------------------------------------------------------------
     positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit, time) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
@@ -213,16 +228,5 @@ class CosmicObject extends JSONManager {
             this.setLastSpeedFromSlider(force);
             this.setIsSpeedChanged(false);
         }
-    }
-
-    cosmicObjectOrbit() {
-        // Initial xRadius and yRadius = 1
-        var curve = new THREE.EllipseCurve(0, 0, 1, 1, 0, 2 * Math.PI, false, 0);
-        var geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(200));
-        var material = new THREE.LineBasicMaterial({ color: 0x7C6CE2 });
-        var ellipse = new THREE.Line(geometry, material);
-        ellipse.rotation.x = THREE.Math.degToRad(90);
-        this.scene.add(ellipse);
-        return ellipse;
     }
 }
