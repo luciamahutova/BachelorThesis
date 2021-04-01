@@ -14,6 +14,12 @@ class CosmicObject extends JSONManager {
         this.currentForceForAxisZ = 1;
         this.lastForceForAxisX = 1;
         this.lastForceForAxisZ = 1;
+
+        // Vectors are for calculating distance between objects and changing speed
+        this.vectorPlanet = new THREE.Vector3(0, 0, 0);
+        this.vectorCosmicObject = new THREE.Vector3(0, 0, 0);
+        this.planetAndObjectVectorDistance = 0;
+        this.movingTime = 0;
     }
 
     // Get()
@@ -29,6 +35,10 @@ class CosmicObject extends JSONManager {
     getCurrentForceForAxisZ() { return this.currentForceForAxisZ }
     getLastForceForAxisX() { return this.lastForceForAxisX }
     getLastForceForAxisZ() { return this.lastForceForAxisZ }
+    getVectorPlanet() { return this.vectorPlanet }
+    getVectorCosmicObject() { return this.vectorCosmicObject }
+    getVectorsDistance() { return this.planetAndObjectVectorDistance }
+    getCosmicObjectMovingTime() { return this.movingTime }
 
     // Set()
     setAddCosmicObject(boolean) { this.addCosmicObject = boolean }
@@ -39,6 +49,8 @@ class CosmicObject extends JSONManager {
     setCurrentForceForAxisZ(value) { this.currentForceForAxisZ = value }
     setLastForceForAxisX(value) { this.lastForceForAxisX = value }
     setLastForceForAxisZ(value) { this.lastForceForAxisZ = value }
+    setVectorsDistance(value) { this.planetAndObjectVectorDistance = value }
+    setCosmicObjectMovingTime(value) { this.movingTime += value }
 
     // Cosmic object and orbit
     // -------------------------------------------------------------------------
@@ -54,7 +66,7 @@ class CosmicObject extends JSONManager {
     cosmicObjectOrbit() {
         // Initial xRadius and yRadius = 1
         var curve = new THREE.EllipseCurve(0, 0, 1, 1, 0, 2 * Math.PI, false, 0);
-        var geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(200));
+        var geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(150));
         var material = new THREE.LineBasicMaterial({ color: 0x7C6CE2 });
         var ellipse = new THREE.Line(geometry, material);
         ellipse.rotation.x = THREE.Math.degToRad(90);
@@ -82,7 +94,7 @@ class CosmicObject extends JSONManager {
 
     // Find clicked planet to show cosmic object, called if ModelScene - animate()
     // -------------------------------------------------------------------------
-    findClickedPlanet(scaleValue, force, time) {
+    findClickedPlanet(scaleValue, force) {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object;
@@ -91,7 +103,7 @@ class CosmicObject extends JSONManager {
             if (this.getIsPlanetClicked()) {
                 var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
                 this.positionCosmicObject(buttonColor, this.getCosmicObject(), this.getPlanetMeshes(), meshOrder, scaleValue,
-                    force, this.getObjectOrbit(), time);
+                    force, this.getObjectOrbit());
                 (this.getScene()).add(this.getCosmicObject());
             } else if (!this.getIsPlanetClicked()) {
                 (this.getScene()).remove(this.getCosmicObject());
@@ -170,23 +182,24 @@ class CosmicObject extends JSONManager {
 
     // Position cosmic object on its orbit
     // -------------------------------------------------------------------------
-    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit, time) {
+    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
             var selectedPlanet = window.myParam[0].object.name;
+            var changeX, changeY, orbitPoint = 0;
+
             orbit.position.x = planetMeshes[planetOrder].position.x;
             orbit.position.z = planetMeshes[planetOrder].position.z;
-            var changeX, changeY, orbitPoint = 0;
 
             if (this.getLastSpeedFromSlider() !== force) {
                 this.setIsSpeedChanged(true);
             }
-            var isSpeedChanged = this.getIsSpeedChanged();
-            var orbitPointX, orbitPointZ = 1;
 
             (async() => {
                 var valueX = this.getCurrentForceForAxisX();
                 var valueZ = this.getCurrentForceForAxisZ();
+                var time = this.getCosmicObjectMovingTime();
+                var isSpeedChanged = this.getIsSpeedChanged();
 
                 var promiseValue = dataOfCurrentPlanetJSON.then(function(result) {
                     changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * valueX;
@@ -197,36 +210,60 @@ class CosmicObject extends JSONManager {
                         changeX * Math.cos(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time), 0,
                         changeY * Math.sin(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time));
                     cosmicObject.position.set(orbit.position.x + orbitPoint.x, orbit.position.y, orbit.position.z + orbitPoint.z);
-
-                    // save and use outside Promise (after await) - to know if the orbit will change on x/z-axis
-                    if (isSpeedChanged) { // change is needed only when value from slider is changed
-                        orbitPointX = orbitPoint.x;
-                        orbitPointZ = orbitPoint.z;
-                    }
                 });
 
-                if (isSpeedChanged) {
-                    await promiseValue; // await - to read data from Promise.then()
-                    this.setLastForceForAxisX(this.getCurrentForceForAxisX());
-                    this.setLastForceForAxisZ(this.getCurrentForceForAxisZ());
-
-                    var positionX = 1.4;
-                    if (selectedPlanet == "Mercury") { // orbit for object is too smal, original value did not work right
-                        positionX = 0.6;
-                    }
-
-                    if (orbitPointX < positionX && orbitPointX > -positionX) { // EŠTE UPRAVIŤ PODMIENKU - PRESNEJŠIE NASTAVOVANIE
-                        this.setCurrentForceForAxisX(force);
-                        this.setCurrentForceForAxisZ(this.getLastForceForAxisZ());
-                    } else {
-                        this.setCurrentForceForAxisX(this.getLastForceForAxisX());
-                        this.setCurrentForceForAxisZ(force);
-                    }
-                    orbit.scale.set(this.getCurrentForceForAxisX(), this.getCurrentForceForAxisZ(), 1);
-                }
+                await promiseValue; // await - to read data from Promise.then()
+                this.changeShapeOfObjectOrbit(isSpeedChanged, selectedPlanet, orbitPoint.x, force, orbit);
+                this.changeRotationSpeedOfObject(orbit, cosmicObject, force, scaleValue);
             })();
             this.setLastSpeedFromSlider(force);
             this.setIsSpeedChanged(false);
+        }
+    }
+
+    // Change speed according position of cosmic object - perihelion/aphelion 
+    changeRotationSpeedOfObject(orbit, cosmicObject, force, scaleValue) {
+        // Vectors set to position of center planet and object
+        // Vectors are good to calculate distance between 2 points
+        (this.getVectorPlanet()).x = orbit.position.x;
+        (this.getVectorPlanet()).z = orbit.position.z;
+        (this.getVectorCosmicObject()).x = cosmicObject.position.x;
+        (this.getVectorCosmicObject()).z = cosmicObject.position.z;
+        this.setVectorsDistance((this.getVectorCosmicObject()).distanceTo(this.getVectorPlanet()));
+
+        if (force == 1) {
+            this.setCosmicObjectMovingTime(50);
+        } else {
+            if (this.getVectorsDistance() > (4 * force * scaleValue)) {
+                // slow down, object is on perihelion (further away)
+                this.setCosmicObjectMovingTime(30);
+            } else if (this.getVectorsDistance() < (4 * force * scaleValue)) {
+                // speed up, object is closer to its planet (aphelion)
+                this.setCosmicObjectMovingTime(50);
+            }
+        }
+    }
+
+    // Change shape of cosmic object orbit according force (and change of object's speed) and object's position
+    changeShapeOfObjectOrbit(isSpeedChanged, selectedPlanet, orbitPointX, force, orbit) {
+        if (isSpeedChanged) {
+            this.setLastForceForAxisX(this.getCurrentForceForAxisX());
+            this.setLastForceForAxisZ(this.getCurrentForceForAxisZ());
+
+            var positionX = 1.4;
+            if (selectedPlanet == "Mercury") { // orbit for object is too small, original value did not work right
+                positionX = 0.6;
+            }
+
+            if (orbitPointX < positionX && orbitPointX > -positionX) {
+                // change shape on axis-x, object is position on x-axis between values -1.4 and +1.4
+                this.setCurrentForceForAxisX(force);
+                this.setCurrentForceForAxisZ(this.getLastForceForAxisZ());
+            } else {
+                this.setCurrentForceForAxisX(this.getLastForceForAxisX());
+                this.setCurrentForceForAxisZ(force);
+            }
+            orbit.scale.set(this.getCurrentForceForAxisX(), this.getCurrentForceForAxisZ(), 1);
         }
     }
 }

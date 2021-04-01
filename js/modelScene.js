@@ -145,7 +145,7 @@ class ModelScene extends InitScene {
 
             this.planetObject.rotateAllPlanets(this.getScaleValue(), time);
             this.moonObject.rotateAllMoons(this.getScaleValue(), time);
-            this.planetObject.cosmicObject.findClickedPlanet(this.getScaleValue(), this.getSpeedValue(), time);
+            this.planetObject.cosmicObject.findClickedPlanet(this.getScaleValue(), this.getSpeedValue());
         }
         zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();
