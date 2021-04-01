@@ -255,132 +255,146 @@ class SidebarManager {
             this.removeAllFromScene(moonMeshes);
             this.removeAllFromScene(moonNamesOnScene);
             this.removeAllMoonOrbitsFromScene(orbits);
-            this.disableAllDropDownOptions(true);
+            this.disableDropDownOptionsMoonNames(true);
+            this.disableDropDownOptionsMoonOrbits(true);
 
             if (selectedElem.value == 2) { // Earth
-                this.disableDropDownOptionsEarth(false);
+                this.enableSingleDropDownOption("earthMoonName", "earthMoonOrbit");
                 (this.getScene()).add(moonMeshes[0]);
+
                 this.addEnabledObjectsForEarth(selectedMoonNameValue, selectedMoonOrbitValue, moonNamesOnScene,
                     translatedMoonNames, orbits);
             } else if (selectedElem.value == 4) { // Jupiter
-                this.disableDropDownOptionsJupiter(false);
+                this.enableSingleDropDownOption("jupiterIoName", "jupiterIoOrbit");
+                this.enableSingleDropDownOption("jupiterEuropaName", "jupiterEuropaOrbit");
+                this.enableSingleDropDownOption("jupiterGanymedeName", "jupiterGanymedeOrbit");
+                this.enableSingleDropDownOption("jupiterCallistoName", "jupiterCallistoOrbit");
                 (this.getScene()).add(moonMeshes[1], moonMeshes[2], moonMeshes[3], moonMeshes[4]);
-                var idNameMoons = ["[id='jupiterIo']", "[id='jupiterEuropa']", "[id='jupiterGanymede']", "[id='jupiterCallisto']"];
-                this.addEnabledObjectsForJupiterUranus("allMoonNamesChecked", moonNamesOnScene, idNameMoons, 1, 0, selectedMoonNameValue, 1);
-                this.addEnabledObjectsForJupiterUranus("allMoonOrbitsChecked", orbits, idNameMoons, 9, 1, selectedMoonOrbitValue, 1);
+
+                var moonIdNames = ["jupiterIoName", "jupiterEuropaName", "jupiterGanymedeName", "jupiterCallistoName"];
+                var moonIdOrbits = ["jupiterIoOrbit", "jupiterEuropaOrbit", "jupiterGanymedeOrbit", "jupiterCallistoOrbit"];
+                this.addEnabledObjectsForJupiterUranus("allMoonNamesChecked", moonIdNames, moonNamesOnScene, 1, selectedMoonNameValue, 1);
+                this.addEnabledObjectsForJupiterUranus("allMoonOrbitsChecked", moonIdOrbits, orbits, 9, selectedMoonOrbitValue, 1);
             } else if (selectedElem.value == 5) { // Saturn
-                this.disableDropDownOptionsSaturn(false);
+                this.enableSingleDropDownOption("saturnRheaName", "saturnRheaOrbit");
+                this.enableSingleDropDownOption("saturnTitanName", "saturnTitanOrbit");
                 (this.getScene()).add(moonMeshes[5], moonMeshes[6]);
-                this.addEnabledObjectsForSaturn("allMoonNamesChecked", moonNamesOnScene, 5, 0, selectedMoonNameValue, 5);
-                this.addEnabledObjectsForSaturn("allMoonOrbitsChecked", orbits, 13, 1, selectedMoonOrbitValue, 5);
+
+                this.addEnabledObjectsForSaturn("allMoonNamesChecked", "saturnRheaName", moonNamesOnScene, 5, selectedMoonNameValue);
+                this.addEnabledObjectsForSaturn("allMoonOrbitsChecked", "saturnRheaOrbit", orbits, 13, selectedMoonOrbitValue);
             } else if (selectedElem.value == 6) { // Uranus
-                this.disableDropDownOptionsUranus(false);
+                this.enableSingleDropDownOption("uranusArielName", "uranusArielOrbit");
+                this.enableSingleDropDownOption("uranusUmbrielName", "uranusUmbrielOrbit");
+                this.enableSingleDropDownOption("uranusTitaniaName", "uranusTitaniaOrbit");
+                this.enableSingleDropDownOption("uranusOberonName", "uranusOberonOrbit");
                 (this.getScene()).add(moonMeshes[7], moonMeshes[8], moonMeshes[9], moonMeshes[10]);
-                var idNameMoons = ["[id='uranusAriel']", "[id='uranusUmbriel']", "[id='uranusTitania']", "[id='uranusOberon']"];
-                this.addEnabledObjectsForJupiterUranus("allMoonNamesChecked", moonNamesOnScene, idNameMoons, 7, 0, selectedMoonNameValue, 7);
-                this.addEnabledObjectsForJupiterUranus("allMoonOrbitsChecked", orbits, idNameMoons, 15, 1, selectedMoonOrbitValue, 7);
+
+                var moonIdNames = ["uranusArielName", "uranusUmbrielName", "uranusTitaniaName", "uranusOberonName"];
+                var moonIdOrbits = ["uranusArielOrbit", "uranusUmbrielOrbit", "uranusTitaniaOrbit", "uranusOberonOrbit"];
+                this.addEnabledObjectsForJupiterUranus("allMoonNamesChecked", moonIdNames, moonNamesOnScene, 7, selectedMoonNameValue, 7);
+                this.addEnabledObjectsForJupiterUranus("allMoonOrbitsChecked", moonIdOrbits, orbits, 15, selectedMoonOrbitValue, 7);
             } else if (selectedElem.value == 7) { // Neptune
-                this.disableDropDownOptionsNeptune(false);
+                this.enableSingleDropDownOption("neptuneTritonName", "neptuneTritonOrbit");
                 (this.getScene()).add(moonMeshes[11]);
-                this.addEnabledObjectsForNeptune("allMoonNamesChecked", 0, moonNamesOnScene, 11, selectedMoonNameValue);
-                this.addEnabledObjectsForNeptune("allMoonOrbitsChecked", 1, orbits, 19, selectedMoonOrbitValue);
+
+                this.addEnabledObjectsForNeptune("allMoonNamesChecked", "neptuneTritonName", moonNamesOnScene, 11, selectedMoonNameValue);
+                this.addEnabledObjectsForNeptune("allMoonOrbitsChecked", "neptuneTritonOrbit", orbits, 19, selectedMoonOrbitValue);
             }
-        } else { this.disableAllDropDownOptions(false); }
+        } else {
+            this.disableDropDownOptionsMoonNames(false);
+            this.disableDropDownOptionsMoonOrbits(false);
+        }
     }
 
     // Disable drop-down options for moon names/orbits of hidden moons
-    disableAllDropDownOptions(boolean) {
-        this.disableDropDownOptionsEarth(boolean);
-        this.disableDropDownOptionsJupiter(boolean);
-        this.disableDropDownOptionsSaturn(boolean);
-        this.disableDropDownOptionsUranus(boolean);
-        this.disableDropDownOptionsNeptune(boolean);
+    disableDropDownOptionsMoonNames(boolean) {
+        $('#earthMoonName').prop('disabled', boolean);
+        $('#jupiterIoName').prop('disabled', boolean);
+        $('#jupiterEuropaName').prop('disabled', boolean);
+        $('#jupiterGanymedeName').prop('disabled', boolean);
+        $('#jupiterCallistoName').prop('disabled', boolean);
+        $('#saturnRheaName').prop('disabled', boolean);
+        $('#saturnTitanName').prop('disabled', boolean);
+        $('#uranusArielName').prop('disabled', boolean);
+        $('#uranusUmbrielName').prop('disabled', boolean);
+        $('#uranusTitaniaName').prop('disabled', boolean);
+        $('#uranusOberonName').prop('disabled', boolean);
+        $('#neptuneTritonName').prop('disabled', boolean);
     }
 
-    disableDropDownOptionsEarth(boolean) {
-        document.querySelectorAll("[id='earthMoon']")[0].disabled =
-            document.querySelectorAll("[id='earthMoon']")[1].disabled = boolean;
+    disableDropDownOptionsMoonOrbits(boolean) {
+        $('#earthMoonOrbit').prop('disabled', boolean);
+        $('#jupiterIoOrbit').prop('disabled', boolean);
+        $('#jupiterEuropaOrbit').prop('disabled', boolean);
+        $('#jupiterGanymedeOrbit').prop('disabled', boolean);
+        $('#jupiterCallistoOrbit').prop('disabled', boolean);
+        $('#saturnRheaOrbit').prop('disabled', boolean);
+        $('#saturnTitanOrbit').prop('disabled', boolean);
+        $('#uranusArielOrbit').prop('disabled', boolean);
+        $('#uranusUmbrielOrbit').prop('disabled', boolean);
+        $('#uranusTitaniaOrbit').prop('disabled', boolean);
+        $('#uranusOberonOrbit').prop('disabled', boolean);
+        $('#neptuneTritonOrbit').prop('disabled', boolean);
     }
 
-    disableDropDownOptionsJupiter(boolean) {
-        document.querySelectorAll("[id='jupiterIo']")[0].disabled =
-            document.querySelectorAll("[id='jupiterIo']")[1].disabled =
-            document.querySelectorAll("[id='jupiterEuropa']")[0].disabled =
-            document.querySelectorAll("[id='jupiterEuropa']")[1].disabled =
-            document.querySelectorAll("[id='jupiterGanymede']")[0].disabled =
-            document.querySelectorAll("[id='jupiterGanymede']")[1].disabled =
-            document.querySelectorAll("[id='jupiterCallisto']")[0].disabled =
-            document.querySelectorAll("[id='jupiterCallisto']")[1].disabled = boolean;
-    }
-
-    disableDropDownOptionsSaturn(boolean) {
-        document.querySelectorAll("[id='saturnRhea']")[0].disabled =
-            document.querySelectorAll("[id='saturnRhea']")[1].disabled =
-            document.querySelectorAll("[id='saturnTitan']")[0].disabled =
-            document.querySelectorAll("[id='saturnTitan']")[1].disabled = boolean;
-    }
-
-    disableDropDownOptionsUranus(boolean) {
-        document.querySelectorAll("[id='uranusAriel']")[0].disabled =
-            document.querySelectorAll("[id='uranusAriel']")[1].disabled =
-            document.querySelectorAll("[id='uranusUmbriel']")[0].disabled =
-            document.querySelectorAll("[id='uranusUmbriel']")[1].disabled =
-            document.querySelectorAll("[id='uranusTitania']")[0].disabled =
-            document.querySelectorAll("[id='uranusTitania']")[1].disabled =
-            document.querySelectorAll("[id='uranusOberon']")[0].disabled =
-            document.querySelectorAll("[id='uranusOberon']")[1].disabled = boolean;
-    }
-
-    disableDropDownOptionsNeptune(boolean) {
-        document.querySelectorAll("[id='neptuneTriton']")[0].disabled =
-            document.querySelectorAll("[id='neptuneTriton']")[1].disabled = boolean;
+    enableSingleDropDownOption(nameId, orbitId) {
+        $("#" + nameId).prop('disabled', false);
+        $("#" + orbitId).prop('disabled', false);
     }
 
     // Add only enabled moon names/orbits for selected planet
     addEnabledObjectsForEarth(selectedMoonNameValue, selectedMoonOrbitValue, moonNamesOnScene, translatedMoonNames, orbits) {
         // Names
-        if (document.querySelectorAll("[id='earthMoon']")[0].disabled == false && selectedMoonNameValue == 0) {
+        if (document.getElementById("allMoonNamesChecked").checked == true) {
             (this.getScene()).add(moonNamesOnScene[0], translatedMoonNames[0], translatedMoonNames[1]);
+        } else {
+            if (selectedMoonNameValue == 0) {
+                (this.getScene()).add(moonNamesOnScene[0], translatedMoonNames[0], translatedMoonNames[1]);
+            }
         }
         // Orbits
-        if (document.querySelectorAll("[id='earthMoon']")[1].disabled == false && selectedMoonOrbitValue == 0) {
+        if (document.getElementById("allMoonOrbitsChecked").checked == true) {
             (this.getScene()).add(orbits[8]);
+        } else {
+            if (selectedMoonOrbitValue == 0) {
+                (this.getScene()).add(orbits[8]);
+            }
         }
     }
 
-    addEnabledObjectsForJupiterUranus(elemId, objects, idNameMoons, firstIndex, optionIndex, nameOrOrbit, nameOrOrbitIndex) {
-        if (document.getElementById(elemId).checked == true) {
+    addEnabledObjectsForJupiterUranus(dropDownId, idNameMoons, objects, firstIndex, nameOrOrbit, nameOrOrbitIndex) {
+        if (document.getElementById(dropDownId).checked == true) {
             (this.getScene()).add(objects[firstIndex], objects[firstIndex + 1], objects[firstIndex + 2], objects[firstIndex + 3]);
         } else {
-            if (!document.querySelectorAll(idNameMoons[0])[optionIndex].disabled && nameOrOrbit == nameOrOrbitIndex) {
+            if (!document.getElementById(idNameMoons[0]).disabled && nameOrOrbit == nameOrOrbitIndex) {
                 (this.getScene()).add(objects[firstIndex]);
-            } else if (!document.querySelectorAll(idNameMoons[1])[optionIndex].disabled && nameOrOrbit == nameOrOrbitIndex + 1) {
+            } else if (!document.getElementById(idNameMoons[1]).disabled && nameOrOrbit == nameOrOrbitIndex + 1) {
                 (this.getScene()).add(objects[firstIndex + 1]);
-            } else if (!document.querySelectorAll(idNameMoons[2])[optionIndex].disabled && nameOrOrbit == nameOrOrbitIndex + 2) {
+            } else if (!document.getElementById(idNameMoons[2]).disabled && nameOrOrbit == nameOrOrbitIndex + 2) {
                 (this.getScene()).add(objects[firstIndex + 2]);
-            } else if (!document.querySelectorAll(idNameMoons[3])[optionIndex].disabled && nameOrOrbit == nameOrOrbitIndex + 3) {
+            } else if (!document.getElementById(idNameMoons[3]).disabled && nameOrOrbit == nameOrOrbitIndex + 3) {
                 (this.getScene()).add(objects[firstIndex + 3]);
             }
         }
     }
 
-    addEnabledObjectsForSaturn(elemId, objects, firstIndex, optionIndex, nameOrOrbit, nameOrOrbitIndex) {
-        if (document.getElementById(elemId).checked == true) {
+    addEnabledObjectsForSaturn(dropDownId, elemId, objects, firstIndex, nameOrOrbit) {
+        if (document.getElementById(dropDownId).checked == true) {
             (this.getScene()).add(objects[firstIndex], objects[firstIndex + 1]);
         } else {
-            if (!document.querySelectorAll("[id='saturnRhea']")[optionIndex].disabled && nameOrOrbit == nameOrOrbitIndex) {
+            if (!document.getElementById(elemId).disabled && nameOrOrbit == 5) {
                 (this.getScene()).add(objects[firstIndex]);
-            } else if (!document.querySelectorAll("[id='saturnTitan']")[optionIndex].disabled && nameOrOrbit == nameOrOrbitIndex + 1) {
+            } else if (!document.getElementById(elemId).disabled && nameOrOrbit == 6) {
                 (this.getScene()).add(objects[firstIndex + 1]);
             }
         }
     }
 
-    addEnabledObjectsForNeptune(elemId, optionIndex, objects, objectIndex, nameOrOrbit) {
-        if (document.getElementById(elemId).checked == true) {
+    addEnabledObjectsForNeptune(dropDownId, elemId, objects, objectIndex, nameOrOrbit) {
+        if (document.getElementById(dropDownId).checked == true) {
             (this.getScene()).add(objects[objectIndex]);
         } else {
-            if (!document.querySelectorAll("[id='neptuneTriton']")[optionIndex].disabled && nameOrOrbit == 11) {
+            if (!document.getElementById(elemId).disabled && nameOrOrbit == 11) {
                 (this.getScene()).add(objects[objectIndex]);
             }
         }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="cz">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title class="lang" data-lang="simulator"></title>
+    <title class="lang" data-lang="simulator">title</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- JavaScript libraries -->
     <script src="/numericalData.json"></script>
@@ -149,18 +149,18 @@
                 <span class="lang" data-lang="singleMoon"></span>
                 <select id="singleMoonNameSelected">     
                     <option value="-1">-</option>      
-                    <option class="lang" data-lang="earthMoon" id="earthMoon" value="0"></option>
-                    <option id="jupiterIo" value="1">Io</option>
-                    <option id="jupiterEuropa" value="2">Europa</option>
-                    <option id="jupiterGanymede" value="3">Ganymede</option>
-                    <option id="jupiterCallisto" value="4">Callisto</option>
-                    <option id="saturnRhea" value="5">Rhea</option>
-                    <option id="saturnTitan" value="6">Titan</option>
-                    <option id="uranusAriel" value="7">Ariel</option>
-                    <option id="uranusUmbriel" value="8">Umbriel</option>
-                    <option id="uranusTitania" value="9">Titania</option>
-                    <option id="uranusOberon" value="10">Oberon</option>
-                    <option id="neptuneTriton" value="11">Triton</option>
+                    <option class="lang" data-lang="earthMoon" id="earthMoonName" value="0">Moon</option>
+                    <option id="jupiterIoName" value="1">Io</option>
+                    <option id="jupiterEuropaName" value="2">Europa</option>
+                    <option id="jupiterGanymedeName" value="3">Ganymede</option>
+                    <option id="jupiterCallistoName" value="4">Callisto</option>
+                    <option id="saturnRheaName" value="5">Rhea</option>
+                    <option id="saturnTitanName" value="6">Titan</option>
+                    <option id="uranusArielName" value="7">Ariel</option>
+                    <option id="uranusUmbrielName" value="8">Umbriel</option>
+                    <option id="uranusTitaniaName" value="9">Titania</option>
+                    <option id="uranusOberonName" value="10">Oberon</option>
+                    <option id="neptuneTritonName" value="11">Triton</option>
                 </select>
             </section>
 
@@ -204,18 +204,18 @@
                 <span class="lang" data-lang="singleMoon"></span>
                 <select id="singleMoonOrbitNameSelected">     
                     <option value="-1">-</option>      
-                    <option class="lang" data-lang="earthMoon" id="earthMoon" value="0"></option>
-                    <option id="jupiterIo" value="1">Io</option>
-                    <option id="jupiterEuropa" value="2">Europa</option>
-                    <option id="jupiterGanymede" value="3">Ganymede</option>
-                    <option id="jupiterCallisto" value="4">Callisto</option>
-                    <option id="saturnRhea" value="5">Rhea</option>
-                    <option id="saturnTitan" value="6">Titan</option>
-                    <option id="uranusAriel" value="7">Ariel</option>
-                    <option id="uranusUmbriel" value="8">Umbriel</option>
-                    <option id="uranusTitania" value="9">Titania</option>
-                    <option id="uranusOberon" value="10">Oberon</option>
-                    <option id="neptuneTriton" value="11">Triton</option>
+                    <option class="lang" data-lang="earthMoon" id="earthMoonOrbit" value="0">Moon</option>
+                    <option id="jupiterIoOrbit" value="1">Io</option>
+                    <option id="jupiterEuropaOrbit" value="2">Europa</option>
+                    <option id="jupiterGanymedeOrbit" value="3">Ganymede</option>
+                    <option id="jupiterCallistoOrbit" value="4">Callisto</option>
+                    <option id="saturnRheaOrbit" value="5">Rhea</option>
+                    <option id="saturnTitanOrbit" value="6">Titan</option>
+                    <option id="uranusArielOrbit" value="7">Ariel</option>
+                    <option id="uranusUmbrielOrbit" value="8">Umbriel</option>
+                    <option id="uranusTitaniaOrbit" value="9">Titania</option>
+                    <option id="uranusOberonOrbit" value="10">Oberon</option>
+                    <option id="neptuneTritonOrbit" value="11">Triton</option>
                 </select>
             </section>
 
@@ -241,12 +241,12 @@
     </section>
 
     <!-- 1st rangeslider = change orbit shape of cosmic object  -->
-    <div class="overlay" id="slidercontainer">
+    <div class="overlay slidercontainer">
         <input type="range" min="1" max="2" value="1" step="0.1" class="slider" id="rangesliderSpeedInput">
         <span class="lang" data-lang="changeOrbit"></span><span id="rangesliderSpeedValue"></span><span>x</span>
     </div>
     <!-- 2nd rangeslider = zoom for scene and all its objects -->
-    <div class="overlay" id="slidercontainer">
+    <div class="overlay slidercontainer">
         <input type="range" min="50" max="160" value="100" step="5" class="slider" id="rangesliderZoomInput">
         <span class="lang" data-lang="zoom"></span><span id="rangesliderZoomValue"></span><span>%</span>
     </div>

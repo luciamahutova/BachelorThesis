@@ -127,10 +127,11 @@ class ModelScene extends InitScene {
         var zoomSliderValue = document.getElementById("rangesliderZoomValue");
         var forceSlider = document.getElementById("rangesliderSpeedInput");
         var forceSliderValue = document.getElementById("rangesliderSpeedValue");
+        var selected = (document.querySelectorAll(".slidercontainer")[0]);
 
         if (document.getElementById("cosmicObjectButton").style.backgroundColor == "lightblue") {
-            document.getElementById("slidercontainer").style.visibility = "visible";
-        } else { document.getElementById("slidercontainer").style.visibility = "hidden"; }
+            selected.style.visibility = "visible";
+        } else { selected.style.visibility = "hidden"; }
 
         var updateRangesliderValues = () => {
             zoomSliderValue.innerHTML = zoomSlider.value;

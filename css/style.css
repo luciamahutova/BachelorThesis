@@ -350,7 +350,7 @@ input[type="checkbox"] {
 
 /* Rangesliders: 1st for planets' rotation speed, 2nd for scene scale */
 
-#slidercontainer {
+.slidercontainer {
     z-index: 20;
     position: fixed;
     left: 38%;
@@ -359,12 +359,12 @@ input[type="checkbox"] {
     text-align: center;
 }
 
-#slidercontainer:first-of-type {
+.slidercontainer:first-of-type {
     top: 20px;
     visibility: hidden;
 }
 
-#slidercontainer:nth-of-type(2) {
+.slidercontainer:nth-of-type(2) {
     bottom: 20px;
 }
 
