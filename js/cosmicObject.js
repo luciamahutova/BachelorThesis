@@ -92,25 +92,6 @@ class CosmicObject extends JSONManager {
         }
     }
 
-    // Find clicked planet to show cosmic object, called if ModelScene - animate()
-    // -------------------------------------------------------------------------
-    findClickedPlanet(scaleValue, force) {
-        var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
-        if (window.myParam != undefined && buttonColor == "lightblue") {
-            var selectedPlanet = window.myParam[0].object;
-            this.moonsVisibilityOfSelectedPlanet(selectedPlanet, false);
-
-            if (this.getIsPlanetClicked()) {
-                var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
-                this.positionCosmicObject(buttonColor, this.getCosmicObject(), this.getPlanetMeshes(), meshOrder, scaleValue,
-                    force, this.getObjectOrbit());
-                (this.getScene()).add(this.getCosmicObject());
-            } else if (!this.getIsPlanetClicked()) {
-                (this.getScene()).remove(this.getCosmicObject());
-            }
-        }
-    }
-
     // Hides moons of seletected planet when cosmic object is added to scene
     // -------------------------------------------------------------------------
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
@@ -159,66 +140,69 @@ class CosmicObject extends JSONManager {
 
     }
 
-    // Position cosmic object to selected planet
+    // Find clicked planet to show cosmic object, called if ModelScene - animate()
     // -------------------------------------------------------------------------
-    // ORIGINÁL FUNKCIA
-    // positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, time) {
-    //     if (window.myParam != undefined && buttonColor == "lightblue") {
-    //         var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
-    //         var orbitalSpeed, newForce = 0;
-    //         var selectedPlanet = window.myParam[0].object;
-
-    //         dataOfCurrentPlanetJSON.then(function(result) {
-    //             orbitalSpeed = result[selectedPlanet.name]["cosmicObjectSpeed"];
-    //             newForce = (force * result[selectedPlanet.name]["gravitationalPull"]) / 10;
-
-    //             cosmicObject.position.x = planetMeshes[planetOrder].position.x + newForce / 3 *
-    //                 result[selectedPlanet.name]["cosmicObjectDistanceX"] * result[selectedPlanet.name]["cosmicObjectScaleFactor"] * scaleValue * Math.cos(orbitalSpeed * 0.0001 * time);
-    //             cosmicObject.position.z = planetMeshes[planetOrder].position.z - 2 *
-    //                 result[selectedPlanet.name]["cosmicObjectDistanceZ"] * result[selectedPlanet.name]["cosmicObjectScaleFactor"] * scaleValue * Math.sin(orbitalSpeed * 0.0001 * time);
-    //         });
-    //     }
-    // }
-
-    // Position cosmic object on its orbit
-    // -------------------------------------------------------------------------
-    positionCosmicObject(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit) {
+    findClickedPlanet(scaleValue, force) {
+        var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
-            var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
-            var selectedPlanet = window.myParam[0].object.name;
-            var changeX, changeY, orbitPoint = 0;
+            var selectedPlanet = window.myParam[0].object;
+            this.moonsVisibilityOfSelectedPlanet(selectedPlanet, false);
 
+            if (this.getIsPlanetClicked()) {
+                var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
+                this.addCosmicObjectToOrbit(buttonColor, this.getCosmicObject(), this.getPlanetMeshes(), meshOrder, scaleValue,
+                    force, this.getObjectOrbit());
+                (this.getScene()).add(this.getCosmicObject());
+            } else if (!this.getIsPlanetClicked()) {
+                (this.getScene()).remove(this.getCosmicObject());
+            }
+        }
+    }
+
+    // Position cosmic object on its orbit, change shape of orbit and rotation speed
+    // -------------------------------------------------------------------------
+    addCosmicObjectToOrbit(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit) {
+        if (window.myParam != undefined && buttonColor == "lightblue") {
+            var selectedPlanet = window.myParam[0].object.name;
             orbit.position.x = planetMeshes[planetOrder].position.x;
             orbit.position.z = planetMeshes[planetOrder].position.z;
 
+            // When force is changed, change (1x) shape of orbit in f. positionCosmicObject()
             if (this.getLastSpeedFromSlider() !== force) {
                 this.setIsSpeedChanged(true);
             }
 
-            (async() => {
-                var valueX = this.getCurrentForceForAxisX();
-                var valueZ = this.getCurrentForceForAxisZ();
-                var time = this.getCosmicObjectMovingTime();
-                var isSpeedChanged = this.getIsSpeedChanged();
-
-                var promiseValue = dataOfCurrentPlanetJSON.then(function(result) {
-                    changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * valueX;
-                    changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * valueZ;
-
-                    orbit.scale.set(changeX, changeY, 1);
-                    orbitPoint = new THREE.Vector3(
-                        changeX * Math.cos(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time), 0,
-                        changeY * Math.sin(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time));
-                    cosmicObject.position.set(orbit.position.x + orbitPoint.x, orbit.position.y, orbit.position.z + orbitPoint.z);
-                });
-
-                await promiseValue; // await - to read data from Promise.then()
-                this.changeShapeOfObjectOrbit(isSpeedChanged, selectedPlanet, orbitPoint.x, force, orbit);
-                this.changeRotationSpeedOfObject(orbit, cosmicObject, force, scaleValue);
-            })();
+            this.positionCosmicObject(selectedPlanet, cosmicObject, orbit, scaleValue, force);
             this.setLastSpeedFromSlider(force);
             this.setIsSpeedChanged(false);
         }
+    }
+
+    positionCosmicObject(selectedPlanet, cosmicObject, orbit, scaleValue, force) {
+        var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
+        var changeX, changeY, orbitPoint = 0;
+
+        (async() => {
+            var valueX = this.getCurrentForceForAxisX();
+            var valueZ = this.getCurrentForceForAxisZ();
+            var time = this.getCosmicObjectMovingTime();
+            var isSpeedChanged = this.getIsSpeedChanged();
+
+            var promiseValue = dataOfCurrentPlanetJSON.then(function(result) {
+                changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * valueX;
+                changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * valueZ;
+
+                orbit.scale.set(changeX, changeY, 1);
+                orbitPoint = new THREE.Vector3(
+                    changeX * Math.cos(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time), 0,
+                    changeY * Math.sin(result[selectedPlanet]["cosmicObjectSpeed"] * Math.PI * (-0.00001) * time));
+                cosmicObject.position.set(orbit.position.x + orbitPoint.x, orbit.position.y, orbit.position.z + orbitPoint.z);
+            });
+
+            await promiseValue; // await - to read data from Promise.then()
+            this.changeShapeOfObjectOrbit(isSpeedChanged, selectedPlanet, orbitPoint.x, force, orbit);
+            this.changeRotationSpeedOfObject(orbit, cosmicObject, force, scaleValue);
+        })();
     }
 
     // Change speed according position of cosmic object - perihelion/aphelion 
