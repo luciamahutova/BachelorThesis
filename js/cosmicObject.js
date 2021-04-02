@@ -96,48 +96,39 @@ class CosmicObject extends JSONManager {
     // -------------------------------------------------------------------------
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
         if (selectedPlanet.name == "Venus" || selectedPlanet.name == "Earth") {
-            (this.getScene()).traverse(function(children) {
-                if (children.name == "Moon" || children.name == "nameMoon" || children.name == "nameMesic" || children.name == "nameMesiac") {
-                    children.visible = showObjectsBoolean;
-                }
-            });
-            this.setIsPlanetClicked(true);
+            // CHYBA, NEZOBRAZÍ SA SPÄŤ ORBITA ANI OBJEKT MESIACA - AKO JEDINÉ
+            this.findChildOfScene("Moon", showObjectsBoolean);
+            this.findChildOfScene("Mesic", showObjectsBoolean);
+            this.findChildOfScene("Mesiac", showObjectsBoolean);
+            // console.log(this.scene.children)
         } else if (selectedPlanet.name == "Jupiter") {
-            (this.getScene()).traverse(function(children) {
-                if (children.name == "Io" || children.name == "Europa" || children.name == "Ganymede" || children.name == "Callisto" ||
-                    children.name == "nameIo" || children.name == "nameEuropa" || children.name == "nameGanymede" ||
-                    children.name == "nameCallisto") {
-                    children.visible = showObjectsBoolean;
-                }
-            });
-            this.setIsPlanetClicked(true);
+            this.findChildOfScene("Io", showObjectsBoolean);
+            this.findChildOfScene("Europa", showObjectsBoolean);
+            this.findChildOfScene("Ganymede", showObjectsBoolean);
+            this.findChildOfScene("Callisto", showObjectsBoolean);
         } else if (selectedPlanet.name == "Saturn") {
-            (this.getScene()).traverse(function(children) {
-                if (children.name == "Rhea" || children.name == "Titan" || children.name == "nameRhea" || children.name == "nameTitan") {
-                    children.visible = showObjectsBoolean;
-                }
-            });
-            this.setIsPlanetClicked(true);
+            this.findChildOfScene("Rhea", showObjectsBoolean);
+            this.findChildOfScene("Titan", showObjectsBoolean);
         } else if (selectedPlanet.name == "Uranus") {
-            (this.getScene()).traverse(function(children) {
-                if (children.name == "Ariel" || children.name == "Umbriel" || children.name == "Titania" || children.name == "Oberon" ||
-                    children.name == "nameAriel" || children.name == "nameUmbriel" || children.name == "nameTitania" ||
-                    children.name == "nameOberon") {
-                    children.visible = showObjectsBoolean;
-                }
-            });
-            this.setIsPlanetClicked(true);
+            this.findChildOfScene("Ariel", showObjectsBoolean);
+            this.findChildOfScene("Umbriel", showObjectsBoolean);
+            this.findChildOfScene("Titania", showObjectsBoolean);
+            this.findChildOfScene("Oberon", showObjectsBoolean);
         } else if (selectedPlanet.name == "Neptune") {
-            (this.getScene()).traverse(function(children) {
-                if (children.name == "Triton" || children.name == "nameTriton") {
-                    children.visible = showObjectsBoolean;
-                }
-            });
-            this.setIsPlanetClicked(true);
-        } else if (selectedPlanet.name == "Mercury" || selectedPlanet.name == "Venus" || selectedPlanet.name == "Mars") {
+            this.findChildOfScene("Triton", showObjectsBoolean);
+        } else if (selectedPlanet.name == "Mercury" || selectedPlanet.name == "Mars") {
             this.setIsPlanetClicked(true);
         } else { this.setIsPlanetClicked(false); }
+    }
 
+    findChildOfScene(childName, showObjectsBoolean) {
+        // Find object and its orbit by name + its name on scene 
+        (this.getScene()).traverse(function(children) {
+            if (children.name == childName || children.name == "name" + childName) {
+                children.visible = showObjectsBoolean;
+            }
+        });
+        this.setIsPlanetClicked(true);
     }
 
     // Find clicked planet to show cosmic object, called if ModelScene - animate()
