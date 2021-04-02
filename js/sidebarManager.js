@@ -168,9 +168,9 @@ class SidebarManager {
     // -------------------------------------------------------------------------
     showHideAllPlanetNamesOnScene() {
         if (document.getElementById("allPlanetNamesChecked").checked == true) {
-            this.addPlanetNamesToScene(this.getPlanetNamesEN(), "nameEn");
-            this.addPlanetNamesToScene(this.getPlanetNamesCZ(), "nameCz");
-            this.addPlanetNamesToScene(this.getPlanetNamesSK(), "nameSk");
+            this.addPlanetNamesToScene(this.getPlanetNamesEN());
+            this.addPlanetNamesToScene(this.getPlanetNamesCZ());
+            this.addPlanetNamesToScene(this.getPlanetNamesSK());
         } else if (document.getElementById("allPlanetNamesChecked").checked == false) {
             this.removeObjectsForPlanetsFromScene(this.getPlanetNamesEN());
             this.removeObjectsForPlanetsFromScene(this.getPlanetNamesCZ());
@@ -225,10 +225,8 @@ class SidebarManager {
         });
     }
 
-    addPlanetNamesToScene(objects, stringName) {
+    addPlanetNamesToScene(objects) {
         (this.getScene()).add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
-        // names are set to 'true' in planets.js -> rotateAllPlanets(...) - according to current language
-        this.traverseSceneToFindPlanetNames(false, stringName);
     }
 
     removeObjectsForPlanetsFromScene(objects) {
@@ -471,7 +469,7 @@ class SidebarManager {
 }
 
 // Script for menu 
-///////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------
 function openNav() {
     document.getElementById("menu").style.right = "0"
 }
@@ -494,4 +492,13 @@ function highlightChosenLanguage(id) {
     document.getElementById(id).style.fontWeight = "bold";
     document.getElementById(id).style.color = "#ffffff";
     closeNav();
+}
+
+// Open 2nd simulation in new window and close the duplicate simulation,
+// so opened page is not overwritten and close because of duplicate window
+// -------------------------------------------------------------------------
+function openInNewTab(id) {
+    if (id == "ssm") {
+        window.open("simulationPage.html", '_blank');
+    }
 }
