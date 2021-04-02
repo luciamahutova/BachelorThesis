@@ -207,8 +207,12 @@ class SidebarManager {
 
         if (selectedElem.value != -1 && allMoonNamesSelected == false) {
             this.removeAllFromScene(moonNamesOnScene);
-            (this.getScene().remove(translatedMoonNames[0], translatedMoonNames[1]));
             (this.getScene()).add(moonNamesOnScene[selectedElem.value]);
+            if (document.getElementById("cz").style.fontWeight == "bold" && selectedElem.value == 0) {
+                (this.getScene()).add(translatedMoonNames[0]);
+            } else if (document.getElementById("sk").style.fontWeight == "bold" && selectedElem.value == 0) {
+                (this.getScene()).add(translatedMoonNames[1]);
+            }
         }
     }
 

@@ -51,7 +51,7 @@ class PlanetScene extends InitScene {
     }
 
     createPlanetMesh(imageSrc) {
-        var object = new THREE.SphereBufferGeometry(3, 50, 50);
+        var object = new THREE.SphereBufferGeometry(3, 100, 100);
         var texture = new THREE.TextureLoader().load(imageSrc);
         var meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
         var planetMesh = new THREE.Mesh(object, meshMaterial);
