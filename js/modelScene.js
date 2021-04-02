@@ -127,11 +127,6 @@ class ModelScene extends InitScene {
         var zoomSliderValue = document.getElementById("rangesliderZoomValue");
         var forceSlider = document.getElementById("rangesliderSpeedInput");
         var forceSliderValue = document.getElementById("rangesliderSpeedValue");
-        var selected = (document.querySelectorAll(".slidercontainer")[0]);
-
-        if (document.getElementById("cosmicObjectButton").style.backgroundColor == "lightblue") {
-            selected.style.visibility = "visible";
-        } else { selected.style.visibility = "hidden"; }
 
         var updateRangesliderValues = () => {
             zoomSliderValue.innerHTML = zoomSlider.value;
@@ -156,13 +151,11 @@ class ModelScene extends InitScene {
     activateCameraToObjectButton() {
         if (this.getIsCameraFollowingObject()) {
             this.setIsCameraFollowingObject(false);
-            $('.slider').prop('disabled', true);
             $('#cosmicObjectButton').prop('disabled', true);
             window.removeEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "lightblue";
         } else if (!(this.getIsCameraFollowingObject())) {
             this.setIsCameraFollowingObject(true);
-            $('.slider').prop('disabled', false);
             $('#cosmicObjectButton').prop('disabled', false);
             window.addEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "#061327";
@@ -170,6 +163,8 @@ class ModelScene extends InitScene {
     }
 
     findClickedPlanetForCamera() {
+        var selected = (document.querySelectorAll(".slidercontainer")[1]);
+
         if (window.myParam != undefined) {
             var selectedPlanet = window.myParam[0].object;
             var planet = this.planetObject.getPlanetMeshes();
@@ -180,10 +175,12 @@ class ModelScene extends InitScene {
                 planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
                 planet[index].add(this.getCamera());
                 this.camera.position.set(0, 15, 0);
+                selected.style.visibility = "hidden";
                 this.setLastIndexOfFollowedObject(index);
             } else if (this.getIsCameraFollowingObject()) {
                 planet[this.getLastIndexOfFollowedObject()].remove(this.getCamera());
                 (this.getCamera()).position.set(0, 45, 0);
+                selected.style.visibility = "visible";
             }
         }
     }
