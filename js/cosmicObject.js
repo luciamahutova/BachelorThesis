@@ -75,8 +75,11 @@ class CosmicObject extends JSONManager {
     }
 
     activateCosmicObjectButton() {
+        var selected = (document.querySelectorAll(".slidercontainer")[0]);
+
         if (this.getAddCosmicObject()) {
             document.getElementById("cosmicObjectButton").style.backgroundColor = "lightblue";
+            selected.style.visibility = "visible";
             $('#cameraToObjectButton').prop('disabled', true);
             (this.getScene()).add(this.getObjectOrbit());
             this.setAddCosmicObject(false);
@@ -88,6 +91,7 @@ class CosmicObject extends JSONManager {
                 this.setVisibilityOfSceneChild("Moon", true);
             }
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
+            selected.style.visibility = "hidden";
             $('#cameraToObjectButton').prop('disabled', false);
             (this.getScene()).remove(this.getObjectOrbit());
             this.setAddCosmicObject(true);
