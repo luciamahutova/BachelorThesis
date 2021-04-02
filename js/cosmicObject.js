@@ -83,7 +83,9 @@ class CosmicObject extends JSONManager {
         } else if (!(this.getAddCosmicObject())) {
             (this.getScene()).remove(this.getCosmicObject());
             if (window.myParam != undefined) {
-                this.moonsVisibilityOfSelectedPlanet(window.myParam[0].object.name, true);
+                var selectedPlanet = window.myParam[0].object;
+                this.moonsVisibilityOfSelectedPlanet(selectedPlanet, true);
+                this.setVisibilityOfSceneChild("Moon", true);
             }
             document.getElementById("cosmicObjectButton").style.backgroundColor = "#061327";
             $('#cameraToObjectButton').prop('disabled', false);
@@ -95,12 +97,13 @@ class CosmicObject extends JSONManager {
     // Hides moons of seletected planet when cosmic object is added to scene
     // -------------------------------------------------------------------------
     moonsVisibilityOfSelectedPlanet(selectedPlanet, showObjectsBoolean) {
+        // Specially for Moon, problems with showing its orbit and object
+        this.setVisibilityOfSceneChild("Moon", true);
+
         if (selectedPlanet.name == "Venus" || selectedPlanet.name == "Earth") {
-            // CHYBA, NEZOBRAZÍ SA SPÄŤ ORBITA ANI OBJEKT MESIACA - AKO JEDINÉ
             this.setVisibilityOfSceneChild("Moon", showObjectsBoolean);
             this.setVisibilityOfSceneChild("Mesic", showObjectsBoolean);
             this.setVisibilityOfSceneChild("Mesiac", showObjectsBoolean);
-            // console.log(this.scene.children)
         } else if (selectedPlanet.name == "Jupiter") {
             this.setVisibilityOfSceneChild("Io", showObjectsBoolean);
             this.setVisibilityOfSceneChild("Europa", showObjectsBoolean);
