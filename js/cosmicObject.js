@@ -83,6 +83,10 @@ class CosmicObject extends JSONManager {
             $('#cameraToObjectButton').prop('disabled', true);
             (this.getScene()).add(this.getObjectOrbit());
             this.setAddCosmicObject(false);
+
+            // Hide physical table, color of planet/orbit is change for 2nd object
+            document.getElementById("sidebarPlanetInfo").style.left = "-300px";
+            document.getElementById("sidebarMoonInfo").style.left = "-300px";
         } else if (!(this.getAddCosmicObject())) {
             (this.getScene()).remove(this.getCosmicObject());
             if (window.myParam != undefined) {
