@@ -122,7 +122,7 @@ class ModelScene extends InitScene {
 
     // Zooming in/out (for planets and orbits) - called in app.js
     // -------------------------------------------------------------------------
-    rotationAndScaleOfObjects(time) {
+    rotateSceneObjects(time) {
         var forceSlider = document.getElementById("rangesliderSpeedInput");
         var forceSliderValue = document.getElementById("rangesliderSpeedValue");
 

@@ -12,7 +12,7 @@ var i = 0;
 function animate() {
     modelScene.animate();
     if (document.getElementById("pauseButton").disabled == false) {
-        modelScene.rotationAndScaleOfObjects(modelScene.sidebarManager.getPlayTime() -
+        modelScene.rotateSceneObjects(modelScene.sidebarManager.getPlayTime() -
             modelScene.sidebarManager.getPlayPauseTimeDifference() + i);
         i += 50;
         modelScene.startRenderer(renderer, scene, camera);
