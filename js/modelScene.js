@@ -125,17 +125,13 @@ class ModelScene extends InitScene {
     rotateSceneObjects(time) {
         var forceSlider = document.getElementById("rangesliderSpeedInput");
         var forceSliderValue = document.getElementById("rangesliderSpeedValue");
+        forceSliderValue.innerHTML = forceSlider.value;
+        this.setSpeedValue(forceSliderValue.innerHTML);
 
-        var updateRangesliderValues = () => {
-            forceSliderValue.innerHTML = forceSlider.value;
-            this.setSpeedValue(forceSliderValue.innerHTML);
-
-            this.planetObject.orbitClass.positionAllMoonOrbits();
-            this.planetObject.rotateAllPlanets(time);
-            this.moonObject.rotateAllMoons(time);
-            this.planetObject.cosmicObject.findClickedPlanet(this.getSpeedValue());
-        }
-        updateRangesliderValues();
+        this.planetObject.orbitClass.positionAllMoonOrbits();
+        this.planetObject.rotateAllPlanets(time);
+        this.moonObject.rotateAllMoons(time);
+        this.planetObject.cosmicObject.findClickedPlanet(this.getSpeedValue());
     }
 
     // Button for camera zoom to selected planet
@@ -177,7 +173,7 @@ class ModelScene extends InitScene {
     // Animate function and initializing classes: called in app.js 
     // -------------------------------------------------------------------------
     animate() {
-        this.raycaster.animate();
+        this.raycaster.getPhysicalValuesOfClickedObjectFromJSON();
         this.findClickedPlanetForCamera();
         this.renderer.render(this.getBgScene(), this.getBgCamera());
     };

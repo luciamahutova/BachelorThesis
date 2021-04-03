@@ -138,7 +138,7 @@ class CosmicObject extends JSONManager {
         this.setIsPlanetClicked(true);
     }
 
-    // Find clicked planet to show cosmic object, called if ModelScene - animate()
+    // Find clicked planet to show cosmic object, called in ModelScene - rotateSceneObjects()
     // -------------------------------------------------------------------------
     findClickedPlanet(force) {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;

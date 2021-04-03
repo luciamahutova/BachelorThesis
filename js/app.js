@@ -20,6 +20,6 @@ function animate() {
         modelScene.startRendererOnMouseEvents(renderer, scene, camera);
     }
 
-    animationFrameOutput = requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
 }
 animate();
