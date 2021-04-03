@@ -12,7 +12,7 @@ class ModelScene extends InitScene {
         this.isCameraFollowingObject = true;
         this.lastIndexOfFollowedObject = 0;
 
-        this.scaleValueScene = this.speedValue = 0;
+        this.speedValue = 0;
         this.mouseDown = false; // Used for drag events
         this.mousePositionX = this.mousePositionY = 0; // Used for drag events
     }
@@ -24,13 +24,11 @@ class ModelScene extends InitScene {
     getBgMesh() { return this.bgMesh }
     getBgScene() { return this.bgScene }
     getBgCamera() { return this.bgCamera }
-    getScaleValue() { return this.scaleValueScene }
     getSpeedValue() { return this.speedValue }
     getIsCameraFollowingObject() { return this.isCameraFollowingObject }
     getLastIndexOfFollowedObject() { return this.lastIndexOfFollowedObject }
 
     // Set()
-    setScaleValue(value) { this.scaleValueScene = value }
     setSpeedValue(value) { this.speedValue = value }
     setIsCameraFollowingObject(boolean) { this.isCameraFollowingObject = boolean }
     setLastIndexOfFollowedObject(value) { this.lastIndexOfFollowedObject = value }
