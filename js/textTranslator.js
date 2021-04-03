@@ -354,5 +354,9 @@ $(function() {
         $('.lang').each(function() {
             $(this).text(arrLang[currentLang][$(this).attr('data-lang')]);
         });
+
+        // Translate moon name (and show it after "Play")
+        modelScene.sidebarManager.showHideSingleMoonNameOnScene(
+            modelScene.sidebarManager.getMoonNamesOnScene(), modelScene.sidebarManager.getTranslatedMoonNames())
     });
 })
