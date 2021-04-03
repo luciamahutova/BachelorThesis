@@ -19,6 +19,16 @@ header img,
     text-decoration: none;
 }
 
+a:disabled,
+button:disabled,
+input:disabled,
+select:disabled,
+option:disabled,
+header img:disabled,
+.sidebarIcon:disabled {
+    cursor: default;
+}
+
 body {
     width: 100%;
     height: 100%;
