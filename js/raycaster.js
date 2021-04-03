@@ -89,7 +89,7 @@ class RayCaster extends JSONManager {
             // Control, so the data will be filled in just once (in f. animate())
             if (this.getLastIntersectName() !== intersects[0].object.name) {
                 var selectedObjectName = intersects[0].object.name;
-                this.setLastIntersectName(selectedObjectNameô)
+                this.setLastIntersectName(selectedObjectName);
 
                 var planetNames = this.getPlanetNames();
                 for (var i = 0; i < planetNames.length; i++) {
