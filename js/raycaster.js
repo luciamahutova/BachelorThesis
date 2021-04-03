@@ -5,11 +5,17 @@ class RayCaster extends JSONManager {
         super();
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2(0, 0);
+        this.lastIntersectName = "";
+        this.disableRaycasterThroughOverlayObjects();
     }
 
     // Get()
     getRaycaster() { return this.raycaster }
     getMouse() { return this.mouse }
+    getLastIntersectName() { return this.lastIntersectName }
+
+    // Set()
+    setLastIntersectName(string) { this.lastIntersectName = string }
 
     // Mouse event
     // -------------------------------------------------------------------------
@@ -78,47 +84,46 @@ class RayCaster extends JSONManager {
         var intersects = window.myParam;
         var showPlanetTable = false;
 
-        if (intersects != undefined) {
-            var selectedObjectName = intersects[0].object.name;
-            var planetNames = this.getPlanetNames();
-            for (var i = 0; i < planetNames.length; i++) {
-                if (selectedObjectName == planetNames[i]) {
-                    showPlanetTable = true
+        // Function is called only if the object is colored red
+        if (intersects != undefined && intersects[0].object.material.color.getHex() == 7938344) {
+            // Control, so the data will be filled in just once (in f. animate())
+            if (this.getLastIntersectName() !== intersects[0].object.name) {
+                var selectedObjectName = intersects[0].object.name;
+                this.setLastIntersectName(selectedObjectNameô)
+
+                var planetNames = this.getPlanetNames();
+                for (var i = 0; i < planetNames.length; i++) {
+                    if (selectedObjectName == planetNames[i]) {
+                        showPlanetTable = true
+                    }
+                }
+
+                var dataOfCurrentObjectJSON;
+                if (showPlanetTable) {
+                    dataOfCurrentObjectJSON = (this.getPlanetData())[0];
+                    dataOfCurrentObjectJSON.then(function(result) {
+                        document.getElementById("planetMassInput").value = result[selectedObjectName]["mass"];
+                        document.getElementById("diameterInput").value = result[selectedObjectName]["diameter"];
+                        document.getElementById("perimeterInput").value = result[selectedObjectName]["perimeter"];
+                        document.getElementById("rotationSpeedInput").value = result[selectedObjectName]["rotationSpeed"];
+                        document.getElementById("rotationPeriodInput").value = result[selectedObjectName]["rotationPeriod"];
+                        document.getElementById("orbitalPeriodInput").value = result[selectedObjectName]["orbitalPeriod"];
+                        document.getElementById("distanceFromSunPerihelionInput").value = result[selectedObjectName]["perihelion"];
+                        document.getElementById("distanceFromSunAphelionInput").value = result[selectedObjectName]["aphelion"];
+                    });
+                } else if (!showPlanetTable) {
+                    dataOfCurrentObjectJSON = (this.getMoonData())[0];
+                    dataOfCurrentObjectJSON.then(function(result) {
+                        document.getElementById("moonMassInput").value = result[selectedObjectName]["mass"];
+                        document.getElementById("diameterInputMoon").value = result[selectedObjectName]["diameter"];
+                        document.getElementById("orbitalSpeedInputMoon").value = result[selectedObjectName]["orbitalSpeed"];
+                        document.getElementById("orbitalPeriodInputMoon").value = result[selectedObjectName]["orbitalPeriod"];
+                        document.getElementById("distanceFromPlanetInput").value = result[selectedObjectName]["distanceFromPlanet"];
+                        document.getElementById("minTemperatureInput").value = result[selectedObjectName]["minTemperature"];
+                        document.getElementById("maxTemperatureInput").value = result[selectedObjectName]["maxTemperature"];
+                    });
                 }
             }
-
-            var dataOfCurrentObjectJSON;
-            if (showPlanetTable) {
-                dataOfCurrentObjectJSON = (this.getPlanetData())[0];
-                dataOfCurrentObjectJSON.then(function(result) {
-                    document.getElementById("planetMassInput").value = result[selectedObjectName]["mass"];
-                    document.getElementById("diameterInput").value = result[selectedObjectName]["diameter"];
-                    document.getElementById("perimeterInput").value = result[selectedObjectName]["perimeter"];
-                    document.getElementById("rotationSpeedInput").value = result[selectedObjectName]["rotationSpeed"];
-                    document.getElementById("rotationPeriodInput").value = result[selectedObjectName]["rotationPeriod"];
-                    document.getElementById("orbitalPeriodInput").value = result[selectedObjectName]["orbitalPeriod"];
-                    document.getElementById("distanceFromSunPerihelionInput").value = result[selectedObjectName]["perihelion"];
-                    document.getElementById("distanceFromSunAphelionInput").value = result[selectedObjectName]["aphelion"];
-                });
-            } else if (!showPlanetTable) {
-                dataOfCurrentObjectJSON = (this.getMoonData())[0];
-                dataOfCurrentObjectJSON.then(function(result) {
-                    document.getElementById("moonMassInput").value = result[selectedObjectName]["mass"];
-                    document.getElementById("diameterInputMoon").value = result[selectedObjectName]["diameter"];
-                    document.getElementById("orbitalSpeedInputMoon").value = result[selectedObjectName]["orbitalSpeed"];
-                    document.getElementById("orbitalPeriodInputMoon").value = result[selectedObjectName]["orbitalPeriod"];
-                    document.getElementById("distanceFromPlanetInput").value = result[selectedObjectName]["distanceFromPlanet"];
-                    document.getElementById("minTemperatureInput").value = result[selectedObjectName]["minTemperature"];
-                    document.getElementById("maxTemperatureInput").value = result[selectedObjectName]["maxTemperature"];
-                });
-            }
         }
-    }
-
-    // Animate
-    // -------------------------------------------------------------------------
-    animate() {
-        this.disableRaycasterThroughOverlayObjects();
-        this.getPhysicalValuesOfClickedObjectFromJSON();
     }
 }
