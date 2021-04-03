@@ -360,18 +360,11 @@ input[type="checkbox"] {
     z-index: 20;
     position: fixed;
     left: 38%;
+    top: 20px;
     width: 25%;
     background-color: transparent;
     text-align: center;
-}
-
-.slidercontainer:first-of-type {
-    top: 20px;
     visibility: hidden;
-}
-
-.slidercontainer:nth-of-type(2) {
-    bottom: 20px;
 }
 
 .slider {
