@@ -80,6 +80,7 @@ let arrLang = {
         'menuFunctionality': 'Funkcionalita menu',
         'menuSolarSystemModelHeading': 'Model sluneční soustavy',
         'menuPlanetsHeading': 'Planety',
+        'menuTranslationHeading': 'Překlad stránky',
         'rightSidebar': 'Pravý boční panel',
         '3buttons': '3 tlačítka (v levém dolním rohu)',
         'moveModelFunctions': 'Funkce pro posouvání modelu',
@@ -96,6 +97,7 @@ let arrLang = {
         // Page About - text
         'menuSolarSystemModelInfo': 'V případě, že je model zobrazený v aktuálním okně, výběrem položky "Model sluneční soustavy" se zobrazí upozornění o ztrátě všech nastavených vlastností pro model. Po akceptování změn bude model znovu načten do původního stavu. Po zamítnutí změn zůstane otevřený aktuální model. Otevření modelů ve více oknech webového prohlížeče bude zamítnuto pro menší zatížení prohlížeče.',
         'menuPlanetsInfo': 'Výběrem položky "Planety" se otevře nová záložka s nabídkou planet. Po výběru a kliknutí na jednu planetu se zobrazí stránka se stručným popisem a interaktivním modelem planety, který je možné ovládat kurzorem.',
+        'menuTranslationInfo': 'Překlad stránky je omezen během zastavení aplikace, kdy budou jména planet a měsíců modela přeloženy až po spuštění aplikace.',
         'cosmicObjectButtonInfo': 'Kliknutím na tlačítko je možné přidat 1 umělý kosmický objekt na orbitu poslední vybrané planety. Pokud uživatel zatím nekliknul na žádnou planetu, po aktivaci tlačítka je třeba vybranou planetu označit kliknutím na ni nebo její orbitu. Přidání objektu dočasně skryje zobrazeny měsíce zvolené planety kvůli přehlednějšímu zobrazení. Během aktivního stavu tlačítka jsou dočasně nefunkční funkce klikání na objekty a zobrazení jejich fyzikálních vlastností. Aktivní tlačítko zpřístupní posuvník (v horní části obrazovky), který slouží ke změně dráhy kosmického objektu. Je znázorněna i změna rychlosti pohybu podle vzdálenosti objektu od planety. Deaktivaci tlačítka lze provést pomocí jeho opětovného stlačení, projeví se změnou barvy.',
         'cameraToPlanetButtonInfo': 'Kliknutím na tlačítko je možné přiblížit kameru na poslední vybranou planetu. Výběr planety funguje stejně jako u tlačítka pro kosmický objekt. Přiblížení kamery nabízí bližší pohled na vesmírné těleso a jeho měsíce. Narozdíl od přiblížení celého modelu kamera následuje zvolený objekt při rotací po orbitě. Během aktivního stavu tlačítka jsou přístupné funkce klikání na objekty a zobrazení jejich fyzikálních vlastností. Deaktivaci tlačítka lze provést pomocí jeho opětovného stlačení, projeví se změnou barvy.',
         'centerModelButtonInfo': 'Kliknutím na tlačítko se posune model do středu obrazovky. V případě, že modelem nebylo pohybováno pomocí kurzoru nebo šipek na klávesnici, model zůstane na stejném místě.',
@@ -188,6 +190,7 @@ let arrLang = {
         'menuFunctionality': 'Functionality of menu',
         'menuSolarSystemModelHeading': 'Solar system model',
         'menuPlanetsHeading': 'Planets',
+        'menuTranslationHeading': 'Page translation',
         'rightSidebar': 'Right side panel',
         '3buttons': '3 buttons (at the bottom left corner)',
         'moveModelFunctions': 'Functions for shifting model',
@@ -204,6 +207,7 @@ let arrLang = {
         // Page About - text
         'menuSolarSystemModelInfo': 'If the model is displayed in the current window, selecting the "Solar system model" item will display a notification about the loss of all set properties for the model. After accepting the changes, the model will be reloaded to its original state. After rejecting the changes, the current model will remain open. Opening models in multiple web browser windows will be denied to reduce browser load.',
         'menuPlanetsInfo': 'Selecting item "Planets" will open a new tab with a menu of planets. After selecting and clicking on one planet, a page will appear with a brief description and an interactive model of the planet, which can be controlled by the cursor.',
+        'menuTranslationInfo': 'The translation of the page is limited during the pause of application, when the names of the planets and moons from the model will be translated only after the application is started.',
         'cosmicObjectButtonInfo': 'By clicking on the button it is possible to add single artificial cosmic object to the orbit of the last selected planet. If the user has not yet clicked on any planet, after activating the button, the selected planet must be marked by clicking on it or its orbit. Adding an object temporarily hides the displayed moons of the selected planet for a clearer view. During the active state of the button, the functions for clicking on objects and displaying their physical properties are temporarily inactive. The active button accesses the slider (at the top of the screen), which is used to change the path of the space object. The change of rotation speed is also shown, according to the distance of the object from the planet. Deactivation of the button can be done by pressing it again, it will show a change in color.',
         'cameraToPlanetButtonInfo': 'By clicking on the button it is possible to zoom the camera to the last selected planet. Selecting a planet works the same as with the cosmic object button. Zooming in on the camera offers a closer look at the planet and its moons. Unlike zooming in on the entire model, the camera follows the selected object during rotation on its orbit. During the active state of the button, the functions for clicking on objects and displaying their physical properties are accessible. Deactivation of the button can be done by pressing it again, it will be reflected in a color change.',
         'centerModelButtonInfo': 'By clicking on the button the model willl move to the center of the screen. If the model has not been moved with the cursor or arrows on the keyboard, the model will remain in the same place.',
@@ -297,6 +301,7 @@ let arrLang = {
         'menuFunctionality': 'Funkcionalita menu',
         'menuSolarSystemModelHeading': 'Model slnečnej sústavy',
         'menuPlanetsHeading': 'Planéty',
+        'menuTranslationHeading': 'Preklad stránky',
         'rightSidebar': 'Pravý bočný panel',
         '3buttons': '3 tlačidlá (v ľavom dolnom rohu)',
         'moveModelFunctions': 'Funkcie pre posúvanie modelu',
@@ -313,6 +318,7 @@ let arrLang = {
         // Page About - text
         'menuSolarSystemModelInfo': 'V prípade, že je model zobrazený v aktuálnom okne, výberom položky "Model slnečnej sústavy" sa zobrazí upozornenie o strate všetkých nastavených vlastností pre model. Po akceptovaní zmien bude model znovu načítaný do pôvodného stavu. Po zamietnutí zmien ostane otvorený aktuálny model. Otvorenie modelov vo viacerých oknách webového prehliadača bude zamietnuté pre menšie zaťaženie prehliadača.',
         'menuPlanetsInfo': 'Výberom položky "Planéty" sa otvorí nová záložka s ponukou planét. Po výbere a kliknutí na jednu planétu sa zobrazí stránka so stručným popisom a interaktívnym modelom planéty, ktorý je možné ovládať kurzorom.',
+        'menuTranslationInfo': 'Preklad stránky je obmedzený počas zastavenia aplikácie, kedy budú mená planét a mesiacov modelu preložené až po spustení aplikácie.',
         'cosmicObjectButtonInfo': 'Kliknutím na tlačidlo je možné pridať 1 umelý kozmický objekt na orbitu poslednej vybranej planéty. Ak užívateľ zatiaľ neklikol na žiadnu planétu, po aktivácií tlačidla je potrebné vybranú planétu označiť kliknutím na ňu alebo jej orbitu. Pridanie objektu dočasne skryje zobrazené mesiace zvolenej planéty kvôli prehľadnejšiemu zobrazeniu. Počas aktívneho stavu tlačidla sú dočasne nefunkčné funkcie klikania na objekty a zobrazenia ich fyzikálnych vlastností. Aktívne tlačidlo sprístupní posúvač (v hornej časti obrazovky), ktorý slúži na zmenu dráhy kozmického objektu. Je znázornená aj zmena rýchlosti pohybu podľa vzdialenosti objektu od planéty. Deaktiváciu tlačidla je možné previesť pomocou jeho opätovného stlačenia, prejaví sa zmenou farby.',
         'cameraToPlanetButtonInfo': 'Kliknutím na tlačidlo je možné priblížiť kameru na poslednú vybranú planétu. Výber planéty funguje rovnako ako pri tlačidle pre kozmický objekt. Priblíženie kamery ponúka bližší pohľad na vesmírne teleso a jeho mesiace. Narozdiel od priblíženia celého modelu kamera nasleduje zvolený objekt pri rotácii po orbite. Počas aktívneho stavu tlačidla sú prístupné funkcie klikania na objekty a zobrazenia ich fyzikálnych vlastností. Deaktiváciu tlačidla je možné previesť pomocou jeho opätovného stlačenia, prejaví sa zmenou farby.',
         'centerModelButtonInfo': 'Kliknutím na tlačidlo sa posunie model do stredu obrazovky. V prípade ak modelom nebolo pohybované pomocou kurzoru alebo šípok na klávesnici, model ostane na rovnakom mieste. ',
