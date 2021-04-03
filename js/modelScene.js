@@ -123,26 +123,18 @@ class ModelScene extends InitScene {
     // Zooming in/out (for planets and orbits) - called in app.js
     // -------------------------------------------------------------------------
     rotationAndScaleOfObjects(time) {
-        var zoomSlider = document.getElementById("rangesliderZoomInput");
-        var zoomSliderValue = document.getElementById("rangesliderZoomValue");
         var forceSlider = document.getElementById("rangesliderSpeedInput");
         var forceSliderValue = document.getElementById("rangesliderSpeedValue");
 
         var updateRangesliderValues = () => {
-            zoomSliderValue.innerHTML = zoomSlider.value;
-            this.setScaleValue(zoomSliderValue.innerHTML / 200);
             forceSliderValue.innerHTML = forceSlider.value;
             this.setSpeedValue(forceSliderValue.innerHTML);
 
-            this.planetObject.setScaleForObjectsAndOrbits(this.getScaleValue());
-            this.moonObject.scaleObjectsByRangeslider(this.getScaleValue(), this.moonObject.getMoonMeshes());
-            this.sunObject.setScaleForSun(this.getScaleValue());
-
-            this.planetObject.rotateAllPlanets(this.getScaleValue(), time);
-            this.moonObject.rotateAllMoons(this.getScaleValue(), time);
-            this.planetObject.cosmicObject.findClickedPlanet(this.getScaleValue(), this.getSpeedValue());
+            this.planetObject.orbitClass.positionAllMoonOrbits();
+            this.planetObject.rotateAllPlanets(time);
+            this.moonObject.rotateAllMoons(time);
+            this.planetObject.cosmicObject.findClickedPlanet(this.getSpeedValue());
         }
-        zoomSlider.addEventListener('input', updateRangesliderValues);
         updateRangesliderValues();
     }
 
@@ -163,9 +155,8 @@ class ModelScene extends InitScene {
     }
 
     findClickedPlanetForCamera() {
-        var selected = (document.querySelectorAll(".slidercontainer")[1]);
-
-        if (window.myParam != undefined) {
+        var buttonColor = document.getElementById("cameraToObjectButton").style.backgroundColor;
+        if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object;
             var planet = this.planetObject.getPlanetMeshes();
             var index = this.jsonManager.getIndexOfSelectedPlanet(selectedPlanet);
@@ -175,12 +166,10 @@ class ModelScene extends InitScene {
                 planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
                 planet[index].add(this.getCamera());
                 this.camera.position.set(0, 15, 0);
-                selected.style.visibility = "hidden";
                 this.setLastIndexOfFollowedObject(index);
             } else if (this.getIsCameraFollowingObject()) {
                 planet[this.getLastIndexOfFollowedObject()].remove(this.getCamera());
                 (this.getCamera()).position.set(0, 45, 0);
-                selected.style.visibility = "visible";
             }
         }
     }

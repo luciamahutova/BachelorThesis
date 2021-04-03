@@ -84,18 +84,9 @@ class Planet extends InitPlanets {
         }
     }
 
-    // Setting planets' and orbits' positions - according to rangeslider scale value
-    // -------------------------------------------------------------------------
-    setScaleForObjectsAndOrbits(scaleValue) {
-        this.scaleObjectsByRangeslider(scaleValue, this.getPlanetMeshes());
-        this.scaleObjectsByRangeslider(scaleValue, [this.cosmicObject.getCosmicObject()]);
-        this.orbitClass.scaleOrbitsByRangeslider(scaleValue);
-        this.orbitClass.positionAllMoonOrbits();
-    }
-
     // Moving planets on their orbits (ellipses)
     // -------------------------------------------------------------------------
-    rotateAllPlanets(scaleValue, time) {
+    rotateAllPlanets(time) {
         // Called in f. animate() in modelScene.js - movement needs to by redrawn by renderer
         this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
         this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
@@ -105,39 +96,36 @@ class Planet extends InitPlanets {
         if (document.getElementById("en").style.fontWeight == "bold") {
             this.traverseSceneToFindPlanetNames(true, "nameEn", this.getScene());
             for (var i = 0; i < planetMeshes.length; i++) {
-                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesEN())[i],
-                    scaleValue * 2, time);
+                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesEN())[i], time);
             }
         } else if (document.getElementById("cz").style.fontWeight == "bold") {
             this.traverseSceneToFindPlanetNames(true, "nameCz", this.getScene());
             for (var i = 0; i < planetMeshes.length; i++) {
-                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesCZ())[i],
-                    scaleValue * 2, time);
+                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesCZ())[i], time);
             }
         } else if (document.getElementById("sk").style.fontWeight == "bold") {
             this.traverseSceneToFindPlanetNames(true, "nameSk", this.getScene());
             for (var i = 0; i < planetMeshes.length; i++) {
-                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesSK())[i],
-                    scaleValue * 2, time);
+                this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesSK())[i], time);
             }
         }
     }
 
     // Positions for 1 planet - according to scale from rangeslider
     // -------------------------------------------------------------------------
-    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, scaleValue, time) {
+    positionPlanetOnOrbit(planetMesh, planetName, planetNameOnScene, time) {
         var dataOfCurrentPlanetJSON = (this.getPlanetDataJSON())[0];
         var orbitalSpeed = 0;
 
         dataOfCurrentPlanetJSON.then(function(result) {
             orbitalSpeed = result[planetName]["orbitalSpeed"] / 3;
-            planetMesh.position.x = result[planetName]["c"] * scaleValue +
-                (result[planetName]["a"] * result[planetName]["scaleFactor"] * scaleValue * Math.cos(orbitalSpeed * 0.0001 * time));
-            planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] * scaleValue *
+            planetMesh.position.x = result[planetName]["c"] +
+                (result[planetName]["a"] * result[planetName]["scaleFactor"] * Math.cos(orbitalSpeed * 0.0001 * time));
+            planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] *
                 Math.sin(orbitalSpeed * 0.0001 * time));
 
             if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
-                planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] * scaleValue + 1;
+                planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] + 1;
                 planetNameOnScene.position.z = planetMesh.position.z;
             }
         });

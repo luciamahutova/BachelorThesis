@@ -140,7 +140,7 @@ class CosmicObject extends JSONManager {
 
     // Find clicked planet to show cosmic object, called if ModelScene - animate()
     // -------------------------------------------------------------------------
-    findClickedPlanet(scaleValue, force) {
+    findClickedPlanet(force) {
         var buttonColor = document.getElementById("cosmicObjectButton").style.backgroundColor;
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object;
@@ -148,7 +148,7 @@ class CosmicObject extends JSONManager {
 
             if (this.getIsPlanetClicked()) {
                 var meshOrder = this.getIndexOfSelectedPlanet(selectedPlanet);
-                this.addCosmicObjectToOrbit(buttonColor, this.getCosmicObject(), this.getPlanetMeshes(), meshOrder, scaleValue,
+                this.addCosmicObjectToOrbit(buttonColor, this.getCosmicObject(), this.getPlanetMeshes(), meshOrder,
                     force, this.getObjectOrbit());
                 (this.getScene()).add(this.getCosmicObject());
             } else if (!this.getIsPlanetClicked()) {
@@ -159,7 +159,7 @@ class CosmicObject extends JSONManager {
 
     // Position cosmic object on its orbit, change shape of orbit and rotation speed
     // -------------------------------------------------------------------------
-    addCosmicObjectToOrbit(buttonColor, cosmicObject, planetMeshes, planetOrder, scaleValue, force, orbit) {
+    addCosmicObjectToOrbit(buttonColor, cosmicObject, planetMeshes, planetOrder, force, orbit) {
         if (window.myParam != undefined && buttonColor == "lightblue") {
             var selectedPlanet = window.myParam[0].object.name;
             orbit.position.x = planetMeshes[planetOrder].position.x;
@@ -170,13 +170,13 @@ class CosmicObject extends JSONManager {
                 this.setIsSpeedChanged(true);
             }
 
-            this.positionCosmicObject(selectedPlanet, cosmicObject, orbit, scaleValue, force);
+            this.positionCosmicObject(selectedPlanet, cosmicObject, orbit, force);
             this.setLastSpeedFromSlider(force);
             this.setIsSpeedChanged(false);
         }
     }
 
-    positionCosmicObject(selectedPlanet, cosmicObject, orbit, scaleValue, force) {
+    positionCosmicObject(selectedPlanet, cosmicObject, orbit, force) {
         var dataOfCurrentPlanetJSON = (this.getPlanetData())[0];
         var changeX, changeY, orbitPoint = 0;
 
@@ -187,8 +187,8 @@ class CosmicObject extends JSONManager {
             var isSpeedChanged = this.getIsSpeedChanged();
 
             var promiseValue = dataOfCurrentPlanetJSON.then(function(result) {
-                changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * scaleValue * valueX;
-                changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * scaleValue * valueZ;
+                changeX = result[selectedPlanet]["cosmicObjectDistanceX"] * valueX * 0.5;
+                changeY = result[selectedPlanet]["cosmicObjectDistanceZ"] * valueZ * 0.5;
 
                 orbit.scale.set(changeX, changeY, 1);
                 orbitPoint = new THREE.Vector3(
@@ -199,12 +199,12 @@ class CosmicObject extends JSONManager {
 
             await promiseValue; // await - to read data from Promise.then()
             this.changeShapeOfObjectOrbit(isSpeedChanged, selectedPlanet, orbitPoint.x, force, orbit);
-            this.changeRotationSpeedOfObject(orbit, cosmicObject, force, scaleValue);
+            this.changeRotationSpeedOfObject(orbit, cosmicObject, force);
         })();
     }
 
     // Change speed according position of cosmic object - perihelion/aphelion 
-    changeRotationSpeedOfObject(orbit, cosmicObject, force, scaleValue) {
+    changeRotationSpeedOfObject(orbit, cosmicObject, force) {
         // Vectors set to position of center planet and object
         // Vectors are good to calculate distance between 2 points
         (this.getVectorPlanet()).x = orbit.position.x;
@@ -216,10 +216,10 @@ class CosmicObject extends JSONManager {
         if (force == 1) {
             this.setCosmicObjectMovingTime(50);
         } else {
-            if (this.getVectorsDistance() > (4 * force * scaleValue)) {
+            if (this.getVectorsDistance() > (2 * force)) {
                 // slow down, object is on perihelion (further away)
                 this.setCosmicObjectMovingTime(30);
-            } else if (this.getVectorsDistance() < (4 * force * scaleValue)) {
+            } else if (this.getVectorsDistance() < (2 * force)) {
                 // speed up, object is closer to its planet (aphelion)
                 this.setCosmicObjectMovingTime(50);
             }

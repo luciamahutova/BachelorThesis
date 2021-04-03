@@ -31,10 +31,4 @@ class Sun extends InitPlanets {
         (this.getPointLightScene()).position.set((this.getSunMesh()).position.x, 0, (this.getSunMesh()).position.z);
         (this.getPointLightSun()).position.set((this.getSunMesh()).position.x, 10, (this.getSunMesh()).position.z);
     }
-
-    // Scaling the Sun (and light in the middle of the scene) - according to zoom
-    // -------------------------------------------------------------------------
-    setScaleForSun(scaleValue) {
-        (this.getSunMesh()).scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
-    }
 }

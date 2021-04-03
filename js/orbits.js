@@ -74,12 +74,4 @@ class Orbits extends JSONManager {
                 (this.getPlanerOrder())[j], (this.getMoonNames())[j]);
         }
     }
-
-    // Scaling orbits according to zoom value from rangeslider
-    // -------------------------------------------------------------------------
-    scaleOrbitsByRangeslider(scaleValue) {
-        for (var i = 0; i < (this.getAllOrbits()).length; i++) {
-            (this.getAllOrbits())[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
-        }
-    }
 }

@@ -33,12 +33,6 @@ class InitPlanets extends JSONManager {
         }
     }
 
-    scaleObjectsByRangeslider(scaleValue, objects) {
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].scale.set(2 * scaleValue, 2 * scaleValue, 2 * scaleValue);
-        }
-    }
-
     // Names for planets on Scene: TextGeometry
     // -------------------------------------------------------------------------
     createTextGeometry(planetsMeshes, planetsNamesOnScene, scene, objectNames, fontSize, startsWith) {
