@@ -52,7 +52,7 @@ class CosmicObject extends JSONManager {
     setVectorsDistance(value) { this.planetAndObjectVectorDistance = value }
     setCosmicObjectMovingTime(value) { this.movingTime += value }
 
-    // Cosmic object and orbit
+    // Cosmic object, orbit and button
     // -------------------------------------------------------------------------
     createCosmicObject() {
         var geometry = new THREE.ConeGeometry(0.3, 0.4, 5, 1, false, 1, 6.3);

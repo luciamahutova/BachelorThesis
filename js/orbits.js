@@ -69,9 +69,11 @@ class Orbits extends JSONManager {
     }
 
     positionAllMoonOrbits() {
+        var orbits = this.getAllOrbits();
+        var planetMeshes = this.getPlanetMeshes();
+        var moonNames = this.getMoonNames();
         for (var i = 8, j = 0; i < (this.getAllOrbits()).length; i++, j++) {
-            this.positionSingleMoonOrbit((this.getAllOrbits())[i], this.getPlanetMeshes(),
-                (this.getPlanerOrder())[j], (this.getMoonNames())[j]);
+            this.positionSingleMoonOrbit(orbits[i], planetMeshes, (this.getPlanerOrder())[j], moonNames[j]);
         }
     }
 }

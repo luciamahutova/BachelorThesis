@@ -16,6 +16,9 @@ class Moon extends InitPlanets {
     getOrbits() { return this.orbits }
     getTranslatedMoonName() { return this.translatedMoonName }
 
+
+    // Create moon objects
+    // -------------------------------------------------------------------------
     createMoons() {
         var moonSizeAndParent = {
             "Moon": [0.2727, "Earth"],
@@ -59,11 +62,9 @@ class Moon extends InitPlanets {
     }
 
     positionMoonToOrbit(moonMesh, moonNameJSON, orbits, orbitOrder, moonNameOnScene, translatedMoonNames, time) {
-        this.traverseSceneToFindMoons(true, "");
-        this.traverseSceneToFindMoons(true, "name");
         var orbitalSpeed = 0;
-
         var dataOfCurrentMoonJSON = (this.getMoonDataJSON())[0];
+
         dataOfCurrentMoonJSON.then(function(result) {
             orbitalSpeed = result[moonNameJSON]["orbitalSpeed"] / 5; // speed is too high
             moonMesh.position.x = orbits[orbitOrder + 8].position.x + result[moonNameJSON]["a"] *
@@ -85,29 +86,8 @@ class Moon extends InitPlanets {
         });
     }
 
-    positionMoonZoomOut() {
-        this.traverseSceneToFindMoons(false, "");
-        this.traverseSceneToFindMoons(false, "name");
-        this.traverseSceneToFindPlanetNames(false, "nameMoon", this.getScene());
-        this.traverseSceneToFindPlanetNames(false, "nameMesic", this.getScene());
-        this.traverseSceneToFindPlanetNames(false, "nameMesiac", this.getScene());
-    }
-
     // Traverse scene + set visibility of one translated name for Moon
     // -------------------------------------------------------------------------
-    traverseSceneToFindMoons(showObjectsBoolean, name) {
-        // Hide all moons, orbits and name (cannot remove from scene in f. scene.traverse)
-        // Arg.: empty name for moons and orbits, "name" for TextGeometry
-        (this.getScene()).traverse(function(children) {
-            if (children.name == name + "Io" || children.name == name + "Europa" ||
-                children.name == name + "Ganymede" || children.name == name + "Callisto" || children.name == name + "Rhea" ||
-                children.name == name + "Titan" || children.name == name + "Ariel" || children.name == name + "Umbriel" ||
-                children.name == name + "Titania" || children.name == name + "Oberon" || children.name == name + "Triton") {
-                children.visible = showObjectsBoolean;
-            }
-        });
-    }
-
     setVisibilityOfTranslatedMoonName() {
         this.traverseSceneToFindPlanetNames(false, "nameMoon", this.getScene());
         this.traverseSceneToFindPlanetNames(false, "nameMesic", this.getScene());

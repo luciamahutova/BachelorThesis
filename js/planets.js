@@ -19,6 +19,7 @@ class Planet extends InitPlanets {
     getPlanetNamesSK() { return this.planetNamesOnSceneSK }
     getScene() { return this.scene }
 
+
     // Creating planet objects, meshes and adding them to Scene
     // -------------------------------------------------------------------------
     createPlanets() {
