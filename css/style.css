@@ -37,7 +37,6 @@ body {
 h1 {
     font-size: 90px;
     font-weight: bold;
-    position: fixed;
     top: 70px;
     left: 40px;
     z-index: 10;
@@ -46,13 +45,31 @@ h1 {
 img,
 h1,
 h3,
-span {
+span,
+p,
+.section--bg-transparent {
     background-color: transparent;
 }
 
+.menu--position-absolute,
+.section--position-absolute {
+    position: absolute;
+}
 
-/* Home page ***********************************************************************************************
-***********************************************************************************************************/
+.h1--position-fixed,
+.header--position-fixed,
+.section--position-fixed,
+.elem--position-fixed {
+    position: fixed;
+}
+
+.elem--border-none,
+.sidebars input[type="text"] {
+    border: none;
+}
+
+
+/* Home page **********************************************************************************************/
 
 .container {
     display: grid;
@@ -108,15 +125,12 @@ span {
 }
 
 
-/* Menu ****************************************************************************************************
-***********************************************************************************************************/
+/* Menu ***************************************************************************************************/
 
-#menu {
+header nav {
     height: 400px;
     width: 300px;
-    background-color: #061327;
     float: right;
-    position: fixed;
     top: 0;
     right: -300px;
     overflow: hidden;
@@ -125,37 +139,34 @@ span {
 }
 
 header img {
-    position: fixed;
     top: 40px;
     right: 40px;
     z-index: 1;
 }
 
-#menu a,
-#menu button {
+header nav a,
+header nav button {
     margin-left: 20px;
     font-size: 18px;
     text-decoration: none;
     border: none;
-    position: relative;
     transition: transform 0.3s ease;
 }
 
-#menu ul {
+header nav ul {
     list-style-type: none;
     margin-top: 110px;
 }
 
-#menu ul li {
+header nav ul li {
     margin-bottom: 15px;
 }
 
-#menu li:hover {
+header nav li:hover {
     transform: translateX(10px);
 }
 
-#menu #languages {
-    position: absolute;
+#languages {
     bottom: 15px;
 }
 
@@ -170,19 +181,16 @@ header img {
     color: #ffffff;
 }
 
-#menu .closebtn {
-    position: absolute;
+header nav .closebtn {
     top: 30px;
     font-size: 40px;
 }
 
 
-/* Sidebars ************************************************************************************************
-***********************************************************************************************************/
+/* Sidebars ***********************************************************************************************/
 
 .sidebarIcon,
 .scaleFactorTooltip {
-    position: fixed;
     top: 110px;
     right: 40px;
     z-index: 1;
@@ -193,11 +201,9 @@ header img {
 }
 
 .sidebars {
-    position: fixed;
     top: 160px;
     width: 285px;
     height: fit-content;
-    border: none;
     border-radius: 5px 0;
     font-size: 16px;
     transition: 0.6s;
@@ -215,7 +221,6 @@ header img {
 
 .sidebars div:first-child {
     /* for while frame */
-    border: none;
     border-radius: 5px 0;
     box-shadow: 0 0 0 2px #ffffff;
     display: inline-block;
@@ -257,7 +262,6 @@ header img {
 }
 
 #sidebarRight select {
-    position: relative;
     float: right;
     border-radius: 5px;
     margin: 3px 15px 0 0;
@@ -268,14 +272,11 @@ header img {
 
 /* Inputs in Sidebar *********************/
 
-.sidebars input[type="text"],
-.sidebars input[type="number"] {
+.sidebars input[type="text"] {
     width: 115px;
-    position: relative;
     float: right;
     margin-right: 15px;
     margin-top: 5px;
-    border: none;
     border-bottom: 1px solid #BABABA;
 }
 
@@ -291,7 +292,6 @@ input[type=number] {
 }
 
 input[type="checkbox"] {
-    position: relative;
     float: right;
     width: 16px;
     height: 16px;
@@ -310,7 +310,6 @@ input[type="checkbox"] {
 .confirmChangesButton {
     width: 80px;
     height: 25px;
-    border: none;
     border-radius: 5px;
     background-color: #BABABA;
     margin: 0 90px 0 15px;
@@ -320,13 +319,11 @@ input[type="checkbox"] {
 .pauseButton {
     width: 25px;
     height: 25px;
-    border: none;
     background-image: url(/icons/playButton.png);
 }
 
 .pauseButton {
     background-image: url(/icons/pauseButton.png);
-    position: fixed;
     margin-right: 20px;
 }
 
@@ -334,17 +331,14 @@ input[type="checkbox"] {
 /* 2 icons for Solar system models ***********/
 
 .models {
-    position: fixed;
     bottom: 40px;
     left: 40px;
-    background-color: transparent;
 }
 
 .models button {
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    position: relative;
     float: left;
     margin-right: 20px;
     background-image: url(/icons/rocket.png);
@@ -368,11 +362,9 @@ input[type="checkbox"] {
 
 .slidercontainer {
     z-index: 20;
-    position: fixed;
     left: 38%;
     top: 20px;
     width: 25%;
-    background-color: transparent;
     text-align: center;
     visibility: hidden;
 }
@@ -407,11 +399,8 @@ input[type="checkbox"] {
 /* Tooltips **********************************/
 
 .scaleFactor {
-    position: absolute;
     top: 0;
     right: 0;
-    background-color: transparent;
-    border: none;
 }
 
 .tooltip,
@@ -420,7 +409,6 @@ input[type="checkbox"] {
     box-shadow: none;
     position: relative;
     display: inline-block;
-    background-color: transparent;
 }
 
 .physicalValuesTooltip {
@@ -440,7 +428,6 @@ input[type="checkbox"] {
     padding: 3px;
     border-radius: 5px;
     z-index: 100;
-    position: absolute;
     bottom: 120%;
     left: -40%;
 }
@@ -491,11 +478,9 @@ input[type="checkbox"] {
 }
 
 
-/* Planets *************************************************************************************************
-***********************************************************************************************************/
+/* Planets ************************************************************************************************/
 
 h1+section {
-    position: absolute;
     bottom: 400px;
     left: 40px;
     width: 2000px;
@@ -504,7 +489,6 @@ h1+section {
 }
 
 h1+section article {
-    position: relative;
     float: left;
     width: fit-content;
     height: inherit;
@@ -518,41 +502,31 @@ h1+section article:hover {
     -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(#ffffff));
 }
 
-h1+section h3 {
-    position: absolute;
-}
-
 header+a {
     font-size: 18px;
-    position: fixed;
     left: 40px;
     top: 40px;
 }
 
 .fadeLine {
     display: block;
-    border: none;
     color: white;
     width: 270px;
     height: 750px;
     background: #061327;
     background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0.4, white), color-stop(0.6, #061327));
     opacity: 0.1;
-    position: fixed;
     left: 160px;
 }
 
 h1+p {
     width: 400px;
-    position: absolute;
     top: 200px;
     left: 60px;
-    background-color: transparent;
 }
 
 
-/* Info page - how to use application **********************************************************************
-***********************************************************************************************************/
+/* Info page - how to use application *********************************************************************/
 
 article {
     position: relative;
@@ -562,11 +536,9 @@ article {
 }
 
 article+.bgLayer {
-    position: fixed;
     top: 0px;
     width: 100%;
     height: 200px;
-    background-color: #061327;
 }
 
 article section {
@@ -588,9 +560,9 @@ article h3 {
 }
 
 
-/* Scene for interactive models of planets */
+/* Scene for interactive models of planets ****************************************************************/
 
-#interativeModelScene {
+.interactivePlanetScene {
     position: absolute;
     top: 100px;
     right: 10%;

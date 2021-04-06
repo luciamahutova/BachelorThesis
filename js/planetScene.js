@@ -17,8 +17,8 @@ class PlanetScene extends InitScene {
     }
 
     // Get()
-    getWidthOfScene() { return document.querySelector('#interativeModelScene').offsetWidth }
-    getHeightOfScene() { return document.querySelector('#interativeModelScene').offsetHeight }
+    getWidthOfScene() { return document.querySelector('.interactivePlanetScene').offsetWidth }
+    getHeightOfScene() { return document.querySelector('.interactivePlanetScene').offsetHeight }
     getHtmlPageName() { return window.location.pathname.split("/").pop() }
     getPlanetMeshes() { return this.planetMeshes }
     getScene() { return this.scene }
@@ -30,7 +30,7 @@ class PlanetScene extends InitScene {
     // Settings for scene and planets
     // -------------------------------------------------------------------------
     initInteractivePlanetScene(scene, renderer, camera, ambientLight) {
-        var interactiveScene = document.querySelector('#interativeModelScene');
+        var interactiveScene = document.querySelector('.interactivePlanetScene');
         interactiveScene.appendChild(this.renderer.domElement);
         renderer.setClearColor(0x000000, 0);
 

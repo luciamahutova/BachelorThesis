@@ -14,9 +14,9 @@
 
 <body style="overflow: hidden;">
     <header class="overlay">
-        <img src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
-        <nav id="menu">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <img class="header--position-fixed" src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
+        <nav class="header--position-fixed" id="menu">
+            <a href="javascript:void(0)" class="closebtn menu--position-absolute" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
                     <a href="#" class="lang" data-lang="ssm" onclick="modelScene.sidebarManager.startNewSimulation()"></a>
@@ -28,7 +28,7 @@
                     <a href="#" class="lang" data-lang="about" id="about" onclick="modelScene.sidebarManager.openInNewTab(this.id)"></a>
                 </li>
             </ul>
-            <div id="languages">
+            <div class="menu--position-absolute" id="languages">
                 <button type="button" class="translate" id="cz" onclick="highlightChosenLanguage(this.id)">cz</button>
                 <button type="button" class="translate" id="en" onclick="highlightChosenLanguage(this.id)">en</button>
                 <button type="button" class="translate" id="sk" onclick="highlightChosenLanguage(this.id)">sk</button>
@@ -36,8 +36,8 @@
         </nav>
     </header>
 
-    <section class="sidebars overlay" id="sidebarPlanetInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
-        <div>
+    <section class="sidebars overlay section--position-fixed elem--border-none" id="sidebarPlanetInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
+        <div class="section--bg-transparent">
             <section>
                 <h3 class="lang" data-lang="physicalValuesPlanet"></h3>
                 <span class="lang" data-lang="planetMass"></span><input id="planetMassInput" type="text" value="" disabled>
@@ -55,7 +55,7 @@
                 <span class="lang" data-lang="rotationPeriod"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" data-lang="negativeRotationPeriodMeaning"></span>
+                    <span class="lang section--position-absolute" data-lang="negativeRotationPeriodMeaning"></span>
                 </div>
                 <input id="rotationPeriodInput" type="text" value="" disabled>
             </section>
@@ -63,7 +63,7 @@
                 <span class="lang" data-lang="orbitalPeriod"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" data-lang="orbitalPeriodMeaning"></span>
+                    <span class="lang section--position-absolute" data-lang="orbitalPeriodMeaning"></span>
                 </div>
                 <input id="orbitalPeriodInput" type="text" value="" disabled>
             </section>
@@ -71,7 +71,7 @@
                 <span class="lang" data-lang="distanceFromSunPerihelion"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" data-lang="perihelionMeaning"></span>
+                    <span class="lang section--position-absolute" data-lang="perihelionMeaning"></span>
                 </div>
                 <input id="distanceFromSunPerihelionInput" type="text" value="" disabled>
             </section>
@@ -79,14 +79,14 @@
                 <span class="lang" data-lang="distanceFromSunAphelion"></span>
                 <div class="physicalValuesTooltip">
                     <img src="icons/infoBubble.png" alt="infoBubble" width="20" height="20">
-                    <span class="lang" data-lang="aphelionMeaning"></span>
+                    <span class="lang section--position-absolute" data-lang="aphelionMeaning"></span>
                 </div>
                 <input id="distanceFromSunAphelionInput" type="text" value="" disabled>
             </section>
         </div>
     </section>
 
-    <section class="sidebars overlay" id="sidebarMoonInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
+    <section class="sidebars overlay section--position-fixed elem--border-none" id="sidebarMoonInfo" onclick="modelScene.sidebarManager.hideSidebarToLeft()">
         <div>
             <section>
                 <h3 class="lang" data-lang="physicalValuesMoon"></h3>
@@ -113,15 +113,15 @@
         </div>
     </section>
 
-    <section class="scaleFactor">
-        <div class="scaleFactorTooltip">
-            <img src="/icons/infoBubble.png" class="infoScaleFactor" alt="infoScene" width="30" height="30">
-            <span class="lang" data-lang="infoScaleFactorScene"></span>
+    <section class="scaleFactor section--position-absolute elem--border-none section--bg-transparent">
+        <div class="scaleFactorTooltip section--position-fixed section--bg-transparent">
+            <img src="/icons/infoBubble.png" class="infoScaleFactor section--bg-transparent" alt="infoScene" width="30" height="30">
+            <span class="lang section--position-absolute" data-lang="infoScaleFactorScene"></span>
         </div>
     </section>
-    <img src="/icons/molecules.png" class="sidebarIcon" alt="sidebarIcon" width="30" height="30" onclick="modelScene.sidebarManager.showHideSidebarToRight()">
+    <img src="/icons/molecules.png" class="sidebarIcon elem--position-fixed" alt="sidebarIcon" width="30" height="30" onclick="modelScene.sidebarManager.showHideSidebarToRight()">
 
-    <section class="sidebars overlay" id="sidebarRight">
+    <section class="sidebars overlay section--position-fixed elem--border-none" id="sidebarRight">
         <div>
             <section>
                 <h3 class="lang" data-lang="names"></h3>
@@ -219,29 +219,29 @@
                 </select>
             </section>
 
-            <button class="confirmChangesButton lang" type="submit" data-lang="confirm" id="confirm" onclick="modelScene.sidebarManager.confirmButtonBehavior()"></button>
-            <button class="pauseButton" id="pauseButton" type="button"></button>
-            <button class="playButton" id="playButton" type="button"></button>
+            <button class="confirmChangesButton lang elem--border-none" type="submit" data-lang="confirm" id="confirm" onclick="modelScene.sidebarManager.confirmButtonBehavior()"></button>
+            <button class="pauseButton elem--position-fixed elem--border-none" id="pauseButton" type="button"></button>
+            <button class="playButton elem--border-none" id="playButton" type="button"></button>
         </div>
     </section>
 
-    <section class="models overlay">
-        <div class="tooltip">
+    <section class="models overlay section--position-fixed section--bg-transparent">
+        <div class="tooltip section--bg-transparent">
             <button type="button" id="cosmicObjectButton" onclick="modelScene.planetObject.cosmicObject.activateCosmicObjectButton()"></button>
-            <span class="lang" data-lang="cosmicObject"></span>
+            <span class="lang section--position-absolute" data-lang="cosmicObject"></span>
         </div>
-        <div class="tooltip">
+        <div class="tooltip section--bg-transparent">
             <button type="button" id="cameraToObjectButton" onclick="modelScene.activateCameraToObjectButton()"></button>
-            <span class="lang" data-lang="cameraToPlanet"></span>
+            <span class="lang section--position-absolute" data-lang="cameraToPlanet"></span>
         </div>
-        <div class="tooltip">
+        <div class="tooltip section--bg-transparent">
             <button type="button" onclick="modelScene.moveSceneToOriginalPosition()"></button>
-            <span class="lang" data-lang="centerModel"></span>
+            <span class="lang section--position-absolute" data-lang="centerModel"></span>
         </div>
     </section>
 
     <!-- slider = change orbit shape of cosmic object  -->
-    <div class="overlay slidercontainer">
+    <div class="overlay slidercontainer section--position-fixed section--bg-transparent">
         <input type="range" min="1" max="2" value="1" step="0.1" class="slider" id="rangesliderSpeedInput">
         <span class="lang" data-lang="changeOrbit"></span><span id="rangesliderSpeedValue"></span><span>x</span>
     </div>

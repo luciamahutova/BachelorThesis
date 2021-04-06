@@ -11,9 +11,9 @@
 
 <body>
     <header>
-        <img src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
-        <nav id="menu">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <img class="header--position-fixed" src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
+        <nav class="header--position-fixed" id="menu">
+            <a href="javascript:void(0)" class="closebtn menu--position-absolute" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
                     <a href="#" class="lang" data-lang="ssm" id="ssm" onclick="openInNewTab(this.id)"></a>
@@ -25,7 +25,7 @@
                     <a href="infoPage.html" class="lang" data-lang="about"></a>
                 </li>
             </ul>
-            <div id="languages">
+            <div class="menu--position-absolute" id="languages">
                 <button type="button" class="translate" id="cz" onclick="highlightChosenLanguage(this.id)">cz</button>
                 <button type="button" class="translate" id="en" onclick="highlightChosenLanguage(this.id)">en</button>
                 <button type="button" class="translate" id="sk" onclick="highlightChosenLanguage(this.id)">sk</button>
@@ -34,7 +34,7 @@
     </header>
 
 
-    <h1 class="lang" data-lang="howToUseApplication"></h1>
+    <h1 class="lang h1--position-fixed" data-lang="howToUseApplication"></h1>
 
     <article>
         <section>
@@ -79,7 +79,7 @@
             <p class="lang" data-lang="clickOnSceneObjectsInfo"></p>
         </section>
     </article>
-    <div class="bgLayer"></div>
+    <div class="bgLayer elem--position-fixed"></div>
 
     <!-- Scripts -->
     <script src="/js/sidebarManager.js "></script>

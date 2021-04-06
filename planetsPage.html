@@ -12,9 +12,9 @@
 
 <body>
     <header>
-        <img src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
-        <nav id="menu">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <img class="header--position-fixed" src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
+        <nav class="header--position-fixed" id="menu">
+            <a href="javascript:void(0)" class="closebtn menu--position-absolute" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
                     <a href="#" class="lang" data-lang="ssm" id="ssm" onclick="openInNewTab(this.id)"></a>
@@ -26,61 +26,61 @@
                     <a href="infoPage.html" class="lang" data-lang="about"></a>
                 </li>
             </ul>
-            <div id="languages">
+            <div class="menu--position-absolute" id="languages">
                 <button type="button" class="translate" id="cz" onclick="highlightChosenLanguage(this.id)">cz</button>
                 <button type="button" class="translate" id="en" onclick="highlightChosenLanguage(this.id)">en</button>
                 <button type="button" class="translate" id="sk" onclick="highlightChosenLanguage(this.id)">sk</button>
             </div>
         </nav>
     </header>
-    <h1 class="lang" data-lang="planetsH1"></h1>
+    <h1 class="lang h1--position-fixed" data-lang="planetsH1"></h1>
 
-    <section>
+    <section class="section--position-absolute">
         <article>
             <a href="mercuryPage.html">
-                <h3 class="lang" data-lang="mercury"></h3>
+                <h3 class="lang section--position-absolute" data-lang="mercury"></h3>
                 <img src="/images/planets/mercuryTransparent.png" alt="Mercury" width="200" height="200">
             </a>
         </article>
         <article>
             <a href="venusPage.html">
-                <h3 class="lang" data-lang="venus"></h3>
+                <h3 class="lang section--position-absolute" data-lang="venus"></h3>
                 <img src="/images/planets/venusTransparent.png" alt="Venus" width="200" height="200">
             </a>
         </article>
         <article>
             <a href="earthPage.html">
-                <h3 class="lang" data-lang="earth"></h3>
+                <h3 class="lang section--position-absolute" data-lang="earth"></h3>
                 <img src="/images/planets/earthTransparent.png" alt="Earth" width="200" height="200">
             </a>
         </article>
         <article>
             <a href="marsPage.html">
-                <h3>Mars</h3>
+                <h3 class="section--position-absolute">Mars</h3>
                 <img src="/images/planets/marsTransparent.png" alt="Mars" width="200" height="200">
             </a>
         </article>
         <article>
             <a href="jupiterPage.html">
-                <h3>Jupiter</h3>
+                <h3 class="section--position-absolute">Jupiter</h3>
                 <img src="/images/planets/jupiterTransparent.png" alt="Jupiter" width="200" height="200">
             </a>
         </article>
         <article>
             <a href="saturnPage.html">
-                <h3>Saturn</h3>
+                <h3 class="section--position-absolute">Saturn</h3>
                 <img src="/images/planets/saturnTransparent.png" alt="Saturn" width="200" height="200">
             </a>
         </article>
         <article>
             <a href="uranusPage.html">
-                <h3 class="lang " data-lang="uranus"></h3>
+                <h3 class="lang section--position-absolute" data-lang="uranus"></h3>
                 <img src="/images/planets/uranusTransparent.png" alt="Uranus" width="200" height="200">
             </a>
         </article>
         <article>
             <a href="neptunePage.html">
-                <h3 class="lang" data-lang="neptune"></h3>
+                <h3 class="lang section--position-absolute" data-lang="neptune"></h3>
                 <img src="/images/planets/neptuneTransparent.png" alt="Neptune" width="200" height="200">
             </a>
         </article>

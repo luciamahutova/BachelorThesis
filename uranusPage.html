@@ -12,9 +12,9 @@
 
 <body>
     <header>
-        <img src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
-        <nav id="menu">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <img class="header--position-fixed" src="/icons/menu.png" alt="" width="30" height="30" onclick="openNav()">
+        <nav class="header--position-fixed" id="menu">
+            <a href="javascript:void(0)" class="closebtn menu--position-absolute" onclick="closeNav()">&times;</a>
             <ul>
                 <li>
                     <a href="#" class="lang" data-lang="ssm" id="ssm" onclick="openInNewTab(this.id)"></a>
@@ -26,24 +26,24 @@
                     <a href="infoPage.html" class="lang" data-lang="about"></a>
                 </li>
             </ul>
-            <div id="languages">
+            <div class="menu--position-absolute" id="languages">
                 <button type="button" class="translate" id="cz" onclick="highlightChosenLanguage(this.id)">cz</button>
                 <button type="button" class="translate" id="en" onclick="highlightChosenLanguage(this.id)">en</button>
                 <button type="button" class="translate" id="sk" onclick="highlightChosenLanguage(this.id)">sk</button>
             </div>
         </nav>
     </header>
-    <a href="planetsPage.html">
+    <a class="elem--position-fixed" href="planetsPage.html">
         <img src="/icons/leftArrow.png" alt="" width="20" height="20">
         <span class="lang" data-lang="backToPlanets"></span>
     </a>
-    <span class="fadeLine"></span>
+    <span class="fadeLine elem--position-fixed elem--border-none"></span>
 
     <!-- Uranus -->
-    <div id="interativeModelScene"></div>
+    <div class="interactivePlanetScene"></div>
     <section>
-        <h1 class="lang" data-lang="uranus"></h1>
-        <p class="lang" data-lang="uranusText"></p>
+        <h1 class="lang h1--position-fixed" data-lang="uranus"></h1>
+        <p class="lang section--position-absolute" data-lang="uranusText"></p>
     </section>
 
 
