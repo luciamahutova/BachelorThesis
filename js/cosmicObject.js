@@ -49,8 +49,16 @@ class CosmicObject extends JSONManager {
     setCurrentForceForAxisZ(value) { this.currentForceForAxisZ = value }
     setLastForceForAxisX(value) { this.lastForceForAxisX = value }
     setLastForceForAxisZ(value) { this.lastForceForAxisZ = value }
-    setVectorsDistance(value) { this.planetAndObjectVectorDistance = value }
     setCosmicObjectMovingTime(value) { this.movingTime += value }
+    setVectorsDistance(value) { this.planetAndObjectVectorDistance = value }
+    setVectorPlanet(valueX, valueZ) {
+        this.vectorPlanet.x = valueX;
+        this.vectorPlanet.z = valueZ;
+    }
+    setVectorCosmicObject(valueX, valueZ) {
+        this.vectorCosmicObject.x = valueX;
+        this.vectorCosmicObject.z = valueZ;
+    }
 
     // Cosmic object, orbit and button
     // -------------------------------------------------------------------------
@@ -211,10 +219,8 @@ class CosmicObject extends JSONManager {
     changeRotationSpeedOfObject(orbit, cosmicObject, force) {
         // Vectors set to position of center planet and object
         // Vectors are good to calculate distance between 2 points
-        (this.getVectorPlanet()).x = orbit.position.x;
-        (this.getVectorPlanet()).z = orbit.position.z;
-        (this.getVectorCosmicObject()).x = cosmicObject.position.x;
-        (this.getVectorCosmicObject()).z = cosmicObject.position.z;
+        this.setVectorPlanet(orbit.position.x, orbit.position.z);
+        this.setVectorCosmicObject(cosmicObject.position.x, cosmicObject.position.z);
         this.setVectorsDistance((this.getVectorCosmicObject()).distanceTo(this.getVectorPlanet()));
 
         if (force == 1) {
