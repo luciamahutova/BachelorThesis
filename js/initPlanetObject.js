@@ -1,4 +1,4 @@
-class InitPlanets extends JSONManager {
+class InitPlanetObject extends JSONManager {
     constructor() {
         super();
         this.allPlanetDataJSON = super.getPlanetData();
