@@ -1,4 +1,4 @@
-class Planet extends InitPlanets {
+class Planet extends InitPlanetObject {
     constructor(scene) {
         super();
         this.scene = scene;

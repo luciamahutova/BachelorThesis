@@ -1,4 +1,4 @@
-class Sun extends InitPlanets {
+class Sun extends InitPlanetObject {
     constructor(scene, pointLightScene, pointLightSun) {
         super();
         this.scene = scene;

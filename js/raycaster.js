@@ -1,8 +1,10 @@
 // This class is for detecting clicked objects in scene
 // Basic code is used from: https://threejs.org/docs/index.html#api/en/core/Raycaster
-class RayCaster extends JSONManager {
-    constructor() {
-        super();
+class RayCaster {
+    constructor(planetDataJSON, moonDataJSON, planetNames) {
+        this.planetDataJSON = planetDataJSON;
+        this.moonDataJSON = moonDataJSON;
+        this.planetNames = planetNames;
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2(0, 0);
         this.lastIntersectName = "";
@@ -13,6 +15,9 @@ class RayCaster extends JSONManager {
     getRaycaster() { return this.raycaster }
     getMouse() { return this.mouse }
     getLastIntersectName() { return this.lastIntersectName }
+    getPlanetData() { return this.planetDataJSON }
+    getMoonData() { return this.moonDataJSON }
+    getPlanetNames() { return this.planetNames }
 
     // Set()
     setLastIntersectName(string) { this.lastIntersectName = string }

@@ -191,7 +191,7 @@ class ModelScene extends InitScene {
 
     initializeSceneObjects() {
         this.jsonManager = new JSONManager();
-        this.initPlanets = new InitPlanets();
+        this.initPlanets = new InitPlanetObject();
         this.planetObject = new Planet(this.getScene());
         this.planetObject.initializePlanets();
         this.moonObject = new Moon(this.getScene(), this.planetObject.orbitClass.getAllOrbits());
@@ -200,7 +200,8 @@ class ModelScene extends InitScene {
         var pointLightScene = this.setPointLightOnScene();
         var pointLightSun = this.setPointLightOnSun();
         this.sunObject = new Sun(this.getScene(), pointLightScene, pointLightSun);
-        this.raycaster = new RayCaster();
+        this.raycaster = new RayCaster(this.jsonManager.getPlanetData(), this.jsonManager.getMoonData(),
+            this.jsonManager.getPlanetNames());
         this.sidebarManager = new SidebarManager(this.planetObject.getPlanetNamesEN(), this.planetObject.getPlanetNamesCZ(),
             this.planetObject.getPlanetNamesSK(), this.moonObject.getMoonsNamesOnScene(), this.moonObject.getTranslatedMoonName(), this.moonObject.getMoonMeshes(), this.getScene(), this.planetObject.orbitClass.getAllOrbits());
 

@@ -1,4 +1,4 @@
-class Moon extends InitPlanets {
+class Moon extends InitPlanetObject {
     constructor(scene, orbits) {
         super();
         this.scene = scene;
