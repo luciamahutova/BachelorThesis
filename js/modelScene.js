@@ -56,22 +56,22 @@ class ModelScene extends InitScene {
         return bgCamera;
     }
 
-    // Move Scene functions
+    // Move functions
     // -------------------------------------------------------------------------
-    moveSceneOnPressedArrow(scene) {
+    moveCameraOnPressedArrow(camera) {
         return function(e) {
             // Movement in opposite direction - seems more natural
-            var moveSceneByValue = 0.01;
+            var moveSceneByValue = 3;
             if (e.keyCode == '37') { // Left arrow key
-                scene.position.x += moveSceneByValue;
+                camera.position.x += moveSceneByValue;
             } else if (e.keyCode == '38') { // Top arrow key
-                scene.position.z += moveSceneByValue;
+                camera.position.z += moveSceneByValue;
             } else if (e.keyCode == '39') { // Right arrow key
-                scene.position.x -= moveSceneByValue;
+                camera.position.x -= moveSceneByValue;
             } else if (e.keyCode == '40') { // Bottom arrow kes
-                scene.position.z -= moveSceneByValue;
+                camera.position.z -= moveSceneByValue;
             } else if (e.keyCode == "27") { // Escape key
-                scene.position.set(0, 0, 0);
+                camera.position.set(0, 0, 0);
             }
         }
     }
@@ -80,9 +80,9 @@ class ModelScene extends InitScene {
         (this.getScene()).position.set(0, 0, 0);
     }
 
-    // Drag function for scene: 
+    // Drag function for camera (more effective than dragging the scene): 
     // https://uxdesign.cc/implementing-a-custom-drag-event-function-in-javascript-and-three-js-dc79ee545d85
-    mouseMoveEvent(scene) {
+    mouseMoveEvent(camera) {
         this.sunObject.setLightsToSunPosition();
         return function(event) {
             if (this.mouseDown) {
@@ -91,8 +91,8 @@ class ModelScene extends InitScene {
                 this.mousePositionX = event.clientX;
                 this.mousePositionY = event.clientY;
 
-                scene.position.x += moveToX / 10;
-                scene.position.z += moveToY / 10;
+                camera.position.x -= moveToX / 10;
+                camera.position.z -= moveToY / 10;
             }
         }
     }
@@ -110,11 +110,11 @@ class ModelScene extends InitScene {
     // Event listener functions
     // -------------------------------------------------------------------------
     addEventListenerFunctions() {
-        window.addEventListener('keydown', this.moveSceneOnPressedArrow(this.getScene()), false);
+        window.addEventListener('keydown', this.moveCameraOnPressedArrow(this.getCamera()), false);
         window.addEventListener('click', this.raycaster.onMouseMove(this.getCamera(), this.getScene(),
             this.raycaster.getRaycaster(), this.raycaster.getMouse()), false);
         window.addEventListener('mousedown', this.mouseDownEvent, false);
-        window.addEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
+        window.addEventListener('mousemove', this.mouseMoveEvent(this.getCamera()), false);
         window.addEventListener('mouseup', this.mouseUpEvent, false);
     }
 
@@ -138,12 +138,12 @@ class ModelScene extends InitScene {
         if (this.getIsCameraFollowingObject()) {
             this.setIsCameraFollowingObject(false);
             $('#cosmicObjectButton').prop('disabled', true);
-            window.removeEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
+            window.removeEventListener('mousemove', this.mouseMoveEvent(this.getCamera()), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "lightblue";
         } else if (!(this.getIsCameraFollowingObject())) {
             this.setIsCameraFollowingObject(true);
             $('#cosmicObjectButton').prop('disabled', false);
-            window.addEventListener('mousemove', this.mouseMoveEvent(this.getScene()), false);
+            window.addEventListener('mousemove', this.mouseMoveEvent(this.getCamera()), false);
             document.getElementById("cameraToObjectButton").style.backgroundColor = "#061327";
         }
     }

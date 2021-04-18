@@ -20,6 +20,7 @@ class Sun extends InitPlanetObject {
         var sunMesh = this.createMesh(sun, '/images/textures/sunTexture2k.jpg');
         sunMesh.name = "Sun";
         (this.getScene()).add(sunMesh);
+        sun.matrixAutoUpdate = false;
 
         sunMesh.add(this.getPointLightScene());
         sunMesh.add(this.getPointLightSun());
