@@ -138,7 +138,7 @@ class SidebarManager {
     // -------------------------------------------------------------------------
     confirmButtonBehavior() {
         // Cannot add/remove names or orbits in for-cycle, planets will jump to different position
-        this.showHideAllPlanetNamesOnScene();
+        this.showHideAllPlanetNamesOnScene(this.getPlanetNamesEN(), this.getPlanetNamesCZ(), this.getPlanetNamesSK());
         this.showHideSinglePlanetNameOnScene(this.getPlanetNamesEN(), this.getPlanetNamesCZ(), this.getPlanetNamesSK());
         this.showHideAllMoonNamesOnScene(this.getTranslatedMoonNames());
         this.showHideSingleMoonNameOnScene(this.getMoonNamesOnScene(), this.getTranslatedMoonNames());
@@ -166,37 +166,36 @@ class SidebarManager {
 
     // Sidebar - functions for planet and moon names
     // -------------------------------------------------------------------------
-    showHideAllPlanetNamesOnScene() {
+    showHideAllPlanetNamesOnScene(namesEN, namesCZ, namesSK) {
         if (document.getElementById("allPlanetNamesChecked").checked == true) {
-            this.addPlanetNamesToScene(this.getPlanetNamesEN());
-            this.addPlanetNamesToScene(this.getPlanetNamesCZ());
-            this.addPlanetNamesToScene(this.getPlanetNamesSK());
+            (this.getScene()).add(namesEN[0], namesEN[1], namesEN[2], namesEN[3], namesEN[4], namesEN[5], namesEN[6], namesEN[7]);
+            (this.getScene()).add(namesCZ[0], namesCZ[1], namesCZ[2], namesCZ[3], namesCZ[4], namesCZ[5], namesCZ[6], namesCZ[7]);
+            (this.getScene()).add(namesSK[0], namesSK[1], namesSK[2], namesSK[3], namesSK[4], namesSK[5], namesSK[6], namesSK[7]);
         } else if (document.getElementById("allPlanetNamesChecked").checked == false) {
-            this.removeObjectsForPlanetsFromScene(this.getPlanetNamesEN());
-            this.removeObjectsForPlanetsFromScene(this.getPlanetNamesCZ());
-            this.removeObjectsForPlanetsFromScene(this.getPlanetNamesSK());
+            (this.getScene()).remove(namesEN[0], namesEN[1], namesEN[2], namesEN[3], namesEN[4], namesEN[5], namesEN[6], namesEN[7]);
+            (this.getScene()).remove(namesCZ[0], namesCZ[1], namesCZ[2], namesCZ[3], namesCZ[4], namesCZ[5], namesCZ[6], namesCZ[7]);
+            (this.getScene()).remove(namesSK[0], namesSK[1], namesSK[2], namesSK[3], namesSK[4], namesSK[5], namesSK[6], namesSK[7]);
         }
     }
 
-    showHideSinglePlanetNameOnScene(planetNamesEN, planetNamesCZ, planetNamesSK) {
+    showHideSinglePlanetNameOnScene(namesEN, namesCZ, namesSK) {
         var selectedElem = document.getElementById("singlePlanetNameSelected");
         var allPlanetNamesSelected = document.getElementById("allPlanetNamesChecked").checked;
         // -1 is for option with no planet name
         if (selectedElem.value != -1 && allPlanetNamesSelected == false) {
-            this.removeObjectsForPlanetsFromScene(planetNamesEN);
-            this.removeObjectsForPlanetsFromScene(planetNamesCZ);
-            this.removeObjectsForPlanetsFromScene(planetNamesSK);
-            (this.getScene()).add(planetNamesEN[selectedElem.value], planetNamesCZ[selectedElem.value],
-                planetNamesSK[selectedElem.value]);
+            (this.getScene()).remove(namesEN[0], namesEN[1], namesEN[2], namesEN[3], namesEN[4], namesEN[5], namesEN[6], namesEN[7]);
+            (this.getScene()).remove(namesCZ[0], namesCZ[1], namesCZ[2], namesCZ[3], namesCZ[4], namesCZ[5], namesCZ[6], namesCZ[7]);
+            (this.getScene()).remove(namesSK[0], namesSK[1], namesSK[2], namesSK[3], namesSK[4], namesSK[5], namesSK[6], namesSK[7]);
+            (this.getScene()).add(namesEN[selectedElem.value], namesCZ[selectedElem.value], namesSK[selectedElem.value]);
         }
     }
 
     showHideAllMoonNamesOnScene(translatedMoonNames) {
         if (document.getElementById("allMoonNamesChecked").checked == true) {
-            this.addAllToScene(this.getMoonNamesOnScene());
+            this.showAllMoonObjects(this.getMoonNamesOnScene(), true);
             (this.getScene()).add(translatedMoonNames[0], translatedMoonNames[1]);
         } else if (document.getElementById("allMoonNamesChecked").checked == false) {
-            this.removeAllFromScene(this.getMoonNamesOnScene());
+            this.showAllMoonObjects(this.getMoonNamesOnScene(), false);
             (this.getScene()).remove(translatedMoonNames[0], translatedMoonNames[1]);
         }
     }
@@ -206,8 +205,8 @@ class SidebarManager {
         var allMoonNamesSelected = document.getElementById("allMoonNamesChecked").checked;
 
         if (selectedElem.value != -1 && allMoonNamesSelected == false) {
-            this.removeAllFromScene(moonNamesOnScene);
-            (this.getScene()).add(moonNamesOnScene[selectedElem.value]);
+            this.showAllMoonObjects(moonNamesOnScene, false);
+            moonNamesOnScene[selectedElem.value].visible = true;
             if (document.getElementById("cz").style.fontWeight == "bold" && selectedElem.value == 0) {
                 (this.getScene()).add(translatedMoonNames[0]);
             } else if (document.getElementById("sk").style.fontWeight == "bold" && selectedElem.value == 0) {
@@ -216,33 +215,27 @@ class SidebarManager {
         }
     }
 
-    // Help functions
-    traverseSceneToFindPlanetNames(showBoolean, stringName) {
+    showAllPlanetObjects(objects, boolean) {
         (this.getScene()).traverse(function(children) {
-            if (children.name.startsWith(stringName)) {
-                children.visible = showBoolean;
+            if (children == objects[0] || children == objects[1] || children == objects[2] || children == objects[3] ||
+                children == objects[4] || children == objects[5] || children == objects[6] || children == objects[7]) {
+                children.visible = boolean;
             }
         });
-    }
-
-    addPlanetNamesToScene(objects) {
-        (this.getScene()).add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
-    }
-
-    removeObjectsForPlanetsFromScene(objects) {
-        (this.getScene()).remove(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
     }
 
     // Sidebar - functions for moon objects
     // -------------------------------------------------------------------------
     showHideAllMoonsOnScene(translatedMoonNames) {
         if (document.getElementById("allMoonObjectsChecked").checked == true) {
-            this.addAllToScene(this.getMoonMeshes());
-            this.addAllMoonOrbitsToScene(this.getOrbits());
+            this.showAllMoonObjects(this.getMoonMeshes(), true);
+            if (document.getElementById("allMoonOrbitsChecked").checked == true) {
+                this.showAllMoonOrbits(this.getOrbits(), true);
+            }
         } else if (document.getElementById("allMoonObjectsChecked").checked == false) {
-            this.removeAllFromScene(this.getMoonMeshes());
-            this.removeAllFromScene(this.getMoonNamesOnScene());
-            this.removeAllMoonOrbitsFromScene(this.getOrbits());
+            this.showAllMoonObjects(this.getMoonMeshes(), false);
+            this.showAllMoonObjects(this.getMoonNamesOnScene(), false);
+            this.showAllMoonOrbits(this.getOrbits(), false);
             (this.getScene()).remove(translatedMoonNames[0], translatedMoonNames[1]);
         }
     }
@@ -254,15 +247,15 @@ class SidebarManager {
         var allMoonObjectsChecked = document.getElementById("allMoonObjectsChecked").checked;
 
         if (selectedElem.value != -1 && allMoonObjectsChecked == false) {
-            this.removeAllFromScene(moonMeshes);
-            this.removeAllFromScene(moonNamesOnScene);
-            this.removeAllMoonOrbitsFromScene(orbits);
+            this.showAllMoonObjects(moonMeshes, false);
+            this.showAllMoonObjects(moonNamesOnScene, false);
+            this.showAllMoonOrbits(this.getOrbits(), false);
             this.disableDropDownOptionsMoonNames(true);
             this.disableDropDownOptionsMoonOrbits(true);
 
             if (selectedElem.value == 2) { // Earth
                 this.enableSingleDropDownOption("earthMoonName", "earthMoonOrbit");
-                (this.getScene()).add(moonMeshes[0]);
+                moonMeshes[0].visible = true;
 
                 this.addEnabledObjectsForEarth(selectedMoonNameValue, selectedMoonOrbitValue, moonNamesOnScene,
                     translatedMoonNames, orbits);
@@ -271,7 +264,10 @@ class SidebarManager {
                 this.enableSingleDropDownOption("jupiterEuropaName", "jupiterEuropaOrbit");
                 this.enableSingleDropDownOption("jupiterGanymedeName", "jupiterGanymedeOrbit");
                 this.enableSingleDropDownOption("jupiterCallistoName", "jupiterCallistoOrbit");
-                (this.getScene()).add(moonMeshes[1], moonMeshes[2], moonMeshes[3], moonMeshes[4]);
+                moonMeshes[1].visible = true;
+                moonMeshes[2].visible = true;
+                moonMeshes[3].visible = true;
+                moonMeshes[4].visible = true;
 
                 var moonIdNames = ["jupiterIoName", "jupiterEuropaName", "jupiterGanymedeName", "jupiterCallistoName"];
                 var moonIdOrbits = ["jupiterIoOrbit", "jupiterEuropaOrbit", "jupiterGanymedeOrbit", "jupiterCallistoOrbit"];
@@ -280,7 +276,8 @@ class SidebarManager {
             } else if (selectedElem.value == 5) { // Saturn
                 this.enableSingleDropDownOption("saturnRheaName", "saturnRheaOrbit");
                 this.enableSingleDropDownOption("saturnTitanName", "saturnTitanOrbit");
-                (this.getScene()).add(moonMeshes[5], moonMeshes[6]);
+                moonMeshes[5].visible = true;
+                moonMeshes[6].visible = true;
 
                 this.addEnabledObjectsForSaturn("allMoonNamesChecked", "saturnRheaName", moonNamesOnScene, 5, selectedMoonNameValue);
                 this.addEnabledObjectsForSaturn("allMoonOrbitsChecked", "saturnRheaOrbit", orbits, 13, selectedMoonOrbitValue);
@@ -289,7 +286,10 @@ class SidebarManager {
                 this.enableSingleDropDownOption("uranusUmbrielName", "uranusUmbrielOrbit");
                 this.enableSingleDropDownOption("uranusTitaniaName", "uranusTitaniaOrbit");
                 this.enableSingleDropDownOption("uranusOberonName", "uranusOberonOrbit");
-                (this.getScene()).add(moonMeshes[7], moonMeshes[8], moonMeshes[9], moonMeshes[10]);
+                moonMeshes[7].visible = true;
+                moonMeshes[8].visible = true;
+                moonMeshes[9].visible = true;
+                moonMeshes[10].visible = true;
 
                 var moonIdNames = ["uranusArielName", "uranusUmbrielName", "uranusTitaniaName", "uranusOberonName"];
                 var moonIdOrbits = ["uranusArielOrbit", "uranusUmbrielOrbit", "uranusTitaniaOrbit", "uranusOberonOrbit"];
@@ -297,7 +297,7 @@ class SidebarManager {
                 this.addEnabledObjectsForJupiterUranus("allMoonOrbitsChecked", moonIdOrbits, orbits, 15, selectedMoonOrbitValue, 7);
             } else if (selectedElem.value == 7) { // Neptune
                 this.enableSingleDropDownOption("neptuneTritonName", "neptuneTritonOrbit");
-                (this.getScene()).add(moonMeshes[11]);
+                moonMeshes[11].visible = true;
 
                 this.addEnabledObjectsForNeptune("allMoonNamesChecked", "neptuneTritonName", moonNamesOnScene, 11, selectedMoonNameValue);
                 this.addEnabledObjectsForNeptune("allMoonOrbitsChecked", "neptuneTritonOrbit", orbits, 19, selectedMoonOrbitValue);
@@ -347,80 +347,72 @@ class SidebarManager {
     // Add only enabled moon names/orbits for selected planet
     addEnabledObjectsForEarth(selectedMoonNameValue, selectedMoonOrbitValue, moonNamesOnScene, translatedMoonNames, orbits) {
         // Names
-        if (document.getElementById("allMoonNamesChecked").checked == true) {
-            (this.getScene()).add(moonNamesOnScene[0], translatedMoonNames[0], translatedMoonNames[1]);
-        } else {
-            if (selectedMoonNameValue == 0) {
-                (this.getScene()).add(moonNamesOnScene[0], translatedMoonNames[0], translatedMoonNames[1]);
-            }
+        if (document.getElementById("allMoonNamesChecked").checked == true || selectedMoonNameValue == 0) {
+            moonNamesOnScene[0].visible = true;
+            (this.getScene()).add(translatedMoonNames[0], translatedMoonNames[1]);
         }
         // Orbits
-        if (document.getElementById("allMoonOrbitsChecked").checked == true) {
-            (this.getScene()).add(orbits[8]);
-        } else {
-            if (selectedMoonOrbitValue == 0) {
-                (this.getScene()).add(orbits[8]);
-            }
+        if (document.getElementById("allMoonOrbitsChecked").checked == true || selectedMoonOrbitValue == 0) {
+            orbits[8].visible = true;
         }
     }
 
     addEnabledObjectsForJupiterUranus(dropDownId, idNameMoons, objects, firstIndex, nameOrOrbit, nameOrOrbitIndex) {
         if (document.getElementById(dropDownId).checked == true) {
-            (this.getScene()).add(objects[firstIndex], objects[firstIndex + 1], objects[firstIndex + 2], objects[firstIndex + 3]);
+            objects[firstIndex].visible = true;
+            objects[firstIndex + 1].visible = true;
+            objects[firstIndex + 2].visible = true;
+            objects[firstIndex + 3].visible = true;
         } else {
             if (!document.getElementById(idNameMoons[0]).disabled && nameOrOrbit == nameOrOrbitIndex) {
-                (this.getScene()).add(objects[firstIndex]);
+                objects[firstIndex].visible = true;
             } else if (!document.getElementById(idNameMoons[1]).disabled && nameOrOrbit == nameOrOrbitIndex + 1) {
-                (this.getScene()).add(objects[firstIndex + 1]);
+                objects[firstIndex + 1].visible = true;
             } else if (!document.getElementById(idNameMoons[2]).disabled && nameOrOrbit == nameOrOrbitIndex + 2) {
-                (this.getScene()).add(objects[firstIndex + 2]);
+                objects[firstIndex + 2].visible = true;
             } else if (!document.getElementById(idNameMoons[3]).disabled && nameOrOrbit == nameOrOrbitIndex + 3) {
-                (this.getScene()).add(objects[firstIndex + 3]);
+                objects[firstIndex + 3].visible = true;
             }
         }
     }
 
     addEnabledObjectsForSaturn(dropDownId, elemId, objects, firstIndex, nameOrOrbit) {
         if (document.getElementById(dropDownId).checked == true) {
-            (this.getScene()).add(objects[firstIndex], objects[firstIndex + 1]);
+            objects[firstIndex].visible = true;
+            objects[firstIndex + 1].visible = true;
         } else {
             if (!document.getElementById(elemId).disabled && nameOrOrbit == 5) {
-                (this.getScene()).add(objects[firstIndex]);
+                objects[firstIndex].visible = true;
             } else if (!document.getElementById(elemId).disabled && nameOrOrbit == 6) {
-                (this.getScene()).add(objects[firstIndex + 1]);
+                objects[firstIndex + 1].visible = true;
             }
         }
     }
 
     addEnabledObjectsForNeptune(dropDownId, elemId, objects, objectIndex, nameOrOrbit) {
-        if (document.getElementById(dropDownId).checked == true) {
-            (this.getScene()).add(objects[objectIndex]);
-        } else {
-            if (!document.getElementById(elemId).disabled && nameOrOrbit == 11) {
-                (this.getScene()).add(objects[objectIndex]);
-            }
+        if (document.getElementById(dropDownId).checked == true ||
+            (!document.getElementById(elemId).disabled && nameOrOrbit == 11)) {
+            objects[objectIndex].visible = true;
         }
     }
 
-    // Helpful functions for moon objects or moon names (textures)
-    addAllToScene(objects) {
-        (this.getScene()).add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7],
-            objects[8], objects[9], objects[10], objects[11]);
-    }
-
-    removeAllFromScene(objects) {
-        (this.getScene()).remove(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7],
-            objects[8], objects[9], objects[10], objects[11]);
+    showAllMoonObjects(objects, boolean) {
+        (this.getScene()).traverse(function(children) {
+            if (children == objects[0] || children == objects[1] || children == objects[2] || children == objects[3] ||
+                children == objects[4] || children == objects[5] || children == objects[6] || children == objects[7] ||
+                children == objects[8] || children == objects[9] || children == objects[10] || children == objects[11]) {
+                children.visible = boolean;
+            }
+        });
     }
 
     // Sidebar - functions for planets' and moons' orbits
     // -------------------------------------------------------------------------
     showHideAllPlanetOrbitsOnScene() {
-        var objects = this.getOrbits();
         if (document.getElementById("allPlanetOrbitsChecked").checked == true) {
-            (this.getScene()).add(objects[0], objects[1], objects[2], objects[3], objects[4], objects[5], objects[6], objects[7]);
+            this.showAllPlanetObjects(this.getOrbits(), true);
         } else if (document.getElementById("allPlanetOrbitsChecked").checked == false) {
-            this.removeObjectsForPlanetsFromScene(this.getOrbits());
+            this.showAllPlanetObjects(this.getOrbits(), false);
         }
     }
 
@@ -429,16 +421,18 @@ class SidebarManager {
         var allPlanetOrbitsSelected = document.getElementById("allPlanetOrbitsChecked").checked;
 
         if (selectedElem.value != -1 && allPlanetOrbitsSelected == false) {
-            this.removeObjectsForPlanetsFromScene(orbits);
-            (this.getScene()).add(orbits[selectedElem.value]);
+            this.showAllPlanetObjects(this.getOrbits(), false);
+            orbits[selectedElem.value].visible = true;
         }
     }
 
     showHideAllMoonOrbitsOnScene() {
         if (document.getElementById("allMoonOrbitsChecked").checked == true) {
-            this.addAllMoonOrbitsToScene(this.getOrbits());
+            if (document.getElementById("allMoonOrbitsChecked").checked == true) {
+                this.showAllMoonOrbits(this.getOrbits(), true);
+            }
         } else if (document.getElementById("allMoonOrbitsChecked").checked == false) {
-            this.removeAllMoonOrbitsFromScene(this.getOrbits());
+            this.showAllMoonOrbits(this.getOrbits(), false);
         }
     }
 
@@ -448,23 +442,20 @@ class SidebarManager {
         var indexOfOrbit;
 
         if (selectedElem.value != -1 && allMoonOrbitsSelected == false) {
-            this.removeAllMoonOrbitsFromScene(orbits);
+            this.showAllMoonOrbits(this.getOrbits(), false);
             indexOfOrbit = parseInt(selectedElem.value) + 8;
-            (this.getScene()).add(orbits[indexOfOrbit]);
+            orbits[indexOfOrbit].visible = true;
         }
     }
 
-    // Functions for moons' orbits
-    addAllMoonOrbitsToScene(objects) {
-        if (document.getElementById("allMoonOrbitsChecked").checked == true) {
-            (this.getScene()).add(objects[8], objects[9], objects[10], objects[11], objects[12], objects[13], objects[14], objects[15],
-                objects[16], objects[17], objects[18], objects[19]);
-        }
-    }
-
-    removeAllMoonOrbitsFromScene(objects) {
-        (this.getScene()).remove(objects[8], objects[9], objects[10], objects[11], objects[12], objects[13], objects[14], objects[15],
-            objects[16], objects[17], objects[18], objects[19]);
+    showAllMoonOrbits(objects, boolean) {
+        (this.getScene()).traverse(function(children) {
+            if (children == objects[8] || children == objects[9] || children == objects[10] || children == objects[11] ||
+                children == objects[12] || children == objects[13] || children == objects[14] || children == objects[15] ||
+                children == objects[16] || children == objects[17] || children == objects[18] || children == objects[19]) {
+                children.visible = boolean;
+            }
+        });
     }
 }
 
