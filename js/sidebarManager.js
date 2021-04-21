@@ -111,6 +111,9 @@ class SidebarManager {
 
     pauseApplicationOnInactiveWindow() {
         this.setIsAppRunning(false);
+        $('#cosmicObjectButton').prop('disabled', false);
+        $('#cameraToObjectButton').prop('disabled', false);
+        $('#rangesliderSpeedInput').prop('disabled', false);
     }
 
     playApplication() {

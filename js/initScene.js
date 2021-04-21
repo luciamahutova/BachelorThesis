@@ -6,7 +6,7 @@ class InitScene {
         renderer.setSize(width, height);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.autoClearColor = false;
-        renderer.autoClear = false;
+        renderer.autoClearDepth = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.BasicShadowMap;
         document.body.appendChild(renderer.domElement);
