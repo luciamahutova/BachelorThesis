@@ -120,10 +120,10 @@ class Planet extends InitPlanetObject {
 
         dataOfCurrentPlanetJSON.then(function(result) {
             orbitalSpeed = result[planetName]["orbitalSpeed"] / 3;
-            planetMesh.position.x = result[planetName]["c"] +
+            planetMesh.position.x = result[planetName]["c"] + 0.00001 +
                 (result[planetName]["a"] * result[planetName]["scaleFactor"] * Math.cos(orbitalSpeed * 0.0001 * time));
             planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] *
-                Math.sin(orbitalSpeed * 0.0001 * time));
+                Math.sin(orbitalSpeed * 0.0001 * time)) + 0.00001;
 
             if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
                 planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] + 1;

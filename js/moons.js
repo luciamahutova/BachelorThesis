@@ -20,6 +20,7 @@ class Moon extends InitPlanetObject {
     // Create moon objects
     // -------------------------------------------------------------------------
     createMoons() {
+        var lod = new THREE.LOD();
         var moonSizeAndParent = {
             "Moon": [0.2727, "Earth"],
             "Io": [0.2859, "Jupiter"],
@@ -45,6 +46,7 @@ class Moon extends InitPlanetObject {
 
             moonMesh = new THREE.Mesh(moon, material);
             moonMesh.name = property;
+            lod.addLevel(moonMesh, 10);
             (this.getMoonMeshes()).push(moonMesh);
         }
         this.addMeshToScene(this.getScene(), this.getMoonMeshes());
@@ -70,7 +72,7 @@ class Moon extends InitPlanetObject {
             moonMesh.position.x = orbits[orbitOrder + 8].position.x + result[moonNameJSON]["a"] *
                 result[moonNameJSON]["scaleFactor"] * Math.cos(orbitalSpeed * 0.0001 * time);
             moonMesh.position.z = orbits[orbitOrder + 8].position.z - 1 * result[moonNameJSON]["b"] *
-                result[moonNameJSON]["scaleFactor"] * Math.sin(orbitalSpeed * 0.0001 * time);
+                result[moonNameJSON]["scaleFactor"] * Math.sin(orbitalSpeed * 0.0001 * time) + 0.00001;
 
             if (moonNameOnScene != undefined) {
                 moonNameOnScene.position.x = moonMesh.position.x + 1;

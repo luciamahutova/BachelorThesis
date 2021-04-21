@@ -3,11 +3,14 @@ class InitPlanetObject extends JSONManager {
         super();
         this.allPlanetDataJSON = super.getPlanetData();
         this.allMoonDataJSON = super.getMoonData();
+        // lod = Level of Detail (further object distance means lower level of detail)
+        this.lod = new THREE.LOD();
     }
 
     // Get() - called by children
     getPlanetDataJSON() { return this.allPlanetDataJSON; }
     getMoonDataJSON() { return this.allMoonDataJSON; }
+    getLod() { return this.lod }
 
     // Functions fo creating space objects
     // -------------------------------------------------------------------------
@@ -18,13 +21,13 @@ class InitPlanetObject extends JSONManager {
     setNewMesh(imageSrc) {
         var texture = new THREE.TextureLoader().load(imageSrc);
         var meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
-        meshMaterial.receiveShadow = true;
-        meshMaterial.castShadow = true;
         return meshMaterial;
     }
 
     createMesh(planetObject, imageSrc) {
-        return new THREE.Mesh(planetObject, this.setNewMesh(imageSrc));
+        var mesh = new THREE.Mesh(planetObject, this.setNewMesh(imageSrc));
+        (this.getLod()).addLevel(mesh, 10);
+        return mesh;
     }
 
     addMeshToScene(scene, planetsMeshes) {
