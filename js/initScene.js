@@ -14,7 +14,7 @@ class InitScene {
     }
 
     initCamera(width, height) {
-        var camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 1500);
+        var camera = new THREE.PerspectiveCamera(100, width / height, 1, 1500);
         camera.position.set(0, 45, 0);
         camera.lookAt(new THREE.Vector3(0, 1, 0));
         return camera;
