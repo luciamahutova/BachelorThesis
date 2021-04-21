@@ -23,3 +23,11 @@ function animate() {
     requestAnimationFrame(animate);
 }
 animate();
+
+
+// Clear WebGL (depth) - after 1min of run
+// -------------------------------------------------------------------------
+function clearDepth() {
+    renderer.clearDepth(1);
+}
+setInterval(clearDepth, 60000);
