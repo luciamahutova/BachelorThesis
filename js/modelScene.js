@@ -149,8 +149,7 @@ class ModelScene extends InitScene {
     }
 
     findClickedPlanetForCamera() {
-        var buttonColor = document.getElementById("cameraToObjectButton").style.backgroundColor;
-        if (window.myParam != undefined && buttonColor == "lightblue") {
+        if (window.myParam != undefined) {
             var selectedPlanet = window.myParam[0].object;
             var planet = this.planetObject.getPlanetMeshes();
             var index = this.jsonManager.getIndexOfSelectedPlanet(selectedPlanet);
