@@ -9,6 +9,8 @@ class Planet extends InitPlanetObject {
 
         this.orbitClass;
         this.cosmicObject;
+        this.currentLang = 'cz';
+        this.lastLang = '';
     }
 
     // Get()
@@ -18,6 +20,12 @@ class Planet extends InitPlanetObject {
     getPlanetNamesCZ() { return this.planetNamesOnSceneCZ }
     getPlanetNamesSK() { return this.planetNamesOnSceneSK }
     getScene() { return this.scene }
+    getCurrentLang() { return this.currentLang }
+    getLastLang() { return this.lastLang }
+
+    // Set()
+    setCurrentLang(langName) { this.currentLang = langName }
+    setLastLang(langName) { this.lastLang = langName }
 
 
     // Creating planet objects, meshes and adding them to Scene
@@ -89,26 +97,41 @@ class Planet extends InitPlanetObject {
     // -------------------------------------------------------------------------
     rotateAllPlanets(time) {
         // Called in f. animate() in modelScene.js - movement needs to by redrawn by renderer
-        this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
-        this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
-        this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
+        if (this.currentLang !== this.lastLang) {
+            this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
+            this.lastLang = this.currentLang;
+        }
         var planetMeshes = this.getPlanetMeshes();
 
         if (document.getElementById("en").style.fontWeight == "bold") {
-            this.traverseSceneToFindPlanetNames(true, "nameEn", this.getScene());
             for (var i = 0; i < planetMeshes.length; i++) {
                 this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesEN())[i], time);
             }
+
+            this.currentLang = 'en';
+            this.traverseSceneToFindPlanetNames(true, "nameEn", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
         } else if (document.getElementById("cz").style.fontWeight == "bold") {
-            this.traverseSceneToFindPlanetNames(true, "nameCz", this.getScene());
             for (var i = 0; i < planetMeshes.length; i++) {
                 this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesCZ())[i], time);
             }
+
+            this.currentLang = 'cz';
+            this.traverseSceneToFindPlanetNames(true, "nameCz", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
         } else if (document.getElementById("sk").style.fontWeight == "bold") {
-            this.traverseSceneToFindPlanetNames(true, "nameSk", this.getScene());
             for (var i = 0; i < planetMeshes.length; i++) {
                 this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesSK())[i], time);
             }
+
+            this.currentLang = 'sk';
+            this.traverseSceneToFindPlanetNames(true, "nameSk", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
+            this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
         }
     }
 
@@ -125,7 +148,7 @@ class Planet extends InitPlanetObject {
             planetMesh.position.z = -1 * (result[planetName]["b"] * result[planetName]["scaleFactor"] *
                 Math.sin(orbitalSpeed * 0.0001 * time)) + 0.00001;
 
-            if (planetNameOnScene != undefined && planetNameOnScene.visible == true) {
+            if (planetNameOnScene !== undefined) {
                 planetNameOnScene.position.x = planetMesh.position.x + result[planetName]["planetSize"] + 1;
                 planetNameOnScene.position.z = planetMesh.position.z;
             }

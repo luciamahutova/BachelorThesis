@@ -31,3 +31,15 @@ function clearDepth() {
     renderer.clearDepth(1);
 }
 setInterval(clearDepth, 60000);
+
+
+// TEST - JE K NIEČOMU DOBRÉ?
+// function clearScene() {
+//     scene.traverse(function(children) {
+//         if (children instanceof THREE.Mesh || children instanceof THREE.Line) {
+//             children.material.dispose();
+//             children.geometry.dispose();
+//         }
+//     });
+// }
+// setInterval(clearScene, 5000);
