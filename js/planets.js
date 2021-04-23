@@ -9,8 +9,6 @@ class Planet extends InitPlanetObject {
 
         this.orbitClass;
         this.cosmicObject;
-        this.currentLang = 'cz';
-        this.lastLang = '';
     }
 
     // Get()
@@ -20,12 +18,6 @@ class Planet extends InitPlanetObject {
     getPlanetNamesCZ() { return this.planetNamesOnSceneCZ }
     getPlanetNamesSK() { return this.planetNamesOnSceneSK }
     getScene() { return this.scene }
-    getCurrentLang() { return this.currentLang }
-    getLastLang() { return this.lastLang }
-
-    // Set()
-    setCurrentLang(langName) { this.currentLang = langName }
-    setLastLang(langName) { this.lastLang = langName }
 
 
     // Creating planet objects, meshes and adding them to Scene
@@ -97,12 +89,6 @@ class Planet extends InitPlanetObject {
     // -------------------------------------------------------------------------
     rotateAllPlanets(time) {
         // Called in f. animate() in modelScene.js - movement needs to by redrawn by renderer
-        if (this.currentLang !== this.lastLang) {
-            this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
-            this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
-            this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
-            this.lastLang = this.currentLang;
-        }
         var planetMeshes = this.getPlanetMeshes();
 
         if (document.getElementById("en").style.fontWeight == "bold") {
@@ -110,7 +96,6 @@ class Planet extends InitPlanetObject {
                 this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesEN())[i], time);
             }
 
-            this.currentLang = 'en';
             this.traverseSceneToFindPlanetNames(true, "nameEn", this.getScene());
             this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());
             this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
@@ -119,7 +104,6 @@ class Planet extends InitPlanetObject {
                 this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesCZ())[i], time);
             }
 
-            this.currentLang = 'cz';
             this.traverseSceneToFindPlanetNames(true, "nameCz", this.getScene());
             this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
             this.traverseSceneToFindPlanetNames(false, "nameSk", this.getScene());
@@ -128,7 +112,6 @@ class Planet extends InitPlanetObject {
                 this.positionPlanetOnOrbit(planetMeshes[i], (this.getPlanetNames())[i], (this.getPlanetNamesSK())[i], time);
             }
 
-            this.currentLang = 'sk';
             this.traverseSceneToFindPlanetNames(true, "nameSk", this.getScene());
             this.traverseSceneToFindPlanetNames(false, "nameEn", this.getScene());
             this.traverseSceneToFindPlanetNames(false, "nameCz", this.getScene());

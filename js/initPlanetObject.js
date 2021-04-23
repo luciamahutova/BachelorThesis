@@ -63,18 +63,6 @@ class InitPlanetObject extends JSONManager {
                 planetsMeshes[i].add(textMesh);
                 textMesh.name = startsWith + objectNames[i];
                 scene.add(textMesh);
-
-                // Names for planets - 1st make visible only those name which are needed
-                if (fontSize > 1) {
-                    //textMesh.visible = false;
-                    if (document.getElementById("en").style.fontWeight == "bold" && startsWith !== 'nameEn') {
-                        textMesh.visible = false;
-                    } else if (document.getElementById("cz").style.fontWeight == "bold" && startsWith !== 'nameCz') {
-                        textMesh.visible = false;
-                    } else if (document.getElementById("sk").style.fontWeight == "bold" && startsWith !== 'nameSk') {
-                        textMesh.visible = false;
-                    }
-                }
             }
         });
     }
