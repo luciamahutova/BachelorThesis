@@ -158,11 +158,15 @@ class ModelScene extends InitScene {
                 // temporarily disable z-rotation for planet object = camera will be placed above the planet
                 planet[index].setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1), 0);
                 planet[index].add(this.getCamera());
-                this.camera.position.set(0, 15, 0);
+                this.camera.position.set(0, 25, 0);
+                this.camera.fov = 50;
+                this.camera.updateProjectionMatrix();
                 this.setLastIndexOfFollowedObject(index);
             } else if (this.getIsCameraFollowingObject()) {
                 planet[this.getLastIndexOfFollowedObject()].remove(this.getCamera());
                 (this.getCamera()).position.set(0, 45, 0);
+                this.camera.fov = 100;
+                this.camera.updateProjectionMatrix();
             }
         }
     }
