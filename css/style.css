@@ -51,9 +51,13 @@ h1 {
 img,
 h1,
 h3,
+h4,
+sup,
+sub,
 span,
 p,
-.section--bg-transparent {
+.section--bg-transparent,
+.section--bg-transparent div {
     background-color: transparent;
 }
 
@@ -512,6 +516,7 @@ header+a {
     font-size: 18px;
     left: 40px;
     top: 40px;
+    z-index: 10;
 }
 
 .fadeLine {
@@ -547,6 +552,7 @@ article {
     top: 400px;
     width: 450px;
     float: left;
+    background-color: transparent;
 }
 
 article+.bgLayer {
@@ -583,7 +589,7 @@ article h3 {
 
 .interactivePlanetScene {
     position: fixed;
-    top: 100px;
+    top: 140px;
     right: 10%;
     width: 600px;
     height: 600px;

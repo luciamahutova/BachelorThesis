@@ -41,7 +41,7 @@ class PlanetScene extends InitScene {
         interactiveScene.appendChild(this.renderer.domElement);
         renderer.setClearColor(0xffffff, 0);
 
-        camera.position.set(2, 4, 2);
+        camera.position.set(3, 1.5, 3);
         scene.background = new THREE.Color(0xff0000);
         scene.add(ambientLight);
         this.createAllPlanets();
