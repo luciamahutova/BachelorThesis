@@ -42,6 +42,12 @@ h1 {
     z-index: 10;
 }
 
+.planetInfoLayout {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 img,
 h1,
 h3,
@@ -517,6 +523,7 @@ header+a {
     background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0.4, white), color-stop(0.6, #061327));
     opacity: 0.1;
     left: 160px;
+    z-index: 10;
 }
 
 h1+p {
@@ -526,13 +533,20 @@ h1+p {
 }
 
 
-/* Info page - how to use application *********************************************************************/
+/* Info page (how to use application) + Physical values for planets ***************************************/
 
 article {
     position: relative;
     top: 220px;
     width: 90%;
     padding-bottom: 30px
+}
+
+.planetInfoArticle {
+    position: relative;
+    top: 400px;
+    width: 450px;
+    float: left;
 }
 
 article+.bgLayer {
@@ -548,6 +562,11 @@ article section {
 article h4 {
     margin-top: 15px;
     text-decoration: underline;
+    width: fit-content;
+}
+
+.planetInfoArticle h4 {
+    margin-top: 10px;
 }
 
 article p {
@@ -563,7 +582,7 @@ article h3 {
 /* Scene for interactive models of planets ****************************************************************/
 
 .interactivePlanetScene {
-    position: absolute;
+    position: fixed;
     top: 100px;
     right: 10%;
     width: 600px;
