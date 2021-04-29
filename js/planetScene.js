@@ -7,10 +7,6 @@ class PlanetScene extends InitScene {
         this.renderer = this.initRenderer(this.getWidthOfScene(), this.getHeightOfScene(), true);
         this.controls = this.setOrbitConstrols(this.camera, this.renderer);
 
-        // this.quaternion = new THREE.Quaternion();
-        // this.targetQuaternion = new THREE.Quaternion();
-        // this.targetQuaternion.setFromAxisAngle(new THREE.Vector3(1, 1, 1), -5, 0, 20);
-
         this.ambientLight = new THREE.AmbientLight(0x404040, 5);
         this.planetMeshes = [];
         this.planetNames = ["mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
@@ -18,9 +14,6 @@ class PlanetScene extends InitScene {
 
         this.initInteractivePlanetScene(this.scene, this.renderer, this.camera, this.ambientLight);
         this.showInteractivePlanet(this.pageName)
-
-        // this.axisHelper = new THREE.AxisHelper(70);
-        // this.scene.add(this.axisHelper)
     }
 
     // Get()
@@ -48,31 +41,23 @@ class PlanetScene extends InitScene {
     }
 
     createAllPlanets() {
-        this.createPlanetMesh('/images/textures/mercuryTexture2k.jpg', 0.03); // Mercury
-        this.createPlanetMesh('/images/textures/venusTexture2k.jpg', 177.4); // Venus
-        this.createPlanetMesh('/images/textures/earthTexture2k.jpg', 23.4); // Earth
-        this.createPlanetMesh('/images/textures/marsTexture2k.jpg', 25.2); // Mars
-        this.createPlanetMesh('/images/textures/jupiterTexture2k.jpg', 3.1); // Jupiter
-        this.createPlanetMesh('/images/textures/saturnTexture2k.jpg', 26.7); // Saturn
-        this.createPlanetMesh('/images/textures/uranusTexture2k.jpg', 97.8); // Uranus
-        this.createPlanetMesh('/images/textures/neptuneTexture2k.jpg', 28.3); // Neptune
+        this.createPlanetMesh('/images/textures/mercuryTexture2k.jpg'); // Mercury
+        this.createPlanetMesh('/images/textures/venusTexture2k.jpg'); // Venus
+        this.createPlanetMesh('/images/textures/earthTexture2k.jpg'); // Earth
+        this.createPlanetMesh('/images/textures/marsTexture2k.jpg'); // Mars
+        this.createPlanetMesh('/images/textures/jupiterTexture2k.jpg'); // Jupiter
+        this.createPlanetMesh('/images/textures/saturnTexture2k.jpg'); // Saturn
+        this.createPlanetMesh('/images/textures/uranusTexture2k.jpg'); // Uranus
+        this.createPlanetMesh('/images/textures/neptuneTexture2k.jpg'); // Neptune
     }
 
-    createPlanetMesh(imageSrc, tiltAxisZ) {
+    createPlanetMesh(imageSrc) {
         var object = new THREE.SphereBufferGeometry(3, 100, 100);
         var texture = new THREE.TextureLoader().load(imageSrc);
         var meshMaterial = new THREE.MeshPhongMaterial({ map: texture });
         var planetMesh = new THREE.Mesh(object, meshMaterial);
 
         planetMesh.position.set(0, 0, 0);
-        // planetMesh.setRotationFromAxisAngle(new THREE.Vector3(0, 0, 1),
-        //     THREE.Math.degToRad(tiltAxisZ)
-        // );
-
-        // this.quaternion.setFromAxisAngle(new THREE.Vector3(0, 0, 1), tiltAxisZ);
-        // this.quaternion.rotateTowards(this.targetQuaternion, 1);
-        // planetMesh.position.applyQuaternion(this.quaternion);
-
         (this.getPlanetMeshes()).push(planetMesh);
         (this.getScene()).add(planetMesh);
     }
