@@ -59,7 +59,7 @@ class Planet extends InitPlanetObject {
     // -------------------------------------------------------------------------
     addNamesToPlanetObject(planetsMeshes, scene) {
         var planetNamesEN = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"];
-        var planetNamesCZ = ["Merkur", "Venuse", "Zeme", "Mars", "Jupitr", "Saturn", "Uran", "Neptun"];
+        var planetNamesCZ = ["Merkur", "Venuse", "Zeme", "Mars", "Jupiter", "Saturn", "Uran", "Neptun"];
         var planetNamesSK = ["Merkur", "Venusa", "Zem", "Mars", "Jupiter", "Saturn", "Uran", "Neptun"];
         this.createTextGeometry(planetsMeshes, this.getPlanetNamesEN(), scene, planetNamesEN, 1.2, "nameEn");
         this.createTextGeometry(planetsMeshes, this.getPlanetNamesCZ(), scene, planetNamesCZ, 1.2, "nameCz");
